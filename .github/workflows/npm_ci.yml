@@ -1,0 +1,13 @@
+name: npm CI
+
+on:
+  push: {}
+  pull_request:
+    branches: [main]
+
+jobs:
+  npm_ci:
+    name: npm CI
+    uses: Katsute/Workflows/.github/workflows/npm.ci.yml@main
+    with:
+      test: false

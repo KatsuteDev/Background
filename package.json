@@ -1,0 +1,152 @@
+{
+    "name": "code-background",
+    "displayName": "Code Background",
+    "description": "Background for VSCode",
+    "publisher": "Katsute",
+    "version": "1.0.0",
+    "private": true,
+    "engines": {
+        "vscode": "^1.68.1"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:code-background.install",
+        "onCommand:code-background.uninstall",
+        "onCommand:code-background.config"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "command": "code-background.install",
+                "title": "Install",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.uninstall",
+                "title": "Uninstall",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.config",
+                "title": "Config",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.select",
+                "title": "Select Image",
+                "category": "Code Background"
+            }
+        ],
+        "configuration": {
+            "title": "Code Background",
+            "order": 0,
+            "properties": {
+                "code-background.align": {
+                    "title": "Alignment",
+                    "type": "string",
+                    "default": "Center Center",
+                    "enum": [
+                        "Top Left",
+                        "Top Center",
+                        "Top Right",
+                        "Center Left",
+                        "Center Center",
+                        "Center Right",
+                        "Bottom Left",
+                        "Bottom Center",
+                        "Bottom Right"
+                    ]
+                },
+                "code-background.opacity": {
+                    "title": "Opacity",
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "code-background.repeat": {
+                    "title": "Repeat",
+                    "type": "string",
+                    "default": "No Repeat",
+                    "enum": [
+                        "No Repeat",
+                        "Repeat",
+                        "Repeat X",
+                        "Repeat Y",
+                        "Repeat Space",
+                        "Repeat Round"
+                    ],
+                    "enumDescriptions": [
+                        "Do not repeat",
+                        "Repeat X/Y",
+                        "Repeat X",
+                        "Repeat Y",
+                        "Repeat evenly distributed",
+                        "Repeat and stretch"
+                    ]
+                },
+                "code-background.size": {
+                    "title": "Size",
+                    "type": "string",
+                    "default": "Auto",
+                    "enum": [
+                        "Auto",
+                        "Contain",
+                        "Cover",
+                        "Manual"
+                    ],
+                    "enumDescriptions": [
+                        "Original image size",
+                        "Fit window size",
+                        "Cover window size",
+                        "Manual size"
+                    ]
+                },
+                "code-background.size-css": {
+                    "title": "Background size",
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        }
+    },
+    "main": "dist/extension.js",
+    "scripts": {
+        "// -- dev -- //": "",
+        "clean": "rimraf dist & rimraf dist",
+        "prune": "npm prune && npm i --package-lock --ignore-scripts",
+        "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
+        "// -- build -- //": "",
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc --outDir dist",
+        "build": "npm run compile",
+        "prepare": "npm run clean && npm run build",
+        "// -- test -- //": "",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile",
+        "test": "npm run pretest",
+        "// -- deploy -- //": "",
+        "package": "vsce package"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KatsuteDev/code-background.git"
+    },
+    "author": "Katsute",
+    "license": "GPL-2.0-only",
+    "bugs": {
+        "url": "https://github.com/KatsuteDev/code-background/issues"
+    },
+    "homepage": "https://github.com/KatsuteDev/code-background#readme",
+    "devDependencies": {
+        "@types/glob": "7.2.0",
+        "@types/node": "18.0.0",
+        "@types/vscode": "1.68.0",
+        "glob": "8.0.3",
+        "rimraf": "3.0.2",
+        "typescript": "4.7.4",
+        "vsce": "2.9.2"
+    }
+}

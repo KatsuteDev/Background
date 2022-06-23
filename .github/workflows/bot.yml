@@ -1,0 +1,21 @@
+name: Repository[bot]
+on:
+  workflow_dispatch: {}
+  label:
+    types: [created, edited, deleted]
+  issues:
+    types: [opened, closed, reopened, edited]
+  issue_comment:
+    types: [created, edited]
+  pull_request:
+    branches: [main]
+    types: [opened, closed, reopened, edited]
+  release:
+    types: [created, published]
+
+jobs:
+  repository-bot:
+    name: Repository[bot]
+    uses: Katsute/Workflows/.github/workflows/bot.yml@main
+    secrets:
+      token: ${{ secrets.BOT }}
