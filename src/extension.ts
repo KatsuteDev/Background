@@ -18,22 +18,25 @@
 
 import * as vscode from "vscode";
 
+import { glob } from "glob";
+
 import * as fs from "fs";
 import * as path from "path";
 
 import { install } from "./command/install";
 import { uninstall } from "./command/uninstall";
 import { config, get } from "./command/config";
-import { select } from "./command/select";
-import { glob } from "glob";
+
+import * as align from "./command/config/align";
+import * as file from "./command/config/file";
+import * as loop from "./command/config/loop";
+import * as opacity from "./command/config/opacity";
+import * as repeat from "./command/config/repeat";
+import * as size from "./command/config/size";
 
 //
 
 const identifier: string = "KatsuteDev/code-background";
-
-const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S]*?` + `\\/\\* ${identifier}-end \\*\\/`);
-
-let js: string | undefined;
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
 
@@ -51,9 +54,20 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     context.subscriptions.push(install);
     context.subscriptions.push(uninstall);
+
     context.subscriptions.push(config);
-    context.subscriptions.push(select);
+
+    context.subscriptions.push(align.command);
+    context.subscriptions.push(file.command);
+    context.subscriptions.push(loop.command);
+    context.subscriptions.push(opacity.command);
+    context.subscriptions.push(repeat.command);
+    context.subscriptions.push(size.command);
 };
+
+//
+
+let js: string | undefined;
 
 export const installJS: () => void = () => {
     js && fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS(), "utf-8")
@@ -64,9 +78,14 @@ export const uninstallJS: () => void = () => {
 }
 
 export const restartVS: () => void = () => {
-    vscode.commands.executeCommand("workbench.action.newWindow");
-    vscode.commands.executeCommand("workbench.action.closeWindow");
+    vscode.commands.executeCommand("workbench.action.newWindow").then(() => {
+        vscode.commands.executeCommand("workbench.action.closeWindow");
+    });
 }
+
+//
+
+const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S]*?` + `\\/\\* ${identifier}-end \\*\\/`);
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
@@ -98,6 +117,8 @@ const getJS: () => string = () => {
     v = `const bk = [${v.endsWith(',') ? v.slice(0, -1) : v}]`;
 
     glob.sync("");
+
+    // todo!
 
     return `
 /* ${identifier}-start */

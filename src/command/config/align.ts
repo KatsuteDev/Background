@@ -26,32 +26,32 @@ const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => n
     updateFromLabel("align", item);
 });
 
-//
+export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.align", () => {
+    const current: string = get("align") as string;
+    vscode.window.showQuickPick(
+        [
+            quickPickItem({ label: "Top Left", onSelect }, current),
+            quickPickItem({ label: "Top Center", onSelect }, current),
+            quickPickItem({ label: "Top Right", onSelect }, current),
+            separator(),
+            quickPickItem({ label: "Center Left", onSelect }, current),
+            quickPickItem({ label: "Center Center", onSelect }, current),
+            quickPickItem({ label: "Center Right", onSelect }, current),
+            separator(),
+            quickPickItem({ label: "Bottom Left", onSelect }, current),
+            quickPickItem({ label: "Bottom Center", onSelect }, current),
+            quickPickItem({ label: "Bottom Right", onSelect }, current)
+        ],
+        {
+            ...options,
+            title: `${options.title} - Alignment`,
+            placeHolder: "Alignment"
+        }
+    ).then(handle);
+});
 
-export const align: CommandQuickPickItem = {
+export const item: CommandQuickPickItem = {
     label: "Align",
     description: "Background image alignment",
-    onSelect: () => new Promise(() => {
-        const current: string = get("align") as string;
-        vscode.window.showQuickPick(
-            [
-                quickPickItem({ label: "Top Left", onSelect }, current),
-                quickPickItem({ label: "Top Center", onSelect }, current),
-                quickPickItem({ label: "Top Right", onSelect }, current),
-                separator(),
-                quickPickItem({ label: "Center Left", onSelect }, current),
-                quickPickItem({ label: "Center Center", onSelect }, current),
-                quickPickItem({ label: "Center Right", onSelect }, current),
-                separator(),
-                quickPickItem({ label: "Bottom Left", onSelect }, current),
-                quickPickItem({ label: "Bottom Center", onSelect }, current),
-                quickPickItem({ label: "Bottom Right", onSelect }, current)
-            ],
-            {
-                ...options,
-                title: `${options.title} - Alignment`,
-                placeHolder: "Alignment"
-            }
-        ).then(handle)
-    })
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.align"))
 }

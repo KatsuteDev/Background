@@ -15,7 +15,12 @@
         "onCommand:code-background.install",
         "onCommand:code-background.uninstall",
         "onCommand:code-background.config",
-        "onCommand:code-background.select"
+        "onCommand:code-background.config.file",
+        "onCommand:code-background.config.align",
+        "onCommand:code-background.config.loop",
+        "onCommand:code-background.config.opacity",
+        "onCommand:code-background.config.repeat",
+        "onCommand:code-background.config.size"
     ],
     "contributes": {
         "commands": [
@@ -31,12 +36,37 @@
             },
             {
                 "command": "code-background.config",
-                "title": "Config",
+                "title": "Configuration",
                 "category": "Code Background"
             },
             {
-                "command": "code-background.select",
-                "title": "Select Image",
+                "command": "code-background.config.file",
+                "title": "Select images",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.config.align",
+                "title": "Set background image alignment",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.config.loop",
+                "title": "Set image loop duration",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.config.opacity",
+                "title": "Set UI opacity",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.config.repeat",
+                "title": "Set background image repeat",
+                "category": "Code Background"
+            },
+            {
+                "command": "code-background.config.size",
+                "title": "Set background image size",
                 "category": "Code Background"
             }
         ],
@@ -46,6 +76,7 @@
             "properties": {
                 "code-background.files": {
                     "title": "Files",
+                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
                     "type": "array",
                     "order": 0,
                     "default": [],
@@ -55,6 +86,7 @@
                 },
                 "code-background.align": {
                     "title": "Alignment",
+                    "markdownDescription": "How to align the background image.",
                     "type": "string",
                     "default": "Center Center",
                     "enum": [
@@ -70,14 +102,15 @@
                     ]
                 },
                 "code-background.loop": {
-                    "title": "Opacity",
-                    "description": "Set to 0 to disable",
+                    "title": "Loop",
+                    "markdownDescription": "How often the background image should be changed in seconds, set to `0` to never change the image.",
                     "type": "number",
                     "default": 0,
                     "minimum": 0
                 },
                 "code-background.opacity": {
                     "title": "Opacity",
+                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
                     "default": 1,
                     "minimum": 0,
@@ -85,6 +118,7 @@
                 },
                 "code-background.repeat": {
                     "title": "Repeat",
+                    "markdownDescription": "How to repeat the background image.",
                     "type": "string",
                     "default": "No Repeat",
                     "enum": [
@@ -100,12 +134,13 @@
                         "Repeat X/Y",
                         "Repeat X",
                         "Repeat Y",
-                        "Repeat evenly distributed",
-                        "Repeat and stretch"
+                        "Repeat with even spacing to fill the screen",
+                        "Repeat and stretch images to fill the screen"
                     ]
                 },
                 "code-background.size": {
                     "title": "Size",
+                    "markdownDescription": "How to size the background image.",
                     "type": "string",
                     "default": "Auto",
                     "enum": [
@@ -116,13 +151,14 @@
                     ],
                     "enumDescriptions": [
                         "Original image size",
-                        "Fit window size",
-                        "Cover window size",
+                        "Fit image to the screen",
+                        "Stretch image to fill the screen",
                         "Manual size"
                     ]
                 },
                 "code-background.size-css": {
                     "title": "Background size",
+                    "markdownDescription": "If the background size is set to `Manual`, this is the literal value for the `background-size` property.",
                     "type": "string",
                     "default": ""
                 }

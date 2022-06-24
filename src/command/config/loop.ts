@@ -22,6 +22,30 @@ import { CommandQuickPickItem, get, update } from "../config";
 
 //
 
+export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.loop", () => {
+    const current: number = round(get("loop") as number);
+    vscode.window.showInputBox({
+        title: "Loop Time",
+        placeHolder: "Loop time in seconds",
+        value: current.toString(),
+        prompt: `Loop time (${current} seconds). How often the background image should change in seconds, set to 0 to disable`,
+        validateInput: validate
+    }).then((value?: string) => {
+        if(value && !isNaN(+value) && +value >= 0)
+            update("loop", round(+value));
+    });
+});
+
+export const item: CommandQuickPickItem = {
+    label: "Loop",
+    description: "How often the background image should be changed",
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.loop"))
+}
+
+//
+
+const round: (num: number) => number = (num: number) => Math.round(num + Number.EPSILON);
+
 const validate: (value: string) => string | null | undefined = (value: string) => {
     if(isNaN(+value))
         return "Not a number";
@@ -30,26 +54,3 @@ const validate: (value: string) => string | null | undefined = (value: string) =
     else
         return null;
 }
-
-export const loop: CommandQuickPickItem = {
-    label: "Loop",
-    description: "How long to change image",
-    onSelect: () => new Promise(() => {
-        const current: number = round(get("loop") as number);
-        vscode.window.showInputBox({
-            title: "Loop time",
-            placeHolder: "Loop time",
-            value: current.toString(),
-            prompt: `Loop time (${current}), set to 0 to disable`,
-            validateInput: validate
-        }).then((value?: string) => {
-            if(value && !isNaN(+value) && +value >= 0){
-                update("loop", round(+value));
-            }
-        });
-    })
-}
-
-//
-
-const round: (num: number) => number = (num: number) => Math.round(num + Number.EPSILON);

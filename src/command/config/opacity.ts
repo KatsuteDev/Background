@@ -22,6 +22,43 @@ import { CommandQuickPickItem, get, update } from "../config";
 
 //
 
+export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.opacity", () => {
+    const current: number = round(get("opacity") as number);
+    vscode.window.showInputBox({
+        title: "UI Opacity",
+        placeHolder: "UI opacity",
+        value: current.toString(),
+        prompt: `UI Opacity (${current})`,
+        validateInput: validate
+    }).then((value?: string) => {
+        if(value && !isNaN(+value) && +value >= 0 && +value <= 1){
+            const o: number = round(+value);
+            if(o > .1){
+                update("opacity", round(+value));
+            }else{
+                vscode.window.showWarningMessage(
+                    "An opacity of " + o + " might make it difficult to see the UI, " +
+                    "are you sure you want to use this opacity?",
+                    { modal: true },
+                    "Yes"
+                ).then((c?: "Yes") => {
+                    c && c === "Yes" && update("opacity", round(+value));
+                });
+            }
+        }
+    });
+});
+
+export const item: CommandQuickPickItem = {
+    label: "Opacity",
+    description: "UI opacity",
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.opacity"))
+}
+
+//
+
+const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
+
 const validate: (value: string) => string | null | undefined = (value: string) => {
     if(isNaN(+value))
         return "Not a number";
@@ -30,27 +67,3 @@ const validate: (value: string) => string | null | undefined = (value: string) =
     else
         return null;
 }
-
-export const opacity: CommandQuickPickItem = {
-    label: "Opacity",
-    description: "UI opacity",
-    onSelect: () => new Promise(() => {
-        const current: number = round(get("opacity") as number);
-        vscode.window.showInputBox({
-            title: "UI Opacity",
-            placeHolder: "UI Opacity",
-            value: current.toString(),
-            prompt: `UI Opacity (${current})`,
-            validateInput: validate
-        }).then((value?: string) => {
-            if(value && !isNaN(+value) && +value >= 0 && +value <= 1){
-                // todo: issue warning if opacity is low
-                update("opacity", round(+value));
-            }
-        });
-    })
-}
-
-//
-
-const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100

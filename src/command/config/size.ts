@@ -30,10 +30,10 @@ const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => n
 const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     const current: string = get("size-css") as string;
     vscode.window.showInputBox({
-        title: "Background size",
+        title: "Background Size",
         placeHolder: "Background size",
         value: current,
-        prompt: `Background size (${current})`
+        prompt: `Background size (${current}). The literal value for the 'background-size' property.`
     }).then((value?: string) => {
         if(value !== undefined){
             let changed: boolean = get("size") !== "Manual" || current !== value;
@@ -47,26 +47,26 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
     });
 });
 
-//
+export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.size", () => {
+    const current: string = get("size") as string;
+    vscode.window.showQuickPick(
+        [
+            quickPickItem({ label: "Auto", description: "Original image size", onSelect }, current),
+            quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect }, current),
+            quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect }, current),
+            separator(),
+            quickPickItem({ label: "Manual", description: "Manual size", onSelect: manual }, current)
+        ],
+        {
+            ...options,
+            title: `${options.title} - Size`,
+            placeHolder: "Size"
+        })
+    .then(handle);
+});
 
-export const size: CommandQuickPickItem = {
+export const item: CommandQuickPickItem = {
     label: "Size",
     description: "Background image size",
-    onSelect: () => new Promise(() => {
-        const current: string = get("size") as string;
-        vscode.window.showQuickPick(
-            [
-                quickPickItem({ label: "Auto", description: "Original image size", onSelect }, current),
-                quickPickItem({ label: "Contain", description: "Fit window size", onSelect }, current),
-                quickPickItem({ label: "Cover", description: "Cover window size", onSelect }, current),
-                separator(),
-                quickPickItem({ label: "Manual", description: "Manual size", onSelect: manual }, current)
-            ],
-            {
-                ...options,
-                title: `${options.title} - Size`,
-                placeHolder: "Size"
-            })
-        .then(handle)
-    })
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.size"))
 }

@@ -18,12 +18,13 @@
 
 import * as vscode from "vscode";
 
-import { align } from "./config/align";
-import { file } from "./config/file";
-import { loop } from "./config/loop";
-import { opacity } from "./config/opacity";
-import { repeat } from "./config/repeat";
-import { size } from "./config/size";
+import * as align from "./config/align";
+import * as file from "./config/file";
+import * as loop from "./config/loop";
+import * as opacity from "./config/opacity";
+import * as repeat from "./config/repeat";
+import * as size from "./config/size";
+
 import { notify } from "./install";
 
 //
@@ -49,13 +50,13 @@ export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("code-background.config", () => {
     vscode.window.showQuickPick([
-        file,
+        file.item,
         separator(),
-        align,
-        loop,
-        opacity,
-        repeat,
-        size,
+        align.item,
+        loop.item,
+        opacity.item,
+        repeat.item,
+        size.item,
     ], options)
     .then(handle);
 });
@@ -76,7 +77,7 @@ export const handle: (item?: CommandQuickPickItem) => void = (item?: CommandQuic
 
 export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
     ...item,
-    description: current && item.label === current ? "(selected)" : undefined
+    description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim()
 } as CommandQuickPickItem);
 
 export const separator: () => vscode.QuickPickItem = () => ({
