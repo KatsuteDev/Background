@@ -25,27 +25,26 @@ import { CommandQuickPickItem, get, update } from "../config";
 const validate: (value: string) => string | null | undefined = (value: string) => {
     if(isNaN(+value))
         return "Not a number";
-    else if(+value < 0 || +value > 1)
-        return "Opacity must be between 0 and 1";
+    else if(+value < 0)
+        return "Opacity must be greater than -1";
     else
         return null;
 }
 
-export const opacity: CommandQuickPickItem = {
-    label: "Opacity",
-    description: "UI opacity",
+export const loop: CommandQuickPickItem = {
+    label: "Loop",
+    description: "How long to change image",
     onSelect: () => new Promise(() => {
-        const current: number = round(get("opacity") as number);
+        const current: number = round(get("loop") as number);
         vscode.window.showInputBox({
-            title: "UI Opacity",
-            placeHolder: "UI Opacity",
+            title: "Loop time",
+            placeHolder: "Loop time",
             value: current.toString(),
-            prompt: `UI Opacity (${current})`,
+            prompt: `Loop time (${current}), set to 0 to disable`,
             validateInput: validate
         }).then((value?: string) => {
-            if(value && !isNaN(+value) && +value >= 0 && +value <= 1){
-                // todo: issue warning if opacity is low
-                update("opacity", round(+value));
+            if(value && !isNaN(+value) && +value >= 0){
+                update("loop", round(+value));
             }
         });
     })
@@ -53,4 +52,4 @@ export const opacity: CommandQuickPickItem = {
 
 //
 
-const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100
+const round: (num: number) => number = (num: number) => Math.round(num + Number.EPSILON);

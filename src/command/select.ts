@@ -18,6 +18,132 @@
 
 import * as vscode from "vscode";
 
-export const select = vscode.commands.registerCommand("code-background.select", () => {
-    vscode.window.showInformationMessage("select");
+import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update } from "./config";
+
+//
+
+const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
+
+const add: (s: string) => Promise<void> = (s: string) => {
+    return new Promise<void>(() => {
+        const files: string[] = get("files") as string[];
+        files.push(s);
+        update("files", files.filter(unique));
+    });
+}
+
+const replace: (old: string, now: string) => Promise<void> = (old: string, now: string) => {
+    return new Promise<void>(() => {
+        const files: string[] = get("files") as string[];
+        for(let i = 0, l = files.length; i < l; i++)
+            if(files[i] === old)
+                files[i] = now;
+        update("files", files.filter(unique));
+    });
+}
+
+const remove: (s: string) => Promise<void> = (s: string) => {
+    return new Promise<void>(() => {
+        update(
+            "files",
+            (get("files") as string[])
+                .filter((f) => f !== s)
+                .filter(unique)
+        );
+    });
+}
+
+//
+
+const updateItem: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    vscode.window.showInputBox({
+        title: "File",
+        placeHolder: "File path or glob",
+        value: item!.label,
+        prompt: "Leave blank to remove",
+    }).then((value?: string) => {
+        if(item){
+            if(value === undefined || value.trim().length === 0)
+                remove(item.value!);
+            else
+                replace(item.value!, value);
+        }
+    });
+});
+
+const addFile: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    vscode.window.showOpenDialog({
+        canSelectFiles: true,
+        canSelectFolders: false,
+        canSelectMany: true,
+        openLabel: "Select Image",
+        filters: {"Images": ["png", "jpg", "jpeg", "webp", "gif"]}
+    }).then((value?: vscode.Uri[]) => {
+        if(value)
+            for(const file of value)
+                add(file.fsPath.replace('\\', '/'));
+    });
+});
+
+const addFolder: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    vscode.window.showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: true,
+        openLabel: "Select Folder"
+    }).then((value?: vscode.Uri[]) => {
+        if(value)
+            for(const file of value)
+                add(`${file.fsPath.replace('\\', '/')}/**`);
+    });
+});
+
+const addGlob: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    vscode.window.showInputBox({
+        title: "Add glob",
+        placeHolder: "File path or glob",
+        prompt: "Add file path or glob, only use '/' for paths,  '\\' are reserved for escape characters only",
+    }).then((value?: string) => {
+        if(value)
+            add(value);
+    });
+});
+
+//
+
+export const select: vscode.Disposable = vscode.commands.registerCommand("code-background.select", () => {
+    const items: CommandQuickPickItem[] = [];
+
+    const files: string[] = get("files") as string[];
+
+    for(const file of files)
+        items.push(quickPickItem({
+            label: file.replace(/(\${\w+})/, "\\$1"),
+            value: file,
+            onSelect: updateItem
+        }))
+
+    vscode.window.showQuickPick(
+        [
+            ...items,
+            separator(),
+            quickPickItem({
+                label: "$(file-add) Add File",
+                onSelect: addFile
+            }),
+            quickPickItem({
+                label: "$(file-directory-create) Add Folder",
+                onSelect: addFolder
+            }),
+            quickPickItem({
+                label: "$(kebab-horizontal) Add Glob",
+                onSelect: addGlob
+            }),
+        ],
+        {
+            ...options,
+            title: `${options.title} - Files`,
+            placeHolder: "Files",
+        }
+    ).then(handle);
 });

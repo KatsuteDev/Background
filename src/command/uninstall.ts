@@ -18,6 +18,11 @@
 
 import * as vscode from "vscode";
 
-export const uninstall = vscode.commands.registerCommand("code-background.uninstall", () => {
-    vscode.window.showInformationMessage("uninstall");
+import { restartVS, uninstallJS } from "../extension";
+
+//
+
+export const uninstall: vscode.Disposable = vscode.commands.registerCommand("code-background.uninstall", () => {
+    uninstallJS();
+    restartVS();
 });

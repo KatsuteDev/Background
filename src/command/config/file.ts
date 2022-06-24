@@ -20,10 +20,12 @@ import * as vscode from "vscode";
 
 import { CommandQuickPickItem } from "../config";
 
+//
+
 export const file: CommandQuickPickItem = {
     label: "File",
     description: "Background image",
-    onSelect: () => new Promise(() => {
+    onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
         vscode.commands.executeCommand("code-background.select");
     })
 }

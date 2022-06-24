@@ -18,17 +18,96 @@
 
 import * as vscode from "vscode";
 
+import * as fs from "fs";
+import * as path from "path";
+
 import { install } from "./command/install";
 import { uninstall } from "./command/uninstall";
-import { config } from "./command/config";
+import { config, get } from "./command/config";
 import { select } from "./command/select";
+import { glob } from "glob";
 
-export const activate = (context: vscode.ExtensionContext) => {
+//
 
-    const reloadWindow = () => vscode.commands.executeCommand("workbench.action.reloadWindow");
+const identifier: string = "KatsuteDev/code-background";
+
+const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S]*?` + `\\/\\* ${identifier}-end \\*\\/`);
+
+let js: string | undefined;
+
+export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
+
+    if(require.main && require.main.filename){
+
+        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/bootstrap-window.js
+
+        const file = path.join(path.dirname(require.main.filename), "bootstrap-window.js");
+        if(fs.existsSync(file))
+            js = file;
+        else
+            vscode.window.showWarningMessage(`Failed to find 'bootstrap-window.js'`);
+    }else
+        vscode.window.showErrorMessage("Failed to find main file");
 
     context.subscriptions.push(install);
     context.subscriptions.push(uninstall);
     context.subscriptions.push(config);
     context.subscriptions.push(select);
 };
+
+export const installJS: () => void = () => {
+    js && fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS(), "utf-8")
+}
+
+export const uninstallJS: () => void = () => {
+    js && fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")), "utf-8");
+}
+
+export const restartVS: () => void = () => {
+    vscode.commands.executeCommand("workbench.action.newWindow");
+    vscode.commands.executeCommand("workbench.action.closeWindow");
+}
+
+const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
+
+const getJS: () => string = () => {
+    const globs: string[] = get("files") as string[];
+
+    const files: string[] = [];
+
+    for(const g of globs){
+        for(const f of glob.sync(g)){
+            const ext: string = path.extname(f);
+            // make sure this matches command/select/addFile$filters
+            switch(ext){
+                case ".png":
+                case ".jpeg":
+                case ".jpg":
+                case ".webp":
+                case ".gif":
+                    if(fs.existsSync(f))
+                        files.push(`'data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}'`);
+            }
+        }
+    }
+
+    let v: string = "";
+    for(const f of files.filter(unique)){
+        v += `"${f}",`;
+    }
+    v = `const bk = [${v.endsWith(',') ? v.slice(0, -1) : v}]`;
+
+    glob.sync("");
+
+    return `
+/* ${identifier}-start */
+window.onload = () => {
+    console.log("WIP");
+}
+/* ${identifier}-end */`
+        .trim();
+}
+
+const removeJS: (s: string) => string = (s: string) => {
+    return s.replace(remove, "").replace(/\s+$/, "");
+}

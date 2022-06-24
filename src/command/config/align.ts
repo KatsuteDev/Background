@@ -18,66 +18,40 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem, get, handle, options, quickPickItem, separator, updateFromLabel } from "../config";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, updateFromLabel } from "../config";
 
-const update: (item?: CommandQuickPickItem) => Promise<void> = (item?: CommandQuickPickItem) => new Promise(() => {
+//
+
+const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     updateFromLabel("align", item);
 });
+
+//
 
 export const align: CommandQuickPickItem = {
     label: "Align",
     description: "Background image alignment",
     onSelect: () => new Promise(() => {
-        const current: string = get("align");
-        vscode.window.showInformationMessage(get("align") + ".." + vscode.workspace.getConfiguration("code-background").get("align") as string);
+        const current: string = get("align") as string;
         vscode.window.showQuickPick(
             [
-                quickPickItem({
-                    label: "Top Left",
-                    onSelect: update
-                }, current),
-                quickPickItem({
-                    label: "Top Center",
-                    onSelect: update
-                }, current),
-                quickPickItem({
-                    label: "Top Right",
-                    onSelect: update
-                }, current),
+                quickPickItem({ label: "Top Left", onSelect }, current),
+                quickPickItem({ label: "Top Center", onSelect }, current),
+                quickPickItem({ label: "Top Right", onSelect }, current),
                 separator(),
-                quickPickItem({
-                    label: "Center Left",
-                    onSelect: update
-                }, current),
-                quickPickItem({
-                    label: "Center Center",
-                    onSelect: update
-                }, current),
-                quickPickItem({
-                    label: "Center Right",
-                    onSelect: update
-                }, current),
+                quickPickItem({ label: "Center Left", onSelect }, current),
+                quickPickItem({ label: "Center Center", onSelect }, current),
+                quickPickItem({ label: "Center Right", onSelect }, current),
                 separator(),
-                quickPickItem({
-                    label: "Bottom Left",
-                    onSelect: update
-                }, current),
-                quickPickItem({
-                    label: "Bottom Center",
-                    onSelect: update
-                }, current),
-                quickPickItem({
-                    label: "Bottom Right",
-                    onSelect: update
-                }, current)
+                quickPickItem({ label: "Bottom Left", onSelect }, current),
+                quickPickItem({ label: "Bottom Center", onSelect }, current),
+                quickPickItem({ label: "Bottom Right", onSelect }, current)
             ],
             {
                 ...options,
-                ...{
-                    title: `${options.title} - Alignment`,
-                    placeHolder: "Alignment"
-                }
-            })
-        .then(handle)
+                title: `${options.title} - Alignment`,
+                placeHolder: "Alignment"
+            }
+        ).then(handle)
     })
 }

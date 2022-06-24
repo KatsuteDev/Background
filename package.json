@@ -14,7 +14,8 @@
     "activationEvents": [
         "onCommand:code-background.install",
         "onCommand:code-background.uninstall",
-        "onCommand:code-background.config"
+        "onCommand:code-background.config",
+        "onCommand:code-background.select"
     ],
     "contributes": {
         "commands": [
@@ -43,6 +44,15 @@
             "title": "Code Background",
             "order": 0,
             "properties": {
+                "code-background.files": {
+                    "title": "Files",
+                    "type": "array",
+                    "order": 0,
+                    "default": [],
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "code-background.align": {
                     "title": "Alignment",
                     "type": "string",
@@ -58,6 +68,13 @@
                         "Bottom Center",
                         "Bottom Right"
                     ]
+                },
+                "code-background.loop": {
+                    "title": "Opacity",
+                    "description": "Set to 0 to disable",
+                    "type": "number",
+                    "default": 0,
+                    "minimum": 0
                 },
                 "code-background.opacity": {
                     "title": "Opacity",

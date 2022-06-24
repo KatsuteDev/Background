@@ -20,29 +20,39 @@ import * as vscode from "vscode";
 
 import { align } from "./config/align";
 import { file } from "./config/file";
+import { loop } from "./config/loop";
 import { opacity } from "./config/opacity";
 import { repeat } from "./config/repeat";
 import { size } from "./config/size";
+import { notify } from "./install";
+
+//
 
 const vsconfig = () => vscode.workspace.getConfiguration("code-background");
 
-export const get = (key: string) => {
-    return vsconfig().get(key) as string;
+export const get: (key: string) => any = (key: string) => {
+    return vsconfig().get(key);
 }
 
-export const update = (key: string, value: any) => {
+export const update: (key: string, value: any, skipWarning?: boolean) => void = (key: string, value: any, skipWarning?: boolean) => {
+    const current: any = get(key);
     vsconfig().update(key, value, vscode.ConfigurationTarget.Global);
+    if(skipWarning !== true && current !== value)
+        notify();
 }
 
-export const updateFromLabel = (key: string, item?: CommandQuickPickItem) => {
+export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void = (key: string, item?: CommandQuickPickItem) => {
     item && item.label && update(key, item.label);
 }
 
-export const config = vscode.commands.registerCommand("code-background.config", () => {
+//
+
+export const config: vscode.Disposable = vscode.commands.registerCommand("code-background.config", () => {
     vscode.window.showQuickPick([
         file,
         separator(),
         align,
+        loop,
         opacity,
         repeat,
         size,
@@ -50,27 +60,35 @@ export const config = vscode.commands.registerCommand("code-background.config", 
     .then(handle);
 });
 
+//
+
 export const options: vscode.QuickPickOptions = {
     title: "Code Background",
     matchOnDetail: true,
     matchOnDescription: true
 }
 
-export const handle = (item?: CommandQuickPickItem) => {
+export const handle: (item?: CommandQuickPickItem) => void = (item?: CommandQuickPickItem) => {
     item && item.onSelect && item.onSelect(item);
 }
 
-export const quickPickItem = (item: CommandQuickPickItem, current: string) => {
-    return {...item, ...{description: item.label === current ? "(selected)" : undefined}} as CommandQuickPickItem;
-}
+//
 
-export const separator = () => {
-    return {
-        label: "",
-        kind: vscode.QuickPickItemKind.Separator
-    } as vscode.QuickPickItem
-}
+export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
+    ...item,
+    description: current && item.label === current ? "(selected)" : undefined
+} as CommandQuickPickItem);
+
+export const separator: () => vscode.QuickPickItem = () => ({
+    label: "",
+    kind: vscode.QuickPickItemKind.Separator
+} as vscode.QuickPickItem);
+
+//
+
+export type CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => Promise<void>;
 
 export interface CommandQuickPickItem extends vscode.QuickPickItem {
     onSelect?: (item?: CommandQuickPickItem) => Promise<void>;
+    value?: string
 }

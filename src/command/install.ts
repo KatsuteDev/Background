@@ -18,6 +18,18 @@
 
 import * as vscode from "vscode";
 
-export const install = vscode.commands.registerCommand("code-background.install", () => {
-    vscode.window.showInformationMessage("install");
+import { installJS, restartVS } from "../extension";
+
+//
+
+export const install: vscode.Disposable = vscode.commands.registerCommand("code-background.install", () => {
+    installJS();
+    restartVS();
 });
+
+export const notify: () => void = () => {
+    vscode.window.showWarningMessage("Code Background has been modified, a restart is required to see changes.", "Restart", "Ignore").then((value?: string) => {
+        if(value === "Restart")
+            vscode.commands.executeCommand("code-background.install");
+    });
+}
