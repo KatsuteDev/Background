@@ -44,10 +44,12 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/bootstrap-window.js
 
-        const file = path.join(path.dirname(require.main.filename), "bootstrap-window.js");
-        if(fs.existsSync(file))
+        const file: string = path.join(path.dirname(require.main.filename), "bootstrap-window.js");
+        if(fs.existsSync(file)){
             js = file;
-        else
+            const backup: string = path.join(path.dirname(require.main.filename), "bootstrap-window-backup.js");
+            fs.existsSync(backup) || fs.copyFileSync(file, backup);
+        }else
             vscode.window.showWarningMessage(`Failed to find 'bootstrap-window.js'`);
     }else
         vscode.window.showErrorMessage("Failed to find main file");
@@ -90,43 +92,83 @@ const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
 const getJS: () => string = () => {
-    const globs: string[] = get("files") as string[];
+    const images: string[] = []; // image data url with quotes
 
-    const files: string[] = [];
-
-    for(const g of globs){
+    for(const g of (get("files") as string[]).filter(unique)){
         for(const f of glob.sync(g)){
             const ext: string = path.extname(f);
-            // make sure this matches command/select/addFile$filters
+            // make sure this matches command/file/addFile$filters
             switch(ext){
                 case ".png":
                 case ".jpeg":
                 case ".jpg":
                 case ".webp":
                 case ".gif":
-                    if(fs.existsSync(f))
-                        files.push(`'data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}'`);
+                    images.push('"' + `data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
             }
         }
     }
 
-    let v: string = "";
-    for(const f of files.filter(unique)){
-        v += `"${f}",`;
-    }
-    v = `const bk = [${v.endsWith(',') ? v.slice(0, -1) : v}]`;
+    const position: string = {
+        "Top Left": "left top",
+        "Top Center": "center top",
+        "Top Right": "right top",
+        "Center Left": "left center",
+        "Center Center": "center center",
+        "Center Right": "right center",
+        "Bottom Left": "left bottom",
+        "Bottom Center": "center bottom",
+        "Bottom Right": "right bottom",
+        "Manual": get("align-css") as string,
+    }[get("align") as string] || "center center";
 
-    glob.sync("");
+    const loop: number = get("loop") as number;
 
-    // todo!
+    const opacity: number = get("opacity") as number;
+
+    const repeat: string = {
+        "No Repeat": "no-repeat",
+        "Repeat": "repeat",
+        "Repeat X": "repeat-x",
+        "Repeat Y": "repeat-y",
+        "Repeat Space": "space",
+        "Repeat Round": "round"
+    }[get("repeat") as string] || "no-repeat";
+
+    const size: string = {
+        "Auto": "auto",
+        "Contain": "contain",
+        "Cover": "cover",
+        "Manual": get("size-css") as string
+    }[get("size") as string] || "auto";
 
     return `
 /* ${identifier}-start */
+const imgs = [${images.join(',')}];
+const len = ${images.length};
+const loop = ${loop};
+
+let last = -1;
+
+const reload = () => {
+    let index;
+    do index = Math.floor(Math.random() * len);
+    while(len > 1 && last === index);
+    document.body.style.backgroundImage = "url(\\"" + imgs[last = index] + "\\")";
+};
+
 window.onload = () => {
-    console.log("WIP");
-}
-/* ${identifier}-end */`
-        .trim();
+    document.body.style.backgroundPosition = "${position}";
+    document.body.style.backgroundRepeat = "${repeat}";
+    document.body.style.backgroundSize = "${size}";
+    document.body.style.opacity = ${opacity};
+
+    reload();
+    if(len > 1 && loop > 0);
+        setInterval(${loop * 1000}, reload);  // <== not supported
+};
+/* ${identifier}-end */
+        `.trim();
 }
 
 const removeJS: (s: string) => string = (s: string) => {

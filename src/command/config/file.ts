@@ -81,7 +81,7 @@ const addFile: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => ne
     }).then((value?: vscode.Uri[]) => {
         if(value)
             for(const file of value)
-                add(file.fsPath.replace(/\\/, '/'));
+                add(file.fsPath.replace(/\\/g, '/'));
     });
 });
 
@@ -94,7 +94,7 @@ const addFolder: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => 
     }).then((value?: vscode.Uri[]) => {
         if(value)
             for(const file of value)
-                add(`${file.fsPath.replace(/\\/, '/')}/**`);
+                add(`${file.fsPath.replace(/\\/g, '/')}/**`);
     });
 });
 

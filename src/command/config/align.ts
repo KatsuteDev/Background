@@ -18,12 +18,33 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, updateFromLabel } from "../config";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update, updateFromLabel } from "../config";
+import { notify } from "../install";
 
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     updateFromLabel("align", item);
+});
+
+const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    const current: string = get("align-css") as string;
+    vscode.window.showInputBox({
+        title: "Background Position",
+        placeHolder: "Background position",
+        value: current,
+        prompt: `Background position (${current}). The literal value for the 'background-position' property.`
+    }).then((value?: string) => {
+        if(value !== undefined){
+            let changed: boolean = get("align") !== "Manual" || current !== value;
+
+            update("align", "Manual", true);
+            update("align-css", value, true);
+
+            if(changed)
+                notify();
+        }
+    });
 });
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.align", () => {
@@ -40,7 +61,9 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("code-
             separator(),
             quickPickItem({ label: "Bottom Left", onSelect }, current),
             quickPickItem({ label: "Bottom Center", onSelect }, current),
-            quickPickItem({ label: "Bottom Right", onSelect }, current)
+            quickPickItem({ label: "Bottom Right", onSelect }, current),
+            separator(),
+            quickPickItem({ label: "Manual", description: "Manual position", onSelect: manual }, current)
         ],
         {
             ...options,

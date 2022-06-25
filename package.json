@@ -98,8 +98,15 @@
                         "Center Right",
                         "Bottom Left",
                         "Bottom Center",
-                        "Bottom Right"
+                        "Bottom Right",
+                        "Manual"
                     ]
+                },
+                "code-background.align-css": {
+                    "title": "Background position",
+                    "markdownDescription": "If the background alignment is set to `Manual`, this is the literal value for the `background-position` property.",
+                    "type": "string",
+                    "default": ""
                 },
                 "code-background.loop": {
                     "title": "Loop",
