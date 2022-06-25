@@ -1,6 +1,6 @@
 {
-    "name": "code-background",
-    "displayName": "Code Background",
+    "name": "background",
+    "displayName": "Background",
     "description": "Background for VSCode",
     "publisher": "Katsute",
     "version": "1.0.0",
@@ -12,69 +12,65 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:code-background.install",
-        "onCommand:code-background.uninstall",
-        "onCommand:code-background.config",
-        "onCommand:code-background.config.file",
-        "onCommand:code-background.config.align",
-        "onCommand:code-background.config.loop",
-        "onCommand:code-background.config.opacity",
-        "onCommand:code-background.config.repeat",
-        "onCommand:code-background.config.size"
+        "onStartupFinished",
+        "onCommand:background.install",
+        "onCommand:background.uninstall",
+        "onCommand:background.config",
+        "onCommand:background.config.file",
+        "onCommand:background.config.align",
+        "onCommand:background.config.loop",
+        "onCommand:background.config.opacity",
+        "onCommand:background.config.repeat",
+        "onCommand:background.config.size"
     ],
     "contributes": {
         "commands": [
             {
-                "command": "code-background.install",
+                "command": "background.install",
                 "title": "Install",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.uninstall",
+                "command": "background.uninstall",
                 "title": "Uninstall",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.config",
+                "command": "background.config",
                 "title": "Configuration",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.config.file",
+                "command": "background.config.file",
                 "title": "Select images",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.config.align",
+                "command": "background.config.align",
                 "title": "Set background image alignment",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.config.loop",
-                "title": "Set image loop duration",
-                "category": "Code Background"
-            },
-            {
-                "command": "code-background.config.opacity",
+                "command": "background.config.opacity",
                 "title": "Set UI opacity",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.config.repeat",
+                "command": "background.config.repeat",
                 "title": "Set background image repeat",
-                "category": "Code Background"
+                "category": "Background"
             },
             {
-                "command": "code-background.config.size",
+                "command": "background.config.size",
                 "title": "Set background image size",
-                "category": "Code Background"
+                "category": "Background"
             }
         ],
         "configuration": {
-            "title": "Code Background",
+            "title": "Background",
             "order": 0,
             "properties": {
-                "code-background.files": {
+                "background.files": {
                     "title": "Files",
                     "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
                     "type": "array",
@@ -84,7 +80,7 @@
                         "type": "string"
                     }
                 },
-                "code-background.align": {
+                "background.align": {
                     "title": "Alignment",
                     "markdownDescription": "How to align the background image.",
                     "type": "string",
@@ -102,20 +98,13 @@
                         "Manual"
                     ]
                 },
-                "code-background.align-css": {
+                "background.align-css": {
                     "title": "Background position",
                     "markdownDescription": "If the background alignment is set to `Manual`, this is the literal value for the `background-position` property.",
                     "type": "string",
                     "default": ""
                 },
-                "code-background.loop": {
-                    "title": "Loop",
-                    "markdownDescription": "How often the background image should be changed in seconds, set to `0` to never change the image.",
-                    "type": "number",
-                    "default": 0,
-                    "minimum": 0
-                },
-                "code-background.opacity": {
+                "background.opacity": {
                     "title": "Opacity",
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
@@ -123,7 +112,7 @@
                     "minimum": 0,
                     "maximum": 1
                 },
-                "code-background.repeat": {
+                "background.repeat": {
                     "title": "Repeat",
                     "markdownDescription": "How to repeat the background image.",
                     "type": "string",
@@ -145,7 +134,7 @@
                         "Repeat and stretch images to fill the screen"
                     ]
                 },
-                "code-background.size": {
+                "background.size": {
                     "title": "Size",
                     "markdownDescription": "How to size the background image.",
                     "type": "string",
@@ -163,7 +152,7 @@
                         "Manual size"
                     ]
                 },
-                "code-background.size-css": {
+                "background.size-css": {
                     "title": "Background size",
                     "markdownDescription": "If the background size is set to `Manual`, this is the literal value for the `background-size` property.",
                     "type": "string",
@@ -192,14 +181,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KatsuteDev/code-background.git"
+        "url": "git+https://github.com/KatsuteDev/background.git"
     },
     "author": "Katsute",
     "license": "GPL-2.0-only",
     "bugs": {
-        "url": "https://github.com/KatsuteDev/code-background/issues"
+        "url": "https://github.com/KatsuteDev/background/issues"
     },
-    "homepage": "https://github.com/KatsuteDev/code-background#readme",
+    "homepage": "https://github.com/KatsuteDev/background#readme",
     "devDependencies": {
         "@types/glob": "7.2.0",
         "@types/node": "18.0.0",

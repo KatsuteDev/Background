@@ -20,7 +20,6 @@ import * as vscode from "vscode";
 
 import * as align from "./config/align";
 import * as file from "./config/file";
-import * as loop from "./config/loop";
 import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
@@ -29,7 +28,7 @@ import { notify } from "./install";
 
 //
 
-const vsconfig = () => vscode.workspace.getConfiguration("code-background");
+const vsconfig = () => vscode.workspace.getConfiguration("background");
 
 export const get: (key: string) => any = (key: string) => {
     return vsconfig().get(key);
@@ -48,12 +47,11 @@ export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void
 
 //
 
-export const config: vscode.Disposable = vscode.commands.registerCommand("code-background.config", () => {
+export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
     vscode.window.showQuickPick([
         file.item,
         separator(),
         align.item,
-        loop.item,
         opacity.item,
         repeat.item,
         size.item,
@@ -64,7 +62,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("code-b
 //
 
 export const options: vscode.QuickPickOptions = {
-    title: "Code Background",
+    title: "Background",
     matchOnDetail: true,
     matchOnDescription: true
 }

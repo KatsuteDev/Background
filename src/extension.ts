@@ -29,14 +29,14 @@ import { config, get } from "./command/config";
 
 import * as align from "./command/config/align";
 import * as file from "./command/config/file";
-import * as loop from "./command/config/loop";
 import * as opacity from "./command/config/opacity";
 import * as repeat from "./command/config/repeat";
 import * as size from "./command/config/size";
+import { statusbar } from "./statusbar";
 
 //
 
-const identifier: string = "KatsuteDev/code-background";
+const identifier: string = "KatsuteDev/background";
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
 
@@ -61,10 +61,12 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     context.subscriptions.push(align.command);
     context.subscriptions.push(file.command);
-    context.subscriptions.push(loop.command);
     context.subscriptions.push(opacity.command);
     context.subscriptions.push(repeat.command);
     context.subscriptions.push(size.command);
+
+    context.subscriptions.push(statusbar);
+    statusbar.show();
 };
 
 //
@@ -104,10 +106,12 @@ const getJS: () => string = () => {
                 case ".jpg":
                 case ".webp":
                 case ".gif":
-                    images.push('"' + `data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+                    images.push(`data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}`);
             }
         }
     }
+
+    const image: string = images[Math.floor(Math.random() * images.length)];
 
     const position: string = {
         "Top Left": "left top",
@@ -121,8 +125,6 @@ const getJS: () => string = () => {
         "Bottom Right": "right bottom",
         "Manual": get("align-css") as string,
     }[get("align") as string] || "center center";
-
-    const loop: number = get("loop") as number;
 
     const opacity: number = get("opacity") as number;
 
@@ -142,35 +144,29 @@ const getJS: () => string = () => {
         "Manual": get("size-css") as string
     }[get("size") as string] || "auto";
 
+    const css: string = `
+body {
+
+    background-position: "${position}";
+    background-repeat: "${repeat}";
+    background-size: "${size}";
+    background-opacity: "${opacity}";
+
+    background-image: url("${image}");
+
+}
+    `.replace(/(?:^\s+)|(?:\s+$)|(?:\r?\n)/gm, "")
+    .trim();
+
     return `
 /* ${identifier}-start */
-const imgs = [${images.join(',')}];
-const len = ${images.length};
-const loop = ${loop};
-
-let last = -1;
-
-const reload = () => {
-    let index;
-    do index = Math.floor(Math.random() * len);
-    while(len > 1 && last === index);
-    document.body.style.backgroundImage = "url(\\"" + imgs[last = index] + "\\")";
-};
-
-window.onload = () => {
-    document.body.style.backgroundPosition = "${position}";
-    document.body.style.backgroundRepeat = "${repeat}";
-    document.body.style.backgroundSize = "${size}";
-    document.body.style.opacity = ${opacity};
-
-    reload();
-    if(len > 1 && loop > 0);
-        setInterval(${loop * 1000}, reload);  // <== not supported
-};
+const s = document.createElement("style");
+s.appendChild(document.createTextNode(\`${css}\`));
+document.getElementsByTagName("head")[0].appendChild(s);
 /* ${identifier}-end */
         `.trim();
 }
 
 const removeJS: (s: string) => string = (s: string) => {
-    return s.replace(remove, "").replace(/\s+$/, "");
+    return s.replace(remove, "").trim();
 }

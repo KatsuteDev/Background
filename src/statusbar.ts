@@ -18,11 +18,13 @@
 
 import * as vscode from "vscode";
 
-import { restartVS, uninstallJS } from "../extension";
+export const statusbar: vscode.StatusBarItem = (() => {
+    const item: vscode.StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
 
-//
+    item.command = "background.config";
+    item.name = "Background";
+    item.text = "$(file-media) Background";
+    item.tooltip = "Open background configuration";
 
-export const uninstall: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", () => {
-    uninstallJS();
-    restartVS();
-});
+    return item;
+})();

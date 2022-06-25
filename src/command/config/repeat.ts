@@ -26,7 +26,7 @@ const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => n
     updateFromLabel("repeat", item);
 });
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.repeat", () => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.repeat", () => {
     const current: string = get("repeat") as string;
     vscode.window.showQuickPick(
         [
@@ -48,5 +48,5 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("code-
 export const item: CommandQuickPickItem = {
     label: "Repeat",
     description: "Background image repeat",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.repeat"))
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.repeat"))
 }

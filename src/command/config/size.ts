@@ -47,7 +47,7 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
     });
 });
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.size", () => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.size", () => {
     const current: string = get("size") as string;
     vscode.window.showQuickPick(
         [
@@ -68,5 +68,5 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("code-
 export const item: CommandQuickPickItem = {
     label: "Size",
     description: "Background image size",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.size"))
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.size"))
 }

@@ -22,7 +22,7 @@ import { CommandQuickPickItem, get, update } from "../config";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("code-background.config.opacity", () => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.opacity", () => {
     const current: number = round(get("opacity") as number);
     vscode.window.showInputBox({
         title: "UI Opacity",
@@ -52,7 +52,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("code-
 export const item: CommandQuickPickItem = {
     label: "Opacity",
     description: "UI opacity",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("code-background.config.opacity"))
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.opacity"))
 }
 
 //
