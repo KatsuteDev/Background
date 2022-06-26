@@ -23,8 +23,9 @@ import { glob } from "glob";
 import * as fs from "fs";
 import * as path from "path";
 
-import { install } from "./command/install";
-import { uninstall } from "./command/uninstall";
+import * as install from "./command/install";
+import * as uninstall from "./command/uninstall";
+
 import { config, get } from "./command/config";
 
 import * as align from "./command/config/align";
@@ -32,6 +33,7 @@ import * as file from "./command/config/file";
 import * as opacity from "./command/config/opacity";
 import * as repeat from "./command/config/repeat";
 import * as size from "./command/config/size";
+
 import { statusbar } from "./statusbar";
 
 //
@@ -54,8 +56,8 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
     }else
         vscode.window.showErrorMessage("Failed to find main file");
 
-    context.subscriptions.push(install);
-    context.subscriptions.push(uninstall);
+    context.subscriptions.push(install.command);
+    context.subscriptions.push(uninstall.command);
 
     context.subscriptions.push(config);
 
@@ -93,6 +95,19 @@ const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
+
+// todo: file for window background image
+// todo: file for editor background image
+// todo: file for panel image (lower)
+// todo: file for sidebar image (always include aux sidebar)
+// todo: nth loop for background images (editor only)
+
+// * :: body
+// sidebar :: .split-view-view > #workbench.parts.sidebar
+// rightbar :: .split-view-view > #workbench.parts.auxiliarybar
+// editor :: .split-view-view > .editor-group-container
+// panel :: .split-view-view > #workbench.parts.panel
+
 const getJS: () => string = () => {
     const images: string[] = []; // image data url with quotes
 
@@ -106,12 +121,10 @@ const getJS: () => string = () => {
                 case ".jpg":
                 case ".webp":
                 case ".gif":
-                    images.push(`data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}`);
+                    images.push('"' + `data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
             }
         }
     }
-
-    const image: string = images[Math.floor(Math.random() * images.length)];
 
     const position: string = {
         "Top Left": "left top",
@@ -144,25 +157,33 @@ const getJS: () => string = () => {
         "Manual": get("size-css") as string
     }[get("size") as string] || "auto";
 
-    const css: string = `
-body {
-
-    background-position: "${position}";
-    background-repeat: "${repeat}";
-    background-size: "${size}";
-    background-opacity: "${opacity}";
-
-    background-image: url("${image}");
-
-}
-    `.replace(/(?:^\s+)|(?:\s+$)|(?:\r?\n)/gm, "")
-    .trim();
-
     return `
 /* ${identifier}-start */
-const s = document.createElement("style");
-s.appendChild(document.createTextNode(\`${css}\`));
-document.getElementsByTagName("head")[0].appendChild(s);
+const images = [${images.join(',')}];
+
+for (let i = images.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [images[i], images[j]] = [images[j], images[i]];
+}
+
+if(images.length > 0){
+    const s = document.createElement("style");
+    s.appendChild(document.createTextNode(
+    \`
+    body {
+
+        background-position: "${position}";
+        background-repeat: "${repeat}";
+        background-size: "${size}";
+        opacity: ${opacity};
+
+        background-image: url("\${images[0]}");
+
+    }
+    \`));
+
+    document.getElementsByTagName("head")[0].appendChild(s);
+}
 /* ${identifier}-end */
         `.trim();
 }

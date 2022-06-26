@@ -19,35 +19,36 @@
 import * as vscode from "vscode";
 
 import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update } from "../config";
+import { notify } from "../install";
 
 //
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
-const add: (s: string) => Promise<void> = (s: string) => {
+const add: (key: string, glob: string) => Promise<void> = (key: string, glob: string) => {
     return new Promise<void>(() => {
-        const files: string[] = get("files") as string[];
-        files.push(s);
-        update("files", files.filter(unique));
+        const files: string[] = get(key) as string[];
+        files.push(glob);
+        update(key, files.filter(unique), true);
     });
 }
 
-const replace: (old: string, now: string) => Promise<void> = (old: string, now: string) => {
+const replace: (key: string, old: string, glob: string) => Promise<void> = (key: string, old: string, glob: string) => {
     return new Promise<void>(() => {
-        const files: string[] = get("files") as string[];
+        const files: string[] = get(key) as string[];
         for(let i = 0, l = files.length; i < l; i++)
             if(files[i] === old)
-                files[i] = now;
-        update("files", files.filter(unique));
+                files[i] = glob;
+        update(key, files.filter(unique), old === glob);
     });
 }
 
-const remove: (s: string) => Promise<void> = (s: string) => {
+const remove: (key: string, glob: string) => Promise<void> = (key: string, glob: string) => {
     return new Promise<void>(() => {
         update(
-            "files",
-            (get("files") as string[])
-                .filter((f) => f !== s)
+            key,
+            (get(key) as string[])
+                .filter((f) => f !== glob)
                 .filter(unique)
         );
     });
@@ -55,18 +56,18 @@ const remove: (s: string) => Promise<void> = (s: string) => {
 
 //
 
-const updateItem: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+const updateItem: (key: string, item?: CommandQuickPickItem) => Promise<void> = (key: string, item?: CommandQuickPickItem) => new Promise(() => {
     vscode.window.showInputBox({
         title: `Update ${item!.value}`,
         placeHolder: "File path or glob",
-        value: item!.label,
+        value: item!.value ?? "",
         prompt: "Only '/' can be used for paths, '\\' is reserved for escape characters. Leave this field blank to remove.",
     }).then((value?: string) => {
         if(item){
             if(value === undefined || value.trim().length === 0)
-                remove(item.value!);
+                remove(key, item.value!);
             else
-                replace(item.value!, value);
+                replace(key, item.value!, value);
         }
     });
 });
@@ -78,10 +79,17 @@ const addFile: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => ne
         canSelectMany: true,
         openLabel: "Select Image",
         filters: {"Images": ["png", "jpg", "jpeg", "webp", "gif"]}
-    }).then((value?: vscode.Uri[]) => {
-        if(value)
-            for(const file of value)
-                add(file.fsPath.replace(/\\/g, '/'));
+    }).then((files?: vscode.Uri[]) => {
+        if(files)
+            scope().then((value?: CommandQuickPickItem[]) => {
+                if(value){
+                    for(const file of files)
+                        for(const s of value)
+                            add(`${s.value}Backgrounds`, file.fsPath.replace(/\\/g, '/'));
+                    if(files.length > 0 && value.length > 0)
+                        notify();
+                }
+            });
     });
 });
 
@@ -91,10 +99,17 @@ const addFolder: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => 
         canSelectFolders: true,
         canSelectMany: true,
         openLabel: "Select Folder"
-    }).then((value?: vscode.Uri[]) => {
-        if(value)
-            for(const file of value)
-                add(`${file.fsPath.replace(/\\/g, '/')}/**`);
+    }).then((files?: vscode.Uri[]) => {
+        if(files)
+            scope().then((value?: CommandQuickPickItem[]) => {
+                if(value){
+                    for(const file of files)
+                        for(const s of value)
+                            add(`${s.value}Backgrounds`, `${file.fsPath.replace(/\\/g, '/')}/**`);
+                    if(files.length > 0 && value.length > 0)
+                        notify();
+                }
+            });
     });
 });
 
@@ -103,10 +118,52 @@ const addGlob: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => ne
         title: "Add File",
         placeHolder: "File path or glob",
         prompt: "Add a file or a glob. Only '/' can be used for paths, '\\' is reserved for escape characters.",
-    }).then((value?: string) => {
-        if(value)
-            add(value);
+    }).then((glob?: string) => {
+        if(glob)
+            scope().then((value?: CommandQuickPickItem[]) => {
+                if(value){
+                    for(const s of value)
+                        add(`${s.value}Backgrounds`, glob);
+                    if(value.length > 0)
+                        notify();
+                }
+            });
     });
+});
+
+//
+
+const scope: () => Promise<CommandQuickPickItem[] | undefined> = () => new Promise((res) => {
+    vscode.window.showQuickPick(
+        [
+            quickPickItem({
+                label: "$(window) Window",
+                description: "Background for full window",
+                value: "window"
+            }),
+            quickPickItem({
+                label: "$(multiple-windows) Editor",
+                description: "Background for editors",
+                value: "editor"
+            }),
+            quickPickItem({
+                label: "$(layout-sidebar-left) Sidebar",
+                description: "Background for left and right sidebars",
+                value: "sidebar"
+            }),
+            quickPickItem({
+                label: "$(layout-panel) Panel",
+                description: "Background for lower panel",
+                value: "panel"
+            }),
+        ],
+        {
+            ...options,
+            title: `${options.title} - Files - Scope`,
+            placeHolder: "Scope",
+            canPickMany: true
+        }
+    ).then(res);
 });
 
 //
@@ -122,14 +179,30 @@ export const item: CommandQuickPickItem = {
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.file", () => {
     const items: CommandQuickPickItem[] = [];
 
-    const files: string[] = get("files") as string[];
+    for(const scope of ["window", "editor", "sidebar", "panel"]){
 
-    for(const file of files)
-        items.push(quickPickItem({
-            label: file.replace(/(\${\w+})/, "\\$1"),
-            value: file,
-            onSelect: updateItem
-        }));
+        const icon: string | undefined = {
+            window: "window",
+            editor: "multiple-windows",
+            sidebar: "layout-sidebar-left",
+            panel: "layout-panel"
+        }[scope];
+
+        const files: string[] = get(`${scope}Backgrounds`) as string[];
+        if(files.length > 0)
+            items.push(quickPickItem({
+                label: scope[0].toUpperCase() + scope.substring(1),
+                kind: vscode.QuickPickItemKind.Separator
+            }));
+        for(const file of files.filter(unique))
+            items.push(quickPickItem({
+                label: (icon ? `$(${icon}) ` : "") + file.replace(/(\${\w+})/g, "\\$1"),
+                value: file,
+                onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                    updateItem(`${scope}Backgrounds`, item);
+                })
+            }));
+    }
 
     vscode.window.showQuickPick(
         [
@@ -137,21 +210,27 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
             separator(),
             quickPickItem({
                 label: "$(file-add) Add a File",
-                onSelect: addFile
+                onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                    addFile(item);
+                })
             }),
             quickPickItem({
                 label: "$(file-directory-create) Add a Folder",
-                onSelect: addFolder
+                onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                    addFolder(item);
+                })
             }),
             quickPickItem({
                 label: "$(kebab-horizontal) Add a Glob",
-                onSelect: addGlob
-            }),
+                onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                    addGlob(item);
+                })
+            })
         ],
         {
             ...options,
             title: `${options.title} - Files`,
-            placeHolder: "Files",
+            placeHolder: "Files"
         }
     ).then(handle);
 });

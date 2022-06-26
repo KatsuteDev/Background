@@ -24,11 +24,11 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    updateFromLabel("size", item);
+    updateFromLabel("backgroundImageSize", item);
 });
 
 const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    const current: string = get("size-css") as string;
+    const current: string = get("backgroundImageSizeValue") as string;
     vscode.window.showInputBox({
         title: "Background Size",
         placeHolder: "Background size",
@@ -36,10 +36,10 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
         prompt: `Background size (${current}). The literal value for the 'background-size' property.`
     }).then((value?: string) => {
         if(value !== undefined){
-            let changed: boolean = get("size") !== "Manual" || current !== value;
+            let changed: boolean = get("backgroundImageSize") !== "Manual" || current !== value;
 
-            update("size", "Manual", true);
-            update("size-css", value, true);
+            update("backgroundImageSize", "Manual", true);
+            update("backgroundImageSizeValue", value, true);
 
             if(changed)
                 notify();
@@ -48,7 +48,7 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
 });
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.size", () => {
-    const current: string = get("size") as string;
+    const current: string = get("backgroundImageSize") as string;
     vscode.window.showQuickPick(
         [
             quickPickItem({ label: "Auto", description: "Original image size", onSelect }, current),

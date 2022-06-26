@@ -24,11 +24,11 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    updateFromLabel("align", item);
+    updateFromLabel("backgroundImageAlignment", item);
 });
 
 const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    const current: string = get("align-css") as string;
+    const current: string = get("backgroundImageAlignmentValue") as string;
     vscode.window.showInputBox({
         title: "Background Position",
         placeHolder: "Background position",
@@ -36,10 +36,10 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
         prompt: `Background position (${current}). The literal value for the 'background-position' property.`
     }).then((value?: string) => {
         if(value !== undefined){
-            let changed: boolean = get("align") !== "Manual" || current !== value;
+            let changed: boolean = get("backgroundImageAlignment") !== "Manual" || current !== value;
 
-            update("align", "Manual", true);
-            update("align-css", value, true);
+            update("backgroundImageAlignment", "Manual", true);
+            update("backgroundImageAlignmentValue", value, true);
 
             if(changed)
                 notify();
@@ -48,7 +48,7 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
 });
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.align", () => {
-    const current: string = get("align") as string;
+    const current: string = get("backgroundImageAlignment") as string;
     vscode.window.showQuickPick(
         [
             quickPickItem({ label: "Top Left", onSelect }, current),

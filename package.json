@@ -70,8 +70,7 @@
             "title": "Background",
             "order": 0,
             "properties": {
-                "background.files": {
-                    "title": "Files",
+                "background.windowBackgrounds": {
                     "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
                     "type": "array",
                     "order": 0,
@@ -80,10 +79,37 @@
                         "type": "string"
                     }
                 },
-                "background.align": {
-                    "title": "Alignment",
+                "background.editorBackgrounds": {
+                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "type": "array",
+                    "order": 1,
+                    "default": [],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "background.sidebarBackgrounds": {
+                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "type": "array",
+                    "order": 2,
+                    "default": [],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "background.panelBackgrounds": {
+                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "type": "array",
+                    "order": 3,
+                    "default": [],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "background.backgroundImageAlignment": {
                     "markdownDescription": "How to align the background image.",
                     "type": "string",
+                    "order": 4,
                     "default": "Center Center",
                     "enum": [
                         "Top Left",
@@ -98,24 +124,24 @@
                         "Manual"
                     ]
                 },
-                "background.align-css": {
-                    "title": "Background position",
-                    "markdownDescription": "If the background alignment is set to `Manual`, this is the literal value for the `background-position` property.",
+                "background.backgroundImageAlignmentValue": {
+                    "markdownDescription": "If `#background.backgroundImageAlignment#` is set to `Manual`, this is the literal value for the `background-position` property.",
                     "type": "string",
+                    "order": 5,
                     "default": ""
                 },
-                "background.opacity": {
-                    "title": "Opacity",
+                "background.UI-Opacity": {
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
+                    "order": 6,
                     "default": 1,
                     "minimum": 0,
                     "maximum": 1
                 },
-                "background.repeat": {
-                    "title": "Repeat",
+                "background.backgroundImageRepeat": {
                     "markdownDescription": "How to repeat the background image.",
                     "type": "string",
+                    "order": 7,
                     "default": "No Repeat",
                     "enum": [
                         "No Repeat",
@@ -134,10 +160,10 @@
                         "Repeat and stretch images to fill the screen"
                     ]
                 },
-                "background.size": {
-                    "title": "Size",
+                "background.backgroundImageSize": {
                     "markdownDescription": "How to size the background image.",
                     "type": "string",
+                    "order": 8,
                     "default": "Auto",
                     "enum": [
                         "Auto",
@@ -152,9 +178,9 @@
                         "Manual size"
                     ]
                 },
-                "background.size-css": {
-                    "title": "Background size",
-                    "markdownDescription": "If the background size is set to `Manual`, this is the literal value for the `background-size` property.",
+                "background.backgroundImageSizeValue": {
+                    "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` property.",
+                    "order": 9,
                     "type": "string",
                     "default": ""
                 }

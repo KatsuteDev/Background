@@ -24,6 +24,9 @@ import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
 
+import * as install from "./install";
+import * as uninstall from "./uninstall";
+
 import { notify } from "./install";
 
 //
@@ -35,7 +38,7 @@ export const get: (key: string) => any = (key: string) => {
 }
 
 export const update: (key: string, value: any, skipWarning?: boolean) => void = (key: string, value: any, skipWarning?: boolean) => {
-    const current: any = get(key);
+    const current: any = get(key) as any;
     vsconfig().update(key, value, vscode.ConfigurationTarget.Global);
     if(skipWarning !== true && current !== value)
         notify();
@@ -55,6 +58,9 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         opacity.item,
         repeat.item,
         size.item,
+        separator(),
+        install.item,
+        uninstall.item
     ], options)
     .then(handle);
 });
