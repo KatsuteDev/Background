@@ -21,7 +21,7 @@ import * as vscode from "vscode";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update } from "../config";
 import { notify } from "../install";
 
-//
+// config
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
@@ -54,7 +54,7 @@ const remove: (key: string, glob: string) => Promise<void> = (key: string, glob:
     });
 }
 
-//
+// ui/config interface
 
 export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "gif"];
 
@@ -133,7 +133,7 @@ const addGlob: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => ne
     });
 });
 
-//
+// ui : scope
 
 const scope: () => Promise<CommandQuickPickItem[] | undefined> = () => new Promise((res) => {
     vscode.window.showQuickPick(
@@ -168,7 +168,7 @@ const scope: () => Promise<CommandQuickPickItem[] | undefined> = () => new Promi
     ).then(res);
 });
 
-//
+// ui : dropdown
 
 export const item: CommandQuickPickItem = {
     label: "File",

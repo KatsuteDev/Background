@@ -29,7 +29,7 @@ import * as uninstall from "./uninstall";
 
 import { notify } from "./install";
 
-//
+// read / write
 
 const vsconfig = () => vscode.workspace.getConfiguration("background");
 
@@ -48,7 +48,7 @@ export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void
     item && item.label && update(key, item.label);
 }
 
-//
+// interface
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
     vscode.window.showQuickPick([
@@ -77,7 +77,7 @@ export const handle: (item?: CommandQuickPickItem) => void = (item?: CommandQuic
     item && item.onSelect && item.onSelect(item);
 }
 
-//
+// vsc quick pick
 
 export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
     ...item,
@@ -89,7 +89,7 @@ export const separator: () => vscode.QuickPickItem = () => ({
     kind: vscode.QuickPickItemKind.Separator
 } as vscode.QuickPickItem);
 
-//
+// types
 
 export type CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => Promise<void>;
 

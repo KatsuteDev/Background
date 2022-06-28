@@ -42,6 +42,8 @@ const identifier: string = "KatsuteDev/background";
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
 
+    // backend
+
     if(require.main && require.main.filename){
 
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/bootstrap-window.js
@@ -50,11 +52,16 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
         if(fs.existsSync(file)){
             js = file;
             const backup: string = path.join(path.dirname(require.main.filename), "bootstrap-window-backup.js");
-            fs.existsSync(backup) || fs.copyFileSync(file, backup);
+            if(!fs.existsSync(backup)){
+                fs.copyFileSync(file, backup)
+                vscode.window.showInformationMessage(`A backup was created for 'bootstrap-window.js'`);
+            }
         }else
             vscode.window.showWarningMessage(`Failed to find 'bootstrap-window.js'`);
     }else
         vscode.window.showErrorMessage("Failed to find main file");
+
+    // extension
 
     context.subscriptions.push(install.command);
     context.subscriptions.push(uninstall.command);
@@ -95,20 +102,7 @@ const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
-
-// todo: file for window background image
-// todo: file for editor background image
-// todo: file for panel image (lower)
-// todo: file for sidebar image (always include aux sidebar)
-// todo: nth loop for background images (editor only)
-
-// * :: body
-// sidebar :: .split-view-view > #workbench.parts.sidebar
-// rightbar :: .split-view-view > #workbench.parts.auxiliarybar
-// editor :: .split-view-view > .editor-group-container
-// panel :: .split-view-view > #workbench.parts.panel
-
-const extFilter = (v: string, i: number, self: string[]) => {
+const extensions = (v: string, i: number, self: string[]) => { // images only
     const ext: string = path.extname(v);
     for(const m of file.extensions())
         if(`.${m}` === ext)
@@ -124,10 +118,14 @@ const getJS: () => string = () => {
         panel: []
     }
 
+    // populate images
+
     for(const s of ["window", "editor", "sidebar", "panel"])
         for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
-            for(const f of glob.sync(g).filter(extFilter))
+            for(const f of glob.sync(g).filter(extensions))
                 images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+
+    // resolve settings to css
 
     const position: string = {
         "Top Left": "left top",
@@ -159,6 +157,27 @@ const getJS: () => string = () => {
         "Cover": "cover",
         "Manual": get("backgroundImageSizeValue") as string
     }[get("backgroundImageSize") as string] || "cover";
+
+    // shared ::after css
+
+    const overlay: string =
+    `
+    content: "";
+
+    top: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 100;
+
+    position: absolute;
+
+    pointer-events: none;
+    `;
+
+    // css for each element
 
     return `
 /* ${identifier}-start */
@@ -197,22 +216,16 @@ if(editorBackgrounds.length > 0){
     for(let i = 1; i <= len; i++){
         s.appendChild(document.createTextNode(
             \`
-.split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::before {
+.split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-    content: "";
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    pointer-events: none;
+    ${overlay}
 
     background-position: ${position};
     background-repeat: ${repeat};
     background-size: ${size};
-    opacity: ${opacity};
+    opacity: ${1-opacity};
 
-    background-image: url("\${sidebarBackgrounds[i-1]}");
+    background-image: url("\${editorBackgrounds[i-1]}");
 
 }
             \`));
@@ -222,39 +235,27 @@ if(editorBackgrounds.length > 0){
 if(sidebarBackgrounds.length > 0){
     s.appendChild(document.createTextNode(
     \`
-.split-view-view > #workbench\\\\.parts\\\\.sidebar::before {
+.split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-    content: "";
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    pointer-events: none;
+    ${overlay}
 
     background-position: ${position};
     background-repeat: ${repeat};
     background-size: ${size};
-    opacity: ${opacity};
+    opacity: ${1-opacity};
 
     background-image: url("\${sidebarBackgrounds[0]}");
 
 }
 
-.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::before {
+.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-    content: "";
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    pointer-events: none;
+    ${overlay}
 
     background-position: ${position};
     background-repeat: ${repeat};
     background-size: ${size};
-    opacity: ${opacity};
+    opacity: ${1-opacity};
 
     background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
 
@@ -269,18 +270,12 @@ if(panelBackgrounds.length > 0){
 
 .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-    content: "";
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    pointer-events: none;
+    ${overlay}
 
     background-position: ${position};
     background-repeat: ${repeat};
     background-size: ${size};
-    opacity: ${opacity};
+    opacity: ${1-opacity};
 
     background-image: url("\${panelBackgrounds[0]}");
 
