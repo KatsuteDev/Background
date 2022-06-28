@@ -1,0 +1,16 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    name: Deploy
+    uses: Katsute/Workflows/.github/workflows/npm.deploy.yml@main
+    with:
+      compile-post: npm run package
+      files: background-*.vsix
+      environment: VSCE Package
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

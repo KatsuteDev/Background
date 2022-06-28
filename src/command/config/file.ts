@@ -174,11 +174,11 @@ export const item: CommandQuickPickItem = {
     label: "File",
     description: "Select background images",
     onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-        vscode.commands.executeCommand("background.config.file");
+        vscode.commands.executeCommand("background.config.background");
     })
 }
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.file", () => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.background", () => {
     const items: CommandQuickPickItem[] = [];
 
     for(const scope of ["window", "editor", "sidebar", "panel"]){

@@ -1,0 +1,38 @@
+name: Feature Request
+description: Suggest a new feature
+labels: [feature request]
+assignees: []
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Prerequisites
+      description: |
+        *If **all** checks are not passed then the issue will be closed.*
+      options:
+        - label: I have checked that no other similar feature request already exists.
+          required: true
+        - label: This feature request makes sense for the project.
+          required: true
+        - label: I have checked that this feature does not already exist.
+          required: true
+        - label: I am running the latest release version.
+          required: true
+
+  - type: textarea
+    id: feature
+    attributes:
+      label: Feature
+      description: |
+        Explain your feature. Add any examples here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason
+      description: |
+        Explain why you think this feature should be added.
+    validations:
+      required: true

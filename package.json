@@ -1,7 +1,7 @@
 {
     "name": "background",
     "displayName": "Background",
-    "description": "Background for VSCode",
+    "description": "The ultimate background image extension for Visual Studio Code",
     "publisher": "Katsute",
     "version": "1.0.0",
     "private": true,
@@ -16,7 +16,7 @@
         "onCommand:background.install",
         "onCommand:background.uninstall",
         "onCommand:background.config",
-        "onCommand:background.config.file",
+        "onCommand:background.config.background",
         "onCommand:background.config.align",
         "onCommand:background.config.loop",
         "onCommand:background.config.opacity",
@@ -41,7 +41,7 @@
                 "category": "Background"
             },
             {
-                "command": "background.config.file",
+                "command": "background.config.background",
                 "title": "Select background images",
                 "category": "Background"
             },

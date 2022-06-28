@@ -53,7 +53,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             js = file;
             const backup: string = path.join(path.dirname(require.main.filename), "bootstrap-window-backup.js");
             if(!fs.existsSync(backup)){
-                fs.copyFileSync(file, backup)
+                fs.copyFileSync(file, backup);
                 vscode.window.showInformationMessage(`A backup was created for 'bootstrap-window.js'`);
             }
         }else

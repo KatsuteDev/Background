@@ -1,0 +1,60 @@
+name: Bug Report
+description: Report a bug
+labels: [bug]
+assignees: []
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Prerequisites
+      description: |
+        *If **all** checks are not passed then the issue will be closed.*
+      options:
+        - label: I have checked that no other similar issue already exists.
+          required: true
+        - label: I have checked that this issue is actually a bug and not a feature.
+          required: true
+        - label: I am running the latest release version.
+          required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: |
+        Operating system name and version.
+      placeholder: |
+        ex: Windows 10
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: VSCode Version
+      description: |
+        VSCode type and version.
+      placeholder: |
+        ex: VSCode 1.68.1, VSCode Insiders 1.68.0
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Release Version
+      description: |
+        Release version or branch commit where the issue occured. Do not write 'latest'.
+      placeholder: |
+        ex: 1.0.0, 529b5de
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: Issue
+      description: |
+        Explain your issue, add any relevant stacktraces here.
+    validations:
+      required: true
