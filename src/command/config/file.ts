@@ -61,7 +61,7 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 const updateItem: (key: string, item?: CommandQuickPickItem) => Promise<void> = (key: string, item?: CommandQuickPickItem) => new Promise(() => {
     vscode.window.showInputBox({
         title: `Update ${item!.value}`,
-        placeHolder: "File path or glob",
+        placeHolder: "File path or glob, leave blank to remove",
         value: item!.value ?? "",
         prompt: "Only '/' can be used for paths, '\\' is reserved for escape characters. Leave this field blank to remove.",
     }).then((value?: string) => {
@@ -172,7 +172,7 @@ const scope: () => Promise<CommandQuickPickItem[] | undefined> = () => new Promi
 
 export const item: CommandQuickPickItem = {
     label: "File",
-    description: "Select background images",
+    description: "Select background image files",
     onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
         vscode.commands.executeCommand("background.config.background");
     })

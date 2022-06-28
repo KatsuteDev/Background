@@ -42,7 +42,7 @@
             },
             {
                 "command": "background.config.background",
-                "title": "Select background images",
+                "title": "Select background image files",
                 "category": "Background"
             },
             {

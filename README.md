@@ -1,13 +1,18 @@
 <div id="top" align="center">
+    <a href="https://github.com/KatsuteDev/Background">
+        <img src="https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/icon.png" alt="icon" width="100" height="100">
+    </a>
     <h3>Background</h3>
-    <h5>The ultimate background image extension for Visual Studio Code</h5>
+    <h5>The most advanced background image extension for Visual Studio Code</h5>
     <br>
     Visual Studio Marketplace
     •
     <a href="https://github.com/KatsuteDev/background/releases">Releases</a>
 </div>
 
-// todo
+The only background extension that supports [glob](https://github.com/isaacs/node-glob#glob-primer). Add multiple background images for the window, editors, sidebars, or the panel. No warnings about modified distributions.
+
+![editor background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/editor.gif)
 
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)
@@ -36,19 +41,38 @@
  2. Add background images using `Background: Select background images` or by opening the configuration menu.
  3. Use `Background: Install` to install the background.
 
+#### ⚠️ Bug: VSCode stopped working
+
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources\app\out\bootstrap-window.js` with `bootstrap-window-backup.js`.
+
 ## ✨ Features
 
 #### ⚙️ Configuration Menu
 
-// todo
+Access the configuration menu using from the command palette with `Background: Config` or by pressing the **Background** tab in the status bar.
 
-#### 🖼️ Multiple background images
+![configuration menu](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/configuration.gif)
 
-// todo
+#### 🖼️ Multiple Backgrounds
+
+Add background images for the whole window, editors, sidebars, or the panel. Images will be randomized whenever a window is opened.
+
+![window background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/window.gif)
+
+![editor background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/editor.gif)
 
 #### ✱ Glob Support
 
-// todo
+Add background images by file, by folder, or by [glob](https://github.com/isaacs/node-glob#glob-primer).
+
+![file menu](https://raw.githubusercontent.com/KatsuteDev/Background/blob/main/assets/glob.gif)
+
+ > ⚠️ **Please only use forward-slashes in glob expressions.**
+ >
+ > Though windows uses either `/` or `\` as its path separator, only `/` characters are used by this glob implementation.
+ > You must use forward-slashes only in glob expressions. Back-slashes will always be interpreted as escape characters, not path separators.
+ >
+ > ― [node-glob](https://github.com/isaacs/node-glob#windows)
 
 ## 💻 Commands
 
@@ -65,6 +89,8 @@
 
 ## ⚙️ Configuration
 
+Use the `Background: Config` command to access the configuration menu.
+
 | Name | Type | Description |
 |---|:-:|---|
 |`background.windowBackgrounds`|`string[]`|The list of files or globs to use for the window background image.|
@@ -73,7 +99,7 @@
 |`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
 |`backgroundImageAlignment`|`enum`|The alignment of the background image.|
 |`backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position:` property.|
-|`background.opacity`|`number`|The UI opacity.|
+|`background.opacity`|`number`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
 |`background.backgroundImageRepeat`|`enum`|The background image repeat.|
 |`background.backgroundImageSize`|`enum`|The background image size.|
 |`background.backgroundImageSizeValue`|`string`|If the background image size is set to `Manual`, this is the literal value for the `background-size` property.|
