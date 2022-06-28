@@ -108,23 +108,26 @@ const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 // editor :: .split-view-view > .editor-group-container
 // panel :: .split-view-view > #workbench.parts.panel
 
-const getJS: () => string = () => {
-    const images: string[] = []; // image data url with quotes
+const extFilter = (v: string, i: number, self: string[]) => {
+    const ext: string = path.extname(v);
+    for(const m of file.extensions())
+        if(`.${m}` === ext)
+            return true;
+    return false;
+}
 
-    for(const g of (get("files") as string[]).filter(unique)){
-        for(const f of glob.sync(g)){
-            const ext: string = path.extname(f);
-            // make sure this matches command/file/addFile$filters
-            switch(ext){
-                case ".png":
-                case ".jpeg":
-                case ".jpg":
-                case ".webp":
-                case ".gif":
-                    images.push('"' + `data:image/${ext.substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
-            }
-        }
+const getJS: () => string = () => {
+    const images: {[key: string]: string[]} = {
+        window: [],
+        editor: [],
+        sidebar: [],
+        panel: []
     }
+
+    for(const s of ["window", "editor", "sidebar", "panel"])
+        for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
+            for(const f of glob.sync(g).filter(extFilter))
+                images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
     const position: string = {
         "Top Left": "left top",
@@ -136,8 +139,8 @@ const getJS: () => string = () => {
         "Bottom Left": "left bottom",
         "Bottom Center": "center bottom",
         "Bottom Right": "right bottom",
-        "Manual": get("align-css") as string,
-    }[get("align") as string] || "center center";
+        "Manual": get("backgroundImageAlignmentValue") as string,
+    }[get("backgroundImageAlignment") as string] || "center center";
 
     const opacity: number = get("opacity") as number;
 
@@ -148,42 +151,144 @@ const getJS: () => string = () => {
         "Repeat Y": "repeat-y",
         "Repeat Space": "space",
         "Repeat Round": "round"
-    }[get("repeat") as string] || "no-repeat";
+    }[get("backgroundImageRepeat") as string] || "no-repeat";
 
     const size: string = {
         "Auto": "auto",
         "Contain": "contain",
         "Cover": "cover",
-        "Manual": get("size-css") as string
-    }[get("size") as string] || "auto";
+        "Manual": get("backgroundImageSizeValue") as string
+    }[get("backgroundImageSize") as string] || "cover";
 
     return `
 /* ${identifier}-start */
-const images = [${images.join(',')}];
+const windowBackgrounds = [${images.window.join(',')}];
+const editorBackgrounds = [${images.editor.join(',')}];
+const sidebarBackgrounds = [${images.sidebar.join(',')}];
+const panelBackgrounds = [${images.panel.join(',')}];
 
-for (let i = images.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [images[i], images[j]] = [images[j], images[i]];
+for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
+    for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
 }
 
-if(images.length > 0){
-    const s = document.createElement("style");
+const s = document.createElement("style");
+
+if(windowBackgrounds.length > 0){
     s.appendChild(document.createTextNode(
     \`
-    body {
+body {
 
-        background-position: "${position}";
-        background-repeat: "${repeat}";
-        background-size: "${size}";
-        opacity: ${opacity};
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${opacity};
 
-        background-image: url("\${images[0]}");
+    background-image: url("\${windowBackgrounds[0]}");
 
-    }
-    \`));
-
-    document.getElementsByTagName("head")[0].appendChild(s);
 }
+    \`));
+}
+
+if(editorBackgrounds.length > 0){
+    const len = editorBackgrounds.length;
+    for(let i = 1; i <= len; i++){
+        s.appendChild(document.createTextNode(
+            \`
+.split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::before {
+
+    content: "";
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${opacity};
+
+    background-image: url("\${sidebarBackgrounds[i-1]}");
+
+}
+            \`));
+    }
+}
+
+if(sidebarBackgrounds.length > 0){
+    s.appendChild(document.createTextNode(
+    \`
+.split-view-view > #workbench\\\\.parts\\\\.sidebar::before {
+
+    content: "";
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${opacity};
+
+    background-image: url("\${sidebarBackgrounds[0]}");
+
+}
+
+.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::before {
+
+    content: "";
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${opacity};
+
+    background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
+
+}
+    \`));
+}
+
+if(panelBackgrounds.length > 0){
+    s.appendChild(document.createTextNode(
+        \`
+
+
+.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
+    content: "";
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${opacity};
+
+    background-image: url("\${panelBackgrounds[0]}");
+
+}
+        \`));
+}
+
+window.onload = () => document.getElementsByTagName("head")[0].appendChild(s);
 /* ${identifier}-end */
         `.trim();
 }

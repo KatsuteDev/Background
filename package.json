@@ -42,7 +42,7 @@
             },
             {
                 "command": "background.config.file",
-                "title": "Select images",
+                "title": "Select background images",
                 "category": "Background"
             },
             {
@@ -130,7 +130,7 @@
                     "order": 5,
                     "default": ""
                 },
-                "background.UI-Opacity": {
+                "background.opacity": {
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
                     "order": 6,
@@ -164,7 +164,7 @@
                     "markdownDescription": "How to size the background image.",
                     "type": "string",
                     "order": 8,
-                    "default": "Auto",
+                    "default": "Cover",
                     "enum": [
                         "Auto",
                         "Contain",

@@ -23,7 +23,7 @@ import { CommandQuickPickItem, get, update } from "../config";
 //
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.opacity", () => {
-    const current: number = round(get("UI-Opacity") as number);
+    const current: number = round(get("opacity") as number);
     vscode.window.showInputBox({
         title: "UI Opacity",
         placeHolder: "UI opacity",
@@ -42,7 +42,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                     { modal: true },
                     "Yes"
                 ).then((c?: "Yes") => {
-                    c && c === "Yes" && update("UI-Opacity", round(+value));
+                    c && c === "Yes" && update("opacity", round(+value));
                 });
             }
         }

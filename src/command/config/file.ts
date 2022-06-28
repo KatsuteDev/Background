@@ -56,6 +56,8 @@ const remove: (key: string, glob: string) => Promise<void> = (key: string, glob:
 
 //
 
+export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "gif"];
+
 const updateItem: (key: string, item?: CommandQuickPickItem) => Promise<void> = (key: string, item?: CommandQuickPickItem) => new Promise(() => {
     vscode.window.showInputBox({
         title: `Update ${item!.value}`,
@@ -78,7 +80,7 @@ const addFile: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => ne
         canSelectFolders: false,
         canSelectMany: true,
         openLabel: "Select Image",
-        filters: {"Images": ["png", "jpg", "jpeg", "webp", "gif"]}
+        filters: {"Images": extensions()}
     }).then((files?: vscode.Uri[]) => {
         if(files)
             scope().then((value?: CommandQuickPickItem[]) => {
