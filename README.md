@@ -1,6 +1,6 @@
 <div id="top" align="center">
     <a href="https://github.com/KatsuteDev/Background">
-        <img src="https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/icon.png" alt="icon" width="100" height="100">
+        <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png" alt="icon" width="100" height="100">
     </a>
     <h3>Background</h3>
     <h5>The most advanced background image extension for Visual Studio Code</h5>
@@ -10,9 +10,11 @@
     <a href="https://github.com/KatsuteDev/background/releases">Releases</a>
 </div>
 
+<br>
+
 The only background extension that supports [glob](https://github.com/isaacs/node-glob#glob-primer). Add multiple background images for the window, editors, sidebars, or the panel. No warnings about modified distributions.
 
-![editor background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/editor.gif)
+![editor background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/main/assets/editor.gif)
 
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)
@@ -51,21 +53,21 @@ This extension modifies an internal file to make backgrounds work, if VSCode sto
 
 Access the configuration menu using from the command palette with `Background: Config` or by pressing the **Background** tab in the status bar.
 
-![configuration menu](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/configuration.gif)
+![configuration menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif)
 
 #### 🖼️ Multiple Backgrounds
 
 Add background images for the whole window, editors, sidebars, or the panel. Images will be randomized whenever a window is opened.
 
-![window background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/window.gif)
+![window background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif)
 
-![editor background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/blob/main/assets/editor.gif)
+![editor background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif)
 
 #### ✱ Glob Support
 
 Add background images by file, by folder, or by [glob](https://github.com/isaacs/node-glob#glob-primer).
 
-![file menu](https://raw.githubusercontent.com/KatsuteDev/Background/blob/main/assets/glob.gif)
+![file menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif)
 
  > ⚠️ **Please only use forward-slashes in glob expressions.**
  >
@@ -118,4 +120,4 @@ Use the `Background: Config` command to access the configuration menu.
 
 ### 💼 License
 
-This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/background/blob/main/LICENSE).
+This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/background/main/LICENSE).
