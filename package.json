@@ -25,6 +25,9 @@
         "image",
         "gif"
     ],
+    "sponsor": {
+        "url": "https://patreon.com/Katsute"
+    },
     "activationEvents": [
         "onStartupFinished",
         "onCommand:background.install",

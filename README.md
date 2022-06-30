@@ -20,7 +20,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)
  - [💻 Commands](#-commands)
- - [⚙️ Configuration](#-configuration)
+ - [⚙️ Configuration](#%EF%B8%8F-configuration)
  - [👨‍💻 Contributing](#-contributing)
  - [💼 License](#-license)
 
