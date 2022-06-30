@@ -16,6 +16,15 @@
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "bg",
+        "bk",
+        "background",
+        "cover",
+        "theme",
+        "image",
+        "gif"
+    ],
     "activationEvents": [
         "onStartupFinished",
         "onCommand:background.install",

@@ -116,7 +116,7 @@ Use the `Background: Configuration` command to access the configuration menu.
 </table>
 <!-- GitHub Copilot Disclaimer -->
 
- - Found a bug? Post it in [issues](https://github.com/KatsuteDev/background/issues).
+ - Found a bug or have a suggestion? Post it in [issues](https://github.com/KatsuteDev/background/issues).
  - Want to further expand our project? [Fork](https://github.com/KatsuteDev/background/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/background/pulls).
 
 ### 💼 License
