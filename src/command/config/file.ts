@@ -65,12 +65,11 @@ const updateItem: (key: string, item?: CommandQuickPickItem) => Promise<void> = 
         value: item!.value ?? "",
         prompt: "Only '/' can be used for paths, '\\' is reserved for escape characters. Leave this field blank to remove.",
     }).then((value?: string) => {
-        if(item){
-            if(value === undefined || value.trim().length === 0)
+        if(item && value !== undefined)
+            if(value.trim().length === 0)
                 remove(key, item.value!);
             else
                 replace(key, item.value!, value);
-        }
     });
 });
 

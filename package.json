@@ -1,7 +1,12 @@
 {
     "name": "background",
     "displayName": "Background",
-    "description": "The ultimate background image extension for Visual Studio Code",
+    "description": "The most advanced background image extension for Visual Studio Code",
+    "icon": "assets/icon-sm.png",
+    "galleryBanner": {
+        "color": "#0098FF",
+        "theme": "dark"
+    },
     "publisher": "Katsute",
     "version": "1.0.0",
     "private": true,
@@ -194,7 +199,7 @@
         "prune": "npm prune && npm i --package-lock --ignore-scripts",
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
-        "vscode:prepublish": "npm run compile",
+        "vscode:prepublish": "npm run prepare",
         "compile": "tsc --outDir dist",
         "build": "npm run compile",
         "prepare": "npm run clean && npm run build",

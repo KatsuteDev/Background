@@ -15,7 +15,7 @@
 
 The only background extension that supports [glob](https://github.com/isaacs/node-glob#glob-primer). Add multiple background images for the window, editors, sidebars, or the panel. No warnings about modified distributions.
 
-![editor background](https://raw.githubusercontent.com/KatsuteDev/KatsuteDev/Background/main/assets/editor.gif)
+![editor background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif)
 
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)

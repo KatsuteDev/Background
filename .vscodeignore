@@ -1,0 +1,12 @@
+.gitignore
+.vscodeignore
+
+.github
+
+assets/*
+!assets/icon-sm.png
+
+src
+test
+
+tsconfig.json
