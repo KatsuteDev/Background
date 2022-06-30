@@ -134,7 +134,7 @@
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
                     "order": 6,
-                    "default": 1,
+                    "default": 0.9,
                     "minimum": 0,
                     "maximum": 1
                 },

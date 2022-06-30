@@ -1,11 +1,12 @@
 <div id="top" align="center">
+    <br>
     <a href="https://github.com/KatsuteDev/Background">
         <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png" alt="icon" width="100" height="100">
     </a>
     <h3>Background</h3>
     <h5>The most advanced background image extension for Visual Studio Code</h5>
     <br>
-    Visual Studio Marketplace
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.background">Visual Studio Marketplace</a>
     •
     <a href="https://github.com/KatsuteDev/background/releases">Releases</a>
 </div>
@@ -29,7 +30,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 
 #### 🛒 VSCode Marketplace (recommended)
 
- 1. Install from `katsute.background` in the extension marketplace in Visual Studio Code or install from the Visual Studio Marketplace.
+ 1. Install from `katsute.background` in the extension marketplace in Visual Studio Code or install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.background).
 
 #### 📦 Manual
 
@@ -39,7 +40,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 
 #### 🖼️ Usage
 
- 1. Open the command palette and use `Background: Config` to open the configuration or press the **Background** tab in the status bar.
+ 1. Open the command palette and use `Background: Configuration` to open the configuration or press the **Background** tab in the status bar.
  2. Add background images using `Background: Select background images` or by opening the configuration menu.
  3. Use `Background: Install` to install the background.
 
@@ -49,12 +50,6 @@ This extension modifies an internal file to make backgrounds work, if VSCode sto
 
 ## ✨ Features
 
-#### ⚙️ Configuration Menu
-
-Access the configuration menu using from the command palette with `Background: Config` or by pressing the **Background** tab in the status bar.
-
-![configuration menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif)
-
 #### 🖼️ Multiple Backgrounds
 
 Add background images for the whole window, editors, sidebars, or the panel. Images will be randomized whenever a window is opened.
@@ -63,18 +58,24 @@ Add background images for the whole window, editors, sidebars, or the panel. Ima
 
 ![editor background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif)
 
+#### ⚙️ Configuration Menu
+
+Access the configuration menu using from the command palette with `Background: Configuration` or by pressing the **Background** tab in the status bar.
+
+![configuration menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif)
+
 #### ✱ Glob Support
 
 Add background images by file, by folder, or by [glob](https://github.com/isaacs/node-glob#glob-primer).
 
 ![file menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif)
 
- > ⚠️ **Please only use forward-slashes in glob expressions.**
- >
- > Though windows uses either `/` or `\` as its path separator, only `/` characters are used by this glob implementation.
- > You must use forward-slashes only in glob expressions. Back-slashes will always be interpreted as escape characters, not path separators.
- >
- > ― [node-glob](https://github.com/isaacs/node-glob#windows)
+> ⚠️ **Please only use forward-slashes in glob expressions.**
+>
+> Though windows uses either `/` or `\` as its path separator, only `/` characters are used by this glob implementation.
+> You must use forward-slashes only in glob expressions. Back-slashes will always be interpreted as escape characters, not path separators.
+>
+> ― [node-glob](https://github.com/isaacs/node-glob#windows)
 
 ## 💻 Commands
 
@@ -82,7 +83,7 @@ Add background images by file, by folder, or by [glob](https://github.com/isaacs
 |---|---|
 |`Background: Install`|Installs and enables the background.|
 |`Background: Uninstall`|Uninstalls and disables the background.|
-|`Background: Config`|Opens the configuration menu.|
+|`Background: Configuration`|Opens the configuration menu.|
 |`Background: Select background images`|Opens the background manager.|
 |`Background: Set background image alignment`|Sets the background image alignment.|
 |`Background: Set UI opacity`|Sets the UI opacity.|
@@ -91,7 +92,7 @@ Add background images by file, by folder, or by [glob](https://github.com/isaacs
 
 ## ⚙️ Configuration
 
-Use the `Background: Config` command to access the configuration menu.
+Use the `Background: Configuration` command to access the configuration menu.
 
 | Name | Type | Description |
 |---|:-:|---|
