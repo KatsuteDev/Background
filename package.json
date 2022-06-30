@@ -32,6 +32,7 @@
         "onStartupFinished",
         "onCommand:background.install",
         "onCommand:background.uninstall",
+        "onCommand:background.reload",
         "onCommand:background.config",
         "onCommand:background.config.background",
         "onCommand:background.config.align",
@@ -50,6 +51,11 @@
             {
                 "command": "background.uninstall",
                 "title": "Uninstall",
+                "category": "Background"
+            },
+            {
+                "command": "background.reload",
+                "title": "Reload",
                 "category": "Background"
             },
             {
@@ -207,7 +213,7 @@
     "main": "dist/extension.js",
     "scripts": {
         "// -- dev -- //": "",
-        "clean": "rimraf dist & rimraf dist",
+        "clean": "rimraf dist & rimraf dist & rimraf background-*.vsix",
         "prune": "npm prune && npm i --package-lock --ignore-scripts",
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
@@ -232,11 +238,13 @@
         "url": "https://github.com/KatsuteDev/background/issues"
     },
     "homepage": "https://github.com/KatsuteDev/background#readme",
+    "dependencies": {
+        "glob": "8.0.3"
+    },
     "devDependencies": {
         "@types/glob": "7.2.0",
         "@types/node": "18.0.0",
         "@types/vscode": "1.68.1",
-        "glob": "8.0.3",
         "rimraf": "3.0.2",
         "typescript": "4.7.4",
         "vsce": "2.9.2"

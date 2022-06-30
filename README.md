@@ -83,6 +83,7 @@ Add background images by file, by folder, or by [glob](https://github.com/isaacs
 |---|---|
 |`Background: Install`|Installs and enables the background.|
 |`Background: Uninstall`|Uninstalls and disables the background.|
+|`Background: Reload`|Randomizes the backgrounds. Background must already be installed.|
 |`Background: Configuration`|Opens the configuration menu.|
 |`Background: Select background images`|Opens the background manager.|
 |`Background: Set background image alignment`|Sets the background image alignment.|

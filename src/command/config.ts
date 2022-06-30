@@ -24,6 +24,7 @@ import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
 
+import * as reload from "./reload";
 import * as install from "./install";
 import * as uninstall from "./uninstall";
 
@@ -60,7 +61,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         size.item,
         separator(),
         install.item,
-        uninstall.item
+        uninstall.item,
+        reload.item
     ], options)
     .then(handle);
 });

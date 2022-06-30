@@ -18,25 +18,16 @@
 
 import * as vscode from "vscode";
 
-import { installJS, restartVS } from "../extension";
 import { CommandQuickPickItem } from "./config";
 
 //
 
 export const item: CommandQuickPickItem = {
-    label: "$(check) Install",
-    description: "Install background",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.install"))
+    label: "$(refresh) Reload Background",
+    description: "Randomizes installed backgrounds. Background must already be installed.",
+    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.reload"))
 }
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.install", () => {
-    installJS();
-    restartVS();
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.reload", () => {
+    vscode.commands.executeCommand("workbench.action.reloadWindow");
 });
-
-export const notify: () => void = () => {
-    vscode.window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Restart", "Ignore").then((value?: string) => {
-        if(value === "Install and Restart")
-            vscode.commands.executeCommand("background.install");
-    });
-}

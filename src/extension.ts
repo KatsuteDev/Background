@@ -23,6 +23,7 @@ import { glob } from "glob";
 import * as fs from "fs";
 import * as path from "path";
 
+import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
 
@@ -63,6 +64,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     // extension
 
+    context.subscriptions.push(reload.command);
     context.subscriptions.push(install.command);
     context.subscriptions.push(uninstall.command);
 
