@@ -4,7 +4,7 @@
         <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png" alt="icon" width="100" height="100">
     </a>
     <h3>Background</h3>
-    <h5>The most advanced background image extension for Visual Studio Code</h5>
+    <h5>The most advanced background image extension for VSCode</h5>
     <br>
     <a href="https://marketplace.visualstudio.com/items?itemName=katsute.background">Visual Studio Marketplace</a>
     •
@@ -41,7 +41,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 #### 🖼️ Usage
 
  1. Open the command palette and use `Background: Configuration` to open the configuration or press the **Background** tab in the status bar.
- 2. Add background images using `Background: Select background images` or by opening the configuration menu.
+ 2. Add background images using `Background: Select background image files` or by opening the configuration menu.
  3. Use `Background: Install` to install the background.
 
 #### ⚠️ Bug: VSCode stopped working
@@ -85,7 +85,7 @@ Add background images by file, by folder, or by [glob](https://github.com/isaacs
 |`Background: Uninstall`|Uninstalls and disables the background.|
 |`Background: Reload`|Randomizes the backgrounds. Background must already be installed.|
 |`Background: Configuration`|Opens the configuration menu.|
-|`Background: Select background images`|Opens the background manager.|
+|`Background: Select background image files`|Opens the background manager.|
 |`Background: Set background image alignment`|Sets the background image alignment.|
 |`Background: Set UI opacity`|Sets the UI opacity.|
 |`Background: Set background image repeat`|Sets the background image repeat.|
@@ -102,11 +102,11 @@ Use the `Background: Configuration` command to access the configuration menu.
 |`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
 |`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
 |`backgroundImageAlignment`|`enum`|The alignment of the background image.|
-|`backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position:` property.|
+|`backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
 |`background.opacity`|`number`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
 |`background.backgroundImageRepeat`|`enum`|The background image repeat.|
 |`background.backgroundImageSize`|`enum`|The background image size.|
-|`background.backgroundImageSizeValue`|`string`|If the background image size is set to `Manual`, this is the literal value for the `background-size` property.|
+|`background.backgroundImageSizeValue`|`string`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
 
 ## 👨‍💻 Contributing
 

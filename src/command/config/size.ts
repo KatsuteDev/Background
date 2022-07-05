@@ -33,7 +33,7 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
         title: "Background Size",
         placeHolder: "Background size",
         value: current,
-        prompt: `Background size (${current}). The literal value for the 'background-size' property.`
+        prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
     }).then((value?: string) => {
         if(value !== undefined){
             let changed: boolean = get("backgroundImageSize") !== "Manual" || current !== value;

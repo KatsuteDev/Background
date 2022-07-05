@@ -33,7 +33,7 @@ const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new
         title: "Background Position",
         placeHolder: "Background position",
         value: current,
-        prompt: `Background position (${current}). The literal value for the 'background-position' property.`
+        prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
     }).then((value?: string) => {
         if(value !== undefined){
             let changed: boolean = get("backgroundImageAlignment") !== "Manual" || current !== value;

@@ -24,7 +24,7 @@ import { CommandQuickPickItem } from "./config";
 
 export const item: CommandQuickPickItem = {
     label: "$(refresh) Reload Background",
-    description: "Randomizes installed backgrounds. Background must already be installed.",
+    description: "Randomizes installed backgrounds; Background must already be installed",
     onSelect: () => new Promise(() => vscode.commands.executeCommand("background.reload"))
 }
 

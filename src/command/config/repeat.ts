@@ -35,7 +35,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
             quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect }, current),
             quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect }, current),
             quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect }, current),
-            quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screenRepeat and stretch image", onSelect }, current)
+            quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect }, current)
         ],
         {
             ...options,

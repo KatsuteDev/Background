@@ -1,7 +1,7 @@
 {
     "name": "background",
     "displayName": "Background",
-    "description": "The most advanced background image extension for Visual Studio Code",
+    "description": "The most advanced background image extension for VSCode",
     "icon": "assets/icon-sm.png",
     "galleryBanner": {
         "color": "#0098FF",
@@ -36,7 +36,6 @@
         "onCommand:background.config",
         "onCommand:background.config.background",
         "onCommand:background.config.align",
-        "onCommand:background.config.loop",
         "onCommand:background.config.opacity",
         "onCommand:background.config.repeat",
         "onCommand:background.config.size"
@@ -130,7 +129,7 @@
                     }
                 },
                 "background.backgroundImageAlignment": {
-                    "markdownDescription": "How to align the background image.",
+                    "markdownDescription": "The background image alignment.",
                     "type": "string",
                     "order": 4,
                     "default": "Center Center",
@@ -148,7 +147,7 @@
                     ]
                 },
                 "background.backgroundImageAlignmentValue": {
-                    "markdownDescription": "If `#background.backgroundImageAlignment#` is set to `Manual`, this is the literal value for the `background-position` property.",
+                    "markdownDescription": "If `#background.backgroundImageAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
                     "type": "string",
                     "order": 5,
                     "default": ""
@@ -162,7 +161,7 @@
                     "maximum": 1
                 },
                 "background.backgroundImageRepeat": {
-                    "markdownDescription": "How to repeat the background image.",
+                    "markdownDescription": "The background image repeat.",
                     "type": "string",
                     "order": 7,
                     "default": "No Repeat",
@@ -184,7 +183,7 @@
                     ]
                 },
                 "background.backgroundImageSize": {
-                    "markdownDescription": "How to size the background image.",
+                    "markdownDescription": "The background image size.",
                     "type": "string",
                     "order": 8,
                     "default": "Cover",
@@ -202,7 +201,7 @@
                     ]
                 },
                 "background.backgroundImageSizeValue": {
-                    "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` property.",
+                    "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
                     "order": 9,
                     "type": "string",
                     "default": ""
@@ -243,7 +242,7 @@
     },
     "devDependencies": {
         "@types/glob": "7.2.0",
-        "@types/node": "18.0.0",
+        "@types/node": "18.0.1",
         "@types/vscode": "1.68.1",
         "rimraf": "3.0.2",
         "typescript": "4.7.4",
