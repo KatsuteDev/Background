@@ -1,5 +1,5 @@
 {
-    "name": "background",
+    "name": "code-background",
     "displayName": "Background",
     "description": "The most advanced background image extension for VSCode",
     "icon": "assets/icon-sm.png",

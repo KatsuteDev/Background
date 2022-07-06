@@ -6,7 +6,7 @@
     <h3>Background</h3>
     <h5>The most advanced background image extension for VSCode</h5>
     <br>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.background">Visual Studio Marketplace</a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background">Visual Studio Marketplace</a>
     •
     <a href="https://github.com/KatsuteDev/background/releases">Releases</a>
 </div>
@@ -30,7 +30,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 
 #### 🛒 VSCode Marketplace (recommended)
 
- 1. Install from `katsute.background` in the extension marketplace in Visual Studio Code or install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.background).
+ 1. Install from `katsute.code-background` in the extension marketplace in Visual Studio Code or install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
 #### 📦 Manual
 
