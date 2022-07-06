@@ -29,13 +29,13 @@ body:
       required: true
 
   - type: input
-    id: os
+    id: vs
     attributes:
       label: VSCode Version
       description: |
         VSCode type and version.
       placeholder: |
-        ex: VSCode 1.68.1, VSCode Insiders 1.68.0
+        ex: VSCode 1.68.0, VSCode Insiders 1.68.0
     validations:
       required: true
 
@@ -44,7 +44,7 @@ body:
     attributes:
       label: Release Version
       description: |
-        Release version or branch commit where the issue occured. Do not write 'latest'.
+        Release version or branch commit where the issue occurred. Do not write 'latest'.
       placeholder: |
         ex: 1.0.0, 529b5de
     validations:
