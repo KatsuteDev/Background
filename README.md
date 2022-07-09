@@ -122,4 +122,4 @@ Use the `Background: Configuration` command to access the configuration menu.
 
 ### 💼 License
 
-This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/background/main/LICENSE).
+This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/background/main/LICENSE).
