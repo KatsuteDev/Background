@@ -3,33 +3,26 @@ description: Suggest a new feature
 labels: [feature request]
 assignees: []
 body:
-  - type: checkboxes
-    id: checks
+  - type: markdown
     attributes:
-      label: Prerequisites
-      description: |
-        *If **all** checks are not passed then the issue will be closed.*
-      options:
-        - label: I have checked that no other similar feature request already exists.
-          required: true
-        - label: This feature request makes sense for the project.
-          required: true
-        - label: I have checked that this feature does not already exist.
-          required: true
-        - label: I am running the latest release version.
-          required: true
+      value: |
+        Before opening a feature request please check that your idea was not already discussed in the following:
+
+        * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3A%22feature+request%22)
+
+        Please also check that:
+
+        * This feature makes sense for the project.
+        * This feature does not already exist.
+        * You are running the latest version.
 
   - type: textarea
-    id: feature
     attributes:
       label: Feature
-      description: |
-        Explain your feature. Add any examples here.
     validations:
       required: true
 
   - type: textarea
-    id: reason
     attributes:
       label: Reason
       description: |

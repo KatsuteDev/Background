@@ -3,58 +3,50 @@ description: Report a bug
 labels: [bug]
 assignees: []
 body:
-  - type: checkboxes
-    id: checks
+  - type: markdown
     attributes:
-      label: Prerequisites
-      description: |
-        *If **all** checks are not passed then the issue will be closed.*
-      options:
-        - label: I have checked that no other similar issue already exists.
-          required: true
-        - label: I have checked that this issue is actually a bug and not a feature.
-          required: true
-        - label: I am running the latest release version.
-          required: true
+      value: |
+        Before opening a bug report please check that your issue was not already discussed in the following:
+
+        * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22)
+
+        Please also check that:
+
+        * This is actually a bug and not a feature.
+        * You are running the latest version.
+
+        If your VSCode is blank or stops working please check [here](https://github.com/KatsuteDev/Background#%EF%B8%8F-bug-vscode-stopped-working) first.
 
   - type: input
-    id: os
     attributes:
       label: Operating System
-      description: |
-        Operating system name and version.
-      placeholder: |
-        ex: Windows 10
     validations:
       required: true
 
   - type: input
-    id: vs
     attributes:
       label: VSCode Version
-      description: |
-        VSCode type and version.
-      placeholder: |
-        ex: VSCode 1.68.0, VSCode Insiders 1.68.0
     validations:
       required: true
 
   - type: input
-    id: version
     attributes:
-      label: Release Version
+      label: Extension Version
       description: |
-        Release version or branch commit where the issue occurred. Do not write 'latest'.
-      placeholder: |
-        ex: 1.0.0, 529b5de
+        Do not write 'latest'.
     validations:
       required: true
 
   - type: textarea
-    id: issue
     attributes:
       label: Issue
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: How to replicate
       description: |
-        Explain your issue, add any relevant stacktraces here.
+        Include steps to reproduce this issue.
     validations:
       required: true
