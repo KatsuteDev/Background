@@ -17,5 +17,11 @@ jobs:
   repository-bot:
     name: Repository[bot]
     uses: Katsute/Workflows/.github/workflows/bot.yml@main
+    if: >-
+      ${{
+      (github.repository_owner == 'Katsute' || github.repository_owner == 'KatsuteDev') &&
+      github.actor != 'mashiro-san' &&
+      !endsWith(github.actor, '[bot]')
+      }}
     secrets:
       token: ${{ secrets.BOT }}
