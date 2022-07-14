@@ -1,9 +1,9 @@
 changelog:
   categories:
-    - title: ⚠ Breaking Change
+    - title: ⚠️ Breaking Change
       labels:
         - breaking change
-    - title: ⚠ Deprecated
+    - title: ⚠️ Deprecated
       labels:
         - deprecated
     - title: ❌ Removed
