@@ -1,7 +1,7 @@
 ### Prerequisites
 *Issues must meet the following criteria:*
 
- - [ ] No similar [pull request](https://github.com/KatsuteDev/Background/pulls) exists.
+ - [ ] No similar pull request exists.
  - [ ] Code follows the general code style of this project.
  - [ ] No sensitive information is exposed.
  - [ ] Relevant comments have been added.
