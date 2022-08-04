@@ -9,7 +9,7 @@ jobs:
     name: Deploy
     uses: Katsute/Workflows/.github/workflows/npm.vsce.deploy.yml@main
     with:
-      file: '*.vsix'
+      file: '**.vsix'
       environment: VSCE Package
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
