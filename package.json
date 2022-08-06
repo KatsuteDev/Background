@@ -8,10 +8,10 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": true,
     "engines": {
-        "vscode": "^1.69.0"
+        "vscode": "^1.70.0"
     },
     "categories": [
         "Other"
@@ -204,6 +204,13 @@
                     "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
                     "order": 9,
                     "type": "string",
+                    "default": ""
+                },
+                "background.CSS": {
+                    "markdownDescription": "Add your own CSS",
+                    "order": 10,
+                    "type": "string",
+                    "editPresentation": "multilineText",
                     "default": ""
                 }
             }

@@ -113,6 +113,8 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
 }
 
 const getJS: () => string = () => {
+    const css: string = get("CSS") || "";
+
     const images: {[key: string]: string[]} = {
         window: [],
         editor: [],
@@ -284,6 +286,8 @@ if(panelBackgrounds.length > 0){
 }
         \`));
 }
+
+s.appendChild(document.createTextNode(\`${css}\`));
 
 window.onload = () => document.getElementsByTagName("head")[0].appendChild(s);
 /* ${identifier}-end */
