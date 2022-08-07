@@ -207,7 +207,7 @@
                     "default": ""
                 },
                 "background.CSS": {
-                    "markdownDescription": "Add your own CSS",
+                    "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
                     "order": 10,
                     "type": "string",
                     "editPresentation": "multilineText",
