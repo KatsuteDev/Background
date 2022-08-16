@@ -1,21 +1,32 @@
 version: 2
 updates:
-- package-ecosystem: github-actions
-  directory: /
-  labels: [dependencies]
-  reviewers: [Katsute]
-  schedule:
-    interval: daily
-    time: '07:00'
-    timezone: US/Eastern
-  open-pull-requests-limit: 99
-
-- package-ecosystem: npm
-  directory: /
-  labels: [dependencies]
-  reviewers: [Katsute]
-  schedule:
-    interval: daily
-    time: '07:00'
-    timezone: US/Eastern
-  open-pull-requests-limit: 99
+  - package-ecosystem: github-actions
+    directory: /
+    labels:
+      - dependencies
+    assignees:
+      - Katsute
+    reviewers:
+      - Katsute
+    schedule:
+      interval: daily
+      time: "07:00"
+      timezone: US/Eastern
+    open-pull-requests-limit: 99
+  - package-ecosystem: npm
+    directory: /
+    labels:
+      - dependencies
+    assignees:
+      - Katsute
+    reviewers:
+      - Katsute
+    schedule:
+      interval: daily
+      time: "07:00"
+      timezone: US/Eastern
+    open-pull-requests-limit: 99
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-patch
