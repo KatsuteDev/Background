@@ -249,8 +249,8 @@
     },
     "devDependencies": {
         "@types/glob": "7.2.0",
-        "@types/node": "18.7.1",
-        "@types/vscode": "1.69.1",
+        "@types/node": "18.7.5",
+        "@types/vscode": "1.70.0",
         "rimraf": "3.0.2",
         "typescript": "4.7.4",
         "vsce": "2.10.0"
