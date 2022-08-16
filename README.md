@@ -111,6 +111,7 @@ Use the `Background: Configuration` command to access the configuration menu.
 |`background.backgroundImageRepeat`|`enum`|The background image repeat.|
 |`background.backgroundImageSize`|`enum`|The background image size.|
 |`background.backgroundImageSizeValue`|`string`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
+|`background.CSS`|`string`|**Advanced Users Only.** Apply raw CSS to VSCode.|
 
 ## 👨‍💻 Contributing
 

@@ -8,10 +8,10 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": true,
     "engines": {
-        "vscode": "^1.69.0"
+        "vscode": "^1.70.0"
     },
     "categories": [
         "Other"
@@ -205,6 +205,13 @@
                     "order": 9,
                     "type": "string",
                     "default": ""
+                },
+                "background.CSS": {
+                    "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
+                    "order": 10,
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": ""
                 }
             }
         }
@@ -242,8 +249,8 @@
     },
     "devDependencies": {
         "@types/glob": "7.2.0",
-        "@types/node": "18.7.1",
-        "@types/vscode": "1.69.1",
+        "@types/node": "18.7.5",
+        "@types/vscode": "1.70.0",
         "rimraf": "3.0.2",
         "typescript": "4.7.4",
         "vsce": "2.10.0"

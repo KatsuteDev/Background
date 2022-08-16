@@ -113,6 +113,12 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
 }
 
 const getJS: () => string = () => {
+    // document.createTextNode will remove any unsafe css
+    const css: string = (get("CSS") || "")
+        .replace(/\n\r?/gm, ' ') // make single line
+        .replace(/"/gm, '\'')    // prevent escaping quotes
+        .replace(/\\+$/gm, '');  // prevent escaping last script quote
+
     const images: {[key: string]: string[]} = {
         window: [],
         editor: [],
@@ -284,6 +290,8 @@ if(panelBackgrounds.length > 0){
 }
         \`));
 }
+
+s.appendChild(document.createTextNode("${css}"));
 
 window.onload = () => document.getElementsByTagName("head")[0].appendChild(s);
 /* ${identifier}-end */
