@@ -10,7 +10,7 @@ updates:
       - Katsute
     schedule:
       interval: daily
-      time: "07:00"
+      time: '07:00'
       timezone: US/Eastern
     open-pull-requests-limit: 99
   - package-ecosystem: npm
@@ -23,7 +23,7 @@ updates:
       - Katsute
     schedule:
       interval: daily
-      time: "07:00"
+      time: '07:00'
       timezone: US/Eastern
     open-pull-requests-limit: 99
     ignore:
