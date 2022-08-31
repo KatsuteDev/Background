@@ -248,7 +248,7 @@
         "glob": "8.0.3"
     },
     "devDependencies": {
-        "@types/glob": "7.2.0",
+        "@types/glob": "8.0.0",
         "@types/node": "18.7.5",
         "@types/vscode": "1.70.0",
         "rimraf": "3.0.2",
