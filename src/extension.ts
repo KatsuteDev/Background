@@ -58,7 +58,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                 vscode.window.showInformationMessage(`A backup was created for 'bootstrap-window.js'`);
             }
         }else
-            vscode.window.showWarningMessage(`Failed to find 'bootstrap-window.js'`);
+            vscode.window.showErrorMessage(`Failed to find 'bootstrap-window.js'`);
     }else
         vscode.window.showErrorMessage("Failed to find main file");
 
@@ -114,10 +114,7 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
 
 const getJS: () => string = () => {
     // document.createTextNode will remove any unsafe css
-    const css: string = (get("CSS") || "")
-        .replace(/\n\r?/gm, ' ') // make single line
-        .replace(/"/gm, '\'')    // prevent escaping quotes
-        .replace(/\\+$/gm, '');  // prevent escaping last script quote
+    const css: string = sanitize(get("CSS") || "");
 
     const images: {[key: string]: string[]} = {
         window: [],
@@ -148,6 +145,7 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageAlignmentValue") as string,
     }[get("backgroundImageAlignment") as string] || "center center";
 
+    const blur: string = sanitize(get("blur") as string);
     const opacity: number = get("opacity") as number;
 
     const repeat: string = {
@@ -185,6 +183,36 @@ const getJS: () => string = () => {
     pointer-events: none;
     `;
 
+    // background css
+
+    const prop: string =
+    `
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${1-opacity};
+
+    filter: blur(${blur});
+    -webkit-filter: blur(${blur});
+    -moz-filter: blur(${blur});
+    -o-filter: blur(${blur});
+    -ms-filter: blur(${blur});
+    `;
+
+    const prop_inv: string = // inverted opacity for ::after
+    `
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+    opacity: ${1-opacity};
+
+    filter: blur(${blur});
+    -webkit-filter: blur(${blur});
+    -moz-filter: blur(${blur});
+    -o-filter: blur(${blur});
+    -ms-filter: blur(${blur});
+    `;
+
     // css for each element
 
     return `
@@ -208,10 +236,7 @@ if(windowBackgrounds.length > 0){
     \`
 body {
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${opacity};
+    ${prop}
 
     background-image: url("\${windowBackgrounds[0]}");
 
@@ -228,10 +253,7 @@ if(editorBackgrounds.length > 0){
 
     ${overlay}
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop_inv}
 
     background-image: url("\${editorBackgrounds[i-1]}");
 
@@ -247,10 +269,7 @@ if(sidebarBackgrounds.length > 0){
 
     ${overlay}
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop_inv}
 
     background-image: url("\${sidebarBackgrounds[0]}");
 
@@ -260,10 +279,7 @@ if(sidebarBackgrounds.length > 0){
 
     ${overlay}
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop_inv}
 
     background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
 
@@ -280,10 +296,7 @@ if(panelBackgrounds.length > 0){
 
     ${overlay}
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop_inv}
 
     background-image: url("\${panelBackgrounds[0]}");
 
@@ -300,4 +313,13 @@ window.onload = () => document.getElementsByTagName("head")[0].appendChild(s);
 
 const removeJS: (s: string) => string = (s: string) => {
     return s.replace(remove, "").trim();
+}
+
+//
+
+const sanitize: (s: string) => string = (s: string) => {
+    return s
+        .replace(/\n\r?/gm, ' ') // make single line
+        .replace(/"/gm, '\'')    // prevent escaping quotes
+        .replace(/\\+$/gm, '');  // prevent escaping last script quote
 }

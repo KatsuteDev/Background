@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "private": true,
     "engines": {
         "vscode": "^1.70.0"
@@ -70,6 +70,11 @@
             {
                 "command": "background.config.align",
                 "title": "Set background image alignment",
+                "category": "Background"
+            },
+            {
+                "command": "background.config.blur",
+                "title": "Set background blur",
                 "category": "Background"
             },
             {
@@ -152,10 +157,16 @@
                     "order": 5,
                     "default": ""
                 },
+                "background.blur": {
+                    "markdownDescription": "The blur amount in css units.",
+                    "type": "string",
+                    "order": 6,
+                    "default": "0"
+                },
                 "background.opacity": {
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
-                    "order": 6,
+                    "order": 7,
                     "default": 0.9,
                     "minimum": 0,
                     "maximum": 1
@@ -163,7 +174,7 @@
                 "background.backgroundImageRepeat": {
                     "markdownDescription": "The background image repeat.",
                     "type": "string",
-                    "order": 7,
+                    "order": 8,
                     "default": "No Repeat",
                     "enum": [
                         "No Repeat",
@@ -185,7 +196,7 @@
                 "background.backgroundImageSize": {
                     "markdownDescription": "The background image size.",
                     "type": "string",
-                    "order": 8,
+                    "order": 9,
                     "default": "Cover",
                     "enum": [
                         "Auto",
@@ -202,13 +213,13 @@
                 },
                 "background.backgroundImageSizeValue": {
                     "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
-                    "order": 9,
+                    "order": 10,
                     "type": "string",
                     "default": ""
                 },
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 10,
+                    "order": 11,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
@@ -249,7 +260,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.7.5",
+        "@types/node": "18.7.14",
         "@types/vscode": "1.70.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.2",
