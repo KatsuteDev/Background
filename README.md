@@ -48,9 +48,15 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
  2. Add background images using `Background: Select background image files` or by opening the configuration menu.
  3. Use `Background: Install` to install the background.
 
+To modify or remove a path run `Background: Select background image files` and select the path you want to change.
+
 #### ⚠️ Bug: VSCode stopped working
 
 This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources\app\out\bootstrap-window.js` with `bootstrap-window-backup.js`.
+
+#### ⚠️ Bug: Doesn't work on WSL
+
+As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
 
 ## ✨ Features
 
@@ -105,8 +111,8 @@ Use the `Background: Configuration` command to access the configuration menu.
 |`background.editorBackgrounds`|`string[]`|The list of files or globs to use for editor background images.|
 |`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
 |`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
-|`backgroundImageAlignment`|`enum`|The alignment of the background image.|
-|`backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
+|`background.backgroundImageAlignment`|`enum`|The alignment of the background image.|
+|`background.backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
 |`background.opacity`|`number`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
 |`background.backgroundImageRepeat`|`enum`|The background image repeat.|
 |`background.backgroundImageSize`|`enum`|The background image size.|
