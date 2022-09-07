@@ -28,9 +28,11 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         title: "Background blur",
         placeHolder: "Background blur",
         value: current.toString(),
-        prompt: `UI Opacity (${current})`
+        prompt: `Background blur (${current})`,
+        validateInput: validate
     }).then((value?: string) => {
-        update("blur", value);
+        if(value && !value.match(/[\w.%+-]/gmi))
+            update("blur", value);
     });
 });
 
@@ -38,4 +40,8 @@ export const item: CommandQuickPickItem = {
     label: "Blur",
     description: "Background blur",
     onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.blur"))
+}
+
+const validate: (value: string) => string | null | undefined = (value: string) => {
+    return value.match(/[\w.%+-]/gmi) ? "Invalid CSS" : null;
 }
