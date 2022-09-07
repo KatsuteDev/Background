@@ -149,7 +149,7 @@ const getJS: () => string = () => {
     }[get("backgroundImageAlignment") as string] || "center center";
 
     const blur: string = (get("blur") as string || "")
-        .replace(/[^\w.%+-]/gmi, "") // remove non-css length
+        .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
     const opacity: number = get("opacity") as number;
 
@@ -169,9 +169,9 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageSizeValue") as string
     }[get("backgroundImageSize") as string] || "cover";
 
-    // shared ::after css
+    // background css
 
-    const overlay: string =
+    const prop: string = // ::before, ::after overlay css
     `
     content: "";
 
@@ -186,21 +186,16 @@ const getJS: () => string = () => {
     position: absolute;
 
     pointer-events: none;
-    `;
-
-    // background css
-
-    const prop: string =
+    `
+    + // background image css
     `
     background-position: ${position};
     background-repeat: ${repeat};
     background-size: ${size};
 
+    opacity: ${1-opacity};
+
     filter: blur(${blur});
-    -webkit-filter: blur(${blur});
-    -moz-filter: blur(${blur});
-    -o-filter: blur(${blur});
-    -ms-filter: blur(${blur});
     `;
 
     // css for each element
@@ -224,11 +219,9 @@ const s = document.createElement("style");
 if(windowBackgrounds.length > 0){
     s.appendChild(document.createTextNode(
     \`
-body {
+body::before {
 
     ${prop}
-
-    opacity: ${opacity};
 
     background-image: url("\${windowBackgrounds[0]}");
 
@@ -243,11 +236,7 @@ if(editorBackgrounds.length > 0){
             \`
 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-    ${overlay}
-
     ${prop}
-
-    opacity: ${1-opacity};
 
     background-image: url("\${editorBackgrounds[i-1]}");
 
@@ -261,11 +250,7 @@ if(sidebarBackgrounds.length > 0){
     \`
 .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-    ${overlay}
-
     ${prop}
-
-    opacity: ${1-opacity};
 
     background-image: url("\${sidebarBackgrounds[0]}");
 
@@ -273,11 +258,7 @@ if(sidebarBackgrounds.length > 0){
 
 .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-    ${overlay}
-
     ${prop}
-
-    opacity: ${1-opacity};
 
     background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
 
@@ -292,11 +273,7 @@ if(panelBackgrounds.length > 0){
 
 .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-    ${overlay}
-
     ${prop}
-
-    opacity: ${1-opacity};
 
     background-image: url("\${panelBackgrounds[0]}");
 

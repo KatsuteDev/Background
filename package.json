@@ -36,6 +36,7 @@
         "onCommand:background.config",
         "onCommand:background.config.background",
         "onCommand:background.config.align",
+        "onCommand:background.config.blur",
         "onCommand:background.config.opacity",
         "onCommand:background.config.repeat",
         "onCommand:background.config.size"

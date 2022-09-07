@@ -31,7 +31,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         prompt: `Background blur (${current})`,
         validateInput: validate
     }).then((value?: string) => {
-        if(value && !value.match(/[\w.%+-]/gmi))
+        if(value && !value.match(/[^\w.%+-]/gmi))
             update("blur", value);
     });
 });
@@ -43,5 +43,5 @@ export const item: CommandQuickPickItem = {
 }
 
 const validate: (value: string) => string | null | undefined = (value: string) => {
-    return value.match(/[\w.%+-]/gmi) ? "Invalid CSS" : null;
+    return value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null;
 }
