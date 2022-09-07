@@ -30,6 +30,7 @@ import * as uninstall from "./command/uninstall";
 import { config, get } from "./command/config";
 
 import * as align from "./command/config/align";
+import * as blur from "./command/config/blur";
 import * as file from "./command/config/file";
 import * as opacity from "./command/config/opacity";
 import * as repeat from "./command/config/repeat";
@@ -71,6 +72,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
     context.subscriptions.push(config);
 
     context.subscriptions.push(align.command);
+    context.subscriptions.push(blur.command);
     context.subscriptions.push(file.command);
     context.subscriptions.push(opacity.command);
     context.subscriptions.push(repeat.command);
