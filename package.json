@@ -248,20 +248,20 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KatsuteDev/background.git"
+        "url": "git+https://github.com/KatsuteDev/Background.git"
     },
     "author": "Katsute",
     "license": "GPL-2.0-only",
     "bugs": {
-        "url": "https://github.com/KatsuteDev/background/issues"
+        "url": "https://github.com/KatsuteDev/Background/issues"
     },
-    "homepage": "https://github.com/KatsuteDev/background#readme",
+    "homepage": "https://github.com/KatsuteDev/Background#readme",
     "dependencies": {
         "glob": "8.0.3"
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.7.15",
+        "@types/node": "18.7.16",
         "@types/vscode": "1.71.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.2",
