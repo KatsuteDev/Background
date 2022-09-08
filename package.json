@@ -75,7 +75,7 @@
             },
             {
                 "command": "background.config.blur",
-                "title": "Set background blur",
+                "title": "Set background image blur",
                 "category": "Background"
             },
             {
@@ -158,7 +158,7 @@
                     "order": 5,
                     "default": ""
                 },
-                "background.blur": {
+                "background.backgroundImageBlur": {
                     "markdownDescription": "The blur amount in css units.",
                     "type": "string",
                     "order": 6,

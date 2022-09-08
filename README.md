@@ -97,6 +97,7 @@ Add background images by file, by folder, or by [glob](https://github.com/isaacs
 |`Background: Configuration`|Opens the configuration menu.|
 |`Background: Select background image files`|Opens the background manager.|
 |`Background: Set background image alignment`|Sets the background image alignment.|
+|`Background: Set background image blur`|Sets the background image blur.|
 |`Background: Set UI opacity`|Sets the UI opacity.|
 |`Background: Set background image repeat`|Sets the background image repeat.|
 |`Background: Set background image size`|Sets the background image size.|
@@ -113,6 +114,7 @@ Use the `Background: Configuration` command to access the configuration menu.
 |`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
 |`background.backgroundImageAlignment`|`enum`|The alignment of the background image.|
 |`background.backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
+|`background.backgroundImageBlur`|`string`|Background image blur in CSS units.|
 |`background.opacity`|`number`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
 |`background.backgroundImageRepeat`|`enum`|The background image repeat.|
 |`background.backgroundImageSize`|`enum`|The background image size.|

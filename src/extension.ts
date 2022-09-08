@@ -150,7 +150,7 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageAlignmentValue") as string,
     }[get("backgroundImageAlignment") as string] || "center center";
 
-    const blur: string = (get("blur") as string || "")
+    const blur: string = (get("backgroundImageBlur") as string || "")
         .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
     const opacity: number = get("opacity") as number;
