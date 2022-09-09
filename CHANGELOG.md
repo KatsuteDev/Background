@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.0
+
+### ⭐ New Features
+
+* Add background blur https://github.com/KatsuteDev/Background/pull/28 (@Katsute)
+
+  Set background image blur using `Background: Set background image blur`
+
+### 📘 Dependencies
+
+* Bump vsce from 2.10.1 to 2.10.2 https://github.com/KatsuteDev/Background/pull/20 (@dependabot)
+* Bump typescript from 4.7.4 to 4.8.2 https://github.com/KatsuteDev/Background/pull/22 (@dependabot)
+* Bump vsce from 2.10.2 to 2.11.0 https://github.com/KatsuteDev/Background/pull/23 (@dependabot)
+* Bump @types/glob from 7.2.0 to 8.0.0 https://github.com/KatsuteDev/Background/pull/26 (@dependabot)
+* Bump @types/vscode from 1.70.0 to 1.71.0 https://github.com/KatsuteDev/Background/pull/29 (@dependabot)
+
+**Full Changelog**: https://github.com/KatsuteDev/Background/compare/1.1.0...1.2.0
+
 ## 1.1.0
 
 ### ⭐ New Features
