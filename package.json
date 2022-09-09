@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "private": true,
     "engines": {
         "vscode": "^1.71.0"
@@ -37,6 +37,7 @@
         "onCommand:background.config.background",
         "onCommand:background.config.align",
         "onCommand:background.config.blur",
+        "onCommand:background.config.delay",
         "onCommand:background.config.opacity",
         "onCommand:background.config.repeat",
         "onCommand:background.config.size"
@@ -76,6 +77,11 @@
             {
                 "command": "background.config.blur",
                 "title": "Set background image blur",
+                "category": "Background"
+            },
+            {
+                "command": "background.config.delay",
+                "title": "Set background image change delay",
                 "category": "Background"
             },
             {
@@ -164,10 +170,17 @@
                     "order": 6,
                     "default": "0"
                 },
+                "background.backgroundImageChangeDelay": {
+                    "markdownDescription": "How often in seconds the background image should change. Set to `0` to disable.",
+                    "type": "number",
+                    "order": 7,
+                    "default": 0,
+                    "minimum": 0
+                },
                 "background.opacity": {
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
                     "type": "number",
-                    "order": 7,
+                    "order": 8,
                     "default": 0.9,
                     "minimum": 0,
                     "maximum": 1
@@ -175,7 +188,7 @@
                 "background.backgroundImageRepeat": {
                     "markdownDescription": "The background image repeat.",
                     "type": "string",
-                    "order": 8,
+                    "order": 9,
                     "default": "No Repeat",
                     "enum": [
                         "No Repeat",
@@ -197,7 +210,7 @@
                 "background.backgroundImageSize": {
                     "markdownDescription": "The background image size.",
                     "type": "string",
-                    "order": 9,
+                    "order": 10,
                     "default": "Cover",
                     "enum": [
                         "Auto",
@@ -214,13 +227,13 @@
                 },
                 "background.backgroundImageSizeValue": {
                     "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
-                    "order": 10,
+                    "order": 11,
                     "type": "string",
                     "default": ""
                 },
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 11,
+                    "order": 12,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""

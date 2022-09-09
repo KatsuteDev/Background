@@ -34,7 +34,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         if(value && !isNaN(+value) && +value >= 0 && +value <= 1){
             const o: number = round(+value);
             if(o > .1){
-                update("opacity", round(+value));
+                update("opacity", o);
             }else{
                 vscode.window.showWarningMessage(
                     "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -42,7 +42,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                     { modal: true },
                     "Yes"
                 ).then((c?: "Yes") => {
-                    c && c === "Yes" && update("opacity", round(+value));
+                    c && c === "Yes" && update("opacity", o);
                 });
             }
         }
