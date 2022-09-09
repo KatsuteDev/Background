@@ -6,8 +6,6 @@ updates:
       - dependencies
     assignees:
       - Katsute
-    reviewers:
-      - Katsute
     schedule:
       interval: daily
       time: '07:00'
@@ -18,8 +16,6 @@ updates:
     labels:
       - dependencies
     assignees:
-      - Katsute
-    reviewers:
       - Katsute
     schedule:
       interval: daily
