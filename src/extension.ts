@@ -30,6 +30,7 @@ import * as uninstall from "./command/uninstall";
 import { config, get } from "./command/config";
 
 import * as align from "./command/config/align";
+import * as blur from "./command/config/blur";
 import * as file from "./command/config/file";
 import * as opacity from "./command/config/opacity";
 import * as repeat from "./command/config/repeat";
@@ -58,7 +59,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                 vscode.window.showInformationMessage(`A backup was created for 'bootstrap-window.js'`);
             }
         }else
-            vscode.window.showWarningMessage(`Failed to find 'bootstrap-window.js'`);
+            vscode.window.showErrorMessage(`Failed to find 'bootstrap-window.js'`);
     }else
         vscode.window.showErrorMessage("Failed to find main file");
 
@@ -71,6 +72,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
     context.subscriptions.push(config);
 
     context.subscriptions.push(align.command);
+    context.subscriptions.push(blur.command);
     context.subscriptions.push(file.command);
     context.subscriptions.push(opacity.command);
     context.subscriptions.push(repeat.command);
@@ -114,7 +116,7 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
 
 const getJS: () => string = () => {
     // document.createTextNode will remove any unsafe css
-    const css: string = (get("CSS") || "")
+    const css: string = (get("CSS") as string || "")
         .replace(/\n\r?/gm, ' ') // make single line
         .replace(/"/gm, '\'')    // prevent escaping quotes
         .replace(/\\+$/gm, '');  // prevent escaping last script quote
@@ -124,7 +126,7 @@ const getJS: () => string = () => {
         editor: [],
         sidebar: [],
         panel: []
-    }
+    };
 
     // populate images
 
@@ -148,6 +150,9 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageAlignmentValue") as string,
     }[get("backgroundImageAlignment") as string] || "center center";
 
+    const blur: string = (get("backgroundImageBlur") as string || "")
+        .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
+
     const opacity: number = get("opacity") as number;
 
     const repeat: string = {
@@ -166,9 +171,9 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageSizeValue") as string
     }[get("backgroundImageSize") as string] || "cover";
 
-    // shared ::after css
+    // background css
 
-    const overlay: string =
+    const prop: string = // ::before, ::after overlay css
     `
     content: "";
 
@@ -183,6 +188,16 @@ const getJS: () => string = () => {
     position: absolute;
 
     pointer-events: none;
+    `
+    + // background image css
+    `
+    background-position: ${position};
+    background-repeat: ${repeat};
+    background-size: ${size};
+
+    opacity: ${1-opacity};
+
+    filter: blur(${blur});
     `;
 
     // css for each element
@@ -206,12 +221,9 @@ const s = document.createElement("style");
 if(windowBackgrounds.length > 0){
     s.appendChild(document.createTextNode(
     \`
-body {
+body::before {
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${opacity};
+    ${prop}
 
     background-image: url("\${windowBackgrounds[0]}");
 
@@ -226,12 +238,7 @@ if(editorBackgrounds.length > 0){
             \`
 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-    ${overlay}
-
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop}
 
     background-image: url("\${editorBackgrounds[i-1]}");
 
@@ -245,12 +252,7 @@ if(sidebarBackgrounds.length > 0){
     \`
 .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-    ${overlay}
-
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop}
 
     background-image: url("\${sidebarBackgrounds[0]}");
 
@@ -258,12 +260,7 @@ if(sidebarBackgrounds.length > 0){
 
 .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-    ${overlay}
-
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop}
 
     background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
 
@@ -278,12 +275,7 @@ if(panelBackgrounds.length > 0){
 
 .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-    ${overlay}
-
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-    opacity: ${1-opacity};
+    ${prop}
 
     background-image: url("\${panelBackgrounds[0]}");
 
