@@ -207,8 +207,10 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
 
     vscode.window.showQuickPick(
         [
+            // existing items
             ...items,
             separator(),
+            // add
             quickPickItem({
                 label: "$(file-add) Add a File",
                 onSelect: (item?: CommandQuickPickItem) => new Promise(() => {

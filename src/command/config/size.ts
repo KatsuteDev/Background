@@ -27,35 +27,34 @@ const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => n
     updateFromLabel("backgroundImageSize", item);
 });
 
-const manual: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    const current: string = get("backgroundImageSizeValue") as string;
-    vscode.window.showInputBox({
-        title: "Background Size",
-        placeHolder: "Background size",
-        value: current,
-        prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
-    }).then((value?: string) => {
-        if(value !== undefined){
-            let changed: boolean = get("backgroundImageSize") !== "Manual" || current !== value;
-
-            update("backgroundImageSize", "Manual", true);
-            update("backgroundImageSizeValue", value, true);
-
-            if(changed)
-                notify();
-        }
-    });
-});
-
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.size", () => {
     const current: string = get("backgroundImageSize") as string;
     vscode.window.showQuickPick(
         [
+            // size
             quickPickItem({ label: "Auto", description: "Original image size", onSelect }, current),
             quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect }, current),
             quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect }, current),
             separator(),
-            quickPickItem({ label: "Manual", description: "Manual size", onSelect: manual }, current)
+            // manual
+            quickPickItem({ label: "Manual", description: "Manual size", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                vscode.window.showInputBox({
+                    title: "Background Size",
+                    placeHolder: "Background size",
+                    value: current,
+                    prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
+                }).then((value?: string) => {
+                    if(value !== undefined){
+                        let changed: boolean = get("backgroundImageSize") !== "Manual" || current !== value;
+
+                        update("backgroundImageSize", "Manual", true);
+                        update("backgroundImageSizeValue", value, true);
+
+                        if(changed)
+                            notify();
+                    }
+                });
+            })}, current)
         ],
         {
             ...options,
