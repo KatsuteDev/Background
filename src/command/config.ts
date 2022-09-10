@@ -21,6 +21,7 @@ import * as vscode from "vscode";
 import * as align from "./config/align";
 import * as file from "./config/file";
 import * as blur from "./config/blur";
+import * as delay from "./config/delay";
 import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
@@ -58,6 +59,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         separator(),
         align.item,
         blur.item,
+        delay.item,
         opacity.item,
         repeat.item,
         size.item,

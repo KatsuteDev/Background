@@ -116,6 +116,8 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
     return false;
 }
 
+const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
+
 const getJS: () => string = () => {
     // document.createTextNode will remove any unsafe css
     const css: string = (get("CSS") as string || "")
@@ -155,9 +157,9 @@ const getJS: () => string = () => {
     const blur: string = (get("backgroundImageBlur") as string || "")
         .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
-    const opacity: number = get("opacity") as number;
+    const opacity: number = round(get("opacity") as number);
 
-    const delay: number = get("backgroundImageChangeDelay") as number;
+    const delay: number = round(get("backgroundImageChangeDelay") as number);
 
     const repeat: string = {
         "No Repeat": "no-repeat",
@@ -189,15 +191,15 @@ bk_global.type = "text/css";
 
 bk_global.appendChild(document.createTextNode(
 \`
-html[transition="true"] body::before,
-html[transition="true"] .split-view-view > .editor-group-container::after,
-html[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-html[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
-html[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+body[transition="true"]::before,
+body[transition="true"] .split-view-view > .editor-group-container::after,
+body[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+body[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
+body[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
     opacity: 0;
 
-};
+}
 
 body::before,
 .split-view-view > .editor-group-container::after,
@@ -223,13 +225,13 @@ body::before,
     background-repeat: ${repeat};
     background-size: ${size};
 
-    opacity: ${1-opacity};
+    opacity: ${round(1-opacity)};
 
     filter: blur(${blur});
 
-    transition: opacity .5s ease-in-out;
+    transition: opacity 1s ease-in-out;
 
-};
+}
 \`));
 `
 + // custom user css
@@ -250,6 +252,10 @@ bk_image.id = "${identifier}";
 bk_image.type = "text/css";
 
 const setBackground = () => {
+    while(bk_image.firstChild){
+        bk_image.removeChild(bk_image.firstChild);
+    }
+
     shuffle();
 
     if(windowBackgrounds.length > 0){
@@ -306,13 +312,6 @@ body::before {
     }
 }
 `
-+ // install
-`
-window.onload = () => {
-    document.getElementsByTagName("head")[0].appendChild(bk_global);
-    document.getElementsByTagName("head")[0].appendChild(bk_image);
-};
-`
 + // randomize backgrounds
 `
 const shuffle = () => {
@@ -323,6 +322,27 @@ const shuffle = () => {
         }
     }
 }
+`
++ // install
+`
+window.onload = () => {
+    document.getElementsByTagName("head")[0].appendChild(bk_global);
+    document.getElementsByTagName("head")[0].appendChild(bk_image);
+
+    const body = document.getElementsByTagName("body")[0];
+
+    setBackground();
+
+    if(${delay} > 2){
+        setInterval(() => {
+            body.setAttribute("transition", true);
+            setTimeout(() => {
+                setBackground();
+                body.setAttribute("transition", false);
+            }, 1 * 1000);
+        }, ${delay} * 1000);
+    }
+};
 `
 + // EOF
 `
