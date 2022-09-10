@@ -123,19 +123,22 @@ const getJS: () => string = () => {
         .replace(/"/gm, '\'')    // prevent escaping quotes
         .replace(/\\+$/gm, '');  // prevent escaping last script quote
 
-    const images: {[key: string]: string[]} = {
+    // populate images
+
+    const images: {[key: string]: string[]} = { // include start and end quotes
         window: [],
         editor: [],
         sidebar: [],
         panel: []
     };
 
-    // populate images
-
     for(const s of ["window", "editor", "sidebar", "panel"])
         for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
-            for(const f of glob.sync(g).filter(extensions))
-                images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+            if(g.startsWith("https://")) // use literal URL
+                images[s].push('"' + g + '"');
+            else // use glob
+                for(const f of glob.sync(g).filter(extensions))
+                    images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
     // resolve settings to css
 
