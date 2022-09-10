@@ -226,7 +226,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                         prompt: "Add a image URL. Must be served over HTTPS",
                         validateInput: (value: string) => {
                             if(value.startsWith("file://"))
-                                return "File URLs not accepted, use Add File option.";
+                                return "File URLs not accepted, use Add File option";
                             else if(value.startsWith("http://"))
                                 return "Images must be served over HTTPS";
                             else if(value.startsWith("https://"))

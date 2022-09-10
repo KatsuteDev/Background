@@ -74,9 +74,9 @@ Access the configuration menu using from the command palette with `Background: C
 
 ![configuration menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif)
 
-#### ✱ Glob Support
+#### ✱ Glob and URL Support
 
-Add background images by file, by folder, or by [glob](https://github.com/isaacs/node-glob#glob-primer).
+Add background images by file, by folder, by [glob](https://github.com/isaacs/node-glob#glob-primer), or by URL.
 
 ![file menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif)
 
