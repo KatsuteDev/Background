@@ -23,6 +23,8 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
 </div>
 
+<br>
+
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)
  - [💻 Commands](#-commands)
@@ -68,7 +70,7 @@ Add background images for the whole window, editors, sidebars, or the panel. Ima
 
 <div align="center">
     <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
-    <br>
+    <br><br>
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
 </div>
 
