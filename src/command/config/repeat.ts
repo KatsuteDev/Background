@@ -40,7 +40,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         {
             ...options,
             title: `${options.title} - Repeat`,
-            placeHolder: "Repeat",
+            placeHolder: "Background repeat",
         })
     .then(handle);
 });

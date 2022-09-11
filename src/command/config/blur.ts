@@ -23,13 +23,13 @@ import { CommandQuickPickItem, get, options, update } from "../config";
 //
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.blur", () => {
-    const current: string = get("backgroundImageBlur");
+    const current: string = get("backgroundImageBlur") as string ?? "";
     vscode.window.showInputBox({
         title: `${options.title} - Blur`,
-        placeHolder: "Background Blur",
-        value: current.toString(),
+        placeHolder: "Background blur",
+        value: current,
         prompt: `Background blur (${current})`,
-        validateInput: validate
+        validateInput: (value: string) => value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null
     }).then((value?: string) => {
         if(value && !value.match(/[^\w.%+-]/gmi))
             update("backgroundImageBlur", value);
@@ -40,8 +40,4 @@ export const item: CommandQuickPickItem = {
     label: "Blur",
     description: "Background image blur",
     onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.blur"))
-}
-
-const validate: (value: string) => string | null | undefined = (value: string) => {
-    return value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null;
 }

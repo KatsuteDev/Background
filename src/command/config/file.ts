@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update } from "../config";
+import { CommandQuickPickItem, get, handle, options, quickPickItem, separator, update } from "../config";
 import { notify } from "../install";
 
 // config
@@ -61,74 +61,23 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 const updateItem: (key: string, item?: CommandQuickPickItem) => Promise<void> = (key: string, item?: CommandQuickPickItem) => new Promise(() => {
     vscode.window.showInputBox({
         title: `Update ${item!.value}`,
-        placeHolder: "File path or glob, leave blank to remove",
+        placeHolder: "File path, glob, or URL, leave blank to remove",
         value: item!.value ?? "",
         prompt: "Only '/' can be used for paths, '\\' is reserved for escape characters. Leave this field blank to remove.",
+        validateInput: (value: string) => {
+            if(value.startsWith("file://"))
+                return "Do not include 'file://' as part of the file path";
+            else if(value.startsWith("http://"))
+                return "Images must be served over HTTPS";
+            else
+                return null;
+        }
     }).then((value?: string) => {
         if(item && value !== undefined)
             if(value.trim().length === 0)
                 remove(key, item.value!);
             else
                 replace(key, item.value!, value);
-    });
-});
-
-const addFile: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    vscode.window.showOpenDialog({
-        canSelectFiles: true,
-        canSelectFolders: false,
-        canSelectMany: true,
-        openLabel: "Select Image",
-        filters: {"Images": extensions()}
-    }).then((files?: vscode.Uri[]) => {
-        if(files)
-            scope().then((value?: CommandQuickPickItem[]) => {
-                if(value){
-                    for(const file of files)
-                        for(const s of value)
-                            add(`${s.value}Backgrounds`, file.fsPath.replace(/\\/g, '/'));
-                    if(files.length > 0 && value.length > 0)
-                        notify();
-                }
-            });
-    });
-});
-
-const addFolder: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    vscode.window.showOpenDialog({
-        canSelectFiles: false,
-        canSelectFolders: true,
-        canSelectMany: true,
-        openLabel: "Select Folder"
-    }).then((files?: vscode.Uri[]) => {
-        if(files)
-            scope().then((value?: CommandQuickPickItem[]) => {
-                if(value){
-                    for(const file of files)
-                        for(const s of value)
-                            add(`${s.value}Backgrounds`, `${file.fsPath.replace(/\\/g, '/')}/**`);
-                    if(files.length > 0 && value.length > 0)
-                        notify();
-                }
-            });
-    });
-});
-
-const addGlob: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    vscode.window.showInputBox({
-        title: "Add File",
-        placeHolder: "File path or glob",
-        prompt: "Add a file or a glob. Only '/' can be used for paths, '\\' is reserved for escape characters.",
-    }).then((glob?: string) => {
-        if(glob)
-            scope().then((value?: CommandQuickPickItem[]) => {
-                if(value){
-                    for(const s of value)
-                        add(`${s.value}Backgrounds`, glob);
-                    if(value.length > 0)
-                        notify();
-                }
-            });
     });
 });
 
@@ -178,10 +127,10 @@ export const item: CommandQuickPickItem = {
 }
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.background", () => {
+    // existing items
     const items: CommandQuickPickItem[] = [];
 
     for(const scope of ["window", "editor", "sidebar", "panel"]){
-
         const icon: string | undefined = {
             window: "window",
             editor: "multiple-windows",
@@ -204,27 +153,114 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                 })
             }));
     }
-
+    // show menu
     vscode.window.showQuickPick(
         [
+            // existing items
             ...items,
             separator(),
+            // add
             quickPickItem({
                 label: "$(file-add) Add a File",
                 onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                    addFile(item);
+                    vscode.window.showOpenDialog({
+                        canSelectFiles: true,
+                        canSelectFolders: false,
+                        canSelectMany: true,
+                        openLabel: "Select Image",
+                        filters: {"Images": extensions()}
+                    }).then((files?: vscode.Uri[]) => {
+                        if(files)
+                            scope().then((value?: CommandQuickPickItem[]) => {
+                                if(value){
+                                    for(const file of files)
+                                        for(const s of value)
+                                            add(`${s.value}Backgrounds`, file.fsPath.replace(/\\/g, '/'));
+                                    if(files.length > 0 && value.length > 0)
+                                        notify();
+                                }
+                            });
+                    });
                 })
             }),
             quickPickItem({
                 label: "$(file-directory-create) Add a Folder",
                 onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                    addFolder(item);
+                    vscode.window.showOpenDialog({
+                        canSelectFiles: false,
+                        canSelectFolders: true,
+                        canSelectMany: true,
+                        openLabel: "Select Folder"
+                    }).then((files?: vscode.Uri[]) => {
+                        if(files)
+                            scope().then((value?: CommandQuickPickItem[]) => {
+                                if(value){
+                                    for(const file of files)
+                                        for(const s of value)
+                                            add(`${s.value}Backgrounds`, `${file.fsPath.replace(/\\/g, '/')}/**`);
+                                    if(files.length > 0 && value.length > 0)
+                                        notify();
+                                }
+                            });
+                    });
                 })
             }),
             quickPickItem({
                 label: "$(kebab-horizontal) Add a Glob",
                 onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                    addGlob(item);
+                    vscode.window.showInputBox({
+                        title: "Add File",
+                        placeHolder: "File path or glob",
+                        prompt: "Add a file or a glob. Only '/' can be used for paths, '\\' is reserved for escape characters.",
+                        validateInput: (value: string) => {
+                            if(value.startsWith("file://"))
+                                return "Do not include 'file://' as part of the file path";
+                            else if(value.startsWith("http://") || value.startsWith("https://"))
+                                return "Image URLs do not support glob, use Add URL option"
+                            else
+                                return null;
+                        }
+                    }).then((glob?: string) => {
+                        if(glob)
+                            scope().then((value?: CommandQuickPickItem[]) => {
+                                if(value){
+                                    for(const s of value)
+                                        add(`${s.value}Backgrounds`, glob);
+                                    if(value.length > 0)
+                                        notify();
+                                }
+                            });
+                    });
+                })
+            }),
+            quickPickItem({
+                label: "$(ports-open-browser-icon) Add a URL",
+                onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                    vscode.window.showInputBox({
+                        title: "Add URL",
+                        placeHolder: "Image URL",
+                        prompt: "Add a image URL. Must be served over HTTPS",
+                        validateInput: (value: string) => {
+                            if(value.startsWith("file://"))
+                                return "File URLs not accepted, use Add File option";
+                            else if(value.startsWith("http://"))
+                                return "Images must be served over HTTPS";
+                            else if(value.startsWith("https://"))
+                                return null;
+                            else
+                                return "Invalid URL";
+                        }
+                    }).then((url?: string) => {
+                        if(url)
+                            scope().then((value?: CommandQuickPickItem[]) => {
+                                if(value){
+                                    for(const s of value)
+                                        add(`${s.value}Backgrounds`, url);
+                                    if(value.length > 0)
+                                        notify();
+                                }
+                            });
+                    });
                 })
             })
         ],

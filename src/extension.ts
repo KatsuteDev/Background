@@ -40,7 +40,7 @@ import { statusbar } from "./statusbar";
 
 //
 
-const identifier: string = "KatsuteDev/background";
+const identifier: string = "KatsuteDev/Background";
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
 
@@ -102,7 +102,7 @@ export const restartVS: () => void = () => {
 
 //
 
-const remove: RegExp = new RegExp(`\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S]*?` + `\\/\\* ${identifier}-end \\*\\/`);
+const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
@@ -114,6 +114,8 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
     return false;
 }
 
+const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
+
 const getJS: () => string = () => {
     // document.createTextNode will remove any unsafe css
     const css: string = (get("CSS") as string || "")
@@ -121,19 +123,22 @@ const getJS: () => string = () => {
         .replace(/"/gm, '\'')    // prevent escaping quotes
         .replace(/\\+$/gm, '');  // prevent escaping last script quote
 
-    const images: {[key: string]: string[]} = {
+    // populate images
+
+    const images: {[key: string]: string[]} = { // include start and end quotes
         window: [],
         editor: [],
         sidebar: [],
         panel: []
     };
 
-    // populate images
-
     for(const s of ["window", "editor", "sidebar", "panel"])
         for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
-            for(const f of glob.sync(g).filter(extensions))
-                images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+            if(g.startsWith("https://")) // use literal URL
+                images[s].push('"' + g + '"');
+            else // use glob
+                for(const f of glob.sync(g).filter(extensions))
+                    images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
     // resolve settings to css
 
@@ -153,7 +158,7 @@ const getJS: () => string = () => {
     const blur: string = (get("backgroundImageBlur") as string || "")
         .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
-    const opacity: number = get("opacity") as number;
+    const opacity: number = round(get("opacity") as number);
 
     const repeat: string = {
         "No Repeat": "no-repeat",
@@ -171,121 +176,151 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageSizeValue") as string
     }[get("backgroundImageSize") as string] || "cover";
 
-    // background css
+    return `
+/* ${identifier}-start */
+`
++ // background image css
+`
+const bk_global = document.createElement("style");
+bk_global.id = "${identifier}-global";
+bk_global.setAttribute("type", "text/css");
 
-    const prop: string = // ::before, ::after overlay css
-    `
+bk_global.appendChild(document.createTextNode(
+\`
+body::before,
+.split-view-view > .editor-group-container::after,
+.split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
+.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
     content: "";
 
     top: 0;
-    right: 0;
 
     width: 100%;
     height: 100%;
 
-    z-index: 100;
+    z-index: 1000;
 
     position: absolute;
 
     pointer-events: none;
-    `
-    + // background image css
-    `
+
     background-position: ${position};
     background-repeat: ${repeat};
     background-size: ${size};
 
-    opacity: ${1-opacity};
+    opacity: ${round(1-opacity)};
 
     filter: blur(${blur});
-    `;
 
-    // css for each element
-
-    return `
-/* ${identifier}-start */
+}
+\`));
+`
++ // custom user css
+`
+bk_global.appendChild(document.createTextNode("${css}"));
+`
++ // background image cache
+`
 const windowBackgrounds = [${images.window.join(',')}];
 const editorBackgrounds = [${images.editor.join(',')}];
 const sidebarBackgrounds = [${images.sidebar.join(',')}];
 const panelBackgrounds = [${images.panel.join(',')}];
+`
++ // background images
+`
+const bk_image = document.createElement("style");
+bk_image.id = "${identifier}-images";
+bk_image.setAttribute("type", "text/css");
 
-for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
-    for(let i = arr.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+const setBackground = () => {
+    while(bk_image.firstChild){
+        bk_image.removeChild(bk_image.firstChild);
     }
-}
 
-const s = document.createElement("style");
+    randomize();
 
-if(windowBackgrounds.length > 0){
-    s.appendChild(document.createTextNode(
-    \`
+    if(windowBackgrounds.length > 0){
+        bk_image.appendChild(document.createTextNode(
+        \`
 body::before {
-
-    ${prop}
 
     background-image: url("\${windowBackgrounds[0]}");
 
 }
-    \`));
-}
+        \`));
+    }
 
-if(editorBackgrounds.length > 0){
-    const len = editorBackgrounds.length;
-    for(let i = 1; i <= len; i++){
-        s.appendChild(document.createTextNode(
-            \`
+    if(editorBackgrounds.length > 0){
+        const len = editorBackgrounds.length;
+        for(let i = 1; i <= len; i++){
+            bk_image.appendChild(document.createTextNode(
+                \`
 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-    ${prop}
-
     background-image: url("\${editorBackgrounds[i-1]}");
+
+}
+                \`));
+        }
+    }
+
+    if(sidebarBackgrounds.length > 0){
+        bk_image.appendChild(document.createTextNode(
+        \`
+.split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
+
+    background-image: url("\${sidebarBackgrounds[0]}");
+
+}
+.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+
+    background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
+
+}
+        \`));
+    }
+
+    if(panelBackgrounds.length > 0){
+        bk_image.appendChild(document.createTextNode(
+            \`
+.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
+    background-image: url("\${panelBackgrounds[0]}");
 
 }
             \`));
     }
 }
+`
++ // randomize backgrounds
+`
+const randomize = () => {
+    for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
+        shuffle(arr);
+    }
+};
 
-if(sidebarBackgrounds.length > 0){
-    s.appendChild(document.createTextNode(
-    \`
-.split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
+const shuffle = (arr) => {
+    for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+};
+`
++ // install
+`
+window.onload = () => {
+    document.getElementsByTagName("head")[0].appendChild(bk_global);
+    document.getElementsByTagName("head")[0].appendChild(bk_image);
 
-    ${prop}
-
-    background-image: url("\${sidebarBackgrounds[0]}");
-
-}
-
-.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
-
-    ${prop}
-
-    background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
-
-}
-    \`));
-}
-
-if(panelBackgrounds.length > 0){
-    s.appendChild(document.createTextNode(
-        \`
-
-
-.split-view-view > #workbench\\\\.parts\\\\.panel::after {
-
-    ${prop}
-
-    background-image: url("\${panelBackgrounds[0]}");
-
-}
-        \`));
-}
-
-s.appendChild(document.createTextNode("${css}"));
-
-window.onload = () => document.getElementsByTagName("head")[0].appendChild(s);
+    setBackground();
+};
+`
++ // EOF
+`
 /* ${identifier}-end */
         `.trim();
 }
