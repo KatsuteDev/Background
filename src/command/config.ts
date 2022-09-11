@@ -18,50 +18,48 @@
 
 import * as vscode from "vscode";
 
-import * as align from "./config/align";
-import * as file from "./config/file";
-import * as blur from "./config/blur";
-import * as opacity from "./config/opacity";
-import * as repeat from "./config/repeat";
-import * as size from "./config/size";
+import { get } from "../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../vs/quickpick";
 
 import * as reload from "./reload";
 import * as install from "./install";
 import * as uninstall from "./uninstall";
 
-import { notify } from "./install";
-
-// read / write
-
-const vsconfig = () => vscode.workspace.getConfiguration("background");
-
-export const get: (key: string) => any = (key: string) => {
-    return vsconfig().get(key);
-}
-
-export const update: (key: string, value: any, skipWarning?: boolean) => void = (key: string, value: any, skipWarning?: boolean) => {
-    const current: any = get(key) as any;
-    vsconfig().update(key, value, vscode.ConfigurationTarget.Global);
-    if(skipWarning !== true && current !== value)
-        notify();
-}
-
-export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void = (key: string, item?: CommandQuickPickItem) => {
-    item && item.label && update(key, item.label);
-}
-
 // interface
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
     vscode.window.showQuickPick([
-        file.item,
+        // background types
+        quickPickItem({
+            label: "$(window) Window",
+            description: `${get("windowBackgrounds").length} Backgrounds`,
+            detail: `${get("backgroundImageAlignment")} Alignment • ${get("backgroundImageBlur")} Blur • ${get("opacity")} Opacity • ${get("backgroundImageRepeat")} Repeat • ${get("backgroundImageSize")} Size`,
+            onSelect: menu,
+            value: "window"
+        }),
+        quickPickItem({
+            label: "$(multiple-windows) Editor",
+            description: `${get("editorBackgrounds").length} Backgrounds`,
+            detail: `${get("backgroundImageAlignment")} Alignment • ${get("backgroundImageBlur")} Blur • ${get("opacity")} Opacity • ${get("backgroundImageRepeat")} Repeat • ${get("backgroundImageSize")} Size`,
+            onSelect: menu,
+            value: "editor"
+        }),
+        quickPickItem({
+            label: "$(layout-sidebar-left) Sidebar",
+            description: `${get("sidebarBackgrounds").length} Backgrounds`,
+            detail: `${get("backgroundImageAlignment")} Alignment • ${get("backgroundImageBlur")} Blur • ${get("opacity")} Opacity • ${get("backgroundImageRepeat")} Repeat • ${get("backgroundImageSize")} Size`,
+            onSelect: menu,
+            value: "sidebar"
+        }),
+        quickPickItem({
+            label: "$(layout-panel) Panel",
+            description: `${get("panelBackgrounds").length} Backgrounds`,
+            detail: `${get("backgroundImageAlignment")} Alignment • ${get("backgroundImageBlur")} Blur • ${get("opacity")} Opacity • ${get("backgroundImageRepeat")} Repeat • ${get("backgroundImageSize")} Size`,
+            onSelect: menu,
+            value: "panel"
+        }),
         separator(),
-        align.item,
-        blur.item,
-        opacity.item,
-        repeat.item,
-        size.item,
-        separator(),
+        // extension options
         install.item,
         uninstall.item,
         reload.item
@@ -69,7 +67,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
     .then(handle);
 });
 
-//
+// shared options
 
 export const options: vscode.QuickPickOptions = {
     title: "Background",
@@ -77,27 +75,68 @@ export const options: vscode.QuickPickOptions = {
     matchOnDescription: true
 }
 
-export const handle: (item?: CommandQuickPickItem) => void = (item?: CommandQuickPickItem) => {
-    item && item.onSelect && item.onSelect(item);
-}
+// menu
 
-// vsc quick pick
+export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    if(!item) return;
 
-export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
-    ...item,
-    description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim()
-} as CommandQuickPickItem);
+    vscode.window.showQuickPick([
+        // backgrounds
+        quickPickItem({
+            label: "$(file-media) File",
+            description: `${get(item.value! + "Backgrounds").length} Backgrounds`,
+            detail: "Select background image files",
+            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
 
-export const separator: () => vscode.QuickPickItem = () => ({
-    label: "",
-    kind: vscode.QuickPickItemKind.Separator
-} as vscode.QuickPickItem);
+            })
+        }),
+        separator(),
+        // background options
+        quickPickItem({
+            label: "$(arrow-both) Alignment",
+            description: `todo`,
+            detail: "Background image alignment",
+            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
 
-// types
+            })
+        }),
+        quickPickItem({
+            label: "$(eye) Blur",
+            description: `todo`,
+            detail: "Background image blur",
+            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
 
-export type CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => Promise<void>;
+            })
+        }),
+        quickPickItem({
+            label: "$(eye) Opacity",
+            description: `todo%`,
+            detail: "Background image opacity",
+            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
 
-export interface CommandQuickPickItem extends vscode.QuickPickItem {
-    onSelect?: (item?: CommandQuickPickItem) => Promise<void>;
-    value?: string
-}
+            })
+        }),
+        quickPickItem({
+            label: "Repeat",
+            description: `todo`,
+            detail: "Background image repeat",
+            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+
+            })
+        }),
+        quickPickItem({
+            label: "Size",
+            description: `todo`,
+            detail: "Background image size",
+            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+
+            })
+        })
+    ],
+    {
+        ...options,
+        title: `${item.value![0].toUpperCase() + item.value!.substring(1)} ${options.title}`,
+        placeHolder: "Option"
+    })
+    .then(handle);
+});

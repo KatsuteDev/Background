@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem } from "./config";
+import { CommandQuickPickItem } from "../vs/quickpick";
 
 //
 

@@ -18,19 +18,25 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem } from "../vs/quickpick";
+import { CommandQuickPickItem } from "./quickpick";
 
-import { restartVS, uninstallJS } from "../extension";
+import { notify } from "../command/install";
 
 //
 
-export const item: CommandQuickPickItem = {
-    label: "$(close) Uninstall",
-    description: "Uninstall background",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.uninstall"))
+const config = () => vscode.workspace.getConfiguration("background");
+
+// config
+
+export const get: (key: string) => any = (key: string) => config().get(key);
+
+export const update: (key: string, value: any, skipWarning?: boolean) => void = (key: string, value: any, skipWarning?: boolean) => {
+    const current: any = get(key) as any;
+    config().update(key, value, vscode.ConfigurationTarget.Global);
+    if(skipWarning !== true && current !== value)
+        notify();
 }
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", () => {
-    uninstallJS();
-    restartVS();
-});
+export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void = (key: string, item?: CommandQuickPickItem) => {
+    item && item.label && update(key, item.label);
+}

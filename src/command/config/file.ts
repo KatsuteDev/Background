@@ -18,7 +18,10 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem, get, handle, options, quickPickItem, separator, update } from "../config";
+import { get, update } from "../../vs/vsconfig";
+import { CommandQuickPickItem, handle, quickPickItem, separator } from "../../vs/quickpick";
+
+import { options } from "../config";
 import { notify } from "../install";
 
 // config

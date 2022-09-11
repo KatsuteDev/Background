@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "1.3.0",
+    "version": "2.0.0",
     "private": true,
     "engines": {
         "vscode": "^1.71.0"
@@ -33,13 +33,7 @@
         "onCommand:background.install",
         "onCommand:background.uninstall",
         "onCommand:background.reload",
-        "onCommand:background.config",
-        "onCommand:background.config.background",
-        "onCommand:background.config.align",
-        "onCommand:background.config.blur",
-        "onCommand:background.config.opacity",
-        "onCommand:background.config.repeat",
-        "onCommand:background.config.size"
+        "onCommand:background.config"
     ],
     "contributes": {
         "commands": [
@@ -61,36 +55,6 @@
             {
                 "command": "background.config",
                 "title": "Configuration",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.background",
-                "title": "Select background image files",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.align",
-                "title": "Set background image alignment",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.blur",
-                "title": "Set background image blur",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.opacity",
-                "title": "Set UI opacity",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.repeat",
-                "title": "Set background image repeat",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.size",
-                "title": "Set background image size",
                 "category": "Background"
             }
         ],

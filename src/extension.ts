@@ -18,6 +18,8 @@
 
 import * as vscode from "vscode";
 
+import { get } from "./vs/vsconfig";
+
 import { glob } from "glob";
 
 import * as fs from "fs";
@@ -27,7 +29,7 @@ import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
 
-import { config, get } from "./command/config";
+import { config } from "./command/config";
 
 import * as align from "./command/config/align";
 import * as blur from "./command/config/blur";
@@ -70,13 +72,6 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
     context.subscriptions.push(uninstall.command);
 
     context.subscriptions.push(config);
-
-    context.subscriptions.push(align.command);
-    context.subscriptions.push(blur.command);
-    context.subscriptions.push(file.command);
-    context.subscriptions.push(opacity.command);
-    context.subscriptions.push(repeat.command);
-    context.subscriptions.push(size.command);
 
     context.subscriptions.push(statusbar);
     statusbar.show();

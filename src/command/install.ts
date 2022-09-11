@@ -18,8 +18,9 @@
 
 import * as vscode from "vscode";
 
+import { CommandQuickPickItem } from "../vs/quickpick";
+
 import { installJS, restartVS } from "../extension";
-import { CommandQuickPickItem } from "./config";
 
 //
 
