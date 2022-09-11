@@ -183,7 +183,7 @@ const getJS: () => string = () => {
 `
 const bk_global = document.createElement("style");
 bk_global.id = "${identifier}-global";
-bk_global.type = "text/css";
+bk_global.setAttribute("type", "text/css");
 
 bk_global.appendChild(document.createTextNode(
 \`
@@ -231,8 +231,8 @@ const panelBackgrounds = [${images.panel.join(',')}];
 + // background images
 `
 const bk_image = document.createElement("style");
-bk_image.id = "${identifier}";
-bk_image.type = "text/css";
+bk_image.id = "${identifier}-images";
+bk_image.setAttribute("type", "text/css");
 
 const setBackground = () => {
     while(bk_image.firstChild){
@@ -251,6 +251,7 @@ body::before {
 }
         \`));
     }
+
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
         for(let i = 1; i <= len; i++){
@@ -264,6 +265,7 @@ body::before {
                 \`));
         }
     }
+
     if(sidebarBackgrounds.length > 0){
         bk_image.appendChild(document.createTextNode(
         \`
@@ -279,6 +281,7 @@ body::before {
 }
         \`));
     }
+
     if(panelBackgrounds.length > 0){
         bk_image.appendChild(document.createTextNode(
             \`
@@ -297,7 +300,7 @@ const randomize = () => {
     for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
         shuffle(arr);
     }
-}
+};
 
 const shuffle = (arr) => {
     for(let i = arr.length - 1; i > 0; i--){
@@ -305,7 +308,7 @@ const shuffle = (arr) => {
         [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
-}
+};
 `
 + // install
 `
