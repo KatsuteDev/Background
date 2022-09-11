@@ -8,7 +8,7 @@
   * Image URLs must be served over HTTPS
   * File URLs (`file://`) do not work, use `Add File` or `Add Folder` option
 
-**Full Changelog**: https://github.com/KatsuteDev/Background/compare/1.2.0...1.3,0
+**Full Changelog**: https://github.com/KatsuteDev/Background/compare/1.2.0...1.3.0
 
 ## 1.2.0
 
