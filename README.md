@@ -19,7 +19,9 @@
 
 The only background extension that supports [glob](https://github.com/isaacs/node-glob#glob-primer). Add multiple background images for the window, editors, sidebars, or the panel. No warnings about modified distributions.
 
-<img align="center" alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+<div align="center">
+    <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+</div>
 
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)
@@ -64,9 +66,10 @@ As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issueco
 
 Add background images for the whole window, editors, sidebars, or the panel. Images will be randomized whenever a window is opened.
 
-<img align="center" alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
-
-<img align="center" alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+<div align="center">
+    <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
+    <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+</div>
 
 ![editor background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif)
 
@@ -74,13 +77,17 @@ Add background images for the whole window, editors, sidebars, or the panel. Ima
 
 Access the configuration menu using from the command palette with `Background: Configuration` or by pressing the **Background** tab in the status bar.
 
-<img align="center" alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
+<div align="center">
+    <img alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
+</div>
 
 #### ✱ Glob and URL Support
 
 Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
 
-<img align="center" alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
+<div align="center">
+    <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
+</div>
 
 > ⚠️ **Only use forward-slashes in glob expressions.**
 >
