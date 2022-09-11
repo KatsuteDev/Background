@@ -102,7 +102,7 @@ export const restartVS: () => void = () => {
 
 //
 
-const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S]*?` + `\\/\\* ${identifier}-end \\*\\/$`, "gmi");
+const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 

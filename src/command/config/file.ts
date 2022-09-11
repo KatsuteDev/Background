@@ -212,6 +212,14 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                         title: "Add File",
                         placeHolder: "File path or glob",
                         prompt: "Add a file or a glob. Only '/' can be used for paths, '\\' is reserved for escape characters.",
+                        validateInput: (value: string) => {
+                            if(value.startsWith("file://"))
+                                return "Do not include 'file://' as part of the file path";
+                            else if(value.startsWith("http://") || value.startsWith("https://"))
+                                return "Image URLs do not support glob, use Add URL option"
+                            else
+                                return null;
+                        }
                     }).then((glob?: string) => {
                         if(glob)
                             scope().then((value?: CommandQuickPickItem[]) => {
