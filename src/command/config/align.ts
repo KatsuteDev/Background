@@ -28,7 +28,7 @@ const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => n
 });
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.align", () => {
-    const current: string = get("backgroundImageAlignment") as string;
+    const current: string = get("backgroundImageAlignment") as string ?? "";
     vscode.window.showQuickPick(
         [
             // top

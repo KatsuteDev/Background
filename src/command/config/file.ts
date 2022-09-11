@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update } from "../config";
+import { CommandQuickPickItem, get, handle, options, quickPickItem, separator, update } from "../config";
 import { notify } from "../install";
 
 // config
@@ -61,9 +61,17 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 const updateItem: (key: string, item?: CommandQuickPickItem) => Promise<void> = (key: string, item?: CommandQuickPickItem) => new Promise(() => {
     vscode.window.showInputBox({
         title: `Update ${item!.value}`,
-        placeHolder: "File path or glob, leave blank to remove",
+        placeHolder: "File path, glob, or URL, leave blank to remove",
         value: item!.value ?? "",
         prompt: "Only '/' can be used for paths, '\\' is reserved for escape characters. Leave this field blank to remove.",
+        validateInput: (value: string) => {
+            if(value.startsWith("file://"))
+                return "Do not include 'file://' as part of the file path";
+            else if(value.startsWith("http://"))
+                return "Images must be served over HTTPS";
+            else
+                return null;
+        }
     }).then((value?: string) => {
         if(item && value !== undefined)
             if(value.trim().length === 0)

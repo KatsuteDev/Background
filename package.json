@@ -99,7 +99,7 @@
             "order": 0,
             "properties": {
                 "background.windowBackgrounds": {
-                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 0,
                     "default": [],
@@ -108,7 +108,7 @@
                     }
                 },
                 "background.editorBackgrounds": {
-                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 1,
                     "default": [],
@@ -117,7 +117,7 @@
                     }
                 },
                 "background.sidebarBackgrounds": {
-                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 2,
                     "default": [],
@@ -126,7 +126,7 @@
                     }
                 },
                 "background.panelBackgrounds": {
-                    "markdownDescription": "The list of files or globs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 3,
                     "default": [],
@@ -159,7 +159,7 @@
                     "default": ""
                 },
                 "background.backgroundImageBlur": {
-                    "markdownDescription": "The blur amount in css units.",
+                    "markdownDescription": "The background image blur amount in css units.",
                     "type": "string",
                     "order": 6,
                     "default": "0"

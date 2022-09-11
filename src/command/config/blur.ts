@@ -23,10 +23,10 @@ import { CommandQuickPickItem, get, options, update } from "../config";
 //
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.blur", () => {
-    const current: string = get("backgroundImageBlur") as string;
+    const current: string = get("backgroundImageBlur") as string ?? "";
     vscode.window.showInputBox({
         title: `${options.title} - Blur`,
-        placeHolder: "Background Blur",
+        placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
         validateInput: (value: string) => value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null
