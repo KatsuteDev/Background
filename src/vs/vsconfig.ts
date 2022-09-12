@@ -28,7 +28,7 @@ const config = () => vscode.workspace.getConfiguration("background");
 
 // config
 
-export const get: (key: string) => any = (key: string) => config().get(key);
+export const get: (key: string) => any = (key: string) => config().get(key) ?? '␀';
 
 export const update: (key: string, value: any, skipWarning?: boolean) => void = (key: string, value: any, skipWarning?: boolean) => {
     const current: any = get(key) as any;

@@ -35,7 +35,7 @@
 * Add ability to use custom CSS https://github.com/KatsuteDev/Background/pull/14 (@Katsute)
 
   Added `background.CSS` setting to apply custom CSS to VSCode. Only available in the settings window.
-  
+
   _Experimental feature!_ Use at your own risk.
 
 ### 📘 Dependencies
