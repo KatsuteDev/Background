@@ -21,6 +21,7 @@ import * as vscode from "vscode";
 import { get } from "../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../vs/quickpick";
 
+import * as file from "./config/file";
 import * as align from "./config/align";
 import * as blur from "./config/blur";
 import * as opacity from "./config/opacity";
@@ -93,9 +94,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
             label: "$(file-media) File",
             description: s(get(`${scope}Backgrounds`), "Background"),
             detail: "Select background image files",
-            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-
-            }),
+            onSelect: file.menu,
             scope
         }),
         quickPickItem({
