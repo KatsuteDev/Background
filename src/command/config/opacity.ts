@@ -19,17 +19,24 @@
 import * as vscode from "vscode";
 
 import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem } from "../../vs/quickpick";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, Scope } from "../../vs/quickpick";
+
+import { round } from "../../lib/round";
+import { options } from "../config";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.opacity", () => {
-    const current: number = round(get("opacity") as number);
+export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    if(!item) return;
+
+    const scope: Scope = item.scope!;
+    const current: number = round(get(`${scope}BackgroundOpacity`) as number, 2);
+
     vscode.window.showInputBox({
-        title: "UI Opacity",
-        placeHolder: "UI opacity",
+        title: `${scope} ${options.title} - Opacity`,
+        placeHolder: "Background opacity",
         value: current.toString(),
-        prompt: `UI Opacity (${current})`,
+        prompt: `Background opacity (${current}). 0 is fully visible and 1 is invisible.`,
         validateInput: (value: string) => {
             if(isNaN(+value))
                 return "Not a number";
@@ -40,9 +47,9 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         }
     }).then((value?: string) => {
         if(value && !isNaN(+value)){
-            const o: number = Math.min(Math.max(round(+value), 0), 1);
+            const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
             if(o > .1){
-                update("opacity", o);
+                update(`${scope}BackgroundOpacity`, o);
             }else{
                 vscode.window.showWarningMessage(
                     "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -50,19 +57,9 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                     { modal: true },
                     "Yes"
                 ).then((c?: "Yes") => {
-                    c && c === "Yes" && update("opacity", o);
+                    c && c === "Yes" && update(`${scope}BackgroundOpacity`, o);
                 });
             }
         }
     });
 });
-
-export const item: CommandQuickPickItem = {
-    label: "Opacity",
-    description: "UI opacity",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.opacity"))
-}
-
-//
-
-const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;

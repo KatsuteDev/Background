@@ -19,7 +19,7 @@
 import * as vscode from "vscode";
 
 import { get, update, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../../vs/quickpick";
 
 import { options } from "../config";
 import { notify } from "../install";
@@ -27,30 +27,35 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    updateFromLabel("backgroundImageAlignment", item);
+    item && updateFromLabel(`${item.scope!}BackgroundAlignment`, item);
 });
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.align", () => {
-    const current: string = get("backgroundImageAlignment") as string ?? "";
+export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    if(!item) return;
+
+    const scope: Scope = item.scope!;
+    const current: string = get(`${scope}BackgroundAlignment`) as string ?? "";
+
     vscode.window.showQuickPick(
         [
             // top
-            quickPickItem({ label: "Top Left", onSelect }, current),
-            quickPickItem({ label: "Top Center", onSelect }, current),
-            quickPickItem({ label: "Top Right", onSelect }, current),
+            quickPickItem({ label: "Top Left", onSelect, scope }, current),
+            quickPickItem({ label: "Top Center", onSelect, scope }, current),
+            quickPickItem({ label: "Top Right", onSelect, scope }, current),
             separator(),
             // center
-            quickPickItem({ label: "Center Left", onSelect }, current),
-            quickPickItem({ label: "Center Center", onSelect }, current),
-            quickPickItem({ label: "Center Right", onSelect }, current),
+            quickPickItem({ label: "Center Left", onSelect, scope }, current),
+            quickPickItem({ label: "Center Center", onSelect, scope }, current),
+            quickPickItem({ label: "Center Right", onSelect, scope }, current),
             separator(),
             // bottom
-            quickPickItem({ label: "Bottom Left", onSelect }, current),
-            quickPickItem({ label: "Bottom Center", onSelect }, current),
-            quickPickItem({ label: "Bottom Right", onSelect }, current),
+            quickPickItem({ label: "Bottom Left", onSelect, scope }, current),
+            quickPickItem({ label: "Bottom Center", onSelect, scope }, current),
+            quickPickItem({ label: "Bottom Right", onSelect, scope }, current),
             separator(),
             // manual
-            quickPickItem({ label: "Manual", description: "Manual position", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            quickPickItem({ label: "Manual", description: "Manual position", scope, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+                if(!item) return;
                 vscode.window.showInputBox({
                     title: "Background Position",
                     placeHolder: "Background position",
@@ -58,10 +63,10 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                     prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
                 }).then((value?: string) => {
                     if(value !== undefined){
-                        let changed: boolean = get("backgroundImageAlignment") !== "Manual" || current !== value;
+                        let changed: boolean = get(`${scope}BackgroundAlignment`) !== "Manual" || current !== value;
 
-                        update("backgroundImageAlignment", "Manual", true);
-                        update("backgroundImageAlignmentValue", value, true);
+                        update(`${scope}BackgroundAlignment`, "Manual", true);
+                        update(`${scope}BackgroundAlignmentValue`, value, true);
 
                         if(changed)
                             notify();
@@ -71,14 +76,8 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         ],
         {
             ...options,
-            title: `${options.title} - Alignment`,
-            placeHolder: "Alignment"
+            title: `${scope} ${options.title} - Alignment`,
+            placeHolder: "Background alignment"
         }
     ).then(handle);
 });
-
-export const item: CommandQuickPickItem = {
-    label: "Align",
-    description: "Background image alignment",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.align"))
-}

@@ -19,37 +19,35 @@
 import * as vscode from "vscode";
 
 import { get, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem } from "../../vs/quickpick";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope } from "../../vs/quickpick";
 
 import { options } from "../config";
 
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    updateFromLabel("backgroundImageRepeat", item);
+    item && updateFromLabel(`${item.scope!}BackgroundRepeat`, item);
 });
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.repeat", () => {
-    const current: string = get("backgroundImageRepeat") as string;
+export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+    if(!item) return;
+
+    const scope: Scope = item.scope!;
+    const current: string = get(`${scope}BackgroundRepeat`) as string;
+
     vscode.window.showQuickPick(
         [
-            quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect }, current),
-            quickPickItem({ label: "Repeat", description: "Repeat X/Y", onSelect }, current),
-            quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect }, current),
-            quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect }, current),
-            quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect }, current),
-            quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect }, current)
+            quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect, scope }, current),
+            quickPickItem({ label: "Repeat", description: "Repeat X/Y", onSelect, scope }, current),
+            quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect, scope }, current),
+            quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect, scope }, current),
+            quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect, scope }, current),
+            quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect, scope }, current)
         ],
         {
             ...options,
-            title: `${options.title} - Repeat`,
+            title: `${scope} ${options.title} - Repeat`,
             placeHolder: "Background repeat",
         })
     .then(handle);
 });
-
-export const item: CommandQuickPickItem = {
-    label: "Repeat",
-    description: "Background image repeat",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.repeat"))
-}

@@ -36,9 +36,12 @@ export const separator: () => vscode.QuickPickItem = () => ({
 
 // types
 
+export type Scope = "window" | "editor" | "sidebar" | "panel";
+
 export type CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => Promise<void>;
 
 export interface CommandQuickPickItem extends vscode.QuickPickItem {
     onSelect?: (item?: CommandQuickPickItem) => Promise<void>;
-    value?: string
+    value?: string,
+    scope?: Scope
 }

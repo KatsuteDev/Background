@@ -31,14 +31,10 @@ import * as uninstall from "./command/uninstall";
 
 import { config } from "./command/config";
 
-import * as align from "./command/config/align";
-import * as blur from "./command/config/blur";
 import * as file from "./command/config/file";
-import * as opacity from "./command/config/opacity";
-import * as repeat from "./command/config/repeat";
-import * as size from "./command/config/size";
 
 import { statusbar } from "./statusbar";
+import { round } from "./lib/round";
 
 //
 
@@ -109,8 +105,6 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
     return false;
 }
 
-const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
-
 const getJS: () => string = () => {
     // document.createTextNode will remove any unsafe css
     const css: string = (get("CSS") as string || "")
@@ -153,7 +147,7 @@ const getJS: () => string = () => {
     const blur: string = (get("backgroundImageBlur") as string || "")
         .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
-    const opacity: number = round(get("opacity") as number);
+    const opacity: number = round(get("opacity") as number, 2);
 
     const repeat: string = {
         "No Repeat": "no-repeat",
@@ -205,7 +199,7 @@ body::before,
     background-repeat: ${repeat};
     background-size: ${size};
 
-    opacity: ${round(1-opacity)};
+    opacity: ${round(1-opacity, 2)};
 
     filter: blur(${blur});
 
