@@ -104,7 +104,7 @@ export const restartVS: () => void = () => {
 
 //
 
-const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/` + `[\\s\\S]*?` + `\\/\\* ${identifier}-end \\*\\/$`, "gmi");
+const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
 const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
@@ -125,19 +125,22 @@ const getJS: () => string = () => {
         .replace(/"/gm, '\'')    // prevent escaping quotes
         .replace(/\\+$/gm, '');  // prevent escaping last script quote
 
-    const images: {[key: string]: string[]} = {
+    // populate images
+
+    const images: {[key: string]: string[]} = { // include start and end quotes
         window: [],
         editor: [],
         sidebar: [],
         panel: []
     };
 
-    // populate images
-
     for(const s of ["window", "editor", "sidebar", "panel"])
         for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
-            for(const f of glob.sync(g).filter(extensions))
-                images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+            if(g.startsWith("https://")) // use literal URL
+                images[s].push('"' + g + '"');
+            else // use glob
+                for(const f of glob.sync(g).filter(extensions))
+                    images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
     // resolve settings to css
 
@@ -177,11 +180,8 @@ const getJS: () => string = () => {
         "Manual": get("backgroundImageSizeValue") as string
     }[get("backgroundImageSize") as string] || "cover";
 
-    // css for each element
-
     return `
 /* ${identifier}-start */
-{
 `
 + // background image css
 `
@@ -201,6 +201,10 @@ body[transition="true"] .split-view-view > #workbench\\\\.parts\\\\.panel::after
 
 }
 
+bk_global.setAttribute("type", "text/css");
+
+bk_global.appendChild(document.createTextNode(
+\`
 body::before,
 .split-view-view > .editor-group-container::after,
 .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
@@ -210,7 +214,6 @@ body::before,
     content: "";
 
     top: 0;
-    right: 0;
 
     width: 100%;
     height: 100%;
@@ -248,8 +251,8 @@ const panelBackgrounds = [${images.panel.join(',')}];
 + // background images
 `
 const bk_image = document.createElement("style");
-bk_image.id = "${identifier}";
-bk_image.type = "text/css";
+bk_image.id = "${identifier}-images";
+bk_image.setAttribute("type", "text/css");
 
 const setBackground = () => {
     while(bk_image.firstChild){
@@ -291,7 +294,6 @@ body::before {
     background-image: url("\${sidebarBackgrounds[0]}");
 
 }
-
 .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
     background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
@@ -319,6 +321,14 @@ const randomize = () => {
         shuffle(arr);
     }
 }
+`
++ // randomize backgrounds
+`
+const randomize = () => {
+    for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
+        shuffle(arr);
+    }
+};
 
 const shuffle = (arr) => {
     for(let i = arr.length - 1; i > 0; i--){
@@ -326,7 +336,7 @@ const shuffle = (arr) => {
         [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
-}
+};
 `
 + // install
 `

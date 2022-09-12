@@ -29,10 +29,17 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
         placeHolder: "UI opacity",
         value: current.toString(),
         prompt: `UI Opacity (${current})`,
-        validateInput: validate
+        validateInput: (value: string) => {
+            if(isNaN(+value))
+                return "Not a number";
+            else if(+value < 0 || +value > 1)
+                return "Opacity must be between 0 and 1";
+            else
+                return null;
+        }
     }).then((value?: string) => {
-        if(value && !isNaN(+value) && +value >= 0 && +value <= 1){
-            const o: number = round(+value);
+        if(value && !isNaN(+value)){
+            const o: number = Math.min(Math.max(round(+value), 0), 1);
             if(o > .1){
                 update("opacity", o);
             }else{
@@ -58,12 +65,3 @@ export const item: CommandQuickPickItem = {
 //
 
 const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
-
-const validate: (value: string) => string | null | undefined = (value: string) => {
-    if(isNaN(+value))
-        return "Not a number";
-    else if(+value < 0 || +value > 1)
-        return "Opacity must be between 0 and 1";
-    else
-        return null;
-}

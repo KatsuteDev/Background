@@ -19,7 +19,11 @@
 
 The only background extension that supports [glob](https://github.com/isaacs/node-glob#glob-primer). Add multiple background images for the window, editors, sidebars, or the panel. No warnings about modified distributions.
 
-![editor background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif)
+<div align="center">
+    <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+</div>
+
+<br>
 
  - [📃 Installation](#-installation)
  - [✨ Features](#-features)
@@ -64,23 +68,29 @@ As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issueco
 
 Add background images for the whole window, editors, sidebars, or the panel. Images will be randomized whenever a window is opened.
 
-![window background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif)
-
-![editor background](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif)
+<div align="center">
+    <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
+    <br><br>
+    <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+</div>
 
 #### ⚙️ Configuration Menu
 
 Access the configuration menu using from the command palette with `Background: Configuration` or by pressing the **Background** tab in the status bar.
 
-![configuration menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif)
+<div align="center">
+    <img alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
+</div>
 
-#### ✱ Glob Support
+#### ✱ Glob and URL Support
 
-Add background images by file, by folder, or by [glob](https://github.com/isaacs/node-glob#glob-primer).
+Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
 
-![file menu](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif)
+<div align="center">
+    <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
+</div>
 
-> ⚠️ **Please only use forward-slashes in glob expressions.**
+> ⚠️ **Only use forward-slashes in glob expressions.**
 >
 > Though windows uses either `/` or `\` as its path separator, only `/` characters are used by this glob implementation.
 > You must use forward-slashes only in glob expressions. Back-slashes will always be interpreted as escape characters, not path separators.

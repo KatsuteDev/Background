@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0
+
+### ⭐ New Features
+
+* Accept background images from URLs [#35](https://github.com/KatsuteDev/Background/pull/35) ([@Katsute](https://github.com/Katsute))
+  * Image URLs must be served over HTTPS
+  * File URLs (`file://`) do not work, use `Add File` or `Add Folder` option
+
+**Full Changelog**: https://github.com/KatsuteDev/Background/compare/1.2.0...1.3.0
+
 ## 1.2.0
 
 ### ⭐ New Features
