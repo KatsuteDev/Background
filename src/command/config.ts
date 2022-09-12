@@ -67,9 +67,21 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         }),
         separator(),
         // extension options
-        install.item,
-        uninstall.item,
-        reload.item
+        quickPickItem({
+            label: "$(check) Install",
+            description: "Install background",
+            onSelect: () => new Promise(() => vscode.commands.executeCommand("background.install"))
+        }),
+        quickPickItem({
+            label: "$(close) Uninstall",
+            description: "Uninstall background",
+            onSelect: () => new Promise(() => vscode.commands.executeCommand("background.uninstall"))
+        }),
+        quickPickItem({
+            label: "$(refresh) Reload Background",
+            description: "Randomizes installed backgrounds; Background must already be installed",
+            onSelect: () => new Promise(() => vscode.commands.executeCommand("background.reload"))
+        }),
     ], options)
     .then(handle);
 });

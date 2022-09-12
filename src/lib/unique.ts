@@ -16,13 +16,4 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
-
-import { restartVS, uninstallJS } from "../extension";
-
-//
-
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", () => {
-    uninstallJS();
-    restartVS();
-});
+export const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;

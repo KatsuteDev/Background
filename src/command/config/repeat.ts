@@ -35,19 +35,18 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
     const scope: Scope = item.scope!;
     const current: string = get(`${scope}BackgroundRepeat`) as string;
 
-    vscode.window.showQuickPick(
-        [
-            quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect, scope }, current),
-            quickPickItem({ label: "Repeat", description: "Repeat X/Y", onSelect, scope }, current),
-            quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect, scope }, current),
-            quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect, scope }, current),
-            quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect, scope }, current),
-            quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect, scope }, current)
-        ],
-        {
-            ...options,
-            title: `${scope} ${options.title} - Repeat`,
-            placeHolder: "Background repeat",
-        })
+    vscode.window.showQuickPick([
+        quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect, scope }, current),
+        quickPickItem({ label: "Repeat", description: "Repeat X/Y", onSelect, scope }, current),
+        quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect, scope }, current),
+        quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect, scope }, current),
+        quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect, scope }, current),
+        quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect, scope }, current)
+    ],
+    {
+        ...options,
+        title: `${scope} ${options.title} - Repeat`,
+        placeHolder: "Background repeat",
+    })
     .then(handle);
 });

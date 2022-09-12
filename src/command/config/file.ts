@@ -21,12 +21,12 @@ import * as vscode from "vscode";
 import { get, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../../vs/quickpick";
 
+import { unique } from "../../lib/unique";
+
 import { options } from "../config";
 import { notify } from "../install";
 
 // config
-
-const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
 const add: (scope: Scope, glob: string) => Promise<void> = (scope: Scope, glob: string) => new Promise<void>(() => {
     const files: string[] = get(`${scope}Backgrounds`) as string[];

@@ -36,48 +36,49 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
     const scope: Scope = item.scope!;
     const current: string = get(`${scope}BackgroundAlignment`) as string ?? "";
 
-    vscode.window.showQuickPick(
-        [
-            // top
-            quickPickItem({ label: "Top Left", onSelect, scope }, current),
-            quickPickItem({ label: "Top Center", onSelect, scope }, current),
-            quickPickItem({ label: "Top Right", onSelect, scope }, current),
-            separator(),
-            // center
-            quickPickItem({ label: "Center Left", onSelect, scope }, current),
-            quickPickItem({ label: "Center Center", onSelect, scope }, current),
-            quickPickItem({ label: "Center Right", onSelect, scope }, current),
-            separator(),
-            // bottom
-            quickPickItem({ label: "Bottom Left", onSelect, scope }, current),
-            quickPickItem({ label: "Bottom Center", onSelect, scope }, current),
-            quickPickItem({ label: "Bottom Right", onSelect, scope }, current),
-            separator(),
-            // manual
-            quickPickItem({ label: "Manual", description: "Manual position", scope, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                if(!item) return;
-                vscode.window.showInputBox({
-                    title: "Background Position",
-                    placeHolder: "Background position",
-                    value: current,
-                    prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
-                }).then((value?: string) => {
-                    if(value !== undefined){
-                        let changed: boolean = get(`${scope}BackgroundAlignment`) !== "Manual" || current !== value;
+    const title: string = `${scope} ${options.title} - Alignment`;
 
-                        update(`${scope}BackgroundAlignment`, "Manual", true);
-                        update(`${scope}BackgroundAlignmentValue`, value, true);
+    vscode.window.showQuickPick([
+        // top
+        quickPickItem({ label: "Top Left", onSelect, scope }, current),
+        quickPickItem({ label: "Top Center", onSelect, scope }, current),
+        quickPickItem({ label: "Top Right", onSelect, scope }, current),
+        separator(),
+        // center
+        quickPickItem({ label: "Center Left", onSelect, scope }, current),
+        quickPickItem({ label: "Center Center", onSelect, scope }, current),
+        quickPickItem({ label: "Center Right", onSelect, scope }, current),
+        separator(),
+        // bottom
+        quickPickItem({ label: "Bottom Left", onSelect, scope }, current),
+        quickPickItem({ label: "Bottom Center", onSelect, scope }, current),
+        quickPickItem({ label: "Bottom Right", onSelect, scope }, current),
+        separator(),
+        // manual
+        quickPickItem({ label: "Manual", description: "Manual position", scope, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            if(!item) return;
+            vscode.window.showInputBox({
+                title,
+                placeHolder: "Background position",
+                value: current,
+                prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
+            }).then((value?: string) => {
+                if(value !== undefined){
+                    let changed: boolean = get(`${scope}BackgroundAlignment`) !== "Manual" || current !== value;
 
-                        if(changed)
-                            notify();
-                    }
-                });
-            })}, current)
-        ],
-        {
-            ...options,
-            title: `${scope} ${options.title} - Alignment`,
-            placeHolder: "Background alignment"
-        }
-    ).then(handle);
+                    update(`${scope}BackgroundAlignment`, "Manual", true);
+                    update(`${scope}BackgroundAlignmentValue`, value, true);
+
+                    if(changed)
+                        notify();
+                }
+            });
+        })}, current)
+    ],
+    {
+        ...options,
+        title,
+        placeHolder: "Background alignment"
+    })
+    .then(handle);
 });

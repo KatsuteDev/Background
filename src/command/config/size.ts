@@ -37,37 +37,38 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
     const scope: Scope = item.scope!;
     const current: string = get(`${scope}BackgroundSize`) as string;
 
-    vscode.window.showQuickPick(
-        [
-            // size
-            quickPickItem({ label: "Auto", description: "Original image size", onSelect, scope }, current),
-            quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect, scope }, current),
-            quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect, scope }, current),
-            separator(),
-            // manual
-            quickPickItem({ label: "Manual", description: "Manual size", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                vscode.window.showInputBox({
-                    title: `${scope} ${options.title} - Size`,
-                    placeHolder: "Background size",
-                    value: current,
-                    prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
-                }).then((value?: string) => {
-                    if(value !== undefined){
-                        let changed: boolean = get(`${scope}BackgroundSize`) !== "Manual" || current !== value;
+    const title: string = `${scope} ${options.title} - Size`;
 
-                        update(`${scope}BackgroundSize`, "Manual", true);
-                        update(`${scope}BackgroundSizeValue`, value, true);
+    vscode.window.showQuickPick([
+        // size
+        quickPickItem({ label: "Auto", description: "Original image size", onSelect, scope }, current),
+        quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect, scope }, current),
+        quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect, scope }, current),
+        separator(),
+        // manual
+        quickPickItem({ label: "Manual", description: "Manual size", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            vscode.window.showInputBox({
+                title,
+                placeHolder: "Background size",
+                value: current,
+                prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
+            }).then((value?: string) => {
+                if(value !== undefined){
+                    let changed: boolean = get(`${scope}BackgroundSize`) !== "Manual" || current !== value;
 
-                        if(changed)
-                            notify();
-                    }
-                });
-            })}, current)
-        ],
-        {
-            ...options,
-            title: `${scope} ${options.title} - Size`,
-            placeHolder: "Size"
-        })
+                    update(`${scope}BackgroundSize`, "Manual", true);
+                    update(`${scope}BackgroundSizeValue`, value, true);
+
+                    if(changed)
+                        notify();
+                }
+            });
+        })}, current)
+    ],
+    {
+        ...options,
+        title,
+        placeHolder: "Size"
+    })
     .then(handle);
 });

@@ -18,17 +18,9 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem } from "../vs/quickpick";
-
 import { installJS, restartVS } from "../extension";
 
 //
-
-export const item: CommandQuickPickItem = {
-    label: "$(check) Install",
-    description: "Install background",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.install"))
-}
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.install", () => {
     installJS();

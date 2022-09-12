@@ -25,6 +25,9 @@ import { glob } from "glob";
 import * as fs from "fs";
 import * as path from "path";
 
+import { round } from "./lib/round";
+import { unique } from "./lib/unique";
+
 import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
@@ -34,7 +37,6 @@ import { config } from "./command/config";
 import * as file from "./command/config/file";
 
 import { statusbar } from "./statusbar";
-import { round } from "./lib/round";
 
 //
 
@@ -94,8 +96,6 @@ export const restartVS: () => void = () => {
 //
 
 const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
-
-const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
 
 const extensions = (v: string, i: number, self: string[]) => { // images only
     const ext: string = path.extname(v);
