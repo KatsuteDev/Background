@@ -71,371 +71,152 @@
                         "type": "string"
                     }
                 },
-                "background.windowBackgroundAlignment": {
-                    "markdownDescription": "The background image alignment.",
-                    "type": "string",
-                    "order": 1,
-                    "default": "Center Center",
-                    "enum": [
-                        "Top Left",
-                        "Top Center",
-                        "Top Right",
-                        "Center Left",
-                        "Center Center",
-                        "Center Right",
-                        "Bottom Left",
-                        "Bottom Center",
-                        "Bottom Right",
-                        "Manual"
-                    ]
-                },
-                "background.windowBackgroundAlignmentValue": {
-                    "markdownDescription": "If `#background.windowBackgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
-                    "type": "string",
-                    "order": 2,
-                    "default": ""
-                },
-                "background.windowBackgroundBlur": {
-                    "markdownDescription": "The background image blur amount in css units.",
-                    "type": "string",
-                    "order": 3,
-                    "default": "0"
-                },
-                "background.windowBackgroundOpacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
-                    "type": "number",
-                    "order": 4,
-                    "default": 0.9,
-                    "minimum": 0,
-                    "maximum": 1
-                },
-                "background.windowBackgroundRepeat": {
-                    "markdownDescription": "The background image repeat.",
-                    "type": "string",
-                    "order": 5,
-                    "default": "No Repeat",
-                    "enum": [
-                        "No Repeat",
-                        "Repeat",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat Space",
-                        "Repeat Round"
-                    ],
-                    "enumDescriptions": [
-                        "Do not repeat",
-                        "Repeat X/Y",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat with even spacing to fill the screen",
-                        "Repeat and stretch images to fill the screen"
-                    ]
-                },
-                "background.windowBackgroundSize": {
-                    "markdownDescription": "The background image size.",
-                    "type": "string",
-                    "order": 6,
-                    "default": "Cover",
-                    "enum": [
-                        "Auto",
-                        "Contain",
-                        "Cover",
-                        "Manual"
-                    ],
-                    "enumDescriptions": [
-                        "Original image size",
-                        "Fit image to the screen",
-                        "Stretch image to fill the screen",
-                        "Manual size"
-                    ]
-                },
-                "background.windowBackgroundSizeValue": {
-                    "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
-                    "order": 7,
-                    "type": "string",
-                    "default": ""
-                },
-
                 "background.editorBackgrounds": {
                     "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
-                    "order": 8,
+                    "order": 1,
                     "default": [],
                     "items": {
                         "type": "string"
                     }
                 },
-                "background.editorBackgroundAlignment": {
-                    "markdownDescription": "The background image alignment.",
-                    "type": "string",
-                    "order": 9,
-                    "default": "Center Center",
-                    "enum": [
-                        "Top Left",
-                        "Top Center",
-                        "Top Right",
-                        "Center Left",
-                        "Center Center",
-                        "Center Right",
-                        "Bottom Left",
-                        "Bottom Center",
-                        "Bottom Right",
-                        "Manual"
-                    ]
-                },
-                "background.editorBackgroundAlignmentValue": {
-                    "markdownDescription": "If `#background.windowBackgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
-                    "type": "string",
-                    "order": 10,
-                    "default": ""
-                },
-                "background.editorBackgroundBlur": {
-                    "markdownDescription": "The background image blur amount in css units.",
-                    "type": "string",
-                    "order": 11,
-                    "default": "0"
-                },
-                "background.editorBackgroundOpacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
-                    "type": "number",
-                    "order": 12,
-                    "default": 0.9,
-                    "minimum": 0,
-                    "maximum": 1
-                },
-                "background.editorBackgroundRepeat": {
-                    "markdownDescription": "The background image repeat.",
-                    "type": "string",
-                    "order": 13,
-                    "default": "No Repeat",
-                    "enum": [
-                        "No Repeat",
-                        "Repeat",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat Space",
-                        "Repeat Round"
-                    ],
-                    "enumDescriptions": [
-                        "Do not repeat",
-                        "Repeat X/Y",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat with even spacing to fill the screen",
-                        "Repeat and stretch images to fill the screen"
-                    ]
-                },
-                "background.editorBackgroundSize": {
-                    "markdownDescription": "The background image size.",
-                    "type": "string",
-                    "order": 14,
-                    "default": "Cover",
-                    "enum": [
-                        "Auto",
-                        "Contain",
-                        "Cover",
-                        "Manual"
-                    ],
-                    "enumDescriptions": [
-                        "Original image size",
-                        "Fit image to the screen",
-                        "Stretch image to fill the screen",
-                        "Manual size"
-                    ]
-                },
-                "background.editorBackgroundSizeValue": {
-                    "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
-                    "order": 15,
-                    "type": "string",
-                    "default": ""
-                },
-
                 "background.sidebarBackgrounds": {
                     "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
-                    "order": 16,
+                    "order": 2,
                     "default": [],
                     "items": {
                         "type": "string"
                     }
                 },
-                "background.sidebarBackgroundAlignment": {
-                    "markdownDescription": "The background image alignment.",
-                    "type": "string",
-                    "order": 17,
-                    "default": "Center Center",
-                    "enum": [
-                        "Top Left",
-                        "Top Center",
-                        "Top Right",
-                        "Center Left",
-                        "Center Center",
-                        "Center Right",
-                        "Bottom Left",
-                        "Bottom Center",
-                        "Bottom Right",
-                        "Manual"
-                    ]
-                },
-                "background.sidebarBackgroundAlignmentValue": {
-                    "markdownDescription": "If `#background.windowBackgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
-                    "type": "string",
-                    "order": 18,
-                    "default": ""
-                },
-                "background.sidebarBackgroundBlur": {
-                    "markdownDescription": "The background image blur amount in css units.",
-                    "type": "string",
-                    "order": 19,
-                    "default": "0"
-                },
-                "background.sidebarBackgroundOpacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
-                    "type": "number",
-                    "order": 20,
-                    "default": 0.9,
-                    "minimum": 0,
-                    "maximum": 1
-                },
-                "background.sidebarBackgroundRepeat": {
-                    "markdownDescription": "The background image repeat.",
-                    "type": "string",
-                    "order": 21,
-                    "default": "No Repeat",
-                    "enum": [
-                        "No Repeat",
-                        "Repeat",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat Space",
-                        "Repeat Round"
-                    ],
-                    "enumDescriptions": [
-                        "Do not repeat",
-                        "Repeat X/Y",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat with even spacing to fill the screen",
-                        "Repeat and stretch images to fill the screen"
-                    ]
-                },
-                "background.sidebarBackgroundSize": {
-                    "markdownDescription": "The background image size.",
-                    "type": "string",
-                    "order": 22,
-                    "default": "Cover",
-                    "enum": [
-                        "Auto",
-                        "Contain",
-                        "Cover",
-                        "Manual"
-                    ],
-                    "enumDescriptions": [
-                        "Original image size",
-                        "Fit image to the screen",
-                        "Stretch image to fill the screen",
-                        "Manual size"
-                    ]
-                },
-                "background.sidebarBackgroundSizeValue": {
-                    "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
-                    "order": 23,
-                    "type": "string",
-                    "default": ""
-                },
-
                 "background.panelBackgrounds": {
                     "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
-                    "order": 24,
+                    "order": 3,
                     "default": [],
                     "items": {
                         "type": "string"
                     }
                 },
-                "background.panelBackgroundAlignment": {
+
+                "background.backgroundAlignment": {
                     "markdownDescription": "The background image alignment.",
-                    "type": "string",
-                    "order": 25,
-                    "default": "Center Center",
-                    "enum": [
-                        "Top Left",
-                        "Top Center",
-                        "Top Right",
-                        "Center Left",
-                        "Center Center",
-                        "Center Right",
-                        "Bottom Left",
-                        "Bottom Center",
-                        "Bottom Right",
-                        "Manual"
-                    ]
+                    "type": "array",
+                    "order": 4,
+                    "default": ["Center Center", "Center Center", "Center Center", "Center Center"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Top Left",
+                            "Top Center",
+                            "Top Right",
+                            "Center Left",
+                            "Center Center",
+                            "Center Right",
+                            "Bottom Left",
+                            "Bottom Center",
+                            "Bottom Right",
+                            "Manual"
+                        ]
+                    }
                 },
-                "background.panelBackgroundAlignmentValue": {
-                    "markdownDescription": "If `#background.windowBackgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
-                    "type": "string",
-                    "order": 26,
-                    "default": ""
+                "background.backgroundAlignmentValue": {
+                    "markdownDescription": "If `#background.backgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
+                    "type": "array",
+                    "order": 5,
+                    "default": ["", "", "", ""],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string"
+                    }
                 },
-                "background.panelBackgroundBlur": {
+                "background.backgroundBlur": {
                     "markdownDescription": "The background image blur amount in css units.",
                     "type": "string",
-                    "order": 27,
-                    "default": "0"
+                    "order": 6,
+                    "default": ["0", "0", "0", "0"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string"
+                    }
                 },
-                "background.panelBackgroundOpacity": {
+                "background.backgroundOpacity": {
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
-                    "type": "number",
-                    "order": 28,
-                    "default": 0.9,
-                    "minimum": 0,
-                    "maximum": 1
+                    "type": "array",
+                    "order": 7,
+                    "default": [0.9, 0.9, 0.9, 0.9],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    }
                 },
-                "background.panelBackgroundRepeat": {
+                "background.backgroundRepeat": {
                     "markdownDescription": "The background image repeat.",
-                    "type": "string",
-                    "order": 29,
-                    "default": "No Repeat",
-                    "enum": [
-                        "No Repeat",
-                        "Repeat",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat Space",
-                        "Repeat Round"
-                    ],
-                    "enumDescriptions": [
-                        "Do not repeat",
-                        "Repeat X/Y",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat with even spacing to fill the screen",
-                        "Repeat and stretch images to fill the screen"
-                    ]
+                    "type": "array",
+                    "order": 8,
+                    "default": ["No Repeat", "No Repeat", "No Repeat", "No Repeat"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "No Repeat",
+                            "Repeat",
+                            "Repeat X",
+                            "Repeat Y",
+                            "Repeat Space",
+                            "Repeat Round"
+                        ],
+                        "enumDescriptions": [
+                            "Do not repeat",
+                            "Repeat X/Y",
+                            "Repeat X",
+                            "Repeat Y",
+                            "Repeat with even spacing to fill the screen",
+                            "Repeat and stretch images to fill the screen"
+                        ]
+                    }
                 },
-                "background.panelBackgroundSize": {
+                "background.backgroundSize": {
                     "markdownDescription": "The background image size.",
-                    "type": "string",
-                    "order": 30,
-                    "default": "Cover",
-                    "enum": [
-                        "Auto",
-                        "Contain",
-                        "Cover",
-                        "Manual"
-                    ],
-                    "enumDescriptions": [
-                        "Original image size",
-                        "Fit image to the screen",
-                        "Stretch image to fill the screen",
-                        "Manual size"
-                    ]
+                    "type": "array",
+                    "order": 9,
+                    "default": ["Cover", "Cover", "Cover", "Cover"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items":{
+                        "type": "string",
+                        "enum": [
+                            "Auto",
+                            "Contain",
+                            "Cover",
+                            "Manual"
+                        ],
+                        "enumDescriptions": [
+                            "Original image size",
+                            "Fit image to the screen",
+                            "Stretch image to fill the screen",
+                            "Manual size"
+                        ]
+                    }
                 },
-                "background.panelBackgroundSizeValue": {
+                "background.backgroundSizeValue": {
                     "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
-                    "order": 31,
-                    "type": "string",
-                    "default": ""
+                    "type": "array",
+                    "order": 10,
+                    "default": ["", "", "", ""],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string"
+                    }
                 },
 
                 "background.CSS": {
@@ -481,7 +262,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.7.16",
+        "@types/node": "18.7.18",
         "@types/vscode": "1.71.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.3",
