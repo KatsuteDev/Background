@@ -40,3 +40,18 @@ export const update: (key: string, value: any, skipWarning?: boolean) => void = 
 export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void = (key: string, item?: CommandQuickPickItem) => {
     item && item.label && update(key, item.label);
 }
+
+// UI
+
+export type UI = "window" | "editor" | "sidebar" | "panel";
+
+export const getForUI: (ui: UI, key: string) => any = (ui: UI, key: string) => {
+    const num: 0 | 1 | 2 | 3 = {
+        "window": 0,
+        "editor": 1,
+        "sidebar": 2,
+        "panel": 3
+    }[ui.toLowerCase()] as 0 | 1 | 2 | 3;
+    const arr: any[] = get(key);
+    return arr[num] ?? arr[0];
+}
