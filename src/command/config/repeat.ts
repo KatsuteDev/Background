@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { get, UI, updateForUIFromLabel } from "../../vs/vsconfig";
+import { getForUI, UI, updateForUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem } from "../../vs/quickpick";
 
 import { options } from "../config";
@@ -33,7 +33,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
     if(!item) return;
 
     const ui: UI = item.ui!;
-    const current: string = get(`${ui}BackgroundRepeat`) as string;
+    const current: string = getForUI(ui, "backgroundRepeat") as string;
 
     vscode.window.showQuickPick([
         quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect, ui }, current),

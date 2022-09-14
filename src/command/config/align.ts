@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { getForUI, UI, updateForUI, updateFromLabel } from "../../vs/vsconfig";
+import { getForUI, UI, updateForUI, updateForUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
 
 import { options } from "../config";
@@ -27,7 +27,7 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateFromLabel(`${item.ui!}BackgroundAlignment`, item);
+    item && updateForUIFromLabel(item.ui!, "backgroundAlignment", item, "Center Center");
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {

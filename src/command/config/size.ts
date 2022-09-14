@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { get, getForUI, UI, updateForUI, updateForUIFromLabel } from "../../vs/vsconfig";
+import { getForUI, UI, updateForUI, updateForUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
 
 import { options } from "../config";
@@ -35,7 +35,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
     if(!item) return;
 
     const ui: UI = item.ui!;
-    const current: string = get(`${ui}BackgroundSize`) as string;
+    const current: string = getForUI(ui, "backgroundSize") as string;
 
     const title: string = `${ui} ${options.title} - Size`;
 
