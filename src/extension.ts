@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { get } from "./vs/vsconfig";
+import { Key, get } from "./vs/vsconfig";
 
 import { glob } from "glob";
 
@@ -122,7 +122,7 @@ const getJS: () => string = () => {
     };
 
     for(const s of ["window", "editor", "sidebar", "panel"])
-        for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
+        for(const g of (get(`${s}Backgrounds` as Key) as string[]).filter(unique))
             if(g.startsWith("https://")) // use literal URL
                 images[s].push('"' + g + '"');
             else // use glob
@@ -141,13 +141,13 @@ const getJS: () => string = () => {
         "Bottom Left": "left bottom",
         "Bottom Center": "center bottom",
         "Bottom Right": "right bottom",
-        "Manual": get("backgroundImageAlignmentValue") as string,
-    }[get("backgroundImageAlignment") as string] || "center center";
+        "Manual": get("backgroundImageAlignmentValue" as Key) as string,
+    }[get("backgroundImageAlignment" as Key) as string] || "center center";
 
-    const blur: string = (get("backgroundImageBlur") as string || "")
+    const blur: string = (get("backgroundImageBlur" as Key) as string || "")
         .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
-    const opacity: number = round(get("opacity") as number, 2);
+    const opacity: number = round(get("opacity" as Key) as number, 2);
 
     const repeat: string = {
         "No Repeat": "no-repeat",
@@ -156,14 +156,14 @@ const getJS: () => string = () => {
         "Repeat Y": "repeat-y",
         "Repeat Space": "space",
         "Repeat Round": "round"
-    }[get("backgroundImageRepeat") as string] || "no-repeat";
+    }[get("backgroundImageRepeat" as Key) as string] || "no-repeat";
 
     const size: string = {
         "Auto": "auto",
         "Contain": "contain",
         "Cover": "cover",
-        "Manual": get("backgroundImageSizeValue") as string
-    }[get("backgroundImageSize") as string] || "cover";
+        "Manual": get("backgroundImageSizeValue" as Key) as string
+    }[get("backgroundImageSize" as Key) as string] || "cover";
 
     return `
 /* ${identifier}-start */

@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { get, getForUI, UI } from "../vs/vsconfig";
+import { get, getUI, UI } from "../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../vs/quickpick";
 
 import * as file from "./config/file";
@@ -36,44 +36,44 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         quickPickItem({
             label: "$(window) Window",
             description: s(get("windowBackgrounds"), "Background"),
-            detail: `${getForUI("window", "backgroundAlignment")} Alignment`    + ` • ` +
-                    `${getForUI("window", "backgroundBlur")} Blur`              + ` • ` +
-                    `${getForUI("window", "backgroundOpacity")} Opacity`        + ` • ` +
-                    `${getForUI("window", "backgroundRepeat")} Repeat`          + ` • ` +
-                    `${getForUI("window", "backgroundSize")} Size`,
+            detail: `${getUI("window", "backgroundAlignment")} Alignment`    + ` • ` +
+                    `${getUI("window", "backgroundBlur")} Blur`              + ` • ` +
+                    `${getUI("window", "backgroundOpacity")} Opacity`        + ` • ` +
+                    `${getUI("window", "backgroundRepeat")} Repeat`          + ` • ` +
+                    `${getUI("window", "backgroundSize")} Size`,
             onSelect: menu,
             ui: "window"
         }),
         quickPickItem({
             label: "$(multiple-windows) Editor",
             description: s(get("editorBackgrounds"), "Background"),
-            detail: `${getForUI("editor", "backgroundAlignment")} Alignment`    + ` • ` +
-                    `${getForUI("editor", "backgroundBlur")} Blur`              + ` • ` +
-                    `${getForUI("editor", "backgroundOpacity")} Opacity`        + ` • ` +
-                    `${getForUI("editor", "backgroundRepeat")} Repeat`          + ` • ` +
-                    `${getForUI("editor", "backgroundSize")} Size`,
+            detail: `${getUI("editor", "backgroundAlignment")} Alignment`    + ` • ` +
+                    `${getUI("editor", "backgroundBlur")} Blur`              + ` • ` +
+                    `${getUI("editor", "backgroundOpacity")} Opacity`        + ` • ` +
+                    `${getUI("editor", "backgroundRepeat")} Repeat`          + ` • ` +
+                    `${getUI("editor", "backgroundSize")} Size`,
             onSelect: menu,
             ui: "editor"
         }),
         quickPickItem({
             label: "$(layout-sidebar-left) Sidebar",
             description: s(get("sidebarBackgrounds"), "Background"),
-            detail: `${getForUI("sidebar", "backgroundAlignment")} Alignment`   + ` • ` +
-                    `${getForUI("sidebar", "backgroundBlur")} Blur`             + ` • ` +
-                    `${getForUI("sidebar", "backgroundOpacity")} Opacity`       + ` • ` +
-                    `${getForUI("sidebar", "backgroundRepeat")} Repeat`         + ` • ` +
-                    `${getForUI("sidebar", "backgroundSize")} Size`,
+            detail: `${getUI("sidebar", "backgroundAlignment")} Alignment`   + ` • ` +
+                    `${getUI("sidebar", "backgroundBlur")} Blur`             + ` • ` +
+                    `${getUI("sidebar", "backgroundOpacity")} Opacity`       + ` • ` +
+                    `${getUI("sidebar", "backgroundRepeat")} Repeat`         + ` • ` +
+                    `${getUI("sidebar", "backgroundSize")} Size`,
             onSelect: menu,
             ui: "sidebar"
         }),
         quickPickItem({
             label: "$(layout-panel) Panel",
             description: s(get("panelBackgrounds"), "Background"),
-            detail: `${getForUI("panel", "backgroundAlignment")} Alignment`     + ` • ` +
-                    `${getForUI("panel", "backgroundBlur")} Blur`               + ` • ` +
-                    `${getForUI("panel", "backgroundOpacity")} Opacity`         + ` • ` +
-                    `${getForUI("panel", "backgroundRepeat")} Repeat`           + ` • ` +
-                    `${getForUI("panel", "backgroundSize")} Size`,
+            detail: `${getUI("panel", "backgroundAlignment")} Alignment`     + ` • ` +
+                    `${getUI("panel", "backgroundBlur")} Blur`               + ` • ` +
+                    `${getUI("panel", "backgroundOpacity")} Opacity`         + ` • ` +
+                    `${getUI("panel", "backgroundRepeat")} Repeat`           + ` • ` +
+                    `${getUI("panel", "backgroundSize")} Size`,
             onSelect: menu,
             ui: "panel"
         }),
@@ -123,35 +123,35 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         }),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${getForUI(ui, "backgroundAlignment")}`,
+            description: `${getUI(ui, "backgroundAlignment")}`,
             detail: "Background image alignment",
             onSelect: align.menu,
             ui
         }),
         quickPickItem({
             label: "$(eye) Blur",
-            description: `${getForUI(ui, "backgroundBlur")}`,
+            description: `${getUI(ui, "backgroundBlur")}`,
             detail: "Background image blur",
             onSelect: blur.menu,
             ui
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
-            description: `${getForUI(ui, "backgroundOpacity")}`,
+            description: `${getUI(ui, "backgroundOpacity")}`,
             detail: "Background image opacity",
             onSelect: opacity.menu,
             ui
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
-            description: `${getForUI(ui, "backgroundRepeat")}`,
+            description: `${getUI(ui, "backgroundRepeat")}`,
             detail: "Background image repeat",
             onSelect: repeat.menu,
             ui
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${getForUI(ui, "backgroundSize")}`,
+            description: `${getUI(ui, "backgroundSize")}`,
             detail: "Background image size",
             onSelect: size.menu,
             ui

@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { getForUI, UI, updateForUI } from "../../vs/vsconfig";
+import { getUI, UI, updateUI } from "../../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise } from "../../vs/quickpick";
 
 import { round } from "../../lib/round";
@@ -30,7 +30,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
     if(!item) return;
 
     const ui: UI = item.ui!;
-    const current: number = round(getForUI(ui, "backgroundOpacity") as number, 2);
+    const current: number = round(getUI(ui, "backgroundOpacity") as number, 2);
 
     vscode.window.showInputBox({
         title: `${ui} ${options.title} - Opacity`,
@@ -49,7 +49,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         if(value && !isNaN(+value)){
             const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
             if(o > .1){
-                updateForUI(ui, "backgroundOpacity", o, 0.9);
+                updateUI(ui, "backgroundOpacity", o, 0.9);
             }else{
                 vscode.window.showWarningMessage(
                     "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -57,7 +57,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                     { modal: true },
                     "Yes"
                 ).then((c?: "Yes") => {
-                    c && c === "Yes" && updateForUI(ui, "backgroundOpacity", o, 0.9);
+                    c && c === "Yes" && updateUI(ui, "backgroundOpacity", o, 0.9);
                 });
             }
         }

@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { getForUI, UI, updateForUI, updateForUIFromLabel } from "../../vs/vsconfig";
+import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
 
 import { options } from "../config";
@@ -27,14 +27,14 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateForUIFromLabel(item.ui!, "backgroundAlignment", item, "Center Center");
+    item && updateUIFromLabel(item.ui!, "backgroundAlignment", item, "Center Center");
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
     const ui: UI = item.ui!;
-    const current: string = getForUI(ui, "backgroundAlignment") as string;
+    const current: string = getUI(ui, "backgroundAlignment") as string;
 
     const title: string = `${ui} ${options.title} - Alignment`;
 
@@ -64,10 +64,10 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
             }).then((value?: string) => {
                 if(value !== undefined){
-                    let changed: boolean = getForUI(ui, "backgroundAlignment") !== "Manual" || current !== value;
+                    let changed: boolean = getUI(ui, "backgroundAlignment") !== "Manual" || current !== value;
 
-                    updateForUI(ui, "backgroundAlignment", "Manual", "Center Center", true);
-                    updateForUI(ui, "backgroundAlignmentValue", value, "", true);
+                    updateUI(ui, "backgroundAlignment", "Manual", "Center Center", true);
+                    updateUI(ui, "backgroundAlignmentValue", value, "", true);
 
                     changed && notify();
                 }
