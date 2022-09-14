@@ -18,8 +18,8 @@
 
 import * as vscode from "vscode";
 
-import { get } from "../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../vs/quickpick";
+import { get, getForUI, UI } from "../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../vs/quickpick";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -27,10 +27,6 @@ import * as blur from "./config/blur";
 import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
-
-import * as reload from "./reload";
-import * as install from "./install";
-import * as uninstall from "./uninstall";
 
 // interface
 
@@ -40,30 +36,46 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         quickPickItem({
             label: "$(window) Window",
             description: s(get("windowBackgrounds"), "Background"),
-            detail: `${get("windowBackgroundAlignment")} Alignment • ${get("windowBackgroundBlur")} Blur • ${get("windowBackgroundOpacity")} Opacity • ${get("windowBackgroundRepeat")} Repeat • ${get("windowBackgroundSize")} Size`,
+            detail: `${getForUI("window", "backgroundAlignment")} Alignment`    + ` • ` +
+                    `${getForUI("window", "backgroundBlur")} Blur`              + ` • ` +
+                    `${getForUI("window", "backgroundOpacity")} Opacity`        + ` • ` +
+                    `${getForUI("window", "backgroundRepeat")} Repeat`          + ` • ` +
+                    `${getForUI("window", "backgroundSize")} Size`,
             onSelect: menu,
-            scope: "window"
+            ui: "window"
         }),
         quickPickItem({
             label: "$(multiple-windows) Editor",
             description: s(get("editorBackgrounds"), "Background"),
-            detail: `${get("editorBackgroundAlignment")} Alignment • ${get("editorBackgroundBlur")} Blur • ${get("editorBackgroundOpacity")} Opacity • ${get("editorBackgroundRepeat")} Repeat • ${get("editorBackgroundSize")} Size`,
+            detail: `${getForUI("editor", "backgroundAlignment")} Alignment`    + ` • ` +
+                    `${getForUI("editor", "backgroundBlur")} Blur`              + ` • ` +
+                    `${getForUI("editor", "backgroundOpacity")} Opacity`        + ` • ` +
+                    `${getForUI("editor", "backgroundRepeat")} Repeat`          + ` • ` +
+                    `${getForUI("editor", "backgroundSize")} Size`,
             onSelect: menu,
-            scope: "editor"
+            ui: "editor"
         }),
         quickPickItem({
             label: "$(layout-sidebar-left) Sidebar",
             description: s(get("sidebarBackgrounds"), "Background"),
-            detail: `${get("sidebarBackgroundAlignment")} Alignment • ${get("sidebarBackgroundBlur")} Blur • ${get("sidebarBackgroundOpacity")} Opacity • ${get("sidebarBackgroundRepeat")} Repeat • ${get("sidebarBackgroundSize")} Size`,
+            detail: `${getForUI("sidebar", "backgroundAlignment")} Alignment`   + ` • ` +
+                    `${getForUI("sidebar", "backgroundBlur")} Blur`             + ` • ` +
+                    `${getForUI("sidebar", "backgroundOpacity")} Opacity`       + ` • ` +
+                    `${getForUI("sidebar", "backgroundRepeat")} Repeat`         + ` • ` +
+                    `${getForUI("sidebar", "backgroundSize")} Size`,
             onSelect: menu,
-            scope: "sidebar"
+            ui: "sidebar"
         }),
         quickPickItem({
             label: "$(layout-panel) Panel",
             description: s(get("panelBackgrounds"), "Background"),
-            detail: `${get("panelBackgroundAlignment")} Alignment • ${get("panelBackgroundBlur")} Blur • ${get("panelBackgroundOpacity")} Opacity • ${get("panelBackgroundRepeat")} Repeat • ${get("panelBackgroundSize")} Size`,
+            detail: `${getForUI("panel", "backgroundAlignment")} Alignment`     + ` • ` +
+                    `${getForUI("panel", "backgroundBlur")} Blur`               + ` • ` +
+                    `${getForUI("panel", "backgroundOpacity")} Opacity`         + ` • ` +
+                    `${getForUI("panel", "backgroundRepeat")} Repeat`           + ` • ` +
+                    `${getForUI("panel", "backgroundSize")} Size`,
             onSelect: menu,
-            scope: "panel"
+            ui: "panel"
         }),
         separator(),
         // extension options
@@ -99,55 +111,55 @@ export const options: vscode.QuickPickOptions = {
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
+    const ui: UI = item.ui!;
 
     vscode.window.showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
-            description: s(get(`${scope}Backgrounds`), "Background"),
+            description: s(get(`${ui}Backgrounds`), "Background"),
             detail: "Select background image files",
             onSelect: file.menu,
-            scope
+            ui
         }),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${get(`${scope}BackgroundAlignment`)}`,
+            description: `${getForUI(ui, "backgroundAlignment")}`,
             detail: "Background image alignment",
             onSelect: align.menu,
-            scope
+            ui
         }),
         quickPickItem({
             label: "$(eye) Blur",
-            description: `${get(`${scope}BackgroundBlur`)}`,
+            description: `${getForUI(ui, "backgroundBlur")}`,
             detail: "Background image blur",
             onSelect: blur.menu,
-            scope
+            ui
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
-            description: `${get(`${scope}BackgroundOpacity`)}`,
+            description: `${getForUI(ui, "backgroundOpacity")}`,
             detail: "Background image opacity",
             onSelect: opacity.menu,
-            scope
+            ui
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
-            description: `${get(`${scope}BackgroundRepeat`)}`,
+            description: `${getForUI(ui, "backgroundRepeat")}`,
             detail: "Background image repeat",
             onSelect: repeat.menu,
-            scope
+            ui
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${get(`${scope}BackgroundSize`)}`,
+            description: `${getForUI(ui, "backgroundSize")}`,
             detail: "Background image size",
             onSelect: size.menu,
-            scope
+            ui
         })
     ],
     {
         ...options,
-        title: `${scope[0].toUpperCase() + scope.substring(1)} ${options.title}`,
+        title: `${ui[0].toUpperCase() + ui.substring(1)} ${options.title}`,
     })
     .then(handle);
 });

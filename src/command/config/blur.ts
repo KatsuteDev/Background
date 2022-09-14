@@ -18,8 +18,8 @@
 
 import * as vscode from "vscode";
 
-import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, Scope } from "../../vs/quickpick";
+import { get, UI, updateForUI } from "../../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise } from "../../vs/quickpick";
 
 import { options } from "../config";
 
@@ -28,17 +28,17 @@ import { options } from "../config";
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
-    const current: string = get(`${scope}BackgroundBlur`) as string ?? "";
+    const ui: UI = item.ui!;
+    const current: string = get(`${ui}BackgroundBlur`) as string ?? "";
 
     vscode.window.showInputBox({
-        title: `${scope} ${options.title} - Blur`,
+        title: `${ui} ${options.title} - Blur`,
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
         validateInput: (value: string) => value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null
     }).then((value?: string) => {
         if(value && !value.match(/[^\w.%+-]/gmi))
-            update(`${scope}BackgroundBlur`, value);
+            updateForUI(ui, "backgroundBlur", value, "0");
     });
 });

@@ -18,34 +18,34 @@
 
 import * as vscode from "vscode";
 
-import { get, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope } from "../../vs/quickpick";
+import { get, UI, updateForUIFromLabel } from "../../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem } from "../../vs/quickpick";
 
 import { options } from "../config";
 
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateFromLabel(`${item.scope!}BackgroundRepeat`, item);
+    item && updateForUIFromLabel(item.ui!, "backgroundRepeat", item, "No Repeat");
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
-    const current: string = get(`${scope}BackgroundRepeat`) as string;
+    const ui: UI = item.ui!;
+    const current: string = get(`${ui}BackgroundRepeat`) as string;
 
     vscode.window.showQuickPick([
-        quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect, scope }, current),
-        quickPickItem({ label: "Repeat", description: "Repeat X/Y", onSelect, scope }, current),
-        quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect, scope }, current),
-        quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect, scope }, current),
-        quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect, scope }, current),
-        quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect, scope }, current)
+        quickPickItem({ label: "No Repeat", description: "Do not repeat", onSelect, ui }, current),
+        quickPickItem({ label: "Repeat", description: "Repeat X/Y", onSelect, ui }, current),
+        quickPickItem({ label: "Repeat X", description: "Repeat X", onSelect, ui }, current),
+        quickPickItem({ label: "Repeat Y", description: "Repeat Y", onSelect, ui }, current),
+        quickPickItem({ label: "Repeat Space", description: "Repeat with even spacing to fill the screen", onSelect, ui }, current),
+        quickPickItem({ label: "Repeat Round", description: "Repeat and stretch images to fill the screen", onSelect, ui }, current)
     ],
     {
         ...options,
-        title: `${scope} ${options.title} - Repeat`,
+        title: `${ui} ${options.title} - Repeat`,
         placeHolder: "Background repeat",
     })
     .then(handle);

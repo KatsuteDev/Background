@@ -45,13 +45,38 @@ export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void
 
 export type UI = "window" | "editor" | "sidebar" | "panel";
 
-export const getForUI: (ui: UI, key: string) => any = (ui: UI, key: string) => {
-    const num: 0 | 1 | 2 | 3 = {
+type UINum = 0 | 1 | 2 | 3;
+
+const asNum: (ui: UI) => UINum = (ui: UI) => {
+    return {
         "window": 0,
         "editor": 1,
         "sidebar": 2,
         "panel": 3
-    }[ui.toLowerCase()] as 0 | 1 | 2 | 3;
+    }[ui.toLowerCase()] as UINum;
+}
+
+export const getForUI: (ui: UI, key: string) => any = (ui: UI, key: string) => {
     const arr: any[] = get(key);
-    return arr[num] ?? arr[0];
+    return arr[asNum(ui)] ?? arr[0];
+}
+
+export const updateForUI: (ui: UI, key: string, value: any, def: any, skipWarning?: boolean) => void = (ui: UI, key: string, value: any, def: any, skipWarning: boolean = false) => {
+    const current: any = get(key) as any;
+
+    for(let i = current.length; i < 4; i++)
+        current.push(def);
+
+    const i: UINum = asNum(ui);
+
+    const diff: boolean = current[i] !== value;
+
+    current[i] = value;
+    config().update(key, current, vscode.ConfigurationTarget.Global);
+
+    skipWarning !== true && diff && notify();
+}
+
+export const updateForUIFromLabel: (ui: UI, key: string, item: CommandQuickPickItem, def: any) => void = (ui: UI, key: string, def: any, item: CommandQuickPickItem) => {
+    item.label && updateForUI(ui, key, item.label, def);
 }

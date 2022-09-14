@@ -18,8 +18,8 @@
 
 import * as vscode from "vscode";
 
-import { get, update, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../../vs/quickpick";
+import { getForUI, UI, updateForUI, updateFromLabel } from "../../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
 
 import { options } from "../config";
 import { notify } from "../install";
@@ -27,35 +27,35 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateFromLabel(`${item.scope!}BackgroundAlignment`, item);
+    item && updateFromLabel(`${item.ui!}BackgroundAlignment`, item);
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
-    const current: string = get(`${scope}BackgroundAlignment`) as string ?? "";
+    const ui: UI = item.ui!;
+    const current: string = getForUI(ui, "backgroundAlignment") as string;
 
-    const title: string = `${scope} ${options.title} - Alignment`;
+    const title: string = `${ui} ${options.title} - Alignment`;
 
     vscode.window.showQuickPick([
         // top
-        quickPickItem({ label: "Top Left", onSelect, scope }, current),
-        quickPickItem({ label: "Top Center", onSelect, scope }, current),
-        quickPickItem({ label: "Top Right", onSelect, scope }, current),
+        quickPickItem({ label: "Top Left", onSelect, ui }, current),
+        quickPickItem({ label: "Top Center", onSelect, ui }, current),
+        quickPickItem({ label: "Top Right", onSelect, ui }, current),
         separator(),
         // center
-        quickPickItem({ label: "Center Left", onSelect, scope }, current),
-        quickPickItem({ label: "Center Center", onSelect, scope }, current),
-        quickPickItem({ label: "Center Right", onSelect, scope }, current),
+        quickPickItem({ label: "Center Left", onSelect, ui }, current),
+        quickPickItem({ label: "Center Center", onSelect, ui }, current),
+        quickPickItem({ label: "Center Right", onSelect, ui }, current),
         separator(),
         // bottom
-        quickPickItem({ label: "Bottom Left", onSelect, scope }, current),
-        quickPickItem({ label: "Bottom Center", onSelect, scope }, current),
-        quickPickItem({ label: "Bottom Right", onSelect, scope }, current),
+        quickPickItem({ label: "Bottom Left", onSelect, ui }, current),
+        quickPickItem({ label: "Bottom Center", onSelect, ui }, current),
+        quickPickItem({ label: "Bottom Right", onSelect, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: "Manual", description: "Manual position", scope, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+        quickPickItem({ label: "Manual", description: "Manual position", ui, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
             if(!item) return;
             vscode.window.showInputBox({
                 title,
@@ -64,13 +64,12 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
             }).then((value?: string) => {
                 if(value !== undefined){
-                    let changed: boolean = get(`${scope}BackgroundAlignment`) !== "Manual" || current !== value;
+                    let changed: boolean = getForUI(ui, "backgroundAlignment") !== "Manual" || current !== value;
 
-                    update(`${scope}BackgroundAlignment`, "Manual", true);
-                    update(`${scope}BackgroundAlignmentValue`, value, true);
+                    updateForUI(ui, "backgroundAlignment", "Manual", "Center Center", true);
+                    updateForUI(ui, "backgroundAlignmentValue", value, "", true);
 
-                    if(changed)
-                        notify();
+                    changed && notify();
                 }
             });
         })}, current)

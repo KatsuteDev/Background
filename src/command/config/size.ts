@@ -18,8 +18,8 @@
 
 import * as vscode from "vscode";
 
-import { get, update, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../../vs/quickpick";
+import { get, getForUI, UI, updateForUI, updateForUIFromLabel } from "../../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
 
 import { options } from "../config";
 
@@ -28,22 +28,22 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateFromLabel(`${item.scope!}BackgroundSize`, item);
+    item && updateForUIFromLabel(item.ui!, "backgroundSize", item, "Cover");
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
-    const current: string = get(`${scope}BackgroundSize`) as string;
+    const ui: UI = item.ui!;
+    const current: string = get(`${ui}BackgroundSize`) as string;
 
-    const title: string = `${scope} ${options.title} - Size`;
+    const title: string = `${ui} ${options.title} - Size`;
 
     vscode.window.showQuickPick([
         // size
-        quickPickItem({ label: "Auto", description: "Original image size", onSelect, scope }, current),
-        quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect, scope }, current),
-        quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect, scope }, current),
+        quickPickItem({ label: "Auto", description: "Original image size", onSelect, ui }, current),
+        quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect, ui }, current),
+        quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect, ui }, current),
         separator(),
         // manual
         quickPickItem({ label: "Manual", description: "Manual size", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
@@ -54,13 +54,12 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
             }).then((value?: string) => {
                 if(value !== undefined){
-                    let changed: boolean = get(`${scope}BackgroundSize`) !== "Manual" || current !== value;
+                    let changed: boolean = getForUI(ui, "backgroundSize") !== "Manual" || current !== value;
 
-                    update(`${scope}BackgroundSize`, "Manual", true);
-                    update(`${scope}BackgroundSizeValue`, value, true);
+                    updateForUI(ui, "backgroundSize", "Manual", "Cover", true);
+                    updateForUI(ui, "backgroundSizeValue", value, "", true);
 
-                    if(changed)
-                        notify();
+                    changed && notify();
                 }
             });
         })}, current)

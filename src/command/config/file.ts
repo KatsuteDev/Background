@@ -18,8 +18,8 @@
 
 import * as vscode from "vscode";
 
-import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, Scope, separator } from "../../vs/quickpick";
+import { get, UI, update } from "../../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
 
 import { unique } from "../../lib/unique";
 
@@ -28,24 +28,24 @@ import { notify } from "../install";
 
 // config
 
-const add: (scope: Scope, glob: string) => Promise<void> = (scope: Scope, glob: string) => new Promise<void>(() => {
-    const files: string[] = get(`${scope}Backgrounds`) as string[];
+const add: (ui: UI, glob: string) => Promise<void> = (ui: UI, glob: string) => new Promise<void>(() => {
+    const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
-    update(`${scope}Backgrounds`, files.filter(unique), true);
+    update(`${ui}Backgrounds`, files.filter(unique), true);
 });
 
-const replace: (scope: Scope, old: string, glob: string) => Promise<void> = (scope: Scope, old: string, glob: string) => new Promise<void>(() => {
-    const files: string[] = get(`${scope}Backgrounds`) as string[];
+const replace: (ui: UI, old: string, glob: string) => Promise<void> = (ui: UI, old: string, glob: string) => new Promise<void>(() => {
+    const files: string[] = get(`${ui}Backgrounds`) as string[];
     for(let i = 0, l = files.length; i < l; i++)
         if(files[i] === old)
             files[i] = glob;
-    update(`${scope}Backgrounds`, files.filter(unique), old === glob);
+    update(`${ui}Backgrounds`, files.filter(unique), old === glob);
 });
 
-const remove: (scope: Scope, glob: string) => Promise<void> = (scope: Scope, glob: string) => new Promise<void>(() => {
+const remove: (ui: UI, glob: string) => Promise<void> = (ui: UI, glob: string) => new Promise<void>(() => {
     update(
-        `${scope}Backgrounds`,
-        (get(`${scope}Backgrounds`) as string[])
+        `${ui}Backgrounds`,
+        (get(`${ui}Backgrounds`) as string[])
             .filter((f) => f !== glob)
             .filter(unique)
     );
@@ -57,7 +57,7 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 
 // update
 
-const updateItem: (scope: Scope, item?: CommandQuickPickItem) => Promise<void> = (scope: Scope, item?: CommandQuickPickItem) => new Promise(() => {
+const updateItem: (ui: UI, item?: CommandQuickPickItem) => Promise<void> = (ui: UI, item?: CommandQuickPickItem) => new Promise(() => {
     vscode.window.showInputBox({
         title: `Update ${item!.value}`,
         placeHolder: "File path, glob, or URL, leave blank to remove",
@@ -74,9 +74,9 @@ const updateItem: (scope: Scope, item?: CommandQuickPickItem) => Promise<void> =
     }).then((value?: string) => {
         if(item && value !== undefined)
             if(value.trim().length === 0)
-                remove(scope, item.value!);
+                remove(ui, item.value!);
             else
-                replace(scope, item.value!, value);
+                replace(ui, item.value!, value);
     });
 });
 
@@ -85,15 +85,15 @@ const updateItem: (scope: Scope, item?: CommandQuickPickItem) => Promise<void> =
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
+    const ui: UI = item.ui!;
 
     // existing items
-    const items: CommandQuickPickItem[] = (get(`${scope}Backgrounds`) as string[])
+    const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
         .filter(unique)
         .map(file => quickPickItem({
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
-            onSelect: (item?: CommandQuickPickItem) => updateItem(scope, item)
+            onSelect: (item?: CommandQuickPickItem) => updateItem(ui, item)
         }));
 
     // show menu
@@ -114,7 +114,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 }).then((files?: vscode.Uri[]) => {
                     if(files){
                         for(const file of files)
-                            add(scope, file.fsPath.replace(/\\/g, '/'));
+                            add(ui, file.fsPath.replace(/\\/g, '/'));
                         files.length > 0 && notify();
                     }
                 });
@@ -131,7 +131,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 }).then((files?: vscode.Uri[]) => {
                     if(files){
                         for(const file of files)
-                            add(scope, file.fsPath.replace(/\\/g, '/'));
+                            add(ui, file.fsPath.replace(/\\/g, '/'));
                         files.length > 0 && notify();
                     }
                 });
@@ -154,7 +154,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                     }
                 }).then((glob?: string) => {
                     if(glob)
-                        add(scope, glob);
+                        add(ui, glob);
                 });
             })
         }),
@@ -177,14 +177,14 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                     }
                 }).then((url?: string) => {
                     if(url)
-                        add(scope, url);
+                        add(ui, url);
                 });
             })
         })
     ],
     {
         ...options,
-        title: `${scope} ${options.title} - Files`,
+        title: `${ui} ${options.title} - Files`,
         placeHolder: "Files"
     })
     .then(handle);

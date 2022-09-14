@@ -18,8 +18,8 @@
 
 import * as vscode from "vscode";
 
-import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, Scope } from "../../vs/quickpick";
+import { getForUI, UI, updateForUI } from "../../vs/vsconfig";
+import { CommandQuickPickItem, CommandQuickPickItemPromise } from "../../vs/quickpick";
 
 import { round } from "../../lib/round";
 import { options } from "../config";
@@ -29,11 +29,11 @@ import { options } from "../config";
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     if(!item) return;
 
-    const scope: Scope = item.scope!;
-    const current: number = round(get(`${scope}BackgroundOpacity`) as number, 2);
+    const ui: UI = item.ui!;
+    const current: number = round(getForUI(ui, "backgroundOpacity") as number, 2);
 
     vscode.window.showInputBox({
-        title: `${scope} ${options.title} - Opacity`,
+        title: `${ui} ${options.title} - Opacity`,
         placeHolder: "Background opacity",
         value: current.toString(),
         prompt: `Background opacity (${current}). 0 is fully visible and 1 is invisible.`,
@@ -49,7 +49,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         if(value && !isNaN(+value)){
             const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
             if(o > .1){
-                update(`${scope}BackgroundOpacity`, o);
+                updateForUI(ui, "backgroundOpacity", o, 0.9);
             }else{
                 vscode.window.showWarningMessage(
                     "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -57,7 +57,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                     { modal: true },
                     "Yes"
                 ).then((c?: "Yes") => {
-                    c && c === "Yes" && update(`${scope}BackgroundOpacity`, o);
+                    c && c === "Yes" && updateForUI(ui, "backgroundOpacity", o, 0.9);
                 });
             }
         }
