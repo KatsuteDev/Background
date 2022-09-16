@@ -20,28 +20,30 @@ import * as vscode from "vscode";
 
 import { UI } from "./vsconfig";
 
-// quick pick handle
+// types
 
-export const handle: (item?: CommandQuickPickItem) => void = (item?: CommandQuickPickItem) => item && item.onSelect && item.onSelect(item);
+export interface CommandQuickPickItem extends vscode.QuickPickItem {
+    then?: (item: CommandQuickPickItem) => void;
+    value?: string,
+    ui?: UI
+}
 
 // quick pick
+
+export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}) => {
+    vscode.window.showQuickPick(items, options).then((item?: CommandQuickPickItem) => {
+        item && item.then && new Promise(() => item.then!(item));
+    });
+}
 
 export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
     ...item,
     description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim()
 } as CommandQuickPickItem);
 
+// separator
+
 export const separator: () => vscode.QuickPickItem = () => ({
     label: "",
     kind: vscode.QuickPickItemKind.Separator
 } as vscode.QuickPickItem);
-
-// types
-
-export type CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => Promise<void>;
-
-export interface CommandQuickPickItem extends vscode.QuickPickItem {
-    onSelect?: (item?: CommandQuickPickItem) => Promise<void>;
-    value?: string,
-    ui?: UI
-}

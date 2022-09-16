@@ -19,7 +19,7 @@
 import * as vscode from "vscode";
 
 import { get, getUI, UI } from "../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../vs/quickpick";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../vs/quickpick";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -31,7 +31,7 @@ import * as size from "./config/size";
 // interface
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
-    vscode.window.showQuickPick([
+    showQuickPick([
         // background types
         quickPickItem({
             label: "$(window) Window",
@@ -41,7 +41,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("window", "backgroundOpacity")} Opacity`        + ` • ` +
                     `${getUI("window", "backgroundRepeat")} Repeat`          + ` • ` +
                     `${getUI("window", "backgroundSize")} Size`,
-            onSelect: menu,
+            then: menu,
             ui: "window"
         }),
         quickPickItem({
@@ -52,7 +52,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("editor", "backgroundOpacity")} Opacity`        + ` • ` +
                     `${getUI("editor", "backgroundRepeat")} Repeat`          + ` • ` +
                     `${getUI("editor", "backgroundSize")} Size`,
-            onSelect: menu,
+            then: menu,
             ui: "editor"
         }),
         quickPickItem({
@@ -63,7 +63,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("sidebar", "backgroundOpacity")} Opacity`       + ` • ` +
                     `${getUI("sidebar", "backgroundRepeat")} Repeat`         + ` • ` +
                     `${getUI("sidebar", "backgroundSize")} Size`,
-            onSelect: menu,
+            then: menu,
             ui: "sidebar"
         }),
         quickPickItem({
@@ -74,7 +74,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("panel", "backgroundOpacity")} Opacity`         + ` • ` +
                     `${getUI("panel", "backgroundRepeat")} Repeat`           + ` • ` +
                     `${getUI("panel", "backgroundSize")} Size`,
-            onSelect: menu,
+            then: menu,
             ui: "panel"
         }),
         separator(),
@@ -82,20 +82,19 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         quickPickItem({
             label: "$(check) Install",
             description: "Install background",
-            onSelect: () => new Promise(() => vscode.commands.executeCommand("background.install"))
+            then: () => vscode.commands.executeCommand("background.install")
         }),
         quickPickItem({
             label: "$(close) Uninstall",
             description: "Uninstall background",
-            onSelect: () => new Promise(() => vscode.commands.executeCommand("background.uninstall"))
+            then: () => vscode.commands.executeCommand("background.uninstall")
         }),
         quickPickItem({
             label: "$(refresh) Reload Background",
             description: "Randomizes installed backgrounds; Background must already be installed",
-            onSelect: () => new Promise(() => vscode.commands.executeCommand("background.reload"))
+            then: () => vscode.commands.executeCommand("background.reload")
         }),
-    ], options)
-    .then(handle);
+    ], options);
 });
 
 // shared options
@@ -108,61 +107,60 @@ export const options: vscode.QuickPickOptions = {
 
 // menu
 
-export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     if(!item) return;
 
     const ui: UI = item.ui!;
 
-    vscode.window.showQuickPick([
+    showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
             description: s(get(`${ui}Backgrounds`), "Background"),
             detail: "Select background image files",
-            onSelect: file.menu,
+            then: file.menu,
             ui
         }),
         quickPickItem({
             label: "$(arrow-both) Alignment",
             description: `${getUI(ui, "backgroundAlignment")}`,
             detail: "Background image alignment",
-            onSelect: align.menu,
+            then: align.menu,
             ui
         }),
         quickPickItem({
             label: "$(eye) Blur",
             description: `${getUI(ui, "backgroundBlur")}`,
             detail: "Background image blur",
-            onSelect: blur.menu,
+            then: blur.menu,
             ui
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
             description: `${getUI(ui, "backgroundOpacity")}`,
             detail: "Background image opacity",
-            onSelect: opacity.menu,
+            then: opacity.menu,
             ui
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
             description: `${getUI(ui, "backgroundRepeat")}`,
             detail: "Background image repeat",
-            onSelect: repeat.menu,
+            then: repeat.menu,
             ui
         }),
         quickPickItem({
             label: "$(screen-full) Size",
             description: `${getUI(ui, "backgroundSize")}`,
             detail: "Background image size",
-            onSelect: size.menu,
+            then: size.menu,
             ui
         })
     ],
     {
         ...options,
         title: `${ui[0].toUpperCase() + ui.substring(1)} ${options.title}`,
-    })
-    .then(handle);
-});
+    });
+};
 
 //
 

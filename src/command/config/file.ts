@@ -18,8 +18,9 @@
 
 import * as vscode from "vscode";
 
+import { showInputBox } from "../../vs/inputbox";
 import { get, UI, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
 import { unique } from "../../lib/unique";
 
@@ -57,8 +58,8 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 
 // update
 
-const updateItem: (ui: UI, item?: CommandQuickPickItem) => Promise<void> = (ui: UI, item?: CommandQuickPickItem) => new Promise(() => {
-    vscode.window.showInputBox({
+const updateItem: (ui: UI, item: CommandQuickPickItem) => void = (ui: UI, item: CommandQuickPickItem) => {
+    showInputBox({
         title: `Update ${item!.value}`,
         placeHolder: "File path, glob, or URL, leave blank to remove",
         value: item!.value ?? "",
@@ -70,21 +71,19 @@ const updateItem: (ui: UI, item?: CommandQuickPickItem) => Promise<void> = (ui: 
                 return "Images must be served over HTTPS";
             else
                 return null;
-        }
-    }).then((value?: string) => {
-        if(item && value !== undefined)
+        },
+        then: (value: string) => {
             if(value.trim().length === 0)
                 remove(ui, item.value!);
             else
                 replace(ui, item.value!, value);
+        }
     });
-});
+};
 
 // files
 
-export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    if(!item) return;
-
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const ui: UI = item.ui!;
 
     // existing items
@@ -93,18 +92,18 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         .map(file => quickPickItem({
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
-            onSelect: (item?: CommandQuickPickItem) => updateItem(ui, item)
+            then: (item: CommandQuickPickItem) => updateItem(ui, item)
         }));
 
     // show menu
-    vscode.window.showQuickPick([
+    showQuickPick([
         // existing items
         ...items,
         separator(),
         // add
         quickPickItem({
             label: "$(file-add) Add a File",
-            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => new Promise(() => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: true,
                     canSelectFolders: false,
@@ -122,7 +121,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         }),
         quickPickItem({
             label: "$(file-directory-create) Add a Folder",
-            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => new Promise(() => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: false,
                     canSelectFolders: true,
@@ -139,7 +138,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         }),
         quickPickItem({
             label: "$(kebab-horizontal) Add a Glob",
-            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => new Promise(() => {
                 vscode.window.showInputBox({
                     title: "Add File",
                     placeHolder: "File path or glob",
@@ -160,7 +159,7 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         }),
         quickPickItem({
             label: "$(ports-open-browser-icon) Add a URL",
-            onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => new Promise(() => {
                 vscode.window.showInputBox({
                     title: "Add URL",
                     placeHolder: "Image URL",
@@ -186,6 +185,5 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         ...options,
         title: `${ui} ${options.title} - Files`,
         placeHolder: "Files"
-    })
-    .then(handle);
-});
+    });
+};

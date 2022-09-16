@@ -16,29 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
-
+import { showInputBox } from "../../vs/inputbox";
 import { getUI, UI, updateUI } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise } from "../../vs/quickpick";
+import { CommandQuickPickItem } from "../../vs/quickpick";
 
 import { options } from "../config";
 
 //
 
-export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    if(!item) return;
+const invalidCSS: RegExp = /[^\w.%+-]/gmi;
 
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const ui: UI = item.ui!;
     const current: string = getUI(ui, "backgroundBlur") as string ?? "";
 
-    vscode.window.showInputBox({
+    showInputBox({
         title: `${ui} ${options.title} - Blur`,
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
-        validateInput: (value: string) => value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null
-    }).then((value?: string) => {
-        if(value && !value.match(/[^\w.%+-]/gmi))
-            updateUI(ui, "backgroundBlur", value);
+        validateInput: (value: string) => value.match(invalidCSS) ? "Invalid CSS" : null,
+        then: (value: string) => !value.match(invalidCSS) && updateUI(ui, "backgroundBlur", value)
     });
-});
+};

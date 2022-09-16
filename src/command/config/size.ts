@@ -17,25 +17,22 @@
  */
 
 import { config } from "../../vs/package";
-
-import * as vscode from "vscode";
-
+import { showInputBox } from "../../vs/inputbox";
 import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise, handle, quickPickItem, separator } from "../../vs/quickpick";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
 import { options } from "../config";
-
 import { notify } from "../install";
 
 //
 
 const prop: any = config("backgroundSize");
 
-const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+const onSelect: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     item && updateUIFromLabel(item.ui!, "backgroundSize", item);
-});
+};
 
-export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     if(!item) return;
 
     const ui: UI = item.ui!;
@@ -43,21 +40,20 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
 
     const title: string = `${ui} ${options.title} - Size`;
 
-    vscode.window.showQuickPick([
+    showQuickPick([
         // size
-        quickPickItem({ label: prop.items.enum[0], description: prop.items.enumDescriptions[0], onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[1], description: prop.items.enumDescriptions[1], onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[2], description: prop.items.enumDescriptions[2], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[0], description: prop.items.enumDescriptions[0], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[1], description: prop.items.enumDescriptions[1], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[2], description: prop.items.enumDescriptions[2], then: onSelect, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items.enum[3], description: prop.items.enumDescriptions[3], onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-            vscode.window.showInputBox({
+        quickPickItem({ label: prop.items.enum[3], description: prop.items.enumDescriptions[3], then: (item: CommandQuickPickItem) => {
+            showInputBox({
                 title,
                 placeHolder: "Background size",
                 value: current,
-                prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
-            }).then((value?: string) => {
-                if(value !== undefined){
+                prompt: `Background size (${current}). The literal value for the 'background-size' css property.`,
+                then: (value: string) => {
                     let changed: boolean = getUI(ui, "backgroundSize") !== prop.items.enumDescriptions[3] || current !== value;
 
                     updateUI(ui, "backgroundSize", prop.items.enumDescriptions[3], true);
@@ -66,12 +62,11 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                     changed && notify();
                 }
             });
-        })}, current)
+        }}, current)
     ],
     {
         ...options,
         title,
         placeHolder: "Size"
-    })
-    .then(handle);
-});
+    });
+};

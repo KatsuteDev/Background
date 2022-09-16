@@ -18,21 +18,20 @@
 
 import * as vscode from "vscode";
 
+import { showInputBox } from "../../vs/inputbox";
 import { getUI, UI, updateUI } from "../../vs/vsconfig";
-import { CommandQuickPickItem, CommandQuickPickItemPromise } from "../../vs/quickpick";
+import { CommandQuickPickItem } from "../../vs/quickpick";
 
 import { round } from "../../lib/round";
 import { options } from "../config";
 
 //
 
-export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    if(!item) return;
-
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const ui: UI = item.ui!;
     const current: number = round(getUI(ui, "backgroundOpacity") as number, 2);
 
-    vscode.window.showInputBox({
+    showInputBox({
         title: `${ui} ${options.title} - Opacity`,
         placeHolder: "Background opacity",
         value: current.toString(),
@@ -44,22 +43,23 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 return "Opacity must be between 0 and 1";
             else
                 return null;
-        }
-    }).then((value?: string) => {
-        if(value && !isNaN(+value)){
-            const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
-            if(o > .1){
-                updateUI(ui, "backgroundOpacity", o);
-            }else{
-                vscode.window.showWarningMessage(
-                    "An opacity of " + o + " might make it difficult to see the UI, " +
-                    "are you sure you want to use this opacity?",
-                    { modal: true },
-                    "Yes"
-                ).then((c?: "Yes") => {
-                    c && c === "Yes" && updateUI(ui, "backgroundOpacity", o);
-                });
+        },
+        then: (value: string) => {
+            if(!isNaN(+value)){
+                const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
+                if(o > .1){
+                    updateUI(ui, "backgroundOpacity", o);
+                }else{
+                    vscode.window.showWarningMessage(
+                        "An opacity of " + o + " might make it difficult to see the UI, " +
+                        "are you sure you want to use this opacity?",
+                        { modal: true },
+                        "Yes"
+                    ).then((c?: "Yes") => {
+                        c && c === "Yes" && updateUI(ui, "backgroundOpacity", o);
+                    });
+                }
             }
         }
     });
-});
+};
