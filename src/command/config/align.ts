@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import { config } from "../../vs/package";
+
 import * as vscode from "vscode";
 
 import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
@@ -25,6 +27,8 @@ import { options } from "../config";
 import { notify } from "../install";
 
 //
+
+const prop: any = config("backgroundAlignment");
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     item && updateUIFromLabel(item.ui!, "backgroundAlignment", item);
@@ -40,22 +44,22 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
 
     vscode.window.showQuickPick([
         // top
-        quickPickItem({ label: "Top Left", onSelect, ui }, current),
-        quickPickItem({ label: "Top Center", onSelect, ui }, current),
-        quickPickItem({ label: "Top Right", onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[0], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[1], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[2], onSelect, ui }, current),
         separator(),
         // center
-        quickPickItem({ label: "Center Left", onSelect, ui }, current),
-        quickPickItem({ label: "Center Center", onSelect, ui }, current),
-        quickPickItem({ label: "Center Right", onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[3], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[4], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[5], onSelect, ui }, current),
         separator(),
         // bottom
-        quickPickItem({ label: "Bottom Left", onSelect, ui }, current),
-        quickPickItem({ label: "Bottom Center", onSelect, ui }, current),
-        quickPickItem({ label: "Bottom Right", onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[6], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[7], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[8], onSelect, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: "Manual", description: "Manual position", ui, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+        quickPickItem({ label: prop.items.enum[9], description: "Manual position", ui, onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
             if(!item) return;
             vscode.window.showInputBox({
                 title,
@@ -64,9 +68,9 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
             }).then((value?: string) => {
                 if(value !== undefined){
-                    let changed: boolean = getUI(ui, "backgroundAlignment") !== "Manual" || current !== value;
+                    let changed: boolean = getUI(ui, "backgroundAlignment") !== prop.items.enum[9] || current !== value;
 
-                    updateUI(ui, "backgroundAlignment", "Manual", true);
+                    updateUI(ui, "backgroundAlignment", prop.items.enum[9], true);
                     updateUI(ui, "backgroundAlignmentValue", value, true);
 
                     changed && notify();

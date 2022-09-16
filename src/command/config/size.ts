@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import { config } from "../../vs/package";
+
 import * as vscode from "vscode";
 
 import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
@@ -26,6 +28,8 @@ import { options } from "../config";
 import { notify } from "../install";
 
 //
+
+const prop: any = config("backgroundSize");
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
     item && updateUIFromLabel(item.ui!, "backgroundSize", item);
@@ -41,12 +45,12 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
 
     vscode.window.showQuickPick([
         // size
-        quickPickItem({ label: "Auto", description: "Original image size", onSelect, ui }, current),
-        quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect, ui }, current),
-        quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[0], description: prop.items.enumDescriptions[0], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[1], description: prop.items.enumDescriptions[1], onSelect, ui }, current),
+        quickPickItem({ label: prop.items.enum[2], description: prop.items.enumDescriptions[2], onSelect, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: "Manual", description: "Manual size", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
+        quickPickItem({ label: prop.items.enum[3], description: prop.items.enumDescriptions[3], onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
             vscode.window.showInputBox({
                 title,
                 placeHolder: "Background size",
@@ -54,9 +58,9 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
             }).then((value?: string) => {
                 if(value !== undefined){
-                    let changed: boolean = getUI(ui, "backgroundSize") !== "Manual" || current !== value;
+                    let changed: boolean = getUI(ui, "backgroundSize") !== prop.items.enumDescriptions[3] || current !== value;
 
-                    updateUI(ui, "backgroundSize", "Manual", true);
+                    updateUI(ui, "backgroundSize", prop.items.enumDescriptions[3], true);
                     updateUI(ui, "backgroundSizeValue", value, true);
 
                     changed && notify();

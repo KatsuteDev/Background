@@ -135,13 +135,14 @@
                 },
                 "background.backgroundBlur": {
                     "markdownDescription": "The background image blur amount in css units.",
-                    "type": "string",
+                    "type": "array",
                     "order": 6,
                     "default": ["0", "0", "0", "0"],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
-                        "type": "string"
+                        "type": "string",
+                        "pattern": "^[\\w.%+-]+$"
                     }
                 },
                 "background.backgroundOpacity": {
@@ -191,7 +192,7 @@
                     "default": ["Cover", "Cover", "Cover", "Cover"],
                     "minItems": 4,
                     "maxItems": 4,
-                    "items":{
+                    "items": {
                         "type": "string",
                         "enum": [
                             "Auto",

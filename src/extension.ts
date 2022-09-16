@@ -16,9 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import { Key } from "./vs/package";
+
 import * as vscode from "vscode";
 
-import { Key, get } from "./vs/vsconfig";
+import { get } from "./vs/vsconfig";
 
 import { glob } from "glob";
 

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as pkg from "../../package.json";
+import { config as cfg, Key } from "./package";
 
 import * as vscode from "vscode";
 
@@ -28,23 +28,9 @@ import { notify } from "../command/install";
 
 const config = () => vscode.workspace.getConfiguration("background");
 
-export type Key =
-    "windowBackgrounds" |
-    "editorBackgrounds" |
-    "sidebarBackgrounds" |
-    "panelBackgrounds" |
-    "backgroundAlignment" |
-    "backgroundAlignmentValue" |
-    "backgroundBlur" |
-    "backgroundOpacity" |
-    "backgroundRepeat" |
-    "backgroundSize" |
-    "backgroundSizeValue" |
-    "CSS";
-
 // config
 
-export const get: (key: Key) => any = (key: Key) => config().get(key) ?? pkg.contributes.configuration.properties[`background.${key}`] ?? '␀';
+export const get: (key: Key) => any = (key: Key) => config().get(key) ?? cfg(key) ?? '␀';
 
 export const update: (key: Key, value: any, skipWarning?: boolean) => void = (key: Key, value: any, skipWarning?: boolean) => {
     const diff: boolean = get(key) as any !== value;
@@ -71,14 +57,14 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
 
 export const getUI: (ui: UI, key: Key) => any = (ui: UI, key: Key) => {
     const arr: any[] = get(key);
-    return arr[asNum(ui)] ?? pkg.contributes.configuration.properties[`background.${key}`].default[0] ?? '␀';
+    return arr[asNum(ui)] ?? cfg(key).default[0] ?? '␀';
 }
 
 export const updateUI: (ui: UI, key: Key, value: any, skipWarning?: boolean) => void = (ui: UI, key: Key, value: any, skipWarning: boolean = false) => {
     const current: any = get(key) as any;
 
     for(let i = current.length; i < 4; i++) // make array size 4
-        current.push(pkg.contributes.configuration.properties[`background.${key}`].default[0]); // push def
+        current.push(cfg(key).default[0]); // push def
 
     const i: 0 | 1 | 2 | 3 = asNum(ui);
 
