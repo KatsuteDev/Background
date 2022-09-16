@@ -28,6 +28,6 @@ type then = {
 
 export const showInputBox: (options?: vscode.InputBoxOptions & then) => void = (options: vscode.InputBoxOptions & then = {}) => {
     options.then && vscode.window.showInputBox(options).then((value?: string) => {
-        options.then && value !== undefined && options.then(value);
+        options.then && value !== undefined && new Promise(() => options.then!(value)); // run then in a promise
     });
 }

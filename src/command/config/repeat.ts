@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config } from "../../vs/package";
+import { config, Props } from "../../vs/package";
 
 import { getUI, UI, updateUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../../vs/quickpick";
@@ -25,7 +25,7 @@ import { options } from "../config";
 
 //
 
-const prop: any = config("backgroundRepeat");
+const prop: Props = config("backgroundRepeat");
 
 const onSelect: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     updateUIFromLabel(item.ui!, "backgroundRepeat", item);
@@ -36,12 +36,12 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     const current: string = getUI(ui, "backgroundRepeat") as string;
 
     showQuickPick([
-        quickPickItem({ label: prop.items.enum[0], description: prop.items.enumDescriptions[0], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[1], description: prop.items.enumDescriptions[1], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[2], description: prop.items.enumDescriptions[2], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[3], description: prop.items.enumDescriptions[3], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[4], description: prop.items.enumDescriptions[4], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[5], description: prop.items.enumDescriptions[5], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![4], description: prop.items!.enumDescriptions![4], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![5], description: prop.items!.enumDescriptions![5], then: onSelect, ui }, current),
     ],
     {
         ...options,

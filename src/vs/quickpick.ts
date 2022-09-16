@@ -32,13 +32,13 @@ export interface CommandQuickPickItem extends vscode.QuickPickItem {
 
 export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}) => {
     vscode.window.showQuickPick(items, options).then((item?: CommandQuickPickItem) => {
-        item && item.then && new Promise(() => item.then!(item)); //  run then in promise
+        item && item.then && new Promise(() => item.then!(item)); // run then in a promise
     });
 }
 
 export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
     ...item,
-    description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim()
+    description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim() // mark as selected if matches
 } as CommandQuickPickItem);
 
 // separator

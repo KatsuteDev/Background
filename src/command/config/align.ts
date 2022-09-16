@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config } from "../../vs/package";
+import { config, Props } from "../../vs/package";
 import { showInputBox } from "../../vs/inputbox";
 import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
@@ -26,7 +26,7 @@ import { notify } from "../install";
 
 //
 
-const prop: any = config("backgroundAlignment");
+const prop: Props = config("backgroundAlignment");
 
 const onSelect: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     updateUIFromLabel(item.ui!, "backgroundAlignment", item);
@@ -40,31 +40,31 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
 
     showQuickPick([
         // top
-        quickPickItem({ label: prop.items.enum[0], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[1], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[2], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![1], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![2], then: onSelect, ui }, current),
         separator(),
         // center
-        quickPickItem({ label: prop.items.enum[3], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[4], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[5], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![3], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![4], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![5], then: onSelect, ui }, current),
         separator(),
         // bottom
-        quickPickItem({ label: prop.items.enum[6], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[7], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[8], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![6], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![7], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![8], then: onSelect, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items.enum[9], description: "Manual position", ui, then: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![9], description: "Manual position", ui, then: (item: CommandQuickPickItem) => {
             showInputBox({
                 title,
                 placeHolder: "Background position",
                 value: current,
                 prompt: `Background position (${current}). The literal value for the 'background-position' css property.`,
                 then: (value: string) => {
-                    let changed: boolean = getUI(ui, "backgroundAlignment") !== prop.items.enum[9] || current !== value;
+                    let changed: boolean = getUI(ui, "backgroundAlignment") !== prop.items!.enum![9] || current !== value;
 
-                    updateUI(ui, "backgroundAlignment", prop.items.enum[9], true);
+                    updateUI(ui, "backgroundAlignment", prop.items!.enum![9], true);
                     updateUI(ui, "backgroundAlignmentValue", value, true);
 
                     changed && notify();

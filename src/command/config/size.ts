@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config } from "../../vs/package";
+import { config, Props } from "../../vs/package";
 import { showInputBox } from "../../vs/inputbox";
 import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
@@ -26,7 +26,7 @@ import { notify } from "../install";
 
 //
 
-const prop: any = config("backgroundSize");
+const prop: Props = config("backgroundSize");
 
 const onSelect: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     item && updateUIFromLabel(item.ui!, "backgroundSize", item);
@@ -42,21 +42,21 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
 
     showQuickPick([
         // size
-        quickPickItem({ label: prop.items.enum[0], description: prop.items.enumDescriptions[0], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[1], description: prop.items.enumDescriptions[1], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items.enum[2], description: prop.items.enumDescriptions[2], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], then: onSelect, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items.enum[3], description: prop.items.enumDescriptions[3], then: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], then: (item: CommandQuickPickItem) => {
             showInputBox({
                 title,
                 placeHolder: "Background size",
                 value: current,
                 prompt: `Background size (${current}). The literal value for the 'background-size' css property.`,
                 then: (value: string) => {
-                    let changed: boolean = getUI(ui, "backgroundSize") !== prop.items.enumDescriptions[3] || current !== value;
+                    let changed: boolean = getUI(ui, "backgroundSize") !== prop.items!.enumDescriptions![3] || current !== value;
 
-                    updateUI(ui, "backgroundSize", prop.items.enumDescriptions[3], true);
+                    updateUI(ui, "backgroundSize", prop.items!.enumDescriptions![3], true);
                     updateUI(ui, "backgroundSizeValue", value, true);
 
                     changed && notify();

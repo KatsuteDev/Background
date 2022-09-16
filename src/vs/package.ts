@@ -34,4 +34,37 @@ export type Key =
     "backgroundSizeValue" |
     "CSS";
 
-export const config: (key: Key) => any = (key: Key) => cfg[`background.${key}`];
+export type Contributes = {
+    commands: [{
+        command: string,
+        title: string,
+        category: string
+    }],
+    configuration: {
+        title: string,
+        order: number,
+        properties: {
+            [key: string]: {
+                markdownDescription: string,
+                type: string,
+                order: number
+                default: any | any[],
+                minItems?: number,
+                maxItems: number,
+                items?: {
+                    type: string,
+                    editPresentation?: string,
+                    enum?: string[],
+                    enumDescriptions?: string[]
+                    minimum?: number,
+                    maximum?: number,
+                    pattern?: string,
+                }
+            }
+        }
+    }
+}
+
+export type Props = Contributes["configuration"]["properties"][0]
+
+export const config: (key: Key) => Props = (key: Key) => cfg[`background.${key}`];
