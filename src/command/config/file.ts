@@ -29,28 +29,28 @@ import { notify } from "../install";
 
 // config
 
-const add: (ui: UI, glob: string) => Promise<void> = (ui: UI, glob: string) => new Promise<void>(() => {
+const add: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
     update(`${ui}Backgrounds`, files.filter(unique), true);
-});
+};
 
-const replace: (ui: UI, old: string, glob: string) => Promise<void> = (ui: UI, old: string, glob: string) => new Promise<void>(() => {
+const replace: (ui: UI, old: string, glob: string) => void = (ui: UI, old: string, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     for(let i = 0, l = files.length; i < l; i++)
         if(files[i] === old)
             files[i] = glob;
     update(`${ui}Backgrounds`, files.filter(unique), old === glob);
-});
+};
 
-const remove: (ui: UI, glob: string) => Promise<void> = (ui: UI, glob: string) => new Promise<void>(() => {
+const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
     update(
         `${ui}Backgrounds`,
         (get(`${ui}Backgrounds`) as string[])
             .filter((f) => f !== glob)
             .filter(unique)
     );
-});
+};
 
 // exts
 
@@ -103,7 +103,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         // add
         quickPickItem({
             label: "$(file-add) Add a File",
-            then: (item: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: true,
                     canSelectFolders: false,
@@ -117,11 +117,11 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                         files.length > 0 && notify();
                     }
                 });
-            })
+            }
         }),
         quickPickItem({
             label: "$(file-directory-create) Add a Folder",
-            then: (item: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: false,
                     canSelectFolders: true,
@@ -134,11 +134,11 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                         files.length > 0 && notify();
                     }
                 });
-            })
+            }
         }),
         quickPickItem({
             label: "$(kebab-horizontal) Add a Glob",
-            then: (item: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add File",
                     placeHolder: "File path or glob",
@@ -155,11 +155,11 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     if(glob)
                         add(ui, glob);
                 });
-            })
+            }
         }),
         quickPickItem({
             label: "$(ports-open-browser-icon) Add a URL",
-            then: (item: CommandQuickPickItem) => new Promise(() => {
+            then: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add URL",
                     placeHolder: "Image URL",
@@ -178,7 +178,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     if(url)
                         add(ui, url);
                 });
-            })
+            }
         })
     ],
     {
