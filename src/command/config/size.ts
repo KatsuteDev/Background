@@ -18,7 +18,7 @@
 
 import { config, Props } from "../../vs/package";
 import { showInputBox } from "../../vs/inputbox";
-import { getUI, UI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
+import { getUI, updateUI, updateUIFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
 import { options } from "../config";

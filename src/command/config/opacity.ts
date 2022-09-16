@@ -19,7 +19,7 @@
 import * as vscode from "vscode";
 
 import { showInputBox } from "../../vs/inputbox";
-import { getUI, UI, updateUI } from "../../vs/vsconfig";
+import { getUI, updateUI } from "../../vs/vsconfig";
 import { CommandQuickPickItem } from "../../vs/quickpick";
 
 import { round } from "../../lib/round";
