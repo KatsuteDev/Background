@@ -28,7 +28,7 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateUIFromLabel(item.ui!, "backgroundSize", item, "Cover");
+    item && updateUIFromLabel(item.ui!, "backgroundSize", item);
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
@@ -56,8 +56,8 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 if(value !== undefined){
                     let changed: boolean = getUI(ui, "backgroundSize") !== "Manual" || current !== value;
 
-                    updateUI(ui, "backgroundSize", "Manual", "Cover", true);
-                    updateUI(ui, "backgroundSizeValue", value, "", true);
+                    updateUI(ui, "backgroundSize", "Manual", true);
+                    updateUI(ui, "backgroundSizeValue", value, true);
 
                     changed && notify();
                 }

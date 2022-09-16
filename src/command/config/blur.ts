@@ -39,6 +39,6 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
         validateInput: (value: string) => value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null
     }).then((value?: string) => {
         if(value && !value.match(/[^\w.%+-]/gmi))
-            updateUI(ui, "backgroundBlur", value, "0");
+            updateUI(ui, "backgroundBlur", value);
     });
 });

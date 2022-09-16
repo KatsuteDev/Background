@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import * as pkg from "../../package.json";
+
 import * as vscode from "vscode";
 
 import { CommandQuickPickItem } from "./quickpick";
@@ -42,7 +44,7 @@ export type Key =
 
 // config
 
-export const get: (key: Key, def?: any) => any = (key: Key, def?: any) => config().get(key) ?? def ?? '␀';
+export const get: (key: Key) => any = (key: Key) => config().get(key) ?? pkg.contributes.configuration.properties[`background.${key}`] ?? '␀';
 
 export const update: (key: Key, value: any, skipWarning?: boolean) => void = (key: Key, value: any, skipWarning?: boolean) => {
     const diff: boolean = get(key) as any !== value;
@@ -58,29 +60,27 @@ export const updateFromLabel: (key: Key, item: CommandQuickPickItem) => void = (
 
 export type UI = "window" | "editor" | "sidebar" | "panel";
 
-type UINum = 0 | 1 | 2 | 3;
-
-const asNum: (ui: UI) => UINum = (ui: UI) => {
+const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
     return {
         "window": 0,
         "editor": 1,
         "sidebar": 2,
         "panel": 3
-    }[ui.toLowerCase()] as UINum;
+    }[ui.toLowerCase()] as 0 | 1 | 2 | 3;
 }
 
-export const getUI: (ui: UI, key: Key, def?: any) => any = (ui: UI, key: Key, def?: any) => {
-    const arr: any[] = get(key, def);
-    return arr[asNum(ui)] ?? arr[0];
+export const getUI: (ui: UI, key: Key) => any = (ui: UI, key: Key) => {
+    const arr: any[] = get(key);
+    return arr[asNum(ui)] ?? pkg.contributes.configuration.properties[`background.${key}`].default[0] ?? '␀';
 }
 
-export const updateUI: (ui: UI, key: Key, value: any, def: any, skipWarning?: boolean) => void = (ui: UI, key: Key, value: any, def: any, skipWarning: boolean = false) => {
+export const updateUI: (ui: UI, key: Key, value: any, skipWarning?: boolean) => void = (ui: UI, key: Key, value: any, skipWarning: boolean = false) => {
     const current: any = get(key) as any;
 
     for(let i = current.length; i < 4; i++) // make array size 4
-        current.push(def); // push def
+        current.push(pkg.contributes.configuration.properties[`background.${key}`].default[0]); // push def
 
-    const i: UINum = asNum(ui);
+    const i: 0 | 1 | 2 | 3 = asNum(ui);
 
     const diff: boolean = current[i] !== value;
 
@@ -90,6 +90,6 @@ export const updateUI: (ui: UI, key: Key, value: any, def: any, skipWarning?: bo
     skipWarning === false && diff && notify();
 }
 
-export const updateUIFromLabel: (ui: UI, key: Key, item: CommandQuickPickItem, def: any) => void = (ui: UI, key: Key, def: any, item: CommandQuickPickItem) => {
-    item.label && updateUI(ui, key, item.label, def);
+export const updateUIFromLabel: (ui: UI, key: Key, item: CommandQuickPickItem) => void = (ui: UI, key: Key, item: CommandQuickPickItem) => {
+    item.label && updateUI(ui, key, item.label);
 }

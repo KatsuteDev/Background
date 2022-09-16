@@ -27,7 +27,7 @@ import { notify } from "../install";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateUIFromLabel(item.ui!, "backgroundAlignment", item, "Center Center");
+    item && updateUIFromLabel(item.ui!, "backgroundAlignment", item);
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
@@ -66,8 +66,8 @@ export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) =
                 if(value !== undefined){
                     let changed: boolean = getUI(ui, "backgroundAlignment") !== "Manual" || current !== value;
 
-                    updateUI(ui, "backgroundAlignment", "Manual", "Center Center", true);
-                    updateUI(ui, "backgroundAlignmentValue", value, "", true);
+                    updateUI(ui, "backgroundAlignment", "Manual", true);
+                    updateUI(ui, "backgroundAlignmentValue", value, true);
 
                     changed && notify();
                 }

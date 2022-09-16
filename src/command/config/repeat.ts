@@ -26,7 +26,7 @@ import { options } from "../config";
 //
 
 const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    item && updateUIFromLabel(item.ui!, "backgroundRepeat", item, "No Repeat");
+    item && updateUIFromLabel(item.ui!, "backgroundRepeat", item);
 });
 
 export const menu: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
