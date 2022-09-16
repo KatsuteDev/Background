@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { Key } from "./vs/package";
+import { ConfigKey } from "./vs/package";
 
 import * as vscode from "vscode";
 
@@ -124,7 +124,7 @@ const getJS: () => string = () => {
     };
 
     for(const s of ["window", "editor", "sidebar", "panel"])
-        for(const g of (get(`${s}Backgrounds` as Key) as string[]).filter(unique))
+        for(const g of (get(`${s}Backgrounds` as ConfigKey) as string[]).filter(unique))
             if(g.startsWith("https://")) // use literal URL
                 images[s].push('"' + g + '"');
             else // use glob
@@ -143,13 +143,13 @@ const getJS: () => string = () => {
         "Bottom Left": "left bottom",
         "Bottom Center": "center bottom",
         "Bottom Right": "right bottom",
-        "Manual": get("backgroundImageAlignmentValue" as Key) as string,
-    }[get("backgroundImageAlignment" as Key) as string] || "center center";
+        "Manual": get("backgroundImageAlignmentValue" as ConfigKey) as string,
+    }[get("backgroundImageAlignment" as ConfigKey) as string] || "center center";
 
-    const blur: string = (get("backgroundImageBlur" as Key) as string || "")
+    const blur: string = (get("backgroundImageBlur" as ConfigKey) as string || "")
         .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
 
-    const opacity: number = round(get("opacity" as Key) as number, 2);
+    const opacity: number = round(get("opacity" as ConfigKey) as number, 2);
 
     const repeat: string = {
         "No Repeat": "no-repeat",
@@ -158,14 +158,14 @@ const getJS: () => string = () => {
         "Repeat Y": "repeat-y",
         "Repeat Space": "space",
         "Repeat Round": "round"
-    }[get("backgroundImageRepeat" as Key) as string] || "no-repeat";
+    }[get("backgroundImageRepeat" as ConfigKey) as string] || "no-repeat";
 
     const size: string = {
         "Auto": "auto",
         "Contain": "contain",
         "Cover": "cover",
-        "Manual": get("backgroundImageSizeValue" as Key) as string
-    }[get("backgroundImageSize" as Key) as string] || "cover";
+        "Manual": get("backgroundImageSizeValue" as ConfigKey) as string
+    }[get("backgroundImageSize" as ConfigKey) as string] || "cover";
 
     return `
 /* ${identifier}-start */

@@ -20,7 +20,9 @@ export const pkg = require("../../package.json");
 
 export const cfg = pkg.contributes.configuration.properties;
 
-export type Key =
+// types
+
+export type ConfigKey =
     "windowBackgrounds" |
     "editorBackgrounds" |
     "sidebarBackgrounds" |
@@ -65,6 +67,8 @@ export type Contributes = {
     }
 }
 
+//
+
 export type Props = Contributes["configuration"]["properties"][0]
 
-export const config: (key: Key) => Props = (key: Key) => cfg[`background.${key}`];
+export const config: (key: ConfigKey) => Props = (key: ConfigKey) => cfg[`background.${key}`];

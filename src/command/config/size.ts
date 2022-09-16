@@ -28,36 +28,33 @@ import { notify } from "../install";
 
 const prop: Props = config("backgroundSize");
 
-const onSelect: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+const update: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     item && updateUIFromLabel(item.ui!, "backgroundSize", item);
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    if(!item) return;
+    const current: string = getUI(item.ui!, "backgroundSize") as string;
 
-    const ui: UI = item.ui!;
-    const current: string = getUI(ui, "backgroundSize") as string;
-
-    const title: string = `${ui} ${options.title} - Size`;
+    const title: string = `${item.ui!} ${options.title} - Size`;
 
     showQuickPick([
         // size
-        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], then: onSelect, ui }, current),
-        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], then: onSelect, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle: update, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], handle: update, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle: update, ui: item.ui! }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], then: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], handle: (item: CommandQuickPickItem) => {
             showInputBox({
                 title,
                 placeHolder: "Background size",
                 value: current,
                 prompt: `Background size (${current}). The literal value for the 'background-size' css property.`,
-                then: (value: string) => {
-                    let changed: boolean = getUI(ui, "backgroundSize") !== prop.items!.enumDescriptions![3] || current !== value;
+                handle: (value: string) => {
+                    let changed: boolean = getUI(item.ui!, "backgroundSize") !== prop.items!.enumDescriptions![3] || current !== value;
 
-                    updateUI(ui, "backgroundSize", prop.items!.enumDescriptions![3], true);
-                    updateUI(ui, "backgroundSizeValue", value, true);
+                    updateUI(item.ui!, "backgroundSize", prop.items!.enumDescriptions![3], true);
+                    updateUI(item.ui!, "backgroundSizeValue", value, true);
 
                     changed && notify();
                 }
@@ -67,6 +64,6 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     {
         ...options,
         title,
-        placeHolder: "Size"
+        placeHolder: "Background size"
     });
 };

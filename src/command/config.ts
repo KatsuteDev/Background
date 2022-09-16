@@ -28,6 +28,8 @@ import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
 
+import { capitalize, s } from "../lib/str";
+
 // interface
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
@@ -41,8 +43,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("window", "backgroundOpacity")} Opacity`        + ` • ` +
                     `${getUI("window", "backgroundRepeat")} Repeat`          + ` • ` +
                     `${getUI("window", "backgroundSize")} Size`,
-            then: menu,
-            ui: "window"
+            ui: "window",
+            handle: menu
         }),
         quickPickItem({
             label: "$(multiple-windows) Editor",
@@ -52,8 +54,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("editor", "backgroundOpacity")} Opacity`        + ` • ` +
                     `${getUI("editor", "backgroundRepeat")} Repeat`          + ` • ` +
                     `${getUI("editor", "backgroundSize")} Size`,
-            then: menu,
-            ui: "editor"
+            ui: "editor",
+            handle: menu
         }),
         quickPickItem({
             label: "$(layout-sidebar-left) Sidebar",
@@ -63,8 +65,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("sidebar", "backgroundOpacity")} Opacity`       + ` • ` +
                     `${getUI("sidebar", "backgroundRepeat")} Repeat`         + ` • ` +
                     `${getUI("sidebar", "backgroundSize")} Size`,
-            then: menu,
-            ui: "sidebar"
+            ui: "sidebar",
+            handle: menu
         }),
         quickPickItem({
             label: "$(layout-panel) Panel",
@@ -74,25 +76,25 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${getUI("panel", "backgroundOpacity")} Opacity`         + ` • ` +
                     `${getUI("panel", "backgroundRepeat")} Repeat`           + ` • ` +
                     `${getUI("panel", "backgroundSize")} Size`,
-            then: menu,
-            ui: "panel"
+            ui: "panel",
+            handle: menu
         }),
         separator(),
         // extension options
         quickPickItem({
             label: "$(check) Install",
             description: "Install background",
-            then: () => vscode.commands.executeCommand("background.install")
+            handle: () => vscode.commands.executeCommand("background.install")
         }),
         quickPickItem({
             label: "$(close) Uninstall",
             description: "Uninstall background",
-            then: () => vscode.commands.executeCommand("background.uninstall")
+            handle: () => vscode.commands.executeCommand("background.uninstall")
         }),
         quickPickItem({
             label: "$(refresh) Reload Background",
             description: "Randomizes installed backgrounds; Background must already be installed",
-            then: () => vscode.commands.executeCommand("background.reload")
+            handle: () => vscode.commands.executeCommand("background.reload")
         }),
     ], options);
 });
@@ -105,63 +107,57 @@ export const options: vscode.QuickPickOptions = {
     matchOnDescription: true
 }
 
+export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui ? `${ui} ${options.title} - ${s}` : `${options.title} - ${s}`;
+
 // menu
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    if(!item) return;
-
-    const ui: UI = item.ui!;
-
     showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
-            description: s(get(`${ui}Backgrounds`), "Background"),
+            description: s(get(`${item.ui!}Backgrounds`), "Background"),
             detail: "Select background image files",
-            then: file.menu,
-            ui
+            ui: item.ui!,
+            handle: file.menu
         }),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${getUI(ui, "backgroundAlignment")}`,
+            description: `${getUI(item.ui!, "backgroundAlignment")}`,
             detail: "Background image alignment",
-            then: align.menu,
-            ui
+            ui: item.ui!,
+            handle: align.menu
         }),
         quickPickItem({
             label: "$(eye) Blur",
-            description: `${getUI(ui, "backgroundBlur")}`,
+            description: `${getUI(item.ui!, "backgroundBlur")}`,
             detail: "Background image blur",
-            then: blur.menu,
-            ui
+            ui: item.ui!,
+            handle: blur.menu
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
-            description: `${getUI(ui, "backgroundOpacity")}`,
+            description: `${getUI(item.ui!, "backgroundOpacity")}`,
             detail: "Background image opacity",
-            then: opacity.menu,
-            ui
+            ui: item.ui!,
+            handle: opacity.menu
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
-            description: `${getUI(ui, "backgroundRepeat")}`,
+            description: `${getUI(item.ui!, "backgroundRepeat")}`,
             detail: "Background image repeat",
-            then: repeat.menu,
-            ui
+            ui: item.ui!,
+            handle: repeat.menu
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${getUI(ui, "backgroundSize")}`,
+            description: `${getUI(item.ui!, "backgroundSize")}`,
             detail: "Background image size",
-            then: size.menu,
-            ui
+            ui: item.ui!,
+            handle: size.menu
         })
     ],
     {
         ...options,
-        title: `${ui[0].toUpperCase() + ui.substring(1)} ${options.title}`,
+        title: `${capitalize(item.ui!)} ${options.title}`,
     });
 };
-
-//
-
-const s: (arr: any[], s: string) => string = (arr: any[], s: string) => `${arr.length} ${s}${arr.length != 1 ? 's' : ''}`;

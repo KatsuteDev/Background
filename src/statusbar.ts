@@ -18,6 +18,8 @@
 
 import * as vscode from "vscode";
 
+//
+
 export const statusbar: vscode.StatusBarItem = (() => {
     const item: vscode.StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
 

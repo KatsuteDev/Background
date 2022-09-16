@@ -27,15 +27,14 @@ import { options } from "../config";
 const invalidCSS: RegExp = /[^\w.%+-]/gmi;
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const ui: UI = item.ui!;
-    const current: string = getUI(ui, "backgroundBlur") as string ?? "";
+    const current: string = getUI(item.ui!, "backgroundBlur") as string ?? "";
 
     showInputBox({
-        title: `${ui} ${options.title} - Blur`,
+        title: `${item.ui!} ${options.title} - Blur`,
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
         validateInput: (value: string) => value.match(invalidCSS) ? "Invalid CSS" : null,
-        then: (value: string) => !value.match(invalidCSS) && updateUI(ui, "backgroundBlur", value)
+        handle: (value: string) => !value.match(invalidCSS) && updateUI(item.ui!, "backgroundBlur", value)
     });
 };

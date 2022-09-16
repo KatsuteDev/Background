@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config as cfg, Key } from "./package";
+import { config as cfg, ConfigKey } from "./package";
 
 import * as vscode from "vscode";
 
@@ -30,15 +30,15 @@ const config = () => vscode.workspace.getConfiguration("background");
 
 // config
 
-export const get: (key: Key) => any = (key: Key) => config().get(key) ?? cfg(key) ?? '␀';
+export const get: (key: ConfigKey) => any = (key: ConfigKey) => config().get(key) ?? cfg(key) ?? '␀';
 
-export const update: (key: Key, value: any, skipWarning?: boolean) => void = (key: Key, value: any, skipWarning?: boolean) => {
+export const update: (key: ConfigKey, value: any, skipWarning?: boolean) => void = (key: ConfigKey, value: any, skipWarning?: boolean) => {
     const diff: boolean = get(key) as any !== value;
     config().update(key, value, vscode.ConfigurationTarget.Global);
     skipWarning === false && diff && notify();
 }
 
-export const updateFromLabel: (key: Key, item: CommandQuickPickItem) => void = (key: Key, item: CommandQuickPickItem) => {
+export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem) => void = (key: ConfigKey, item: CommandQuickPickItem) => {
     item.label && update(key, item.label);
 }
 
@@ -55,12 +55,12 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
     }[ui.toLowerCase()] as 0 | 1 | 2 | 3;
 }
 
-export const getUI: (ui: UI, key: Key) => any = (ui: UI, key: Key) => {
+export const getUI: (ui: UI, key: ConfigKey) => any = (ui: UI, key: ConfigKey) => {
     const arr: any[] = get(key);
     return arr[asNum(ui)] ?? cfg(key).default[0] ?? '␀';
 }
 
-export const updateUI: (ui: UI, key: Key, value: any, skipWarning?: boolean) => void = (ui: UI, key: Key, value: any, skipWarning: boolean = false) => {
+export const updateUI: (ui: UI, key: ConfigKey, value: any, skipWarning?: boolean) => void = (ui: UI, key: ConfigKey, value: any, skipWarning: boolean = false) => {
     const current: any = get(key) as any;
 
     for(let i = current.length; i < 4; i++) // make array size 4
@@ -76,6 +76,6 @@ export const updateUI: (ui: UI, key: Key, value: any, skipWarning?: boolean) => 
     skipWarning === false && diff && notify();
 }
 
-export const updateUIFromLabel: (ui: UI, key: Key, item: CommandQuickPickItem) => void = (ui: UI, key: Key, item: CommandQuickPickItem) => {
+export const updateUIFromLabel: (ui: UI, key: ConfigKey, item: CommandQuickPickItem) => void = (ui: UI, key: ConfigKey, item: CommandQuickPickItem) => {
     item.label && updateUI(ui, key, item.label);
 }

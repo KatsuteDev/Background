@@ -16,18 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+export const s: (arr: any[], s: string) => string = (arr: any[], s: string) => `${arr.length} ${s}${arr.length != 1 ? 's' : ''}`;
 
-// type
-
-type handle = {
-    handle?: (value: string) => void
-}
-
-// input box
-
-export const showInputBox: (options?: vscode.InputBoxOptions & handle) => void = (options: vscode.InputBoxOptions & handle = {}) => {
-    options.handle && vscode.window.showInputBox(options).then((value?: string) => {
-        options.handle && value !== undefined && new Promise(() => options.handle!(value)); // run then in a promise
-    });
-}
+export const capitalize: (s: string) => string = (s: string) => `${(s[0] ?? "").toUpperCase() + (s ?? "").substring(1)}`;

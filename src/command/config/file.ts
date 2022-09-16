@@ -72,7 +72,7 @@ const updateItem: (ui: UI, item: CommandQuickPickItem) => void = (ui: UI, item: 
             else
                 return null;
         },
-        then: (value: string) => {
+        handle: (value: string) => {
             if(value.trim().length === 0)
                 remove(ui, item.value!);
             else
@@ -84,15 +84,13 @@ const updateItem: (ui: UI, item: CommandQuickPickItem) => void = (ui: UI, item: 
 // files
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const ui: UI = item.ui!;
-
     // existing items
-    const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
+    const items: CommandQuickPickItem[] = (get(`${item.ui!}Backgrounds`) as string[])
         .filter(unique)
         .map(file => quickPickItem({
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
-            then: (item: CommandQuickPickItem) => updateItem(ui, item)
+            handle: (item: CommandQuickPickItem) => updateItem(item.ui!, item)
         }));
 
     // show menu
@@ -103,7 +101,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         // add
         quickPickItem({
             label: "$(file-add) Add a File",
-            then: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: true,
                     canSelectFolders: false,
@@ -113,7 +111,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 }).then((files?: vscode.Uri[]) => {
                     if(files){
                         for(const file of files)
-                            add(ui, file.fsPath.replace(/\\/g, '/'));
+                            add(item.ui!, file.fsPath.replace(/\\/g, '/'));
                         files.length > 0 && notify();
                     }
                 });
@@ -121,7 +119,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         }),
         quickPickItem({
             label: "$(file-directory-create) Add a Folder",
-            then: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: false,
                     canSelectFolders: true,
@@ -130,7 +128,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 }).then((files?: vscode.Uri[]) => {
                     if(files){
                         for(const file of files)
-                            add(ui, file.fsPath.replace(/\\/g, '/'));
+                            add(item.ui!, file.fsPath.replace(/\\/g, '/'));
                         files.length > 0 && notify();
                     }
                 });
@@ -138,7 +136,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         }),
         quickPickItem({
             label: "$(kebab-horizontal) Add a Glob",
-            then: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add File",
                     placeHolder: "File path or glob",
@@ -153,13 +151,13 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     }
                 }).then((glob?: string) => {
                     if(glob)
-                        add(ui, glob);
+                        add(item.ui!, glob);
                 });
             }
         }),
         quickPickItem({
             label: "$(ports-open-browser-icon) Add a URL",
-            then: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add URL",
                     placeHolder: "Image URL",
@@ -176,14 +174,14 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     }
                 }).then((url?: string) => {
                     if(url)
-                        add(ui, url);
+                        add(item.ui!, url);
                 });
             }
         })
     ],
     {
         ...options,
-        title: `${ui} ${options.title} - Files`,
+        title: `${item.ui!} ${options.title} - Files`,
         placeHolder: "Files"
     });
 };
