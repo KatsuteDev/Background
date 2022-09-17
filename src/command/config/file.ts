@@ -32,7 +32,7 @@ import { notify } from "../install";
 const add: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
-    update(`${ui}Backgrounds`, files.filter(unique), true);
+    update(`${ui}Backgrounds`, files.filter(unique), undefined, true);
 };
 
 const replace: (ui: UI, old: string, glob: string) => void = (ui: UI, old: string, glob: string) => {
@@ -40,7 +40,7 @@ const replace: (ui: UI, old: string, glob: string) => void = (ui: UI, old: strin
     for(let i = 0, l = files.length; i < l; i++)
         if(files[i] === old)
             files[i] = glob;
-    update(`${ui}Backgrounds`, files.filter(unique), old === glob);
+    update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob);
 };
 
 const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {

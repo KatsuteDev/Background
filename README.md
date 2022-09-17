@@ -105,30 +105,41 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 |`Background: Uninstall`|Uninstalls and disables the background.|
 |`Background: Reload`|Randomizes the backgrounds. Background must already be installed.|
 |`Background: Configuration`|Opens the configuration menu.|
-|`Background: Select background image files`|Opens the background manager.|
-|`Background: Set background image alignment`|Sets the background image alignment.|
-|`Background: Set background image blur`|Sets the background image blur.|
-|`Background: Set UI opacity`|Sets the UI opacity.|
-|`Background: Set background image repeat`|Sets the background image repeat.|
-|`Background: Set background image size`|Sets the background image size.|
 
 ## ⚙️ Configuration
 
 Use the `Background: Configuration` command to access the configuration menu.
 
-| Name | Type | Description |
+Background properties are saved as arrays so you can have different options for different UI elements.
+
+The order settings are saved in is:
+
+ 0. Window
+ 1. Editor
+ 2. Sidebar
+ 3. Panel
+
+The array must have a length of 4, otherwise default values will be used.
+
+| Background | Type | Description |
 |---|:-:|---|
 |`background.windowBackgrounds`|`string[]`|The list of files or globs to use for the window background image.|
 |`background.editorBackgrounds`|`string[]`|The list of files or globs to use for editor background images.|
 |`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
 |`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
-|`background.backgroundImageAlignment`|`enum`|The alignment of the background image.|
-|`background.backgroundImageAlignmentValue`|`string`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
-|`background.backgroundImageBlur`|`string`|Background image blur in CSS units.|
-|`background.opacity`|`number`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
-|`background.backgroundImageRepeat`|`enum`|The background image repeat.|
-|`background.backgroundImageSize`|`enum`|The background image size.|
-|`background.backgroundImageSizeValue`|`string`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
+
+| Property | Type | Description |
+|---|:-:|---|
+|`background.backgroundAlignment`|`enum[]`|The alignment of the background image.|
+|`background.backgroundAlignmentValue`|`string[]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
+|`background.backgroundBlur`|`string[]`|Background image blur in CSS units.|
+|`background.backgroundOpacity`|`number[]`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
+|`background.backgroundRepeat`|`enum[]`|The background image repeat.|
+|`background.backgroundSize`|`enum[]`|The background image size.|
+|`background.backgroundSizeValue`|`string[]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
+
+| Advanced | Type | Description |
+|---|:-:|---|
 |`background.CSS`|`string`|**Advanced Users Only.** Apply raw CSS to VSCode.|
 
 ## 👨‍💻 Contributing

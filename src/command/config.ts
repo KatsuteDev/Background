@@ -18,7 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { get, getUI, UI } from "../vs/vsconfig";
+import { get, UI } from "../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../vs/quickpick";
 
 import * as file from "./config/file";
@@ -38,44 +38,44 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         quickPickItem({
             label: "$(window) Window",
             description: s(get("windowBackgrounds"), "Background"),
-            detail: `${getUI("window", "backgroundAlignment")} Alignment`    + ` • ` +
-                    `${getUI("window", "backgroundBlur")} Blur`              + ` • ` +
-                    `${getUI("window", "backgroundOpacity")} Opacity`        + ` • ` +
-                    `${getUI("window", "backgroundRepeat")} Repeat`          + ` • ` +
-                    `${getUI("window", "backgroundSize")} Size`,
+            detail: `${get("backgroundAlignment",   "window")} Alignment`   + ` • ` +
+                    `${get("backgroundBlur",        "window")} Blur`        + ` • ` +
+                    `${get("backgroundOpacity",     "window")} Opacity`     + ` • ` +
+                    `${get("backgroundRepeat",      "window")} Repeat`      + ` • ` +
+                    `${get("backgroundSize",        "window")} Size`,
             ui: "window",
             handle: menu
         }),
         quickPickItem({
             label: "$(multiple-windows) Editor",
             description: s(get("editorBackgrounds"), "Background"),
-            detail: `${getUI("editor", "backgroundAlignment")} Alignment`    + ` • ` +
-                    `${getUI("editor", "backgroundBlur")} Blur`              + ` • ` +
-                    `${getUI("editor", "backgroundOpacity")} Opacity`        + ` • ` +
-                    `${getUI("editor", "backgroundRepeat")} Repeat`          + ` • ` +
-                    `${getUI("editor", "backgroundSize")} Size`,
+            detail: `${get("backgroundAlignment",   "editor")} Alignment`   + ` • ` +
+                    `${get("backgroundBlur",        "editor")} Blur`        + ` • ` +
+                    `${get("backgroundOpacity",     "editor")} Opacity`     + ` • ` +
+                    `${get("backgroundRepeat",      "editor")} Repeat`      + ` • ` +
+                    `${get("backgroundSize",        "editor")} Size`,
             ui: "editor",
             handle: menu
         }),
         quickPickItem({
             label: "$(layout-sidebar-left) Sidebar",
             description: s(get("sidebarBackgrounds"), "Background"),
-            detail: `${getUI("sidebar", "backgroundAlignment")} Alignment`   + ` • ` +
-                    `${getUI("sidebar", "backgroundBlur")} Blur`             + ` • ` +
-                    `${getUI("sidebar", "backgroundOpacity")} Opacity`       + ` • ` +
-                    `${getUI("sidebar", "backgroundRepeat")} Repeat`         + ` • ` +
-                    `${getUI("sidebar", "backgroundSize")} Size`,
+            detail: `${get("backgroundAlignment",   "sidebar")} Alignment`  + ` • ` +
+                    `${get("backgroundBlur",        "sidebar")} Blur`       + ` • ` +
+                    `${get("backgroundOpacity",     "sidebar")} Opacity`    + ` • ` +
+                    `${get("backgroundRepeat",      "sidebar")} Repeat`     + ` • ` +
+                    `${get("backgroundSize",        "sidebar")} Size`,
             ui: "sidebar",
             handle: menu
         }),
         quickPickItem({
             label: "$(layout-panel) Panel",
             description: s(get("panelBackgrounds"), "Background"),
-            detail: `${getUI("panel", "backgroundAlignment")} Alignment`     + ` • ` +
-                    `${getUI("panel", "backgroundBlur")} Blur`               + ` • ` +
-                    `${getUI("panel", "backgroundOpacity")} Opacity`         + ` • ` +
-                    `${getUI("panel", "backgroundRepeat")} Repeat`           + ` • ` +
-                    `${getUI("panel", "backgroundSize")} Size`,
+            detail: `${get("backgroundAlignment",   "panel")} Alignment`    + ` • ` +
+                    `${get("backgroundBlur",        "panel")} Blur`         + ` • ` +
+                    `${get("backgroundOpacity",     "panel")} Opacity`      + ` • ` +
+                    `${get("backgroundRepeat",      "panel")} Repeat`       + ` • ` +
+                    `${get("backgroundSize",        "panel")} Size`,
             ui: "panel",
             handle: menu
         }),
@@ -122,35 +122,35 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         }),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${getUI(item.ui!, "backgroundAlignment")}`,
+            description: `${get("backgroundAlignment", item.ui!)}`,
             detail: "Background image alignment",
             ui: item.ui!,
             handle: align.menu
         }),
         quickPickItem({
             label: "$(eye) Blur",
-            description: `${getUI(item.ui!, "backgroundBlur")}`,
+            description: `${get("backgroundBlur", item.ui!)}`,
             detail: "Background image blur",
             ui: item.ui!,
             handle: blur.menu
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
-            description: `${getUI(item.ui!, "backgroundOpacity")}`,
+            description: `${get("backgroundOpacity", item.ui!)}`,
             detail: "Background image opacity",
             ui: item.ui!,
             handle: opacity.menu
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
-            description: `${getUI(item.ui!, "backgroundRepeat")}`,
+            description: `${get("backgroundRepeat", item.ui!)}`,
             detail: "Background image repeat",
             ui: item.ui!,
             handle: repeat.menu
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${getUI(item.ui!, "backgroundSize")}`,
+            description: `${get("backgroundSize", item.ui!)}`,
             detail: "Background image size",
             ui: item.ui!,
             handle: size.menu

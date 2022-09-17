@@ -17,7 +17,7 @@
  */
 
 import { showInputBox } from "../../vs/inputbox";
-import { getUI, updateUI } from "../../vs/vsconfig";
+import { get, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem } from "../../vs/quickpick";
 
 import { options } from "../config";
@@ -27,7 +27,7 @@ import { options } from "../config";
 const invalidCSS: RegExp = /[^\w.%+-]/gmi;
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const current: string = getUI(item.ui!, "backgroundBlur") as string ?? "";
+    const current: string = get("backgroundBlur", item.ui!) as string;
 
     showInputBox({
         title: `${item.ui!} ${options.title} - Blur`,
@@ -35,6 +35,6 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         value: current,
         prompt: `Background blur (${current})`,
         validateInput: (value: string) => value.match(invalidCSS) ? "Invalid CSS" : null,
-        handle: (value: string) => !value.match(invalidCSS) && updateUI(item.ui!, "backgroundBlur", value)
+        handle: (value: string) => !value.match(invalidCSS) && update("backgroundBlur", value, item.ui!)
     });
 };

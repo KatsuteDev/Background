@@ -126,7 +126,7 @@
                     "markdownDescription": "If `#background.backgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
                     "type": "array",
                     "order": 5,
-                    "default": ["", "", "", ""],
+                    "default": ["50%", "50%", "50%", "50%"],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -212,7 +212,7 @@
                     "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
                     "type": "array",
                     "order": 10,
-                    "default": ["", "", "", ""],
+                    "default": ["100%", "100%", "100%", "100%"],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {

@@ -24,23 +24,9 @@ import { CommandQuickPickItem } from "./quickpick";
 
 import { notify } from "../command/install";
 
-//
+// vs
 
 const config = () => vscode.workspace.getConfiguration("background");
-
-// config
-
-export const get: (key: ConfigKey) => any = (key: ConfigKey) => config().get(key) ?? cfg(key) ?? '␀';
-
-export const update: (key: ConfigKey, value: any, skipWarning?: boolean) => void = (key: ConfigKey, value: any, skipWarning?: boolean) => {
-    const diff: boolean = get(key) as any !== value;
-    config().update(key, value, vscode.ConfigurationTarget.Global);
-    skipWarning === false && diff && notify();
-}
-
-export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem) => void = (key: ConfigKey, item: CommandQuickPickItem) => {
-    item.label && update(key, item.label);
-}
 
 // UI
 
@@ -55,27 +41,36 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
     }[ui.toLowerCase()] as 0 | 1 | 2 | 3;
 }
 
-export const getUI: (ui: UI, key: ConfigKey) => any = (ui: UI, key: ConfigKey) => {
-    const arr: any[] = get(key);
-    return arr[asNum(ui)] ?? cfg(key).default[0] ?? '␀';
+// config
+
+export const get: (key: ConfigKey, ui?: UI) => any = (key: ConfigKey, ui?: UI) => {
+    if(!ui)
+        return config().get(key) ?? cfg(key).default ?? '␀'; // get from config or use default
+    else
+        return get(key)[asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // get from array from config or use default
+};
+
+export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => void = (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => {
+    let diff: boolean = false;
+    if(!ui){
+        diff = get(key) as any !== value;
+        config().update(key, value, vscode.ConfigurationTarget.Global); // update
+    }else{
+        const current: any = get(key) as any;
+
+        for(let i = current.length; i < 4; i++) // make array size 4
+            current.push(cfg(key).default[0]); // push def
+
+        const i: 0 | 1 | 2 | 3 = asNum(ui);
+
+        diff = current[i] !== value; // diff
+
+        current[i] = value; // update array
+        config().update(key, current, vscode.ConfigurationTarget.Global); // update
+    }
+    skipWarning === false && diff && notify(); // notify
 }
 
-export const updateUI: (ui: UI, key: ConfigKey, value: any, skipWarning?: boolean) => void = (ui: UI, key: ConfigKey, value: any, skipWarning: boolean = false) => {
-    const current: any = get(key) as any;
-
-    for(let i = current.length; i < 4; i++) // make array size 4
-        current.push(cfg(key).default[0]); // push def
-
-    const i: 0 | 1 | 2 | 3 = asNum(ui);
-
-    const diff: boolean = current[i] !== value;
-
-    current[i] = value; // assign
-    config().update(key, current, vscode.ConfigurationTarget.Global);
-
-    skipWarning === false && diff && notify();
-}
-
-export const updateUIFromLabel: (ui: UI, key: ConfigKey, item: CommandQuickPickItem) => void = (ui: UI, key: ConfigKey, item: CommandQuickPickItem) => {
-    item.label && updateUI(ui, key, item.label);
+export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem, ui?: UI) => void = (key: ConfigKey, item: CommandQuickPickItem, ui?:UI) => {
+    item.label && update(key, item.label, ui);
 }

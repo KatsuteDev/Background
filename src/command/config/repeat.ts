@@ -18,7 +18,7 @@
 
 import { config, Props } from "../../vs/package";
 
-import { getUI, updateUIFromLabel } from "../../vs/vsconfig";
+import { get, updateFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../../vs/quickpick";
 
 import { options } from "../config";
@@ -27,20 +27,20 @@ import { options } from "../config";
 
 const prop: Props = config("backgroundRepeat");
 
-const update: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    updateUIFromLabel(item.ui!, "backgroundRepeat", item);
+const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    updateFromLabel("backgroundRepeat", item, item.ui!);
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const current: string = getUI(item.ui!, "backgroundRepeat") as string;
+    const current: string = get("backgroundRepeat", item.ui!) as string;
 
     showQuickPick([
-        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle: update, ui: item.ui! }, current),
-        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], handle: update, ui: item.ui! }, current),
-        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle: update, ui: item.ui! }, current),
-        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], handle: update, ui: item.ui! }, current),
-        quickPickItem({ label: prop.items!.enum![4], description: prop.items!.enumDescriptions![4], handle: update, ui: item.ui! }, current),
-        quickPickItem({ label: prop.items!.enum![5], description: prop.items!.enumDescriptions![5], handle: update, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle: handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], handle: handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle: handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], handle: handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![4], description: prop.items!.enumDescriptions![4], handle: handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![5], description: prop.items!.enumDescriptions![5], handle: handle, ui: item.ui! }, current),
     ],
     {
         ...options,
