@@ -142,7 +142,7 @@
                     "maxItems": 4,
                     "items": {
                         "type": "string",
-                        "pattern": "^[\\w.%+-]+$"
+                        "pattern": "^[\\w.% +-]+$"
                     }
                 },
                 "background.backgroundOpacity": {
@@ -216,7 +216,8 @@
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
-                        "type": "string"
+                        "type": "string",
+                        "pattern": "^[\\w.% +-]+$"
                     }
                 },
 

@@ -16,13 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config as cfg, ConfigKey } from "./package";
+import { config as cfg, ConfigKey, Props } from "./package";
 
 import * as vscode from "vscode";
 
 import { CommandQuickPickItem } from "./quickpick";
 
 import { notify } from "../command/install";
+import { round } from "../lib/round";
 
 // vs
 
@@ -74,3 +75,64 @@ export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean
 export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem, ui?: UI) => void = (key: ConfigKey, item: CommandQuickPickItem, ui?:UI) => {
     item.label && update(key, item.label, ui);
 }
+
+// css
+
+export const css: (key: ConfigKey, ui: UI) => string = (key: ConfigKey, ui: UI) => {
+    const value: string = get(key, ui);
+
+    const prop: Props = cfg(key);
+
+    switch(key){
+        case "backgroundAlignment": {
+            switch(value){
+                // top
+                case prop.items!.enum![0]: return "left top";
+                case prop.items!.enum![1]: return "center top";
+                case prop.items!.enum![2]: return "right top";
+                // center
+                case prop.items!.enum![3]: return "left center";
+                case prop.items!.enum![4]: return "center center";
+                case prop.items!.enum![5]: return "right center";
+                // bottom
+                case prop.items!.enum![6]: return "left bottom";
+                case prop.items!.enum![7]: return "center bottom";
+                case prop.items!.enum![8]: return "right bottom";
+                case prop.items!.enum![9]: return cssUnits(get("backgroundAlignmentValue", ui));
+            }
+        }
+        case "backgroundBlur": {
+            return cssUnits(value);
+        }
+        case "backgroundOpacity": {
+            return !isNaN(+value) ? round(+value, 2) : prop.default[0];
+        }
+        case "backgroundRepeat": {
+            switch(value){
+                case prop.items!.enum![0]: return "no-repeat";
+                case prop.items!.enum![1]: return "repeat";
+                case prop.items!.enum![2]: return "repeat-x";
+                case prop.items!.enum![3]: return "repeat-x";
+                case prop.items!.enum![4]: return "space";
+                case prop.items!.enum![5]: return "round";
+            }
+        }
+        case "backgroundSize": {
+            switch(value){
+                case prop.items!.enum![0]: return "auto";
+                case prop.items!.enum![1]: return "contain";
+                case prop.items!.enum![2]: return "cover";
+                case prop.items!.enum![3]: return cssUnits(get("backgroundSizeValue", ui));
+            }
+        }
+    }
+    return '␀';
+}
+
+export const cssValue: (s: string) => string = (s: string) => s
+    .replace(/\n\r?/gm, ' ') // make single line
+    .replace(/"/gm, '\'')    // prevent escaping quotes
+    .replace(/\\+$/gm, '');  // prevent escaping last script quote;
+
+export const cssUnits: (s: string) => string = (s: string) => s
+    .replace(/[^\w.% +-]/gmi, "") // make css units

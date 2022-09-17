@@ -20,14 +20,13 @@ import { ConfigKey } from "./vs/package";
 
 import * as vscode from "vscode";
 
-import { get } from "./vs/vsconfig";
+import { css, cssValue, get } from "./vs/vsconfig";
 
 import { glob } from "glob";
 
 import * as fs from "fs";
 import * as path from "path";
 
-import { round } from "./lib/round";
 import { unique } from "./lib/unique";
 
 import * as reload from "./command/reload";
@@ -108,12 +107,6 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
 }
 
 const getJS: () => string = () => {
-    // document.createTextNode will remove any unsafe css
-    const css: string = (get("CSS") as string || "")
-        .replace(/\n\r?/gm, ' ') // make single line
-        .replace(/"/gm, '\'')    // prevent escaping quotes
-        .replace(/\\+$/gm, '');  // prevent escaping last script quote
-
     // populate images
 
     const images: {[key: string]: string[]} = { // include start and end quotes
@@ -130,42 +123,6 @@ const getJS: () => string = () => {
             else // use glob
                 for(const f of glob.sync(g).filter(extensions))
                     images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
-
-    // resolve settings to css
-
-    const position: string = {
-        "Top Left": "left top",
-        "Top Center": "center top",
-        "Top Right": "right top",
-        "Center Left": "left center",
-        "Center Center": "center center",
-        "Center Right": "right center",
-        "Bottom Left": "left bottom",
-        "Bottom Center": "center bottom",
-        "Bottom Right": "right bottom",
-        "Manual": get("backgroundImageAlignmentValue" as ConfigKey) as string,
-    }[get("backgroundImageAlignment" as ConfigKey) as string] || "center center";
-
-    const blur: string = (get("backgroundImageBlur" as ConfigKey) as string || "")
-        .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
-
-    const opacity: number = round(get("opacity" as ConfigKey) as number, 2);
-
-    const repeat: string = {
-        "No Repeat": "no-repeat",
-        "Repeat": "repeat",
-        "Repeat X": "repeat-x",
-        "Repeat Y": "repeat-y",
-        "Repeat Space": "space",
-        "Repeat Round": "round"
-    }[get("backgroundImageRepeat" as ConfigKey) as string] || "no-repeat";
-
-    const size: string = {
-        "Auto": "auto",
-        "Contain": "contain",
-        "Cover": "cover",
-        "Manual": get("backgroundImageSizeValue" as ConfigKey) as string
-    }[get("backgroundImageSize" as ConfigKey) as string] || "cover";
 
     return `
 /* ${identifier}-start */
@@ -197,20 +154,12 @@ body::before,
 
     pointer-events: none;
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-
-    opacity: ${round(1-opacity, 2)};
-
-    filter: blur(${blur});
-
 }
 \`));
 `
 + // custom user css
 `
-bk_global.appendChild(document.createTextNode("${css}"));
+bk_global.appendChild(document.createTextNode("${cssValue(get("CSS"))}"));
 `
 + // background image cache
 `
@@ -229,9 +178,10 @@ const setBackground = () => {
     while(bk_image.firstChild){
         bk_image.removeChild(bk_image.firstChild);
     }
-
     randomize();
-
+`
++ // window
+`
     if(windowBackgrounds.length > 0){
         bk_image.appendChild(document.createTextNode(
         \`
@@ -239,12 +189,36 @@ body::before {
 
     background-image: url("\${windowBackgrounds[0]}");
 
+    background-position: ${css("backgroundAlignment", "window")};
+    background-repeat: ${css("backgroundRepeat", "window")};
+    background-size: ${css("backgroundSize", "window")};
+
+    opacity: ${css("backgroundOpacity", "window")};
+
+    filter: blur(${css("backgroundBlur", "window")});
+
 }
         \`));
     }
-
+`
++ // edior
+`
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
+        bk_image.appendChild(document.createTextNode(
+            \`
+.split-view-view > .editor-group-container::after {
+
+    background-position: ${css("backgroundAlignment", "editor")};
+    background-repeat: ${css("backgroundRepeat", "editor")};
+    background-size: ${css("backgroundSize", "editor")};
+
+    opacity: ${css("backgroundOpacity", "editor")};
+
+    filter: blur(${css("backgroundBlur", "editor")});
+
+}
+        \`));
         for(let i = 1; i <= len; i++){
             bk_image.appendChild(document.createTextNode(
                 \`
@@ -256,7 +230,9 @@ body::before {
                 \`));
         }
     }
-
+`
++ // sidebar
+`
     if(sidebarBackgrounds.length > 0){
         bk_image.appendChild(document.createTextNode(
         \`
@@ -264,21 +240,48 @@ body::before {
 
     background-image: url("\${sidebarBackgrounds[0]}");
 
+    background-position: ${css("backgroundAlignment", "sidebar")};
+    background-repeat: ${css("backgroundRepeat", "sidebar")};
+    background-size: ${css("backgroundSize", "sidebar")};
+
+    opacity: ${css("backgroundOpacity", "sidebar")};
+
+    filter: blur(${css("backgroundBlur", "sidebar")});
+
+
 }
 .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
     background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
 
+    background-position: ${css("backgroundAlignment", "sidebar")};
+    background-repeat: ${css("backgroundRepeat", "sidebar")};
+    background-size: ${css("backgroundSize", "sidebar")};
+
+    opacity: ${css("backgroundOpacity", "sidebar")};
+
+    filter: blur(${css("backgroundBlur", "sidebar")});
+
 }
         \`));
     }
-
+`
++ // panel
+`
     if(panelBackgrounds.length > 0){
         bk_image.appendChild(document.createTextNode(
             \`
 .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
     background-image: url("\${panelBackgrounds[0]}");
+
+    background-position: ${css("backgroundAlignment", "panel")};
+    background-repeat: ${css("backgroundRepeat", "panel")};
+    background-size: ${css("backgroundSize", "panel")};
+
+    opacity: ${css("backgroundOpacity", "panel")};
+
+    filter: blur(${css("backgroundBlur", "panel")});
 
 }
             \`));
@@ -313,7 +316,7 @@ window.onload = () => {
 + // EOF
 `
 /* ${identifier}-end */
-        `.trim();
+        `.trim().replace(/\r?\n/gm, '');
 }
 
 const removeJS: (s: string) => string = (s: string) => {

@@ -25,7 +25,7 @@ import { capitalize } from "../../lib/str";
 
 //
 
-const invalidCSS: RegExp = /[^\w.%+-]/gmi;
+const invalidCSS: RegExp = /[^\w.% +-]/gmi;
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const current: string = get("backgroundBlur", item.ui!) as string;
