@@ -21,8 +21,9 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, update, updateFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
-import { options } from "../config";
+import { menu as cm, options } from "../config";
 import { notify } from "../install";
+import { capitalize } from "../../lib/str";
 
 //
 
@@ -30,12 +31,13 @@ const prop: Props = config("backgroundSize");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     updateFromLabel("backgroundSize", item, item.ui!);
+    cm(item); // reopen menu
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const current: string = get("backgroundSize", item.ui!) as string;
 
-    const title: string = `${item.ui!} ${options.title} - Size`;
+    const title: string = `${capitalize(item.ui!)} ${options.title} - Size`;
 
     showQuickPick([
         // size
@@ -57,6 +59,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     update("backgroundSizeValue", value, item.ui!, true);
 
                     changed && notify();
+
+                    cm(item); // reopen menu
                 }
             });
         }}, current)

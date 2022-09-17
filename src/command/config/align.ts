@@ -21,14 +21,17 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, update, updateFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
-import { options, title } from "../config";
+import { menu as cm, options, title } from "../config";
 import { notify } from "../install";
 
 //
 
 const prop: Props = config("backgroundAlignment");
 
-const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => updateFromLabel("backgroundAlignment", item, item.ui!);
+const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    updateFromLabel("backgroundAlignment", item, item.ui!);
+    cm(item); // reopen menu
+};
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const current: string = get("backgroundAlignment", item.ui!) as string;

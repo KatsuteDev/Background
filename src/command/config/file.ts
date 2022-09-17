@@ -24,8 +24,9 @@ import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from ".
 
 import { unique } from "../../lib/unique";
 
-import { options } from "../config";
+import { menu as cm, options } from "../config";
 import { notify } from "../install";
+import { capitalize } from "../../lib/str";
 
 // config
 
@@ -33,6 +34,7 @@ const add: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
     update(`${ui}Backgrounds`, files.filter(unique), undefined, true);
+    cm({label: '␀', ui}); // reopen files
 };
 
 const replace: (ui: UI, old: string, glob: string) => void = (ui: UI, old: string, glob: string) => {
@@ -41,6 +43,7 @@ const replace: (ui: UI, old: string, glob: string) => void = (ui: UI, old: strin
         if(files[i] === old)
             files[i] = glob;
     update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob);
+    cm({label: '␀', ui}); // reopen files
 };
 
 const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
@@ -50,6 +53,7 @@ const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
             .filter((f) => f !== glob)
             .filter(unique)
     );
+    cm({label: '␀', ui}); // reopen files
 };
 
 // exts
@@ -101,6 +105,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         // add
         quickPickItem({
             label: "$(file-add) Add a File",
+            ui: item.ui!,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: true,
@@ -119,6 +124,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         }),
         quickPickItem({
             label: "$(file-directory-create) Add a Folder",
+            ui: item.ui!,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: false,
@@ -136,6 +142,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         }),
         quickPickItem({
             label: "$(kebab-horizontal) Add a Glob",
+            ui: item.ui!,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add File",
@@ -157,6 +164,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         }),
         quickPickItem({
             label: "$(ports-open-browser-icon) Add a URL",
+            ui: item.ui!,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add URL",
@@ -181,7 +189,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     ],
     {
         ...options,
-        title: `${item.ui!} ${options.title} - Files`,
+        title: `${capitalize(item.ui!)} ${options.title} - Files`,
         placeHolder: "Files"
     });
 };

@@ -21,7 +21,7 @@ import { config, Props } from "../../vs/package";
 import { get, updateFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../../vs/quickpick";
 
-import { options } from "../config";
+import { menu as cm, options } from "../config";
 
 //
 
@@ -29,6 +29,7 @@ const prop: Props = config("backgroundRepeat");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     updateFromLabel("backgroundRepeat", item, item.ui!);
+    cm(item); // reopen menu
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
