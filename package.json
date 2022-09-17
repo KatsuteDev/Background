@@ -146,7 +146,7 @@
                     }
                 },
                 "background.backgroundOpacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
+                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change. 0 is fully visible and 1 is invisible.",
                     "type": "array",
                     "order": 7,
                     "default": [0.9, 0.9, 0.9, 0.9],

@@ -133,7 +133,7 @@ The array must have a length of 4, otherwise default values will be used.
 |`background.backgroundAlignment`|`enum[]`|The alignment of the background image.|
 |`background.backgroundAlignmentValue`|`string[]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
 |`background.backgroundBlur`|`string[]`|Background image blur in CSS units.|
-|`background.backgroundOpacity`|`number[]`|The UI opacity. Do not set this value too low, a low opacity might make it difficult to see the UI and more difficult to revert this change.|
+|`background.backgroundOpacity`|`number[]`|The UI opacity. 0 is fully visible and 1 is invisible.|
 |`background.backgroundRepeat`|`enum[]`|The background image repeat.|
 |`background.backgroundSize`|`enum[]`|The background image size.|
 |`background.backgroundSizeValue`|`string[]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|

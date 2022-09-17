@@ -38,6 +38,7 @@ import { config } from "./command/config";
 import * as file from "./command/config/file";
 
 import { statusbar } from "./statusbar";
+import { round } from "./lib/round";
 
 //
 
@@ -124,37 +125,34 @@ const getJS: () => string = () => {
                 for(const f of glob.sync(g).filter(extensions))
                     images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
-    return `
-/* ${identifier}-start */
-`
-+ // background image css
-`
+    return `/* ${identifier}-start */` + '\n' +
+// background image css
+(`
 const bk_global = document.createElement("style");
 bk_global.id = "${identifier}-global";
 bk_global.setAttribute("type", "text/css");
 
-bk_global.appendChild(document.createTextNode(
-\`
-body::before,
-.split-view-view > .editor-group-container::after,
-.split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
-.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+bk_global.appendChild(document.createTextNode(\`
+    body::before,
+    .split-view-view > .editor-group-container::after,
+    .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+    .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
+    .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-    content: "";
+        content: "";
 
-    top: 0;
+        top: 0;
 
-    width: 100%;
-    height: 100%;
+        width: 100%;
+        height: 100%;
 
-    z-index: 1000;
+        z-index: 1000;
 
-    position: absolute;
+        position: absolute;
 
-    pointer-events: none;
+        pointer-events: none;
 
-}
+    }
 \`));
 `
 + // custom user css
@@ -177,130 +175,125 @@ bk_image.setAttribute("type", "text/css");
 const setBackground = () => {
     while(bk_image.firstChild){
         bk_image.removeChild(bk_image.firstChild);
-    }
+    };
     randomize();
 `
 + // window
 `
     if(windowBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(
-        \`
-body::before {
+        bk_image.appendChild(document.createTextNode(\`
+            body::before {
 
-    background-image: url("\${windowBackgrounds[0]}");
+                background-image: url("\${windowBackgrounds[0]}");
 
-    background-position: ${css("backgroundAlignment", "window")};
-    background-repeat: ${css("backgroundRepeat", "window")};
-    background-size: ${css("backgroundSize", "window")};
+                background-position: ${css("backgroundAlignment", "window")};
+                background-repeat: ${css("backgroundRepeat", "window")};
+                background-size: ${css("backgroundSize", "window")};
 
-    opacity: ${css("backgroundOpacity", "window")};
+                opacity: ${round(1 - +css("backgroundOpacity", "window"), 2)};
 
-    filter: blur(${css("backgroundBlur", "window")});
+                filter: blur(${css("backgroundBlur", "window")});
 
-}
+            }
         \`));
-    }
+    };
 `
 + // edior
 `
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
-        bk_image.appendChild(document.createTextNode(
-            \`
-.split-view-view > .editor-group-container::after {
+        bk_image.appendChild(document.createTextNode(\`
+            .split-view-view > .editor-group-container::after {
 
-    background-position: ${css("backgroundAlignment", "editor")};
-    background-repeat: ${css("backgroundRepeat", "editor")};
-    background-size: ${css("backgroundSize", "editor")};
+                background-position: ${css("backgroundAlignment", "editor")};
+                background-repeat: ${css("backgroundRepeat", "editor")};
+                background-size: ${css("backgroundSize", "editor")};
 
-    opacity: ${css("backgroundOpacity", "editor")};
+                opacity: ${round(1 - +css("backgroundOpacity", "editor"), 2)};
 
-    filter: blur(${css("backgroundBlur", "editor")});
+                filter: blur(${css("backgroundBlur", "editor")});
 
-}
+            }
         \`));
         for(let i = 1; i <= len; i++){
-            bk_image.appendChild(document.createTextNode(
-                \`
-.split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
+            bk_image.appendChild(document.createTextNode(\`
+                .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-    background-image: url("\${editorBackgrounds[i-1]}");
+                    background-image: url("\${editorBackgrounds[i-1]}");
 
-}
-                \`));
-        }
-    }
+                }
+            \`));
+        };
+    };
 `
 + // sidebar
 `
     if(sidebarBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(
-        \`
-.split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
+        bk_image.appendChild(document.createTextNode(\`
+            .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-    background-image: url("\${sidebarBackgrounds[0]}");
+                background-image: url("\${sidebarBackgrounds[0]}");
 
-    background-position: ${css("backgroundAlignment", "sidebar")};
-    background-repeat: ${css("backgroundRepeat", "sidebar")};
-    background-size: ${css("backgroundSize", "sidebar")};
+                background-position: ${css("backgroundAlignment", "sidebar")};
+                background-repeat: ${css("backgroundRepeat", "sidebar")};
+                background-size: ${css("backgroundSize", "sidebar")};
 
-    opacity: ${css("backgroundOpacity", "sidebar")};
+                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
 
-    filter: blur(${css("backgroundBlur", "sidebar")});
+                filter: blur(${css("backgroundBlur", "sidebar")});
 
 
-}
-.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+            }
+            .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-    background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
+                background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
 
-    background-position: ${css("backgroundAlignment", "sidebar")};
-    background-repeat: ${css("backgroundRepeat", "sidebar")};
-    background-size: ${css("backgroundSize", "sidebar")};
+                background-position: ${css("backgroundAlignment", "sidebar")};
+                background-repeat: ${css("backgroundRepeat", "sidebar")};
+                background-size: ${css("backgroundSize", "sidebar")};
 
-    opacity: ${css("backgroundOpacity", "sidebar")};
+                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
 
-    filter: blur(${css("backgroundBlur", "sidebar")});
+                filter: blur(${css("backgroundBlur", "sidebar")});
 
-}
+            }
         \`));
-    }
+    };
 `
 + // panel
 `
     if(panelBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(
-            \`
-.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+        bk_image.appendChild(document.createTextNode(\`
+            .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-    background-image: url("\${panelBackgrounds[0]}");
+                background-image: url("\${panelBackgrounds[0]}");
 
-    background-position: ${css("backgroundAlignment", "panel")};
-    background-repeat: ${css("backgroundRepeat", "panel")};
-    background-size: ${css("backgroundSize", "panel")};
+                background-position: ${css("backgroundAlignment", "panel")};
+                background-repeat: ${css("backgroundRepeat", "panel")};
+                background-size: ${css("backgroundSize", "panel")};
 
-    opacity: ${css("backgroundOpacity", "panel")};
+                opacity: ${round(1 - +css("backgroundOpacity", "panel"), 2)};
 
-    filter: blur(${css("backgroundBlur", "panel")});
+                filter: blur(${css("backgroundBlur", "panel")});
 
-}
-            \`));
-    }
-}
+            }
+        \`));
+    };
+};
 `
 + // randomize backgrounds
 `
 const randomize = () => {
     for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
         shuffle(arr);
-    }
+    };
 };
 
 const shuffle = (arr) => {
     for(let i = arr.length - 1; i > 0; i--){
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+    };
     return arr;
 };
 `
@@ -312,11 +305,12 @@ window.onload = () => {
 
     setBackground();
 };
-`
-+ // EOF
-`
-/* ${identifier}-end */
-        `.trim().replace(/\r?\n/gm, '');
+`)
+// minify
+    .trim()
+    .replace(/^ +/gm, '') // spaces
+    .replace(/\r?\n/gm, '') + // newlines
+    '\n' + `/* ${identifier}-end */`; // EOF
 }
 
 const removeJS: (s: string) => string = (s: string) => {
