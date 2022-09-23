@@ -45,13 +45,20 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
 // config
 
 export const get: (key: ConfigKey, ui?: UI) => any = (key: ConfigKey, ui?: UI) => {
-    if(!ui)
-        return config().get(key) ?? cfg(key).default ?? '␀'; // get from config or use default
-    else
-        return get(key)[asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // get from array from config or use default
+    return !ui
+        ? config().get(key) // from config
+            ?? cfg(key)
+                ? cfg(key).default // fallback default
+                : '␀'
+            ?? '␀'
+        : get(key)[asNum(ui)] // from config
+            ?? cfg(key)
+                ? cfg(key).default[0] // fallback default
+                : '␀'
+            ?? '␀';
 };
 
-export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => void = (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => {
+export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => void = (key: ConfigKey, value: any, ui?: UI, skipWarning: boolean = false) => {
     let diff: boolean = false;
     if(!ui){
         diff = get(key) as any !== value;

@@ -33,7 +33,7 @@ import { capitalize } from "../../lib/str";
 const add: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
-    update(`${ui}Backgrounds`, files.filter(unique), undefined, true);
+    update(`${ui}Backgrounds`, files.filter(unique));
     cm({label: '␀', ui}); // reopen files
 };
 
@@ -94,6 +94,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         .map(file => quickPickItem({
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
+            ui: item.ui,
             handle: (item: CommandQuickPickItem) => updateItem(item.ui!, item)
         }));
 
