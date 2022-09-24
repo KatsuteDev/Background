@@ -48,8 +48,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             if(!isNaN(+value)){
                 const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
                 if(o > .1){
-                    update("backgroundOpacity", o, item.ui!);
-                    cm(item); // reopen menu
+                    update("backgroundOpacity", o, item.ui!)
+                        .then(() => cm(item)); // reopen menu
                 }else{
                     vscode.window.showWarningMessage(
                         "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -57,10 +57,9 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                         { modal: true },
                         "Yes"
                     ).then((c?: "Yes") => {
-                        if(c && c === "Yes"){
-                            update("backgroundOpacity", o, item.ui!);
-                            cm(item); // reopen menu
-                        }
+                        if(c && c === "Yes")
+                            update("backgroundOpacity", o, item.ui!)
+                                .then(() => cm(item)); // reopen menu
                     });
                 }
             }

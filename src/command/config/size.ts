@@ -55,12 +55,12 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 handle: (value: string) => {
                     let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enumDescriptions![3] || current !== value;
 
-                    update("backgroundSize", prop.items!.enumDescriptions![3], item.ui!, true);
-                    update("backgroundSizeValue", value, item.ui!, true);
-
-                    changed && notify();
-
-                    cm(item); // reopen menu
+                    update("backgroundSize", prop.items!.enumDescriptions![3], item.ui!, true)
+                        .then(() => update("backgroundSizeValue", value, item.ui!, true))
+                        .then(() => {
+                            changed && notify();
+                            cm(item); // reopen menu
+                        });
                 }
             });
         }}, current)

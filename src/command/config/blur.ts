@@ -37,10 +37,9 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         prompt: `Background blur (${current})`,
         validateInput: (value: string) => value.match(invalidCSS) ? "Invalid CSS" : null,
         handle: (value: string) => {
-            if(!value.match(invalidCSS)){
-                update("backgroundBlur", value, item.ui!);
-                cm(item); // reopen menu
-            }
+            if(!value.match(invalidCSS))
+                update("backgroundBlur", value, item.ui!)
+                    .then(() => cm(item)); // reopen menu
         }
     });
 };

@@ -46,23 +46,15 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
 
 export const get: (key: ConfigKey, ui?: UI) => any = (key: ConfigKey, ui?: UI) => {
     return !ui
-        ? config().get(key) // from config
-            ?? cfg(key)
-                ? cfg(key).default // fallback default
-                : '␀'
-            ?? '␀'
-        : get(key)[asNum(ui)] // from config
-            ?? cfg(key)
-                ? cfg(key).default[0] // fallback default
-                : '␀'
-            ?? '␀';
-};
+        ? config().get(key) ?? cfg(key).default ?? '␀'
+        : (config().get(key) as any[])[asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // fallback default
+}
 
-export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => void = (key: ConfigKey, value: any, ui?: UI, skipWarning: boolean = false) => {
+export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => Promise<void> = async (key: ConfigKey, value: any, ui?: UI, skipWarning: boolean = false) => {
     let diff: boolean = false;
     if(!ui){
         diff = get(key) as any !== value;
-        config().update(key, value, vscode.ConfigurationTarget.Global); // update
+        await config().update(key, value, vscode.ConfigurationTarget.Global); // update
     }else{
         const current: any = get(key) as any;
 
@@ -74,7 +66,7 @@ export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean
         diff = current[i] !== value; // diff
 
         current[i] = value; // update array
-        config().update(key, current, vscode.ConfigurationTarget.Global); // update
+        await config().update(key, current, vscode.ConfigurationTarget.Global); // update
     }
     skipWarning === false && diff && notify(); // notify
 }

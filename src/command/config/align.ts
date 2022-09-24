@@ -62,10 +62,9 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 handle: (value: string) => {
                     let changed: boolean = get("backgroundAlignment", item.ui!) !== prop.items!.enum![9] || current !== value;
 
-                    update("backgroundAlignment", prop.items!.enum![9], item.ui!, true);
-                    update("backgroundAlignmentValue", value, item.ui!, true);
-
-                    changed && notify();
+                    update("backgroundAlignment", prop.items!.enum![9], item.ui!, true)
+                        .then(() => update("backgroundAlignmentValue", value, item.ui!, true))
+                        .then(() => changed && notify());
                 }
             });
         }}, current)

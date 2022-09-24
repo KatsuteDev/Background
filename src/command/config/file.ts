@@ -33,17 +33,17 @@ import { capitalize } from "../../lib/str";
 const add: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
-    update(`${ui}Backgrounds`, files.filter(unique));
-    cm({label: '␀', ui}); // reopen files
+    update(`${ui}Backgrounds`, files.filter(unique))
+        .then(() => cm({label: '␀', ui})); // reopen menu
 };
 
-const replace: (ui: UI, old: string, glob: string) => void = (ui: UI, old: string, glob: string) => {
+const replace: (ui: UI, old: string, glob: string, remove?: boolean) => void = (ui: UI, old: string, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     for(let i = 0, l = files.length; i < l; i++)
         if(files[i] === old)
             files[i] = glob;
-    update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob);
-    cm({label: '␀', ui}); // reopen files
+    update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob)
+        .then(() => cm({label: '␀', ui})); // reopen menu
 };
 
 const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
@@ -52,8 +52,8 @@ const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
         (get(`${ui}Backgrounds`) as string[])
             .filter((f) => f !== glob)
             .filter(unique)
-    );
-    cm({label: '␀', ui}); // reopen files
+    )
+    .then(() => cm({label: '␀', ui})); // reopen files
 };
 
 // exts
