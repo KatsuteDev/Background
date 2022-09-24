@@ -54,6 +54,10 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 
 To modify or remove a path run `Background: Select background image files` and select the path you want to change.
 
+<div align="center">
+    <img alt="update or delete path" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/delete.gif">
+</div>
+
 #### ⚠️ Bug: VSCode stopped working
 
 This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources\app\out\bootstrap-window.js` with `bootstrap-window-backup.js`.
