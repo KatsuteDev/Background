@@ -34,6 +34,7 @@ export type ConfigKey =
     "backgroundRepeat" |
     "backgroundSize" |
     "backgroundSizeValue" |
+    "useWindowOptionsForAllBackgrounds" |
     "CSS";
 
 export type Contributes = {

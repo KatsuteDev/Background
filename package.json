@@ -221,9 +221,16 @@
                     }
                 },
 
+                "background.useWindowOptionsForAllBackgrounds": {
+                    "markdownDescription": "If enabled, all backgrounds will use the options set for the windows background.",
+                    "order": 11,
+                    "type": "boolean",
+                    "default": false
+                },
+
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 32,
+                    "order": 12,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""

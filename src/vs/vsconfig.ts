@@ -47,7 +47,7 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
 export const get: (key: ConfigKey, ui?: UI) => any = (key: ConfigKey, ui?: UI) => {
     return !ui
         ? config().get(key) ?? cfg(key).default ?? '␀'
-        : (config().get(key) as any[])[asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // fallback default
+        : (config().get(key) as any[])[get("useWindowOptionsForAllBackgrounds") === true ? 0 : asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // fallback default
 }
 
 export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => Promise<void> = async (key: ConfigKey, value: any, ui?: UI, skipWarning: boolean = false) => {

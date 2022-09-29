@@ -144,6 +144,7 @@ The array must have a length of 4, otherwise default values will be used.
 
 | Advanced | Type | Description |
 |---|:-:|---|
+|`background.useWindowOptionsForAllBackgrounds`|`boolean`|If enabled, all backgrounds will use the options set for the windows background.|
 |`background.CSS`|`string`|**Advanced Users Only.** Apply raw CSS to VSCode.|
 
 ## 👨‍💻 Contributing
