@@ -30,8 +30,8 @@ import { capitalize } from "../../lib/str";
 const prop: Props = config("backgroundSize");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    updateFromLabel("backgroundSize", item, item.ui!);
-    cm(item); // reopen menu
+    updateFromLabel("backgroundSize", item, item.ui!)
+        .then(() => cm(item)); // reopen menu
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {

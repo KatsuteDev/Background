@@ -71,8 +71,8 @@ export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean
     skipWarning === false && diff && notify(); // notify
 }
 
-export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem, ui?: UI) => void = (key: ConfigKey, item: CommandQuickPickItem, ui?:UI) => {
-    item.label && update(key, item.label, ui);
+export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem, ui?: UI) => Promise<void> = async (key: ConfigKey, item: CommandQuickPickItem, ui?:UI) => {
+    item.label && await update(key, item.label, ui);
 }
 
 // css

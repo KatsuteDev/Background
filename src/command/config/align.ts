@@ -29,8 +29,8 @@ import { notify } from "../install";
 const prop: Props = config("backgroundAlignment");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    updateFromLabel("backgroundAlignment", item, item.ui!);
-    cm(item); // reopen menu
+    updateFromLabel("backgroundAlignment", item, item.ui!)
+        .then(() => cm(item)); // reopen menu
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
@@ -64,7 +64,10 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
 
                     update("backgroundAlignment", prop.items!.enum![9], item.ui!, true)
                         .then(() => update("backgroundAlignmentValue", value, item.ui!, true))
-                        .then(() => changed && notify());
+                        .then(() => {
+                            changed && notify();
+                            cm(item); // reopen menu
+                        });
                 }
             });
         }}, current)

@@ -28,8 +28,8 @@ import { menu as cm, options } from "../config";
 const prop: Props = config("backgroundRepeat");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    updateFromLabel("backgroundRepeat", item, item.ui!);
-    cm(item); // reopen menu
+    updateFromLabel("backgroundRepeat", item, item.ui!)
+        .then(() => cm(item)); // reopen menu
 };
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {

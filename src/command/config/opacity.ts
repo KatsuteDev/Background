@@ -57,7 +57,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                         { modal: true },
                         "Yes"
                     ).then((c?: "Yes") => {
-                        if(c && c === "Yes")
+                        if(c === "Yes")
                             update("backgroundOpacity", o, item.ui!)
                                 .then(() => cm(item)); // reopen menu
                     });
