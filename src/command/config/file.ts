@@ -135,7 +135,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 }).then((files?: vscode.Uri[]) => {
                     if(files){
                         for(const file of files)
-                            add(item.ui!, file.fsPath.replace(/\\/g, '/'));
+                            add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`);
                         files.length > 0 && notify();
                     }
                 });
