@@ -1,6 +1,8 @@
 name: Repository[bot]
 on:
   workflow_dispatch: {}
+  schedule:
+    - cron: 0 11 * * *
   label:
     types: [created, edited, deleted]
   issues:
