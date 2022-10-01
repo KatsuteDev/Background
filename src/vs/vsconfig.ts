@@ -44,10 +44,10 @@ const asNum: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
 
 // config
 
-export const get: (key: ConfigKey, ui?: UI) => any = (key: ConfigKey, ui?: UI) => {
+export const get: (key: ConfigKey, ui?: UI, fallback?: boolean) => any = (key: ConfigKey, ui?: UI, fallback?: boolean) => {
     return !ui
         ? config().get(key) ?? cfg(key).default ?? '␀'
-        : (config().get(key) as any[])[get("useWindowOptionsForAllBackgrounds") === true ? 0 : asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // fallback default
+        : (config().get(key) as any[])[fallback && get("useWindowOptionsForAllBackgrounds") === true ? 0 : asNum(ui)] ?? cfg(key).default[0] ?? '␀'; // fallback default
 }
 
 export const update: (key: ConfigKey, value: any, ui?: UI, skipWarning?: boolean) => Promise<void> = async (key: ConfigKey, value: any, ui?: UI, skipWarning: boolean = false) => {
@@ -78,7 +78,7 @@ export const updateFromLabel: (key: ConfigKey, item: CommandQuickPickItem, ui?: 
 // css
 
 export const css: (key: ConfigKey, ui: UI) => string = (key: ConfigKey, ui: UI) => {
-    const value: string = get(key, ui);
+    const value: string = get(key, ui, true);
 
     const prop: Props = cfg(key);
 
