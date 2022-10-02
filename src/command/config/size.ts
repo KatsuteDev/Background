@@ -46,11 +46,12 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         separator(),
         // manual
         quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: item.ui!, handle: (item: CommandQuickPickItem) => {
+            const value: string = get("backgroundSizeValue", item.ui!);
             showInputBox({
                 title,
                 placeHolder: "Background size",
-                value: get("backgroundSizeValue", item.ui!),
-                prompt: `Background size (${current}). The literal value for the 'background-size' css property.`,
+                value,
+                prompt: `Background size (${value}). The literal value for the 'background-size' css property.`,
                 handle: (value: string) => {
                     let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enum![3] || current !== value;
 

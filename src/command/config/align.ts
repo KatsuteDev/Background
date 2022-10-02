@@ -54,11 +54,12 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         separator(),
         // manual
         quickPickItem({ label: prop.items!.enum![9], description: "Manual position", ui: item.ui!, handle: (item: CommandQuickPickItem) => {
+            const value: string = get("backgroundAlignmentValue", item.ui!);
             showInputBox({
                 title: title("Alignment", item.ui!),
                 placeHolder: "Background position",
-                value: get("backgroundAlignmentValue", item.ui!),
-                prompt: `Background position (${current}). The literal value for the 'background-position' css property.`,
+                value,
+                prompt: `Background position (${value}). The literal value for the 'background-position' css property.`,
                 handle: (value: string) => {
                     let changed: boolean = get("backgroundAlignment", item.ui!) !== prop.items!.enum![9] || current !== value;
 
