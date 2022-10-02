@@ -23,6 +23,7 @@ import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from ".
 
 import { menu as cm, options, title } from "../config";
 import { notify } from "../install";
+import { validCSS } from "../../lib/str";
 
 //
 
@@ -54,21 +55,24 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         separator(),
         // manual
         quickPickItem({ label: prop.items!.enum![9], description: "Manual position", ui: item.ui!, handle: (item: CommandQuickPickItem) => {
-            const value: string = get("backgroundAlignmentValue", item.ui!);
+            const currentValue: string = get("backgroundAlignmentValue", item.ui!);
             showInputBox({
                 title: title("Alignment", item.ui!),
                 placeHolder: "Background position",
-                value,
-                prompt: `Background position (${value}). The literal value for the 'background-position' css property.`,
+                value: currentValue,
+                prompt: `Background position (${currentValue}). The literal value for the 'background-position' css property.`,
+                validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
                 handle: (value: string) => {
-                    let changed: boolean = get("backgroundAlignment", item.ui!) !== prop.items!.enum![9] || current !== value;
+                    if(validCSS(value)){
+                        let changed: boolean = get("backgroundAlignment", item.ui!) !== prop.items!.enum![9] || currentValue !== value;
 
-                    update("backgroundAlignment", prop.items!.enum![9], item.ui!, true)
-                        .then(() => update("backgroundAlignmentValue", value, item.ui!, true))
-                        .then(() => {
-                            changed && notify();
-                            cm(item); // reopen menu
-                        });
+                        update("backgroundAlignment", prop.items!.enum![9], item.ui!, true)
+                            .then(() => update("backgroundAlignmentValue", value, item.ui!, true))
+                            .then(() => {
+                                changed && notify();
+                                cm(item); // reopen menu
+                            });
+                    }
                 }
             });
         }}, current)

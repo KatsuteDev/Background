@@ -23,6 +23,7 @@ import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from ".
 
 import { menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
+import { validCSS } from "../../lib/str";
 
 //
 
@@ -46,21 +47,24 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         separator(),
         // manual
         quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: item.ui!, handle: (item: CommandQuickPickItem) => {
-            const value: string = get("backgroundSizeValue", item.ui!);
+            const currentValue: string = get("backgroundSizeValue", item.ui!);
             showInputBox({
                 title,
                 placeHolder: "Background size",
-                value,
-                prompt: `Background size (${value}). The literal value for the 'background-size' css property.`,
+                value: currentValue,
+                prompt: `Background size (${currentValue}). The literal value for the 'background-size' css property.`,
+                validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
                 handle: (value: string) => {
-                    let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enum![3] || current !== value;
+                    if(validCSS(value)){
+                        let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enum![3] || currentValue !== value;
 
-                    update("backgroundSize", prop.items!.enum![3], item.ui!, true)
-                        .then(() => update("backgroundSizeValue", value, item.ui!, true))
-                        .then(() => {
-                            changed && notify();
-                            cm(item); // reopen menu
-                        });
+                        update("backgroundSize", prop.items!.enum![3], item.ui!, true)
+                            .then(() => update("backgroundSizeValue", value, item.ui!, true))
+                            .then(() => {
+                                changed && notify();
+                                cm(item); // reopen menu
+                            });
+                    }
                 }
             });
         }}, current)

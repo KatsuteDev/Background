@@ -21,10 +21,9 @@ import { get, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem } from "../../vs/quickpick";
 
 import { menu as cm, title } from "../config";
+import { validCSS } from "../../lib/str";
 
 //
-
-const invalidCSS: RegExp = /[^\w.% +-]/gmi;
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const current: string = get("backgroundBlur", item.ui!) as string;
@@ -34,9 +33,9 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
-        validateInput: (value: string) => value.match(invalidCSS) ? "Invalid CSS" : null,
+        validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
         handle: (value: string) => {
-            if(!value.match(invalidCSS))
+            if(validCSS(value))
                 update("backgroundBlur", value, item.ui!)
                     .then(() => cm(item)); // reopen menu
         }

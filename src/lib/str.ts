@@ -19,3 +19,7 @@
 export const s: (arr: any[], s: string) => string = (arr: any[], s: string) => `${arr.length} ${s}${arr.length != 1 ? 's' : ''}`;
 
 export const capitalize: (s: string) => string = (s: string) => `${(s[0] ?? "").toUpperCase() + (s ?? "").substring(1)}`;
+
+const invalidCSS: RegExp = /[^\w.% +-]/gmi;
+
+export const validCSS: (s: string) => boolean = (s: string) => !s.match(invalidCSS);
