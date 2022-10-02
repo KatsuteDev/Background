@@ -20,8 +20,7 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem } from "../../vs/quickpick";
 
-import { menu as cm, options } from "../config";
-import { capitalize } from "../../lib/str";
+import { menu as cm, title } from "../config";
 
 //
 
@@ -31,7 +30,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     const current: string = get("backgroundBlur", item.ui!) as string;
 
     showInputBox({
-        title: `${capitalize(item.ui!)} ${options.title} - Blur`,
+        title: title("Blur", item.ui!),
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,

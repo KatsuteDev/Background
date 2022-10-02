@@ -107,7 +107,7 @@ export const options: vscode.QuickPickOptions = {
     matchOnDescription: true
 }
 
-export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui ? `${ui} ${options.title} - ${s}` : `${options.title} - ${s}`;
+export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui ? `${capitalize(ui)} ${options.title} - ${s}` : `${options.title} - ${s}`;
 
 // menu
 

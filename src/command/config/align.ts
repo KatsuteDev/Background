@@ -57,7 +57,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             showInputBox({
                 title: title("Alignment", item.ui!),
                 placeHolder: "Background position",
-                value: current,
+                value: get("backgroundAlignmentValue", item.ui!),
                 prompt: `Background position (${current}). The literal value for the 'background-position' css property.`,
                 handle: (value: string) => {
                     let changed: boolean = get("backgroundAlignment", item.ui!) !== prop.items!.enum![9] || current !== value;

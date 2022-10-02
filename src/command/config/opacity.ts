@@ -23,8 +23,7 @@ import { get, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem } from "../../vs/quickpick";
 
 import { round } from "../../lib/round";
-import { menu as cm, options } from "../config";
-import { capitalize } from "../../lib/str";
+import { menu as cm, title } from "../config";
 
 //
 
@@ -32,7 +31,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     const current: number = round(get("backgroundOpacity", item.ui!) as number, 2);
 
     showInputBox({
-        title: `${capitalize(item.ui!)} ${options.title} - Opacity`,
+        title: title("Opacity", item.ui!),
         placeHolder: "Background opacity",
         value: current.toString(),
         prompt: `Background opacity (${current}). 0 is fully visible and 1 is invisible.`,

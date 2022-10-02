@@ -21,9 +21,8 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, update, updateFromLabel } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
-import { menu as cm, options } from "../config";
+import { menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
-import { capitalize } from "../../lib/str";
 
 //
 
@@ -37,7 +36,7 @@ const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     const current: string = get("backgroundSize", item.ui!) as string;
 
-    const title: string = `${capitalize(item.ui!)} ${options.title} - Size`;
+    const title: string = t("Size", item.ui!);
 
     showQuickPick([
         // size
@@ -46,16 +45,16 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle, ui: item.ui! }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], handle: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: item.ui!, handle: (item: CommandQuickPickItem) => {
             showInputBox({
                 title,
                 placeHolder: "Background size",
-                value: current,
+                value: get("backgroundSizeValue", item.ui!),
                 prompt: `Background size (${current}). The literal value for the 'background-size' css property.`,
                 handle: (value: string) => {
-                    let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enumDescriptions![3] || current !== value;
+                    let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enum![3] || current !== value;
 
-                    update("backgroundSize", prop.items!.enumDescriptions![3], item.ui!, true)
+                    update("backgroundSize", prop.items!.enum![3], item.ui!, true)
                         .then(() => update("backgroundSizeValue", value, item.ui!, true))
                         .then(() => {
                             changed && notify();
