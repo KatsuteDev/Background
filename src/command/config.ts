@@ -96,6 +96,13 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
             description: "Randomizes installed backgrounds; Background must already be installed",
             handle: () => vscode.commands.executeCommand("background.reload")
         }),
+        separator(),
+        // changelog
+        quickPickItem({
+            label: "$(output) Changelog",
+            description: "Open extension changelog",
+            handle: () => vscode.commands.executeCommand("background.changelog")
+        }),
     ], options);
 });
 
