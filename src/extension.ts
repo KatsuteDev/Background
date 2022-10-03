@@ -32,6 +32,7 @@ import { unique } from "./lib/unique";
 import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
+import * as changelog from "./command/changelog";
 
 import { config } from "./command/config";
 
@@ -43,6 +44,8 @@ import { round } from "./lib/round";
 //
 
 const identifier: string = "KatsuteDev/Background";
+
+export let clog: vscode.Uri;
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
 
@@ -67,9 +70,12 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     // extension
 
+    clog = vscode.Uri.file(path.join(context.extensionPath, "CHANGELOG.md"));
+
     context.subscriptions.push(reload.command);
     context.subscriptions.push(install.command);
     context.subscriptions.push(uninstall.command);
+    context.subscriptions.push(changelog.command);
 
     context.subscriptions.push(config);
 
@@ -198,7 +204,7 @@ const setBackground = () => {
         \`));
     };
 `
-+ // edior
++ // editor
 `
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;

@@ -33,7 +33,8 @@
         "onCommand:background.install",
         "onCommand:background.uninstall",
         "onCommand:background.reload",
-        "onCommand:background.config"
+        "onCommand:background.config",
+        "onCommand:background.changelog"
     ],
     "contributes": {
         "commands": [
@@ -55,6 +56,11 @@
             {
                 "command": "background.config",
                 "title": "Configuration",
+                "category": "Background"
+            },
+            {
+                "command": "background.changelog",
+                "title": "Changelog",
                 "category": "Background"
             }
         ],
@@ -272,7 +278,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.7.23",
+        "@types/node": "18.8.0",
         "@types/vscode": "1.71.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.4",
