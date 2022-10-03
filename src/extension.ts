@@ -16,27 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import { ConfigKey } from "./vs/package";
+
 import * as vscode from "vscode";
+
+import { css, cssValue, get } from "./vs/vsconfig";
 
 import { glob } from "glob";
 
 import * as fs from "fs";
 import * as path from "path";
 
+import { unique } from "./lib/unique";
+
 import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
 
-import { config, get } from "./command/config";
+import { config } from "./command/config";
 
-import * as align from "./command/config/align";
-import * as blur from "./command/config/blur";
 import * as file from "./command/config/file";
-import * as opacity from "./command/config/opacity";
-import * as repeat from "./command/config/repeat";
-import * as size from "./command/config/size";
 
 import { statusbar } from "./statusbar";
+import { round } from "./lib/round";
 
 //
 
@@ -71,13 +73,6 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     context.subscriptions.push(config);
 
-    context.subscriptions.push(align.command);
-    context.subscriptions.push(blur.command);
-    context.subscriptions.push(file.command);
-    context.subscriptions.push(opacity.command);
-    context.subscriptions.push(repeat.command);
-    context.subscriptions.push(size.command);
-
     context.subscriptions.push(statusbar);
     statusbar.show();
 };
@@ -104,8 +99,6 @@ export const restartVS: () => void = () => {
 
 const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
-const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
-
 const extensions = (v: string, i: number, self: string[]) => { // images only
     const ext: string = path.extname(v);
     for(const m of file.extensions())
@@ -114,15 +107,7 @@ const extensions = (v: string, i: number, self: string[]) => { // images only
     return false;
 }
 
-const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
-
 const getJS: () => string = () => {
-    // document.createTextNode will remove any unsafe css
-    const css: string = (get("CSS") as string || "")
-        .replace(/\n\r?/gm, ' ') // make single line
-        .replace(/"/gm, '\'')    // prevent escaping quotes
-        .replace(/\\+$/gm, '');  // prevent escaping last script quote
-
     // populate images
 
     const images: {[key: string]: string[]} = { // include start and end quotes
@@ -133,93 +118,46 @@ const getJS: () => string = () => {
     };
 
     for(const s of ["window", "editor", "sidebar", "panel"])
-        for(const g of (get(`${s}Backgrounds`) as string[]).filter(unique))
+        for(const g of (get(`${s}Backgrounds` as ConfigKey) as string[]).filter(unique))
             if(g.startsWith("https://")) // use literal URL
                 images[s].push('"' + g + '"');
             else // use glob
                 for(const f of glob.sync(g).filter(extensions))
                     images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
-    // resolve settings to css
-
-    const position: string = {
-        "Top Left": "left top",
-        "Top Center": "center top",
-        "Top Right": "right top",
-        "Center Left": "left center",
-        "Center Center": "center center",
-        "Center Right": "right center",
-        "Bottom Left": "left bottom",
-        "Bottom Center": "center bottom",
-        "Bottom Right": "right bottom",
-        "Manual": get("backgroundImageAlignmentValue") as string,
-    }[get("backgroundImageAlignment") as string] || "center center";
-
-    const blur: string = (get("backgroundImageBlur") as string || "")
-        .replace(/[^\w.%+-]/gmi, ""); // remove non-css length
-
-    const opacity: number = round(get("opacity") as number);
-
-    const repeat: string = {
-        "No Repeat": "no-repeat",
-        "Repeat": "repeat",
-        "Repeat X": "repeat-x",
-        "Repeat Y": "repeat-y",
-        "Repeat Space": "space",
-        "Repeat Round": "round"
-    }[get("backgroundImageRepeat") as string] || "no-repeat";
-
-    const size: string = {
-        "Auto": "auto",
-        "Contain": "contain",
-        "Cover": "cover",
-        "Manual": get("backgroundImageSizeValue") as string
-    }[get("backgroundImageSize") as string] || "cover";
-
-    return `
-/* ${identifier}-start */
-`
-+ // background image css
-`
+    return `/* ${identifier}-start */` + '\n' +
+// background image css
+(`
 const bk_global = document.createElement("style");
 bk_global.id = "${identifier}-global";
 bk_global.setAttribute("type", "text/css");
 
-bk_global.appendChild(document.createTextNode(
-\`
-body::before,
-.split-view-view > .editor-group-container::after,
-.split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
-.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+bk_global.appendChild(document.createTextNode(\`
+    body::before,
+    .split-view-view > .editor-group-container::after,
+    .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+    .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
+    .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-    content: "";
+        content: "";
 
-    top: 0;
+        top: 0;
 
-    width: 100%;
-    height: 100%;
+        width: 100%;
+        height: 100%;
 
-    z-index: 1000;
+        z-index: 1000;
 
-    position: absolute;
+        position: absolute;
 
-    pointer-events: none;
+        pointer-events: none;
 
-    background-position: ${position};
-    background-repeat: ${repeat};
-    background-size: ${size};
-
-    opacity: ${round(1-opacity)};
-
-    filter: blur(${blur});
-
-}
+    }
 \`));
 `
 + // custom user css
 `
-bk_global.appendChild(document.createTextNode("${css}"));
+bk_global.appendChild(document.createTextNode("${cssValue(get("CSS"))}"));
 `
 + // background image cache
 `
@@ -237,76 +175,125 @@ bk_image.setAttribute("type", "text/css");
 const setBackground = () => {
     while(bk_image.firstChild){
         bk_image.removeChild(bk_image.firstChild);
-    }
-
+    };
     randomize();
-
+`
++ // window
+`
     if(windowBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(
-        \`
-body::before {
+        bk_image.appendChild(document.createTextNode(\`
+            body::before {
 
-    background-image: url("\${windowBackgrounds[0]}");
+                background-image: url("\${windowBackgrounds[0]}");
 
-}
+                background-position: ${css("backgroundAlignment", "window")};
+                background-repeat: ${css("backgroundRepeat", "window")};
+                background-size: ${css("backgroundSize", "window")};
+
+                opacity: ${round(1 - +css("backgroundOpacity", "window"), 2)};
+
+                filter: blur(${css("backgroundBlur", "window")});
+
+            }
         \`));
-    }
-
+    };
+`
++ // edior
+`
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
-        for(let i = 1; i <= len; i++){
-            bk_image.appendChild(document.createTextNode(
-                \`
-.split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
+        bk_image.appendChild(document.createTextNode(\`
+            .split-view-view > .editor-group-container::after {
 
-    background-image: url("\${editorBackgrounds[i-1]}");
+                background-position: ${css("backgroundAlignment", "editor")};
+                background-repeat: ${css("backgroundRepeat", "editor")};
+                background-size: ${css("backgroundSize", "editor")};
 
-}
-                \`));
-        }
-    }
+                opacity: ${round(1 - +css("backgroundOpacity", "editor"), 2)};
 
-    if(sidebarBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(
-        \`
-.split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
+                filter: blur(${css("backgroundBlur", "editor")});
 
-    background-image: url("\${sidebarBackgrounds[0]}");
-
-}
-.split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
-
-    background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
-
-}
+            }
         \`));
-    }
+        for(let i = 1; i <= len; i++){
+            bk_image.appendChild(document.createTextNode(\`
+                .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-    if(panelBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(
-            \`
-.split-view-view > #workbench\\\\.parts\\\\.panel::after {
+                    background-image: url("\${editorBackgrounds[i-1]}");
 
-    background-image: url("\${panelBackgrounds[0]}");
-
-}
+                }
             \`));
-    }
-}
+        };
+    };
+`
++ // sidebar
+`
+    if(sidebarBackgrounds.length > 0){
+        bk_image.appendChild(document.createTextNode(\`
+            .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
+
+                background-image: url("\${sidebarBackgrounds[0]}");
+
+                background-position: ${css("backgroundAlignment", "sidebar")};
+                background-repeat: ${css("backgroundRepeat", "sidebar")};
+                background-size: ${css("backgroundSize", "sidebar")};
+
+                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
+
+                filter: blur(${css("backgroundBlur", "sidebar")});
+
+
+            }
+            .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+
+                background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
+
+                background-position: ${css("backgroundAlignment", "sidebar")};
+                background-repeat: ${css("backgroundRepeat", "sidebar")};
+                background-size: ${css("backgroundSize", "sidebar")};
+
+                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
+
+                filter: blur(${css("backgroundBlur", "sidebar")});
+
+            }
+        \`));
+    };
+`
++ // panel
+`
+    if(panelBackgrounds.length > 0){
+        bk_image.appendChild(document.createTextNode(\`
+            .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
+                background-image: url("\${panelBackgrounds[0]}");
+
+                background-position: ${css("backgroundAlignment", "panel")};
+                background-repeat: ${css("backgroundRepeat", "panel")};
+                background-size: ${css("backgroundSize", "panel")};
+
+                opacity: ${round(1 - +css("backgroundOpacity", "panel"), 2)};
+
+                filter: blur(${css("backgroundBlur", "panel")});
+
+            }
+        \`));
+    };
+};
 `
 + // randomize backgrounds
 `
 const randomize = () => {
     for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
         shuffle(arr);
-    }
+    };
 };
 
 const shuffle = (arr) => {
     for(let i = arr.length - 1; i > 0; i--){
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+    };
     return arr;
 };
 `
@@ -318,11 +305,12 @@ window.onload = () => {
 
     setBackground();
 };
-`
-+ // EOF
-`
-/* ${identifier}-end */
-        `.trim();
+`)
+// minify
+    .trim()
+    .replace(/^ +/gm, '') // spaces
+    .replace(/\r?\n/gm, '') + // newlines
+    '\n' + `/* ${identifier}-end */`; // EOF
 }
 
 const removeJS: (s: string) => string = (s: string) => {

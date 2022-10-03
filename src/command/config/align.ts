@@ -16,66 +16,70 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+import { config, Props } from "../../vs/package";
+import { showInputBox } from "../../vs/inputbox";
+import { get, update, updateFromLabel } from "../../vs/vsconfig";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
-import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update, updateFromLabel } from "../config";
+import { menu as cm, options, title } from "../config";
 import { notify } from "../install";
+import { validCSS } from "../../lib/str";
 
 //
 
-const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    updateFromLabel("backgroundImageAlignment", item);
-});
+const prop: Props = config("backgroundAlignment");
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.align", () => {
-    const current: string = get("backgroundImageAlignment") as string ?? "";
-    vscode.window.showQuickPick(
-        [
-            // top
-            quickPickItem({ label: "Top Left", onSelect }, current),
-            quickPickItem({ label: "Top Center", onSelect }, current),
-            quickPickItem({ label: "Top Right", onSelect }, current),
-            separator(),
-            // center
-            quickPickItem({ label: "Center Left", onSelect }, current),
-            quickPickItem({ label: "Center Center", onSelect }, current),
-            quickPickItem({ label: "Center Right", onSelect }, current),
-            separator(),
-            // bottom
-            quickPickItem({ label: "Bottom Left", onSelect }, current),
-            quickPickItem({ label: "Bottom Center", onSelect }, current),
-            quickPickItem({ label: "Bottom Right", onSelect }, current),
-            separator(),
-            // manual
-            quickPickItem({ label: "Manual", description: "Manual position", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                vscode.window.showInputBox({
-                    title: "Background Position",
-                    placeHolder: "Background position",
-                    value: current,
-                    prompt: `Background position (${current}). The literal value for the 'background-position' css property.`
-                }).then((value?: string) => {
-                    if(value !== undefined){
-                        let changed: boolean = get("backgroundImageAlignment") !== "Manual" || current !== value;
+const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    updateFromLabel("backgroundAlignment", item, item.ui!)
+        .then(() => cm(item)); // reopen menu
+};
 
-                        update("backgroundImageAlignment", "Manual", true);
-                        update("backgroundImageAlignmentValue", value, true);
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    const current: string = get("backgroundAlignment", item.ui!) as string;
 
-                        if(changed)
-                            notify();
+    showQuickPick([
+        // top
+        quickPickItem({ label: prop.items!.enum![0], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![1], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![2], handle, ui: item.ui! }, current),
+        separator(),
+        // center
+        quickPickItem({ label: prop.items!.enum![3], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![4], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![5], handle, ui: item.ui! }, current),
+        separator(),
+        // bottom
+        quickPickItem({ label: prop.items!.enum![6], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![7], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![8], handle, ui: item.ui! }, current),
+        separator(),
+        // manual
+        quickPickItem({ label: prop.items!.enum![9], description: "Manual position", ui: item.ui!, handle: (item: CommandQuickPickItem) => {
+            const currentValue: string = get("backgroundAlignmentValue", item.ui!);
+            showInputBox({
+                title: title("Alignment", item.ui!),
+                placeHolder: "Background position",
+                value: currentValue,
+                prompt: `Background position (${currentValue}). The literal value for the 'background-position' css property.`,
+                validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
+                handle: (value: string) => {
+                    if(validCSS(value)){
+                        let changed: boolean = get("backgroundAlignment", item.ui!) !== prop.items!.enum![9] || currentValue !== value;
+
+                        update("backgroundAlignment", prop.items!.enum![9], item.ui!, true)
+                            .then(() => update("backgroundAlignmentValue", value, item.ui!, true))
+                            .then(() => {
+                                changed && notify();
+                                cm(item); // reopen menu
+                            });
                     }
-                });
-            })}, current)
-        ],
-        {
-            ...options,
-            title: `${options.title} - Alignment`,
-            placeHolder: "Alignment"
-        }
-    ).then(handle);
-});
-
-export const item: CommandQuickPickItem = {
-    label: "Align",
-    description: "Background image alignment",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.align"))
-}
+                }
+            });
+        }}, current)
+    ],
+    {
+        ...options,
+        title: title("Alignment", item.ui!),
+        placeHolder: "Background alignment"
+    });
+};

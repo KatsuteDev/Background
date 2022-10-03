@@ -16,28 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+import { showInputBox } from "../../vs/inputbox";
+import { get, update } from "../../vs/vsconfig";
+import { CommandQuickPickItem } from "../../vs/quickpick";
 
-import { CommandQuickPickItem, get, options, update } from "../config";
+import { menu as cm, title } from "../config";
+import { validCSS } from "../../lib/str";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.blur", () => {
-    const current: string = get("backgroundImageBlur") as string ?? "";
-    vscode.window.showInputBox({
-        title: `${options.title} - Blur`,
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    const current: string = get("backgroundBlur", item.ui!) as string;
+
+    showInputBox({
+        title: title("Blur", item.ui!),
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
-        validateInput: (value: string) => value.match(/[^\w.%+-]/gmi) ? "Invalid CSS" : null
-    }).then((value?: string) => {
-        if(value && !value.match(/[^\w.%+-]/gmi))
-            update("backgroundImageBlur", value);
+        validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
+        handle: (value: string) => {
+            if(validCSS(value))
+                update("backgroundBlur", value, item.ui!)
+                    .then(() => cm(item)); // reopen menu
+        }
     });
-});
-
-export const item: CommandQuickPickItem = {
-    label: "Blur",
-    description: "Background image blur",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.blur"))
-}
+};

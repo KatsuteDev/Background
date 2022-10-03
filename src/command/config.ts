@@ -18,58 +18,88 @@
 
 import * as vscode from "vscode";
 
-import * as align from "./config/align";
+import { get, UI } from "../vs/vsconfig";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../vs/quickpick";
+
 import * as file from "./config/file";
+import * as align from "./config/align";
 import * as blur from "./config/blur";
 import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
 
-import * as reload from "./reload";
-import * as install from "./install";
-import * as uninstall from "./uninstall";
-
-import { notify } from "./install";
-
-// read / write
-
-const vsconfig = () => vscode.workspace.getConfiguration("background");
-
-export const get: (key: string) => any = (key: string) => {
-    return vsconfig().get(key);
-}
-
-export const update: (key: string, value: any, skipWarning?: boolean) => void = (key: string, value: any, skipWarning?: boolean) => {
-    const current: any = get(key) as any;
-    vsconfig().update(key, value, vscode.ConfigurationTarget.Global);
-    if(skipWarning !== true && current !== value)
-        notify();
-}
-
-export const updateFromLabel: (key: string, item?: CommandQuickPickItem) => void = (key: string, item?: CommandQuickPickItem) => {
-    item && item.label && update(key, item.label);
-}
+import { capitalize, s } from "../lib/str";
 
 // interface
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
-    vscode.window.showQuickPick([
-        file.item,
+    showQuickPick([
+        // background types
+        quickPickItem({
+            label: "$(window) Window",
+            description: s(get("windowBackgrounds"), "Background"),
+            detail: `${get("backgroundAlignment",   "window")} Alignment`   + ` • ` +
+                    `${get("backgroundBlur",        "window")} Blur`        + ` • ` +
+                    `${get("backgroundOpacity",     "window")} Opacity`     + ` • ` +
+                    `${get("backgroundRepeat",      "window")} Repeat`      + ` • ` +
+                    `${get("backgroundSize",        "window")} Size`,
+            ui: "window",
+            handle: menu
+        }),
+        quickPickItem({
+            label: "$(multiple-windows) Editor",
+            description: s(get("editorBackgrounds"), "Background"),
+            detail: `${get("backgroundAlignment",   "editor")} Alignment`   + ` • ` +
+                    `${get("backgroundBlur",        "editor")} Blur`        + ` • ` +
+                    `${get("backgroundOpacity",     "editor")} Opacity`     + ` • ` +
+                    `${get("backgroundRepeat",      "editor")} Repeat`      + ` • ` +
+                    `${get("backgroundSize",        "editor")} Size`,
+            ui: "editor",
+            handle: menu
+        }),
+        quickPickItem({
+            label: "$(layout-sidebar-left) Sidebar",
+            description: s(get("sidebarBackgrounds"), "Background"),
+            detail: `${get("backgroundAlignment",   "sidebar")} Alignment`  + ` • ` +
+                    `${get("backgroundBlur",        "sidebar")} Blur`       + ` • ` +
+                    `${get("backgroundOpacity",     "sidebar")} Opacity`    + ` • ` +
+                    `${get("backgroundRepeat",      "sidebar")} Repeat`     + ` • ` +
+                    `${get("backgroundSize",        "sidebar")} Size`,
+            ui: "sidebar",
+            handle: menu
+        }),
+        quickPickItem({
+            label: "$(layout-panel) Panel",
+            description: s(get("panelBackgrounds"), "Background"),
+            detail: `${get("backgroundAlignment",   "panel")} Alignment`    + ` • ` +
+                    `${get("backgroundBlur",        "panel")} Blur`         + ` • ` +
+                    `${get("backgroundOpacity",     "panel")} Opacity`      + ` • ` +
+                    `${get("backgroundRepeat",      "panel")} Repeat`       + ` • ` +
+                    `${get("backgroundSize",        "panel")} Size`,
+            ui: "panel",
+            handle: menu
+        }),
         separator(),
-        align.item,
-        blur.item,
-        opacity.item,
-        repeat.item,
-        size.item,
-        separator(),
-        install.item,
-        uninstall.item,
-        reload.item
-    ], options)
-    .then(handle);
+        // extension options
+        quickPickItem({
+            label: "$(check) Install",
+            description: "Install background",
+            handle: () => vscode.commands.executeCommand("background.install")
+        }),
+        quickPickItem({
+            label: "$(close) Uninstall",
+            description: "Uninstall background",
+            handle: () => vscode.commands.executeCommand("background.uninstall")
+        }),
+        quickPickItem({
+            label: "$(refresh) Reload Background",
+            description: "Randomizes installed backgrounds; Background must already be installed",
+            handle: () => vscode.commands.executeCommand("background.reload")
+        }),
+    ], options);
 });
 
-//
+// shared options
 
 export const options: vscode.QuickPickOptions = {
     title: "Background",
@@ -77,27 +107,57 @@ export const options: vscode.QuickPickOptions = {
     matchOnDescription: true
 }
 
-export const handle: (item?: CommandQuickPickItem) => void = (item?: CommandQuickPickItem) => {
-    item && item.onSelect && item.onSelect(item);
-}
+export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui ? `${capitalize(ui)} ${options.title} - ${s}` : `${options.title} - ${s}`;
 
-// vsc quick pick
+// menu
 
-export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
-    ...item,
-    description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim()
-} as CommandQuickPickItem);
-
-export const separator: () => vscode.QuickPickItem = () => ({
-    label: "",
-    kind: vscode.QuickPickItemKind.Separator
-} as vscode.QuickPickItem);
-
-// types
-
-export type CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => Promise<void>;
-
-export interface CommandQuickPickItem extends vscode.QuickPickItem {
-    onSelect?: (item?: CommandQuickPickItem) => Promise<void>;
-    value?: string
-}
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    showQuickPick([
+        quickPickItem({
+            label: "$(file-media) File",
+            description: s(get(`${item.ui!}Backgrounds`), "Background"),
+            detail: "Select background image files",
+            ui: item.ui!,
+            handle: file.menu
+        }),
+        quickPickItem({
+            label: "$(arrow-both) Alignment",
+            description: `${get("backgroundAlignment", item.ui!)}`,
+            detail: "Background image alignment",
+            ui: item.ui!,
+            handle: align.menu
+        }),
+        quickPickItem({
+            label: "$(eye) Blur",
+            description: `${get("backgroundBlur", item.ui!)}`,
+            detail: "Background image blur",
+            ui: item.ui!,
+            handle: blur.menu
+        }),
+        quickPickItem({
+            label: "$(color-mode) Opacity",
+            description: `${get("backgroundOpacity", item.ui!)}`,
+            detail: "Background image opacity",
+            ui: item.ui!,
+            handle: opacity.menu
+        }),
+        quickPickItem({
+            label: "$(multiple-windows) Repeat",
+            description: `${get("backgroundRepeat", item.ui!)}`,
+            detail: "Background image repeat",
+            ui: item.ui!,
+            handle: repeat.menu
+        }),
+        quickPickItem({
+            label: "$(screen-full) Size",
+            description: `${get("backgroundSize", item.ui!)}`,
+            detail: "Background image size",
+            ui: item.ui!,
+            handle: size.menu
+        })
+    ],
+    {
+        ...options,
+        title: `${capitalize(item.ui!)} ${options.title}`,
+    });
+};

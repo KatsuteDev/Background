@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "1.3.0",
+    "version": "2.0.0",
     "private": true,
     "engines": {
         "vscode": "^1.71.0"
@@ -33,13 +33,7 @@
         "onCommand:background.install",
         "onCommand:background.uninstall",
         "onCommand:background.reload",
-        "onCommand:background.config",
-        "onCommand:background.config.background",
-        "onCommand:background.config.align",
-        "onCommand:background.config.blur",
-        "onCommand:background.config.opacity",
-        "onCommand:background.config.repeat",
-        "onCommand:background.config.size"
+        "onCommand:background.config"
     ],
     "contributes": {
         "commands": [
@@ -61,36 +55,6 @@
             {
                 "command": "background.config",
                 "title": "Configuration",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.background",
-                "title": "Select background image files",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.align",
-                "title": "Set background image alignment",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.blur",
-                "title": "Set background image blur",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.opacity",
-                "title": "Set UI opacity",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.repeat",
-                "title": "Set background image repeat",
-                "category": "Background"
-            },
-            {
-                "command": "background.config.size",
-                "title": "Set background image size",
                 "category": "Background"
             }
         ],
@@ -134,93 +98,140 @@
                         "type": "string"
                     }
                 },
-                "background.backgroundImageAlignment": {
+
+                "background.backgroundAlignment": {
                     "markdownDescription": "The background image alignment.",
-                    "type": "string",
+                    "type": "array",
                     "order": 4,
-                    "default": "Center Center",
-                    "enum": [
-                        "Top Left",
-                        "Top Center",
-                        "Top Right",
-                        "Center Left",
-                        "Center Center",
-                        "Center Right",
-                        "Bottom Left",
-                        "Bottom Center",
-                        "Bottom Right",
-                        "Manual"
-                    ]
+                    "default": ["Center Center", "Center Center", "Center Center", "Center Center"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Top Left",
+                            "Top Center",
+                            "Top Right",
+                            "Center Left",
+                            "Center Center",
+                            "Center Right",
+                            "Bottom Left",
+                            "Bottom Center",
+                            "Bottom Right",
+                            "Manual"
+                        ]
+                    }
                 },
-                "background.backgroundImageAlignmentValue": {
-                    "markdownDescription": "If `#background.backgroundImageAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
-                    "type": "string",
+                "background.backgroundAlignmentValue": {
+                    "markdownDescription": "If `#background.backgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
+                    "type": "array",
                     "order": 5,
-                    "default": ""
+                    "default": ["50%", "50%", "50%", "50%"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[\\w.% +-]*$"
+                    }
                 },
-                "background.backgroundImageBlur": {
+                "background.backgroundBlur": {
                     "markdownDescription": "The background image blur amount in css units.",
-                    "type": "string",
+                    "type": "array",
                     "order": 6,
-                    "default": "0"
+                    "default": ["0", "0", "0", "0"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[\\w.% +-]*$"
+                    }
                 },
-                "background.opacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.",
-                    "type": "number",
+                "background.backgroundOpacity": {
+                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change. 0 is fully visible and 1 is invisible.",
+                    "type": "array",
                     "order": 7,
-                    "default": 0.9,
-                    "minimum": 0,
-                    "maximum": 1
+                    "default": [0.9, 0.9, 0.9, 0.9],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    }
                 },
-                "background.backgroundImageRepeat": {
+                "background.backgroundRepeat": {
                     "markdownDescription": "The background image repeat.",
-                    "type": "string",
+                    "type": "array",
                     "order": 8,
-                    "default": "No Repeat",
-                    "enum": [
-                        "No Repeat",
-                        "Repeat",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat Space",
-                        "Repeat Round"
-                    ],
-                    "enumDescriptions": [
-                        "Do not repeat",
-                        "Repeat X/Y",
-                        "Repeat X",
-                        "Repeat Y",
-                        "Repeat with even spacing to fill the screen",
-                        "Repeat and stretch images to fill the screen"
-                    ]
+                    "default": ["No Repeat", "No Repeat", "No Repeat", "No Repeat"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "No Repeat",
+                            "Repeat",
+                            "Repeat X",
+                            "Repeat Y",
+                            "Repeat Space",
+                            "Repeat Round"
+                        ],
+                        "enumDescriptions": [
+                            "Do not repeat",
+                            "Repeat X/Y",
+                            "Repeat X",
+                            "Repeat Y",
+                            "Repeat with even spacing to fill the screen",
+                            "Repeat and stretch images to fill the screen"
+                        ]
+                    }
                 },
-                "background.backgroundImageSize": {
+                "background.backgroundSize": {
                     "markdownDescription": "The background image size.",
-                    "type": "string",
+                    "type": "array",
                     "order": 9,
-                    "default": "Cover",
-                    "enum": [
-                        "Auto",
-                        "Contain",
-                        "Cover",
-                        "Manual"
-                    ],
-                    "enumDescriptions": [
-                        "Original image size",
-                        "Fit image to the screen",
-                        "Stretch image to fill the screen",
-                        "Manual size"
-                    ]
+                    "default": ["Cover", "Cover", "Cover", "Cover"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Auto",
+                            "Contain",
+                            "Cover",
+                            "Manual"
+                        ],
+                        "enumDescriptions": [
+                            "Original image size",
+                            "Fit image to the screen",
+                            "Stretch image to fill the screen",
+                            "Manual size"
+                        ]
+                    }
                 },
-                "background.backgroundImageSizeValue": {
-                    "markdownDescription": "If `#background.backgroundImageSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
+                "background.backgroundSizeValue": {
+                    "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
+                    "type": "array",
                     "order": 10,
-                    "type": "string",
-                    "default": ""
+                    "default": ["100%", "100%", "100%", "100%"],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[\\w.% +-]*$"
+                    }
                 },
+
+                "background.useWindowOptionsForAllBackgrounds": {
+                    "markdownDescription": "If enabled, all backgrounds will use the options set for the windows background.",
+                    "order": 11,
+                    "type": "boolean",
+                    "default": false
+                },
+
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 11,
+                    "order": 12,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
@@ -261,7 +272,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.7.16",
+        "@types/node": "18.7.23",
         "@types/vscode": "1.71.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.4",

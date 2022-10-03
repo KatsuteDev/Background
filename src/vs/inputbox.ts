@@ -18,15 +18,16 @@
 
 import * as vscode from "vscode";
 
-//
+// type
 
-export const statusbar: vscode.StatusBarItem = (() => {
-    const item: vscode.StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+type handle = {
+    handle?: (value: string) => void
+}
 
-    item.command = "background.config";
-    item.name = "Background";
-    item.text = "$(file-media) Background";
-    item.tooltip = "Open background configuration";
+// input box
 
-    return item;
-})();
+export const showInputBox: (options?: vscode.InputBoxOptions & handle) => void = (options: vscode.InputBoxOptions & handle = {}) => {
+    options.handle && vscode.window.showInputBox(options).then((value?: string) => {
+        options.handle && value !== undefined && new Promise(() => options.handle!(value)); // run then in a promise
+    });
+}

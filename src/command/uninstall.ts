@@ -19,15 +19,8 @@
 import * as vscode from "vscode";
 
 import { restartVS, uninstallJS } from "../extension";
-import { CommandQuickPickItem } from "./config";
 
 //
-
-export const item: CommandQuickPickItem = {
-    label: "$(close) Uninstall",
-    description: "Uninstall background",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.uninstall"))
-}
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", () => {
     uninstallJS();

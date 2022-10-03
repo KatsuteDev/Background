@@ -18,17 +18,23 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem, get, update } from "../config";
+import { showInputBox } from "../../vs/inputbox";
+import { get, update } from "../../vs/vsconfig";
+import { CommandQuickPickItem } from "../../vs/quickpick";
+
+import { round } from "../../lib/round";
+import { menu as cm, title } from "../config";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.opacity", () => {
-    const current: number = round(get("opacity") as number);
-    vscode.window.showInputBox({
-        title: "UI Opacity",
-        placeHolder: "UI opacity",
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    const current: number = round(get("backgroundOpacity", item.ui!) as number, 2);
+
+    showInputBox({
+        title: title("Opacity", item.ui!),
+        placeHolder: "Background opacity",
         value: current.toString(),
-        prompt: `UI Opacity (${current})`,
+        prompt: `Background opacity (${current}). 0 is fully visible and 1 is invisible.`,
         validateInput: (value: string) => {
             if(isNaN(+value))
                 return "Not a number";
@@ -36,32 +42,26 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
                 return "Opacity must be between 0 and 1";
             else
                 return null;
-        }
-    }).then((value?: string) => {
-        if(value && !isNaN(+value)){
-            const o: number = Math.min(Math.max(round(+value), 0), 1);
-            if(o > .1){
-                update("opacity", o);
-            }else{
-                vscode.window.showWarningMessage(
-                    "An opacity of " + o + " might make it difficult to see the UI, " +
-                    "are you sure you want to use this opacity?",
-                    { modal: true },
-                    "Yes"
-                ).then((c?: "Yes") => {
-                    c && c === "Yes" && update("opacity", o);
-                });
+        },
+        handle: (value: string) => {
+            if(!isNaN(+value)){
+                const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
+                if(o > .1){
+                    update("backgroundOpacity", o, item.ui!)
+                        .then(() => cm(item)); // reopen menu
+                }else{
+                    vscode.window.showWarningMessage(
+                        "An opacity of " + o + " might make it difficult to see the UI, " +
+                        "are you sure you want to use this opacity?",
+                        { modal: true },
+                        "Yes"
+                    ).then((c?: "Yes") => {
+                        if(c === "Yes")
+                            update("backgroundOpacity", o, item.ui!)
+                                .then(() => cm(item)); // reopen menu
+                    });
+                }
             }
         }
     });
-});
-
-export const item: CommandQuickPickItem = {
-    label: "Opacity",
-    description: "UI opacity",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.opacity"))
-}
-
-//
-
-const round: (num: number) => number = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
+};

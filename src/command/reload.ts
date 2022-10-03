@@ -18,15 +18,7 @@
 
 import * as vscode from "vscode";
 
-import { CommandQuickPickItem } from "./config";
-
 //
-
-export const item: CommandQuickPickItem = {
-    label: "$(refresh) Reload Background",
-    description: "Randomizes installed backgrounds; Background must already be installed",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.reload"))
-}
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.reload", () => {
     vscode.commands.executeCommand("workbench.action.reloadWindow");

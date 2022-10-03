@@ -16,17 +16,4 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
-
-//
-
-export const statusbar: vscode.StatusBarItem = (() => {
-    const item: vscode.StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
-
-    item.command = "background.config";
-    item.name = "Background";
-    item.text = "$(file-media) Background";
-    item.tooltip = "Open background configuration";
-
-    return item;
-})();
+export const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;

@@ -5,6 +5,7 @@
         "strict": true,
         "alwaysStrict": true,
         "sourceMap": true,
-        "removeComments": true
+        "removeComments": true,
+        "resolveJsonModule": true,
     }
 }

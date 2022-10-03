@@ -16,56 +16,62 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+import { config, Props } from "../../vs/package";
+import { showInputBox } from "../../vs/inputbox";
+import { get, update, updateFromLabel } from "../../vs/vsconfig";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
-import { CommandQuickPickItem, CommandQuickPickItemPromise, get, handle, options, quickPickItem, separator, update, updateFromLabel } from "../config";
+import { menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
+import { validCSS } from "../../lib/str";
 
 //
 
-const onSelect: CommandQuickPickItemPromise = (item?: CommandQuickPickItem) => new Promise(() => {
-    updateFromLabel("backgroundImageSize", item);
-});
+const prop: Props = config("backgroundSize");
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.config.size", () => {
-    const current: string = get("backgroundImageSize") as string;
-    vscode.window.showQuickPick(
-        [
-            // size
-            quickPickItem({ label: "Auto", description: "Original image size", onSelect }, current),
-            quickPickItem({ label: "Contain", description: "Fit image to the screen", onSelect }, current),
-            quickPickItem({ label: "Cover", description: "Stretch image to fill the screen", onSelect }, current),
-            separator(),
-            // manual
-            quickPickItem({ label: "Manual", description: "Manual size", onSelect: (item?: CommandQuickPickItem) => new Promise(() => {
-                vscode.window.showInputBox({
-                    title: "Background Size",
-                    placeHolder: "Background size",
-                    value: current,
-                    prompt: `Background size (${current}). The literal value for the 'background-size' css property.`
-                }).then((value?: string) => {
-                    if(value !== undefined){
-                        let changed: boolean = get("backgroundImageSize") !== "Manual" || current !== value;
+const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    updateFromLabel("backgroundSize", item, item.ui!)
+        .then(() => cm(item)); // reopen menu
+};
 
-                        update("backgroundImageSize", "Manual", true);
-                        update("backgroundImageSizeValue", value, true);
+export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+    const current: string = get("backgroundSize", item.ui!) as string;
 
-                        if(changed)
-                            notify();
+    const title: string = t("Size", item.ui!);
+
+    showQuickPick([
+        // size
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], handle, ui: item.ui! }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle, ui: item.ui! }, current),
+        separator(),
+        // manual
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: item.ui!, handle: (item: CommandQuickPickItem) => {
+            const currentValue: string = get("backgroundSizeValue", item.ui!);
+            showInputBox({
+                title,
+                placeHolder: "Background size",
+                value: currentValue,
+                prompt: `Background size (${currentValue}). The literal value for the 'background-size' css property.`,
+                validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
+                handle: (value: string) => {
+                    if(validCSS(value)){
+                        let changed: boolean = get("backgroundSize", item.ui!) !== prop.items!.enum![3] || currentValue !== value;
+
+                        update("backgroundSize", prop.items!.enum![3], item.ui!, true)
+                            .then(() => update("backgroundSizeValue", value, item.ui!, true))
+                            .then(() => {
+                                changed && notify();
+                                cm(item); // reopen menu
+                            });
                     }
-                });
-            })}, current)
-        ],
-        {
-            ...options,
-            title: `${options.title} - Size`,
-            placeHolder: "Size"
-        })
-    .then(handle);
-});
-
-export const item: CommandQuickPickItem = {
-    label: "Size",
-    description: "Background image size",
-    onSelect: () => new Promise(() => vscode.commands.executeCommand("background.config.size"))
-}
+                }
+            });
+        }}, current)
+    ],
+    {
+        ...options,
+        title,
+        placeHolder: "Background size"
+    });
+};
