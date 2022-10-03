@@ -24,9 +24,8 @@ import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from ".
 
 import { unique } from "../../lib/unique";
 
-import { menu as cm, options } from "../config";
+import { menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
-import { capitalize } from "../../lib/str";
 
 // config
 
@@ -190,7 +189,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     ],
     {
         ...options,
-        title: `${capitalize(item.ui!)} ${options.title} - Files`,
+        title: t("Files", item.ui!),
         placeHolder: "Files"
     });
 };
