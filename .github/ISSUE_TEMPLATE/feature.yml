@@ -16,6 +16,8 @@ body:
         * This feature does not already exist.
         * You are running the latest version.
 
+        This extension already supports background path modification and removal, please refer to [usage](https://github.com/KatsuteDev/Background#%EF%B8%8F-usage).
+
   - type: textarea
     attributes:
       label: Feature

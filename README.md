@@ -9,6 +9,8 @@
     <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background">Visual Studio Marketplace</a>
     •
     <a href="https://github.com/KatsuteDev/background/releases">Releases</a>
+    •
+    <a href="https://github.com/KatsuteDev/Background/issues/new/choose">Report an Issue</a>
     <br>
     <br>
     <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=flat-square&color=0098FF"></a>
@@ -49,8 +51,9 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 #### 🖼️ Usage
 
  1. Open the command palette and use `Background: Configuration` to open the configuration or press the **Background** tab in the status bar.
- 2. Add background images using `Background: Select background image files` or by opening the configuration menu.
- 3. Use `Background: Install` to install the background.
+ 2. Select where you want to add a background (Window, Editor, Sidebar, Panel).
+ 3. Add backgrounds and change how it should be displayed.
+ 4. Use `Background: Install` or press the install button in the menu to install the background.
 
 To modify or remove a path run `Background: Select background image files` and select the path you want to change.
 

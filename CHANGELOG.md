@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.0.0
+
+### ⭐ New Features
+
+* Use separate options depending on background type [#36](https://github.com/KatsuteDev/Background/pull/36) ([@Katsute](https://github.com/Katsute))
+  ![configuration](https://raw.githubusercontent.com/KatsuteDev/Background/be20d9ec47892bdacf76c5b049b59a0279cf283c/assets/configuration.gif)
+
+  * New configuration menu
+  * Removed property specific commands
+  * Background options are now separated based on UI type
+  * Settings are now saved as arrays rather than objects. Values are in order of
+    1. Window
+    2. Editor
+    3. Sidebar
+    4. Panel
+  * Fixed some validation issues
+
+  If you do not like this separation of options you can restore the old behavior by using the new option `useWindowOptionsForAllBackgrounds` which will use the window options for all backgrounds. You still need to add background images separately.
+
+  ![old](https://raw.githubusercontent.com/KatsuteDev/Background/be20d9ec47892bdacf76c5b049b59a0279cf283c/assets/old.gif)
+* Add command to view changelog [#42](https://github.com/KatsuteDev/Background/pull/42) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump typescript from 4.8.3 to 4.8.4 [#38](https://github.com/KatsuteDev/Background/pull/38) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`1.3.0...2.0.0`](https://github.com/KatsuteDev/Background/compare/1.3.0...2.0.0)
+
 ## 1.3.0
 
 ### ⭐ New Features

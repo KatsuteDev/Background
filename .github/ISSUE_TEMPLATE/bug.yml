@@ -15,6 +15,8 @@ body:
         * This is actually a bug and not a feature.
         * You are running the latest version.
 
+        If you have are trying to change or remove a background please refer to [usage](https://github.com/KatsuteDev/Background#%EF%B8%8F-usage).
+
         If your VSCode is blank or stops working please check [here](https://github.com/KatsuteDev/Background#%EF%B8%8F-bug-vscode-stopped-working) first.
 
   - type: input

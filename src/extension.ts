@@ -248,7 +248,6 @@ const setBackground = () => {
 
                 filter: blur(${css("backgroundBlur", "sidebar")});
 
-
             }
             .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
