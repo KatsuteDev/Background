@@ -28,8 +28,7 @@ export const command: vscode.Disposable = vscode.commands.registerCommand("backg
 });
 
 export const notify: () => void = () => {
-    vscode.window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Restart", "Ignore").then((value?: string) => {
-        if(value === "Install and Restart")
-            vscode.commands.executeCommand("background.install");
+    vscode.window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Reload", "Ignore").then((value?: string) => {
+        value === "Install and Reload" && vscode.commands.executeCommand("background.install");
     });
 }
