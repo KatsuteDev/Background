@@ -11,7 +11,7 @@
     "version": "2.0.0",
     "private": true,
     "engines": {
-        "vscode": "^1.71.0"
+        "vscode": "^1.72.0"
     },
     "categories": [
         "Other"
@@ -104,12 +104,16 @@
                         "type": "string"
                     }
                 },
-
                 "background.backgroundAlignment": {
                     "markdownDescription": "The background image alignment.",
                     "type": "array",
                     "order": 4,
-                    "default": ["Center Center", "Center Center", "Center Center", "Center Center"],
+                    "default": [
+                        "Center Center",
+                        "Center Center",
+                        "Center Center",
+                        "Center Center"
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -132,7 +136,12 @@
                     "markdownDescription": "If `#background.backgroundAlignment#` is set to `Manual`, this is the literal value for the `background-position` css property.",
                     "type": "array",
                     "order": 5,
-                    "default": ["50%", "50%", "50%", "50%"],
+                    "default": [
+                        "50%",
+                        "50%",
+                        "50%",
+                        "50%"
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -144,7 +153,12 @@
                     "markdownDescription": "The background image blur amount in css units.",
                     "type": "array",
                     "order": 6,
-                    "default": ["0", "0", "0", "0"],
+                    "default": [
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -156,7 +170,12 @@
                     "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change. 0 is fully visible and 1 is invisible.",
                     "type": "array",
                     "order": 7,
-                    "default": [0.9, 0.9, 0.9, 0.9],
+                    "default": [
+                        0.9,
+                        0.9,
+                        0.9,
+                        0.9
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -169,7 +188,12 @@
                     "markdownDescription": "The background image repeat.",
                     "type": "array",
                     "order": 8,
-                    "default": ["No Repeat", "No Repeat", "No Repeat", "No Repeat"],
+                    "default": [
+                        "No Repeat",
+                        "No Repeat",
+                        "No Repeat",
+                        "No Repeat"
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -196,7 +220,12 @@
                     "markdownDescription": "The background image size.",
                     "type": "array",
                     "order": 9,
-                    "default": ["Cover", "Cover", "Cover", "Cover"],
+                    "default": [
+                        "Cover",
+                        "Cover",
+                        "Cover",
+                        "Cover"
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -219,7 +248,12 @@
                     "markdownDescription": "If `#background.windowBackgroundSize#` is set to `Manual`, this is the literal value for the `background-size` css property.",
                     "type": "array",
                     "order": 10,
-                    "default": ["100%", "100%", "100%", "100%"],
+                    "default": [
+                        "100%",
+                        "100%",
+                        "100%",
+                        "100%"
+                    ],
                     "minItems": 4,
                     "maxItems": 4,
                     "items": {
@@ -227,14 +261,12 @@
                         "pattern": "^[\\w.% +-]*$"
                     }
                 },
-
                 "background.useWindowOptionsForAllBackgrounds": {
                     "markdownDescription": "If enabled, all backgrounds will use the options set for the windows background.",
                     "order": 11,
                     "type": "boolean",
                     "default": false
                 },
-
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
                     "order": 12,
@@ -279,7 +311,7 @@
     "devDependencies": {
         "@types/glob": "8.0.0",
         "@types/node": "18.8.1",
-        "@types/vscode": "1.71.0",
+        "@types/vscode": "1.72.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.4",
         "vsce": "2.11.0"
