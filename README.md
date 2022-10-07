@@ -30,7 +30,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
  - [✨ Features](#-features)
  - [💻 Commands](#-commands)
  - [⚙️ Configuration](#%EF%B8%8F-configuration)
- - [⚠️ Known Issues](#-known-issues)
+ - [⚠️ Known Issues](#%EF%B8%8F-known-issues)
  - [👨‍💻 Contributing](#-contributing)
  - [💼 License](#-license)
 
@@ -38,12 +38,8 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 
 > ⚠️ This extension is not compatible with remote distributions of VSCode (ex: Codespaces).
 
-Install from the VSCode marketplace
-
-<a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="Visual Studio Code" width="48" valign="middle" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/vscode.png"></a>
-<img alt="Version" valign="middle" src="https://img.shields.io/visual-studio-marketplace/v/katsute.code-background?style=flat-square&color=0098FF">
-
-or install directly from VSCode using the id <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><code>katsute.code-background</code></a>.
+ - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
+ - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
 #### 🖼️ Usage
 
@@ -114,8 +110,6 @@ The order settings are saved in is:
  1. Editor
  2. Sidebar
  3. Panel
-
-The array must have a length of 4, otherwise default values will be used.
 
 | Background | Type | Description |
 |---|:-:|---|
