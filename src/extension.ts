@@ -53,18 +53,21 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     if(require.main && require.main.filename){
 
-        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/bootstrap-window.js
+        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
 
-        const file: string = path.join(path.dirname(require.main.filename), "bootstrap-window.js");
+        const base: string = path.join(path.dirname(require.main.filename), "vs", "workbench");
+
+        const file: string = path.join(base, "workbench.desktop.main.js");
+        const name: string = path.basename(file);
         if(fs.existsSync(file)){
             js = file;
-            const backup: string = path.join(path.dirname(require.main.filename), "bootstrap-window-backup.js");
+            const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
             if(!fs.existsSync(backup)){
                 fs.copyFileSync(file, backup);
-                vscode.window.showInformationMessage(`A backup was created for 'bootstrap-window.js'`);
+                vscode.window.showInformationMessage(`A backup was created for '${name}'`);
             }
         }else
-            vscode.window.showErrorMessage(`Failed to find 'bootstrap-window.js'`);
+            vscode.window.showErrorMessage(`Failed to find '${name}'`);
     }else
         vscode.window.showErrorMessage("Failed to find main file");
 
@@ -96,9 +99,7 @@ export const uninstallJS: () => void = () => {
 }
 
 export const restartVS: () => void = () => {
-    vscode.commands.executeCommand("workbench.action.newWindow").then(() => {
-        vscode.commands.executeCommand("workbench.action.closeWindow");
-    });
+    vscode.commands.executeCommand("workbench.action.reloadWindow");
 }
 
 //
