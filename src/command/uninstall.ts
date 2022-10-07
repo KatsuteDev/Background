@@ -19,10 +19,14 @@
 import * as vscode from "vscode";
 
 import { restartVS, uninstallJS } from "../extension";
+import { statusbar } from "../statusbar";
 
 //
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", () => {
     uninstallJS();
-    restartVS();
+    statusbar.text = `$(loading~spin) Background`;
+    setTimeout(() => {
+        restartVS();
+    }, 10 * 1000); // this is so stupid; wait for vscode to read the file? vscode not using latest file for some random reason
 });
