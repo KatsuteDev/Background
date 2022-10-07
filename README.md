@@ -5,12 +5,11 @@
     </a>
     <h3>Background</h3>
     <h5>The most advanced background image extension for VSCode</h5>
-    <br>
     <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background">Visual Studio Marketplace</a>
     •
-    <a href="https://github.com/KatsuteDev/background/releases">Releases</a>
+    <a href="https://github.com/KatsuteDev/Background/issues/new?template=bug.yml">Report an Issue</a>
     •
-    <a href="https://github.com/KatsuteDev/Background/issues/new/choose">Report an Issue</a>
+    <a href="https://github.com/KatsuteDev/Background/issues/new?template=feature.yml">Suggest a Feature</a>
     <br>
     <br>
     <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=flat-square&color=0098FF"></a>
@@ -31,6 +30,7 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
  - [✨ Features](#-features)
  - [💻 Commands](#-commands)
  - [⚙️ Configuration](#%EF%B8%8F-configuration)
+ - [⚠️ Known Issues](#-known-issues)
  - [👨‍💻 Contributing](#-contributing)
  - [💼 License](#-license)
 
@@ -38,15 +38,12 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
 
 > ⚠️ This extension is not compatible with remote distributions of VSCode (ex: Codespaces).
 
-#### 🛒 VSCode Marketplace (recommended)
+Install from the VSCode marketplace
 
- 1. Install from `katsute.code-background` in the extension marketplace in Visual Studio Code or install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
+<a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="Visual Studio Code" width="48" valign="middle" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/vscode.png"></a>
+<img alt="Version" valign="middle" src="https://img.shields.io/visual-studio-marketplace/v/katsute.code-background?style=flat-square&color=0098FF">
 
-#### 📦 Manual
-
- 1. Install the latest release from the [releases](https://github.com/KatsuteDev/background/releases) tab.
- 2. Open Visual Studio Code in the folder with the extension.
- 3. Right click the extension and select **Install Extension VSIX**.
+or install directly from VSCode using the id <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><code>katsute.code-background</code></a>.
 
 #### 🖼️ Usage
 
@@ -60,14 +57,6 @@ To modify or remove a path run `Background: Select background image files` and s
 <div align="center">
     <img alt="update or delete path" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/delete.gif">
 </div>
-
-#### ⚠️ Bug: VSCode stopped working
-
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources\app\out\bootstrap-window.js` with `bootstrap-window-backup.js`.
-
-#### ⚠️ Bug: Doesn't work on WSL
-
-As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
 
 ## ✨ Features
 
@@ -149,6 +138,16 @@ The array must have a length of 4, otherwise default values will be used.
 |---|:-:|---|
 |`background.useWindowOptionsForAllBackgrounds`|`boolean`|If enabled, all backgrounds will use the options set for the windows background. You still need to add background images separately.|
 |`background.CSS`|`string`|**Advanced Users Only.** Apply raw CSS to VSCode.|
+
+## ⚠️ Known Issues
+
+#### ⚠️ VSCode stopped working
+
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources\app\out\bootstrap-window.js` with `bootstrap-window-backup.js`.
+
+#### ⚠️ Doesn't work on WSL
+
+As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
 
 ## 👨‍💻 Contributing
 

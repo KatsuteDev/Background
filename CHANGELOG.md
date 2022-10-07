@@ -22,6 +22,10 @@
   ![old](https://raw.githubusercontent.com/KatsuteDev/Background/be20d9ec47892bdacf76c5b049b59a0279cf283c/assets/old.gif)
 * Add command to view changelog [#42](https://github.com/KatsuteDev/Background/pull/42) ([@Katsute](https://github.com/Katsute))
 
+### 🐞 Bug Fixes
+
+* Fix VSCode 1.72 [#45](https://github.com/KatsuteDev/Background/pull/45) ([@Katsute](https://github.com/Katsute))
+
 ### 📘 Dependencies
 
 * Bump typescript from 4.8.3 to 4.8.4 [#38](https://github.com/KatsuteDev/Background/pull/38) ([@dependabot](https://github.com/dependabot))
