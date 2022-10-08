@@ -2,6 +2,13 @@
 
 ## 2.0.0
 
+### ⚠️ Breaking Change
+
+* Fix VSCode 1.72 [#45](https://github.com/KatsuteDev/Background/pull/45) ([@Katsute](https://github.com/Katsute))
+  Installing backgrounds using this extension now causes VSCode to warn about the installation being corrupt 😭. Select **Don't Show Again** to suppress this message.
+
+  ![corrupt](https://user-images.githubusercontent.com/58778985/194679747-3f0d1d28-f389-4c7e-9bfb-4580c17daf01.gif)
+
 ### ⭐ New Features
 
 * Use separate options depending on background type [#36](https://github.com/KatsuteDev/Background/pull/36) ([@Katsute](https://github.com/Katsute))
@@ -21,10 +28,6 @@
 
   ![old](https://raw.githubusercontent.com/KatsuteDev/Background/be20d9ec47892bdacf76c5b049b59a0279cf283c/assets/old.gif)
 * Add command to view changelog [#42](https://github.com/KatsuteDev/Background/pull/42) ([@Katsute](https://github.com/Katsute))
-
-### 🐞 Bug Fixes
-
-* Fix VSCode 1.72 [#45](https://github.com/KatsuteDev/Background/pull/45) ([@Katsute](https://github.com/Katsute))
 
 ### 📘 Dependencies
 

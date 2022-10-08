@@ -41,6 +41,10 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
  - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
  - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
+Installing backgrounds with this extension will cause VSCode to warn about the installation being corrupt 😭.  Select **Don't Show Again** to suppress this message.
+
+![corrupt](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/corrupt.gif)
+
 #### 🖼️ Usage
 
  1. Open the command palette and use `Background: Configuration` to open the configuration or press the **Background** tab in the status bar.
@@ -135,9 +139,15 @@ The order settings are saved in is:
 
 ## ⚠️ Known Issues
 
+#### ⚠️ Installation appears to be corrupt
+
+This extension modifies an internal file to make backgrounds work, as a result VSCode will warn about the installation being corrupt. Select **Don't Show Again** to suppress this warning.
+
+![corrupt](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/corrupt.gif)
+
 #### ⚠️ VSCode stopped working
 
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources\app\out\bootstrap-window.js` with `bootstrap-window-backup.js`.
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources/app/out/vs/workbench/workbench.desktop.main.js` with `workbench.desktop.main.js`.
 
 #### ⚠️ Doesn't work on WSL
 
