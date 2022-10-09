@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+* Fix README ([@Katsute](https://github.com/Katsute))
+
 ## 2.0.0
 
 ### ⚠️ Breaking Change

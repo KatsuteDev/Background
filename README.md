@@ -52,7 +52,7 @@ Installing backgrounds with this extension will cause VSCode to warn about the i
  3. Add backgrounds and change how it should be displayed.
  4. Use `Background: Install` or press the install button in the menu to install the background.
 
-To modify or remove a path run `Background: Select background image files` and select the path you want to change.
+To modify or remove a path select file then select the path you want to change.
 
 <div align="center">
     <img alt="update or delete path" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/delete.gif">
@@ -147,7 +147,7 @@ This extension modifies an internal file to make backgrounds work, as a result V
 
 #### ⚠️ VSCode stopped working
 
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources/app/out/vs/workbench/workbench.desktop.main.js` with `workbench.desktop.main.js`.
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources/app/out/vs/workbench/workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
 
 #### ⚠️ Doesn't work on WSL
 
