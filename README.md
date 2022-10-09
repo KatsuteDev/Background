@@ -147,7 +147,7 @@ This extension modifies an internal file to make backgrounds work, as a result V
 
 #### ⚠️ VSCode stopped working
 
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%appdata%\Local\Programs\Microsoft VS Code\resources/app/out/vs/workbench/workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
 
 #### ⚠️ Doesn't work on WSL
 
