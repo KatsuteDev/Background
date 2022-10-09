@@ -2,7 +2,9 @@
 
 ## 2.0.1
 
-* Fix README ([@Katsute](https://github.com/Katsute))
+* Fix README [`b5469c3`](https://github.com/KatsuteDev/Background/commit/b5469c307b6734b56ac5cee1213254f11932c75f) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.0.0...2.0.1`](https://github.com/KatsuteDev/Background/compare/2.0.0...2.0.1)
 
 ## 2.0.0
 
