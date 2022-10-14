@@ -205,6 +205,31 @@ bk_global.appendChild(document.createTextNode(\`
     }
 \`));
 `
++ // notification overrides
+`
+bk_global.appendChild(document.createTextNode(\`
+    div.notifications-toasts div.monaco-list[aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"] {
+
+        display: none;
+
+    }
+
+    div.monaco-list-row[aria-label$=", source: Background (Extension), notification"],
+    div.monaco-list-row[aria-label$=", source: Background (Extension), notification"]:hover {
+
+        background-color: #0098FF !important;
+        border-radius: .5rem;
+        color: white;
+
+    }
+
+    div.monaco-list-row[aria-label$=", source: Background (Extension), notification"] ::before {
+
+        color: white;
+
+    }
+\`));
+`
 + // custom user css
 `
 bk_global.appendChild(document.createTextNode("${cssValue(get("CSS"))}"));
