@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.2
+
+### 🐞 Bug Fixes
+
+* Remove warning about installation being corrupt [#48](https://github.com/KatsuteDev/Background/pull/48) ([@Katsute](https://github.com/Katsute))
+  * Hide corrupt notification on install
+  * Automatically fix checksums after relaunch
+
+**Full Changelog**: [`2.0.1...2.0.2`](https://github.com/KatsuteDev/Background/compare/2.0.1...2.0.2)
+
 ## 2.0.1
 
 * Fix README [`b5469c3`](https://github.com/KatsuteDev/Background/commit/b5469c307b6734b56ac5cee1213254f11932c75f) ([@Katsute](https://github.com/Katsute))
