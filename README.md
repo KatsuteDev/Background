@@ -41,10 +41,6 @@ The only background extension that supports [glob](https://github.com/isaacs/nod
  - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
  - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
-Installing backgrounds with this extension will cause VSCode to warn about the installation being corrupt 😭.  Select **Don't Show Again** to suppress this message.
-
-![corrupt](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/corrupt.gif)
-
 #### 🖼️ Usage
 
  1. Open the command palette and use `Background: Configuration` to open the configuration or press the **Background** tab in the status bar.
@@ -141,7 +137,9 @@ The order settings are saved in is:
 
 #### ⚠️ Installation appears to be corrupt
 
-This extension modifies an internal file to make backgrounds work, as a result VSCode will warn about the installation being corrupt. Select **Don't Show Again** to suppress this warning.
+This extension modifies an internal file to make backgrounds work, as a result VSCode will warn about the installation being corrupt.
+
+This warning will be removed after you relaunch VSCode, a reload is not enough. Alternatively select **Don't Show Again** to suppress this warning.
 
 ![corrupt](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/corrupt.gif)
 
