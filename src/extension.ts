@@ -26,6 +26,7 @@ import { glob } from "glob";
 
 import * as fs from "fs";
 import * as path from "path";
+import * as crypto from "crypto";
 
 import { unique } from "./lib/unique";
 
@@ -55,19 +56,40 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
 
-        const base: string = path.join(path.dirname(require.main.filename), "vs", "workbench");
+        {
+            const base: string = path.join(path.dirname(require.main.filename), "vs", "workbench");
 
-        const file: string = path.join(base, "workbench.desktop.main.js");
-        const name: string = path.basename(file);
-        if(fs.existsSync(file)){
-            js = file;
-            const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
-            if(!fs.existsSync(backup)){
-                fs.copyFileSync(file, backup);
-                vscode.window.showInformationMessage(`A backup was created for '${name}'`);
-            }
-        }else
-            vscode.window.showErrorMessage(`Failed to find '${name}'`);
+            const file: string = js = path.join(base, "workbench.desktop.main.js");
+            const name: string = path.basename(file);
+
+            if(fs.existsSync(file)){
+                const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
+                if(!fs.existsSync(backup)){
+                    fs.copyFileSync(file, backup);
+                    vscode.window.showInformationMessage(`A backup was created for '${name}'`);
+                }
+            }else
+                vscode.window.showErrorMessage(`Failed to find '${name}'`);
+        }
+
+        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
+
+        {
+            const base: string = path.join(path.dirname(require.main.filename), "../");
+
+            const file: string = json = path.join(base, "product.json");
+            const name: string = path.basename(file);
+
+            if(fs.existsSync(file)){
+                const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
+                if(!fs.existsSync(backup)){
+                    fs.copyFileSync(file, backup);
+                    vscode.window.showInformationMessage(`A backup was created for '${name}'`);
+                }
+            }else
+                vscode.window.showErrorMessage(`Failed to find '${name}'`);
+        }
+
     }else
         vscode.window.showErrorMessage("Failed to find main file");
 
@@ -88,18 +110,39 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
 //
 
-let js: string | undefined;
+let js: string;
 
 export const installJS: () => void = () => {
-    js && fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS(), "utf-8")
+    if(js){
+        fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS(), "utf-8");
+        writeChecksum();
+    }
 }
 
 export const uninstallJS: () => void = () => {
-    js && fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")), "utf-8");
+    if(js){
+        fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")), "utf-8");
+        writeChecksum();
+    }
 }
 
 export const restartVS: () => void = () => {
     vscode.commands.executeCommand("workbench.action.reloadWindow");
+}
+
+let json: string;
+
+const checksum: (file: string) => string = (file: string) =>
+    crypto
+        .createHash("md5")
+        .update(fs.readFileSync(file, "utf-8"))
+        .digest("base64")
+        .replace(/=+$/gm, '');
+
+const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
+
+const writeChecksum: () => void = () => {
+    json && fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum(js)).trim());
 }
 
 //
@@ -158,6 +201,31 @@ bk_global.appendChild(document.createTextNode(\`
         position: absolute;
 
         pointer-events: none;
+
+    }
+\`));
+`
++ // notification overrides
+`
+bk_global.appendChild(document.createTextNode(\`
+    div.notifications-toasts div.monaco-list[aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"] {
+
+        display: none;
+
+    }
+
+    div.monaco-list-row[aria-label$=", source: Background (Extension), notification"],
+    div.monaco-list-row[aria-label$=", source: Background (Extension), notification"]:hover {
+
+        background-color: #0098FF !important;
+        border-radius: .5rem;
+        color: white;
+
+    }
+
+    div.monaco-list-row[aria-label$=", source: Background (Extension), notification"] ::before {
+
+        color: white;
 
     }
 \`));

@@ -18,6 +18,7 @@
 ### ⭐ New Features
 
 * Use separate options depending on background type [#36](https://github.com/KatsuteDev/Background/pull/36) ([@Katsute](https://github.com/Katsute))
+
   ![configuration](https://raw.githubusercontent.com/KatsuteDev/Background/be20d9ec47892bdacf76c5b049b59a0279cf283c/assets/configuration.gif)
 
   * New configuration menu
