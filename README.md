@@ -163,9 +163,9 @@ As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issueco
 </table>
 <!-- GitHub Copilot Disclaimer -->
 
- - Found a bug or have a suggestion? Post it in [issues](https://github.com/KatsuteDev/background/issues).
- - Want to further expand our project? [Fork](https://github.com/KatsuteDev/background/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/background/pulls).
+ - Found a bug or have a suggestion? Post it in [issues](https://github.com/KatsuteDev/Background/issues).
+ - Want to further expand our project? [Fork](https://github.com/KatsuteDev/Background/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Background/pulls).
 
 ### 💼 License
 
-This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/background/main/LICENSE).
+This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Background/blob/main/LICENSE).
