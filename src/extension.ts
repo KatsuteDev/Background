@@ -183,6 +183,17 @@ bk_global.id = "${identifier}-global";
 bk_global.setAttribute("type", "text/css");
 
 bk_global.appendChild(document.createTextNode(\`
+
+    body[windowTransition="true"]::before,
+    body[editorTransition="true"] .split-view-view > .editor-group-container::after,
+    body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+    body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
+    body[panelTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
+        opacity: 0;
+
+    }
+
     body::before,
     .split-view-view > .editor-group-container::after,
     .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
@@ -201,6 +212,8 @@ bk_global.appendChild(document.createTextNode(\`
         position: absolute;
 
         pointer-events: none;
+
+        transition: opacity 1s ease-in-out;
 
     }
 \`));
@@ -240,6 +253,11 @@ const windowBackgrounds = [${images.window.join(',')}];
 const editorBackgrounds = [${images.editor.join(',')}];
 const sidebarBackgrounds = [${images.sidebar.join(',')}];
 const panelBackgrounds = [${images.panel.join(',')}];
+
+const iWindowBackgrounds = [...Array(${images.window.length}).keys()];
+const iEditorBackgrounds = [...Array(${images.editor.length}).keys()];
+const iSidebarBackgrounds = [...Array(${images.sidebar.length}).keys()];
+const iPanelBackgrounds = [...Array(${images.panel.length}).keys()];
 `
 + // background images
 `
@@ -251,7 +269,6 @@ const setBackground = () => {
     while(bk_image.firstChild){
         bk_image.removeChild(bk_image.firstChild);
     };
-    randomize();
 `
 + // window
 `
@@ -259,7 +276,7 @@ const setBackground = () => {
         bk_image.appendChild(document.createTextNode(\`
             body::before {
 
-                background-image: url("\${windowBackgrounds[0]}");
+                background-image: url("\${windowBackgrounds[iWindowBackgrounds[0]]}");
 
                 background-position: ${css("backgroundAlignment", "window")};
                 background-repeat: ${css("backgroundRepeat", "window")};
@@ -294,7 +311,7 @@ const setBackground = () => {
             bk_image.appendChild(document.createTextNode(\`
                 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-                    background-image: url("\${editorBackgrounds[i-1]}");
+                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i-1]]}");
 
                 }
             \`));
@@ -307,7 +324,7 @@ const setBackground = () => {
         bk_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-                background-image: url("\${sidebarBackgrounds[0]}");
+                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[0]]}");
 
                 background-position: ${css("backgroundAlignment", "sidebar")};
                 background-repeat: ${css("backgroundRepeat", "sidebar")};
@@ -320,7 +337,7 @@ const setBackground = () => {
             }
             .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-                background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
+                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[1] || 0]}");
 
                 background-position: ${css("backgroundAlignment", "sidebar")};
                 background-repeat: ${css("backgroundRepeat", "sidebar")};
@@ -340,7 +357,7 @@ const setBackground = () => {
         bk_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-                background-image: url("\${panelBackgrounds[0]}");
+                background-image: url("\${panelBackgrounds[iPanelBackgrounds[0]]}");
 
                 background-position: ${css("backgroundAlignment", "panel")};
                 background-repeat: ${css("backgroundRepeat", "panel")};
@@ -358,7 +375,7 @@ const setBackground = () => {
 + // randomize backgrounds
 `
 const randomize = () => {
-    for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
+    for(const arr of [iWindowBackgrounds, iEditorBackgrounds, iSidebarBackgrounds, iPanelBackgrounds]){
         shuffle(arr);
     };
 };
@@ -377,6 +394,7 @@ window.onload = () => {
     document.getElementsByTagName("head")[0].appendChild(bk_global);
     document.getElementsByTagName("head")[0].appendChild(bk_image);
 
+    randomize();
     setBackground();
 };
 `)
