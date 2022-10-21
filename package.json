@@ -261,15 +261,32 @@
                         "pattern": "^[\\w.% +-]*$"
                     }
                 },
+                "background.backgroundTransitionTime": {
+                    "markdownDescription": "How long until the background should automatically change. Set to 0 to always use the same image.",
+                    "type": "array",
+                    "order": 11,
+                    "default": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "number",
+                        "minimum": 0
+                    }
+                },
                 "background.useWindowOptionsForAllBackgrounds": {
                     "markdownDescription": "If enabled, all backgrounds will use the options set for the windows background.",
-                    "order": 11,
+                    "order": 12,
                     "type": "boolean",
                     "default": false
                 },
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 12,
+                    "order": 13,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
