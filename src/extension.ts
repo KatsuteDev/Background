@@ -218,78 +218,94 @@ bk_global.appendChild(document.createTextNode(\`
     }
 \`));
 `
++ // background image cache
+`
+const windowBackgrounds = [${images.window.join(',')}];
+const editorBackgrounds = [${images.editor.join(',')}];
+const sidebarBackgrounds = [${images.sidebar.join(',')}];
+const panelBackgrounds = [${images.panel.join(',')}];
+
+const iWindowBackgrounds = [...Array(${images.window.length}).keys()];
+const iEditorBackgrounds = [...Array(${images.editor.length}).keys()];
+const iSidebarBackgrounds = [...Array(${images.sidebar.length}).keys()];
+const iPanelBackgrounds = [...Array(${images.panel.length}).keys()];
+
+const windowTime = ${get("backgroundChangeTime", "window") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "window"), 2), 5)};
+const editorTime = ${get("backgroundChangeTime", "editor") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "editor"), 2), 5)};
+const sidebarTime = ${get("backgroundChangeTime", "sidebar") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "sidebar"), 2), 5)};
+const panelTime = ${get("backgroundChangeTime", "panel") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "panel"), 2), 5)};
+`
 + // individual background css - window
 `
-    if(windowBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
-            body::before {
+if(windowBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        body::before {
 
-                background-position: ${css("backgroundAlignment", "window")};
-                background-repeat: ${css("backgroundRepeat", "window")};
-                background-size: ${css("backgroundSize", "window")};
+            background-position: ${css("backgroundAlignment", "window")};
+            background-repeat: ${css("backgroundRepeat", "window")};
+            background-size: ${css("backgroundSize", "window")};
 
-                opacity: ${round(1 - +css("backgroundOpacity", "window"), 2)};
+            opacity: ${round(1 - +css("backgroundOpacity", "window"), 2)};
 
-                filter: blur(${css("backgroundBlur", "window")});
+            filter: blur(${css("backgroundBlur", "window")});
 
-            }
-        \`));
-    };
+        }
+    \`));
+};
 `
 + // individual background css - editor
 `
-    if(editorBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
-            .split-view-view > .editor-group-container::after {
+if(editorBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        .split-view-view > .editor-group-container::after {
 
-                background-position: ${css("backgroundAlignment", "editor")};
-                background-repeat: ${css("backgroundRepeat", "editor")};
-                background-size: ${css("backgroundSize", "editor")};
+            background-position: ${css("backgroundAlignment", "editor")};
+            background-repeat: ${css("backgroundRepeat", "editor")};
+            background-size: ${css("backgroundSize", "editor")};
 
-                opacity: ${round(1 - +css("backgroundOpacity", "editor"), 2)};
+            opacity: ${round(1 - +css("backgroundOpacity", "editor"), 2)};
 
-                filter: blur(${css("backgroundBlur", "editor")});
+            filter: blur(${css("backgroundBlur", "editor")});
 
-            }
-        \`));
-    };
+        }
+    \`));
+};
 `
 + // individual background css - sidebar
 `
-    if(sidebarBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
-            .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-            .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+if(sidebarBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+        .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-                background-position: ${css("backgroundAlignment", "sidebar")};
-                background-repeat: ${css("backgroundRepeat", "sidebar")};
-                background-size: ${css("backgroundSize", "sidebar")};
+            background-position: ${css("backgroundAlignment", "sidebar")};
+            background-repeat: ${css("backgroundRepeat", "sidebar")};
+            background-size: ${css("backgroundSize", "sidebar")};
 
-                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
+            opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
 
-                filter: blur(${css("backgroundBlur", "sidebar")});
+            filter: blur(${css("backgroundBlur", "sidebar")});
 
-            }
-        \`));
-    };
+        }
+    \`));
+};
 `
 + // individual background css - panel
 `
-    if(panelBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
-            .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+if(panelBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-                background-position: ${css("backgroundAlignment", "panel")};
-                background-repeat: ${css("backgroundRepeat", "panel")};
-                background-size: ${css("backgroundSize", "panel")};
+            background-position: ${css("backgroundAlignment", "panel")};
+            background-repeat: ${css("backgroundRepeat", "panel")};
+            background-size: ${css("backgroundSize", "panel")};
 
-                opacity: ${round(1 - +css("backgroundOpacity", "panel"), 2)};
+            opacity: ${round(1 - +css("backgroundOpacity", "panel"), 2)};
 
-                filter: blur(${css("backgroundBlur", "panel")});
+            filter: blur(${css("backgroundBlur", "panel")});
 
-            }
-        \`));
-    };
+        }
+    \`));
 };
 `
 + // notification overrides
@@ -320,23 +336,6 @@ bk_global.appendChild(document.createTextNode(\`
 + // custom user css
 `
 bk_global.appendChild(document.createTextNode("${cssValue(get("CSS"))}"));
-`
-+ // background image cache
-`
-const windowBackgrounds = [${images.window.join(',')}];
-const editorBackgrounds = [${images.editor.join(',')}];
-const sidebarBackgrounds = [${images.sidebar.join(',')}];
-const panelBackgrounds = [${images.panel.join(',')}];
-
-const iWindowBackgrounds = [...Array(${images.window.length}).keys()];
-const iEditorBackgrounds = [...Array(${images.editor.length}).keys()];
-const iSidebarBackgrounds = [...Array(${images.sidebar.length}).keys()];
-const iPanelBackgrounds = [...Array(${images.panel.length}).keys()];
-
-const windowTime = ${get("backgroundTransitionTime", "window") == 0 ? 0 : Math.max(round(get("backgroundTransitionTime", "window"), 2), 5)};
-const editorTime = ${get("backgroundTransitionTime", "editor") == 0 ? 0 : Math.max(round(get("backgroundTransitionTime", "editor"), 2), 5)};
-const sidebarTime = ${get("backgroundTransitionTime", "sidebar") == 0 ? 0 : Math.max(round(get("backgroundTransitionTime", "sidebar"), 2), 5)};
-const panelTime = ${get("backgroundTransitionTime", "panel") == 0 ? 0 : Math.max(round(get("backgroundTransitionTime", "panel"), 2), 5)};
 `
 + // background image - window
 `
@@ -447,7 +446,10 @@ const next = (arr) => {
 `
 window.onload = () => {
     document.getElementsByTagName("head")[0].appendChild(bk_global);
-    document.getElementsByTagName("head")[0].appendChild(bk_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_window_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_editor_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_sidebar_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_panel_image);
 
     for(const arr of [iWindowBackgrounds, iEditorBackgrounds, iSidebarBackgrounds, iPanelBackgrounds]){
         for(let i = arr.length - 1; i > 0; i--){

@@ -34,7 +34,7 @@ export type ConfigKey =
     "backgroundRepeat" |
     "backgroundSize" |
     "backgroundSizeValue" |
-    "backgroundTransitionTime" |
+    "backgroundChangeTime" |
     "useWindowOptionsForAllBackgrounds" |
     "CSS";
 

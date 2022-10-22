@@ -26,25 +26,25 @@ import { menu as cm, title } from "../config";
 //
 
 export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const current: number = round(get("backgroundTransitionTime", item.ui!) as number, 2);
+    const current: number = round(get("backgroundChangeTime", item.ui!) as number, 2);
 
     showInputBox({
-        title: title("Transition Time", item.ui!),
-        placeHolder: "Background transition time",
+        title: title("Change Time", item.ui!),
+        placeHolder: "Background change time",
         value: current.toString(),
-        prompt: `Background transition time (${current}). Set to 0 to always use the same image.`,
+        prompt: `Background change time (${current}). How long in seconds before the background should automatically change. Set to 0 to always use the same image.`,
         validateInput: (value: string) => {
             if(isNaN(+value))
                 return "Not a number";
             else if(+value < 0)
-                return "Transition time must be a positive number";
+                return "Background change time must be a positive number";
             else
                 return null;
         },
         handle: (value: string) => {
             if(!isNaN(+value)){
                 const o: number = Math.max(round(+value, 2), 0);
-                update("backgroundTransitionTime", o, item.ui!)
+                update("backgroundChangeTime", o, item.ui!)
                     .then(() => cm(item)); // reopen menu
             }
         }

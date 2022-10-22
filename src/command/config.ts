@@ -43,7 +43,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundBlur",        "window")} Blur`        + ` • ` +
                     `${get("backgroundOpacity",     "window")} Opacity`     + ` • ` +
                     `${get("backgroundRepeat",      "window")} Repeat`      + ` • ` +
-                    `${get("backgroundSize",        "window")} Size`,
+                    `${get("backgroundSize",        "window")} Size`        + ` • ` +
+                    `${get("backgroundChangeTime",  "window")} second${get("backgroundChangeTime", "window") === 1 ? '' : 's'}`,
             ui: "window",
             handle: menu
         }),
@@ -54,7 +55,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundBlur",        "editor")} Blur`        + ` • ` +
                     `${get("backgroundOpacity",     "editor")} Opacity`     + ` • ` +
                     `${get("backgroundRepeat",      "editor")} Repeat`      + ` • ` +
-                    `${get("backgroundSize",        "editor")} Size`,
+                    `${get("backgroundSize",        "editor")} Size`        + ` • ` +
+                    `${get("backgroundChangeTime",  "editor")} second${get("backgroundChangeTime", "editor") === 1 ? '' : 's'}`,
             ui: "editor",
             handle: menu
         }),
@@ -65,7 +67,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundBlur",        "sidebar")} Blur`       + ` • ` +
                     `${get("backgroundOpacity",     "sidebar")} Opacity`    + ` • ` +
                     `${get("backgroundRepeat",      "sidebar")} Repeat`     + ` • ` +
-                    `${get("backgroundSize",        "sidebar")} Size`,
+                    `${get("backgroundSize",        "sidebar")} Size`       + ` • ` +
+                    `${get("backgroundChangeTime",  "sidebar")} second${get("backgroundChangeTime", "sidebar") === 1 ? '' : 's'}`,
             ui: "sidebar",
             handle: menu
         }),
@@ -76,7 +79,8 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundBlur",        "panel")} Blur`         + ` • ` +
                     `${get("backgroundOpacity",     "panel")} Opacity`      + ` • ` +
                     `${get("backgroundRepeat",      "panel")} Repeat`       + ` • ` +
-                    `${get("backgroundSize",        "panel")} Size`,
+                    `${get("backgroundSize",        "panel")} Size`         + ` • ` +
+                    `${get("backgroundChangeTime",  "panel")} second${get("backgroundChangeTime", "panel") === 1 ? '' : 's'}`,
             ui: "panel",
             handle: menu
         }),
@@ -94,7 +98,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         }),
         quickPickItem({
             label: "$(refresh) Reload Background",
-            description: "Randomizes installed backgrounds; Background must already be installed",
+            description: "Randomizes current backgrounds",
             handle: () => vscode.commands.executeCommand("background.reload")
         }),
         separator(),
@@ -128,6 +132,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             ui: item.ui!,
             handle: file.menu
         }),
+        separator(),
         quickPickItem({
             label: "$(arrow-both) Alignment",
             description: `${get("backgroundAlignment", item.ui!)}`,
@@ -164,9 +169,9 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             handle: size.menu
         }),
         quickPickItem({
-            label: "$(clock) Transition Time",
-            description: `${get("backgroundTransitionTime", item.ui!)}`,
-            detail: "Background transition time",
+            label: "$(clock) Time",
+            description: `${get("backgroundChangeTime", item.ui!)} second${get("backgroundChangeTime", item.ui!) === 1 ? '' : 's'}`,
+            detail: "How often to change the background",
             ui: item.ui!,
             handle: transition.menu
         })

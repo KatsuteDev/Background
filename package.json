@@ -261,8 +261,8 @@
                         "pattern": "^[\\w.% +-]*$"
                     }
                 },
-                "background.backgroundTransitionTime": {
-                    "markdownDescription": "How long until the background should automatically change. Set to 0 to always use the same image.",
+                "background.backgroundChangeTime": {
+                    "markdownDescription": "How long in seconds before the background should automatically change. Set to 0 to always use the same image.",
                     "type": "array",
                     "order": 11,
                     "default": [
