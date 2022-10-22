@@ -372,6 +372,7 @@ const setEditorBackground = () => {
 
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
+
         next(iEditorBackgrounds);
 
         for(let i = 1; i <= len; i++){
@@ -398,7 +399,10 @@ const setSidebarBackground = () => {
     };
 
     if(sidebarBackgrounds.length > 0){
-        next(iSidebarBackgrounds);
+        if(sidebarBackgrounds.length === 2){
+            next(iSidebarBackgrounds);
+        };
+
         bk_sidebar_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
