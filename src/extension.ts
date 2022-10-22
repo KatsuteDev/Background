@@ -175,7 +175,7 @@ const getJS: () => string = () => {
                 for(const f of glob.sync(g).filter(extensions))
                     images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
-    return `/* ${identifier}-start */` + '\n' +
+    return `/* ${identifier}-start */` + '\n' + `(() => {` +
 // shared background css
 (`
 const bk_global = document.createElement("style");
@@ -372,6 +372,8 @@ const setEditorBackground = () => {
 
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
+        next(iEditorBackgrounds);
+
         for(let i = 1; i <= len; i++){
             bk_editor_image.appendChild(document.createTextNode(\`
                 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
@@ -396,6 +398,7 @@ const setSidebarBackground = () => {
     };
 
     if(sidebarBackgrounds.length > 0){
+        next(iSidebarBackgrounds);
         bk_sidebar_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
@@ -463,7 +466,7 @@ window.onload = () => {
     setSidebarBackground();
     setPanelBackground();
 
-    if(windowTime > 0){
+    if(windowTime > 0 && iWindowBackgrounds.length > 1){
         setInterval(() => {
             document.body.setAttribute("windowTransition", true);
             setTimeout(() => {
@@ -472,7 +475,7 @@ window.onload = () => {
             }, 1 * 1000);
         }, windowTime * 1000);
     };
-    if(editorTime > 0){
+    if(editorTime > 0 && iEditorBackgrounds.length > 1){
         setInterval(() => {
             document.body.setAttribute("editorTransition", true);
             setTimeout(() => {
@@ -481,7 +484,7 @@ window.onload = () => {
             }, 1 * 1000);
         }, editorTime * 1000);
     };
-    if(sidebarTime > 0){
+    if(sidebarTime > 0 && iSidebarBackgrounds.length > 1){
         setInterval(() => {
             document.body.setAttribute("sidebarTransition", true);
             setTimeout(() => {
@@ -490,7 +493,7 @@ window.onload = () => {
             }, 1 * 1000);
         }, sidebarTime * 1000);
     };
-    if(panelTime > 0){
+    if(panelTime > 0 && iPanelBackgrounds.length > 1){
         setInterval(() => {
             document.body.setAttribute("panelTransition", true);
             setTimeout(() => {
@@ -500,7 +503,9 @@ window.onload = () => {
         }, panelTime * 1000);
     };
 };
-`)
+`
++
+`})();`)
 // minify
     .trim()
     .replace(/^ +/gm, '') // spaces
