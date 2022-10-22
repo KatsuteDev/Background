@@ -322,7 +322,7 @@ bk_global.appendChild(document.createTextNode(\`
 
         background-color: #0098FF !important;
         border-radius: .5rem;
-        color: white;
+        color: white !important;
 
     }
 
@@ -437,7 +437,7 @@ const setPanelBackground = () => {
 `
 const next = (arr) => {
     const i = Math.floor(Math.random() * arr.length / 2);
-    v = arr.splice(i);
+    v = arr.splice(i, 1)[0];
     arr.push(v);
     return v;
 };
@@ -465,37 +465,37 @@ window.onload = () => {
 
     if(windowTime > 0){
         setInterval(() => {
-            body.setAttribute("windowTransition", true);
+            document.body.setAttribute("windowTransition", true);
             setTimeout(() => {
                 setWindowBackground();
-                body.setAttribute("windowTransition", false);
+                document.body.setAttribute("windowTransition", false);
             }, 1 * 1000);
         }, windowTime * 1000);
     };
     if(editorTime > 0){
         setInterval(() => {
-            body.setAttribute("editorTransition", true);
+            document.body.setAttribute("editorTransition", true);
             setTimeout(() => {
                 setEditorBackground();
-                body.setAttribute("editorTransition", false);
+                document.body.setAttribute("editorTransition", false);
             }, 1 * 1000);
         }, editorTime * 1000);
     };
     if(sidebarTime > 0){
         setInterval(() => {
-            body.setAttribute("sidebarTransition", true);
+            document.body.setAttribute("sidebarTransition", true);
             setTimeout(() => {
                 setSidebarBackground();
-                body.setAttribute("sidebarTransition", false);
+                document.body.setAttribute("sidebarTransition", false);
             }, 1 * 1000);
         }, sidebarTime * 1000);
     };
     if(panelTime > 0){
         setInterval(() => {
-            body.setAttribute("panelTransition", true);
+            document.body.setAttribute("panelTransition", true);
             setTimeout(() => {
                 setPanelBackground();
-                body.setAttribute("panelTransition", false);
+                document.body.setAttribute("panelTransition", false);
             }, 1 * 1000);
         }, panelTime * 1000);
     };

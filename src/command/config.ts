@@ -27,7 +27,7 @@ import * as blur from "./config/blur";
 import * as opacity from "./config/opacity";
 import * as repeat from "./config/repeat";
 import * as size from "./config/size";
-import * as transition from "./config/transition";
+import * as time from "./config/time";
 
 import { capitalize, s } from "../lib/str";
 
@@ -173,7 +173,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             description: `${get("backgroundChangeTime", item.ui!)} second${get("backgroundChangeTime", item.ui!) === 1 ? '' : 's'}`,
             detail: "How often to change the background",
             ui: item.ui!,
-            handle: transition.menu
+            handle: time.menu
         })
     ],
     {
