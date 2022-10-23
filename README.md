@@ -18,7 +18,7 @@
 
 <br>
 
-The only background extension that supports [glob](https://github.com/isaacs/node-glob#glob-primer). Add multiple background images for the window, editors, sidebars, or the panel.
+Add multiple background images for the window, editors, sidebars, or the panel. Load backgrounds from file, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL. Transition between multiple background images.
 
 <div align="center">
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
@@ -58,12 +58,14 @@ To modify or remove a path select file then select the path you want to change.
 
 #### 🖼️ Multiple Backgrounds
 
-Add background images for the whole window, editors, sidebars, or the panel. Images will be randomized whenever a window is opened.
+Add background images for the whole window, editors, sidebars, or the panel. Transition between multiple background images.
 
 <div align="center">
     <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
     <br><br>
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+    <br><br>
+    <img alt="multiple backgrounds" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/transition.gif">
 </div>
 
 #### ⚙️ Configuration Menu
@@ -127,6 +129,7 @@ The order settings are saved in is:
 |`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
 |`background.backgroundSize`|`enum[4]`|The background image size.|
 |`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
+|`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
 
 | Advanced | Type | Description |
 |---|:-:|---|
