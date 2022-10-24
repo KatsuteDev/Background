@@ -24,6 +24,7 @@ Add multiple background images for the window, editors, sidebars, or the panel. 
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
 </div>
 
+<!--
 <br>
 
  - [📃 Installation](#-installation)
@@ -33,26 +34,19 @@ Add multiple background images for the window, editors, sidebars, or the panel. 
  - [⚠️ Known Issues](#%EF%B8%8F-known-issues)
  - [👨‍💻 Contributing](#-contributing)
  - [💼 License](#-license)
+-->
 
 ## 📃 Installation
-
-> ⚠️ This extension is not compatible with remote distributions of VSCode (ex: Codespaces).
 
  - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
  - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
 #### 🖼️ Usage
 
- 1. Open the command palette and use `Background: Configuration` to open the configuration or press the **Background** tab in the status bar.
+ 1. Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar.
  2. Select where you want to add a background (Window, Editor, Sidebar, Panel).
  3. Add backgrounds and change how it should be displayed.
- 4. Use `Background: Install` or press the install button in the menu to install the background.
-
-To modify or remove a path select file then select the path you want to change.
-
-<div align="center">
-    <img alt="update or delete path" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/delete.gif">
-</div>
+ 4. Use `Background: Install` or press the install button.
 
 ## ✨ Features
 
@@ -70,7 +64,7 @@ Add background images for the whole window, editors, sidebars, or the panel. Tra
 
 #### ⚙️ Configuration Menu
 
-Access the configuration menu using from the command palette with `Background: Configuration` or by pressing the **Background** tab in the status bar.
+Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar to access the configuration menu.
 
 <div align="center">
     <img alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
@@ -120,6 +114,8 @@ The order settings are saved in is:
 |`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
 |`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
 
+<br>
+
 | Property | Type | Description |
 |---|:-:|---|
 |`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
@@ -130,6 +126,8 @@ The order settings are saved in is:
 |`background.backgroundSize`|`enum[4]`|The background image size.|
 |`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
 |`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
+
+<br>
 
 | Advanced | Type | Description |
 |---|:-:|---|
