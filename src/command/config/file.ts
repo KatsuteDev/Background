@@ -57,7 +57,7 @@ const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
 
 // exts
 
-export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "gif"];
+export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "gif", "bmp", "svg"];
 
 // update
 
