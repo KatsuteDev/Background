@@ -302,13 +302,8 @@
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
         "vscode:prepublish": "npm run prepare",
-        "compile": "tsc --outDir dist",
-        "build": "npm run compile",
+        "build": "tsc --outDir dist",
         "prepare": "npm run clean && npm run build",
-        "// -- test -- //": "",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile",
-        "test": "npm run pretest",
         "// -- deploy -- //": "",
         "package": "vsce package"
     },
@@ -327,7 +322,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.11.3",
+        "@types/node": "18.11.7",
         "@types/vscode": "1.72.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.4",
