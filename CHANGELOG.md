@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.1.0
+
+### ⭐ New Features
+
+* Add ability to transition between multiple images [#49](https://github.com/KatsuteDev/Background/pull/49) ([@Katsute](https://github.com/Katsute))
+  Use this new feature by changing the `background.backgroundChangeTime` field or using the new **Time** option in the configuration menu.
+  
+  _(below image is a compressed gif, your transitions will look cleaner than this)_
+  
+  ![multiple images](https://github.com/KatsuteDev/Background/raw/e84db0493ce947761fa1bd0f45adc2e0f09668cc/assets/transition.gif)
+
+### 📘 Dependencies
+
+* Bump vsce from 2.11.0 to 2.12.0 [#50](https://github.com/KatsuteDev/Background/pull/50) ([@dependabot](https://github.com/dependabot))
+* Bump vsce from 2.12.0 to 2.13.0 [#51](https://github.com/KatsuteDev/Background/pull/51) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.72.0 to 1.73.0 [#56](https://github.com/KatsuteDev/Background/pull/56) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.0.2...2.1.0`](https://github.com/KatsuteDev/Background/compare/2.0.2...2.1.0)
+
 ## 2.0.2
 
 ### 🐞 Bug Fixes
