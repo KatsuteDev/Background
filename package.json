@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "private": true,
     "engines": {
         "vscode": "^1.73.0"
@@ -261,15 +261,32 @@
                         "pattern": "^[\\w.% +-]*$"
                     }
                 },
+                "background.backgroundChangeTime": {
+                    "markdownDescription": "How long in seconds before the background should automatically change. Set to 0 to always use the same image.",
+                    "type": "array",
+                    "order": 11,
+                    "default": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": {
+                        "type": "number",
+                        "minimum": 0
+                    }
+                },
                 "background.useWindowOptionsForAllBackgrounds": {
                     "markdownDescription": "If enabled, all backgrounds will use the options set for the windows background.",
-                    "order": 11,
+                    "order": 12,
                     "type": "boolean",
                     "default": false
                 },
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 12,
+                    "order": 13,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
@@ -285,13 +302,8 @@
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
         "vscode:prepublish": "npm run prepare",
-        "compile": "tsc --outDir dist",
-        "build": "npm run compile",
+        "build": "tsc --outDir dist",
         "prepare": "npm run clean && npm run build",
-        "// -- test -- //": "",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile",
-        "test": "npm run pretest",
         "// -- deploy -- //": "",
         "package": "vsce package"
     },
@@ -310,7 +322,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
-        "@types/node": "18.11.0",
+        "@types/node": "18.11.9",
         "@types/vscode": "1.73.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.4",

@@ -175,14 +175,25 @@ const getJS: () => string = () => {
                 for(const f of glob.sync(g).filter(extensions))
                     images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
-    return `/* ${identifier}-start */` + '\n' +
-// background image css
+    return `/* ${identifier}-start */` + '\n' + `(() => {` +
+// shared background css
 (`
 const bk_global = document.createElement("style");
 bk_global.id = "${identifier}-global";
 bk_global.setAttribute("type", "text/css");
 
 bk_global.appendChild(document.createTextNode(\`
+
+    body[windowTransition="true"]::before,
+    body[editorTransition="true"] .split-view-view > .editor-group-container::after,
+    body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+    body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
+    body[panelTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
+        opacity: 0;
+
+    }
+
     body::before,
     .split-view-view > .editor-group-container::after,
     .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
@@ -202,8 +213,100 @@ bk_global.appendChild(document.createTextNode(\`
 
         pointer-events: none;
 
+        transition: opacity 1s ease-in-out;
+
     }
 \`));
+`
++ // background image cache
+`
+const windowBackgrounds = [${images.window.join(',')}];
+const editorBackgrounds = [${images.editor.join(',')}];
+const sidebarBackgrounds = [${images.sidebar.join(',')}];
+const panelBackgrounds = [${images.panel.join(',')}];
+
+const iWindowBackgrounds = [...Array(${images.window.length}).keys()];
+const iEditorBackgrounds = [...Array(${images.editor.length}).keys()];
+const iSidebarBackgrounds = [...Array(${images.sidebar.length}).keys()];
+const iPanelBackgrounds = [...Array(${images.panel.length}).keys()];
+
+const windowTime = ${get("backgroundChangeTime", "window") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "window"), 2), 5)};
+const editorTime = ${get("backgroundChangeTime", "editor") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "editor"), 2), 5)};
+const sidebarTime = ${get("backgroundChangeTime", "sidebar") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "sidebar"), 2), 5)};
+const panelTime = ${get("backgroundChangeTime", "panel") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "panel"), 2), 5)};
+`
++ // individual background css - window
+`
+if(windowBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        body::before {
+
+            background-position: ${css("backgroundAlignment", "window")};
+            background-repeat: ${css("backgroundRepeat", "window")};
+            background-size: ${css("backgroundSize", "window")};
+
+            opacity: ${round(1 - +css("backgroundOpacity", "window"), 2)};
+
+            filter: blur(${css("backgroundBlur", "window")});
+
+        }
+    \`));
+};
+`
++ // individual background css - editor
+`
+if(editorBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        .split-view-view > .editor-group-container::after {
+
+            background-position: ${css("backgroundAlignment", "editor")};
+            background-repeat: ${css("backgroundRepeat", "editor")};
+            background-size: ${css("backgroundSize", "editor")};
+
+            opacity: ${round(1 - +css("backgroundOpacity", "editor"), 2)};
+
+            filter: blur(${css("backgroundBlur", "editor")});
+
+        }
+    \`));
+};
+`
++ // individual background css - sidebar
+`
+if(sidebarBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
+        .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+
+            background-position: ${css("backgroundAlignment", "sidebar")};
+            background-repeat: ${css("backgroundRepeat", "sidebar")};
+            background-size: ${css("backgroundSize", "sidebar")};
+
+            opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
+
+            filter: blur(${css("backgroundBlur", "sidebar")});
+
+        }
+    \`));
+};
+`
++ // individual background css - panel
+`
+if(panelBackgrounds.length > 0){
+    bk_global.appendChild(document.createTextNode(\`
+        .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+
+            background-position: ${css("backgroundAlignment", "panel")};
+            background-repeat: ${css("backgroundRepeat", "panel")};
+            background-size: ${css("backgroundSize", "panel")};
+
+            opacity: ${round(1 - +css("backgroundOpacity", "panel"), 2)};
+
+            filter: blur(${css("backgroundBlur", "panel")});
+
+        }
+    \`));
+};
 `
 + // notification overrides
 `
@@ -219,7 +322,7 @@ bk_global.appendChild(document.createTextNode(\`
 
         background-color: #0098FF !important;
         border-radius: .5rem;
-        color: white;
+        color: white !important;
 
     }
 
@@ -234,152 +337,179 @@ bk_global.appendChild(document.createTextNode(\`
 `
 bk_global.appendChild(document.createTextNode("${cssValue(get("CSS"))}"));
 `
-+ // background image cache
++ // background image - window
 `
-const windowBackgrounds = [${images.window.join(',')}];
-const editorBackgrounds = [${images.editor.join(',')}];
-const sidebarBackgrounds = [${images.sidebar.join(',')}];
-const panelBackgrounds = [${images.panel.join(',')}];
-`
-+ // background images
-`
-const bk_image = document.createElement("style");
-bk_image.id = "${identifier}-images";
-bk_image.setAttribute("type", "text/css");
+const bk_window_image = document.createElement("style");
+bk_window_image.id = "${identifier}-window-images";
+bk_window_image.setAttribute("type", "text/css");
 
-const setBackground = () => {
-    while(bk_image.firstChild){
-        bk_image.removeChild(bk_image.firstChild);
+const setWindowBackground = () => {
+    while(bk_window_image.firstChild){
+        bk_window_image.removeChild(bk_window_image.firstChild);
     };
-    randomize();
-`
-+ // window
-`
+
     if(windowBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
+        bk_window_image.appendChild(document.createTextNode(\`
             body::before {
 
-                background-image: url("\${windowBackgrounds[0]}");
-
-                background-position: ${css("backgroundAlignment", "window")};
-                background-repeat: ${css("backgroundRepeat", "window")};
-                background-size: ${css("backgroundSize", "window")};
-
-                opacity: ${round(1 - +css("backgroundOpacity", "window"), 2)};
-
-                filter: blur(${css("backgroundBlur", "window")});
+                background-image: url("\${windowBackgrounds[next(iWindowBackgrounds)]}");
 
             }
         \`));
     };
+};
 `
-+ // editor
++ // background image - editor
 `
+const bk_editor_image = document.createElement("style");
+bk_editor_image.id = "${identifier}-editor-images";
+bk_editor_image.setAttribute("type", "text/css");
+
+const setEditorBackground = () => {
+    while(bk_editor_image.firstChild){
+        bk_editor_image.removeChild(bk_editor_image.firstChild);
+    };
+
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
-        bk_image.appendChild(document.createTextNode(\`
-            .split-view-view > .editor-group-container::after {
 
-                background-position: ${css("backgroundAlignment", "editor")};
-                background-repeat: ${css("backgroundRepeat", "editor")};
-                background-size: ${css("backgroundSize", "editor")};
+        next(iEditorBackgrounds);
 
-                opacity: ${round(1 - +css("backgroundOpacity", "editor"), 2)};
-
-                filter: blur(${css("backgroundBlur", "editor")});
-
-            }
-        \`));
         for(let i = 1; i <= len; i++){
-            bk_image.appendChild(document.createTextNode(\`
+            bk_editor_image.appendChild(document.createTextNode(\`
                 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-                    background-image: url("\${editorBackgrounds[i-1]}");
+                    background-image: url("\${editorBackgrounds[next(iEditorBackgrounds)]}");
 
                 }
             \`));
         };
     };
+};
 `
-+ // sidebar
++ // background image - sidebar
 `
+const bk_sidebar_image = document.createElement("style");
+bk_sidebar_image.id = "${identifier}-sidebar-images";
+bk_sidebar_image.setAttribute("type", "text/css");
+
+const setSidebarBackground = () => {
+    while(bk_sidebar_image.firstChild){
+        bk_sidebar_image.removeChild(bk_sidebar_image.firstChild);
+    };
+
     if(sidebarBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
+        if(sidebarBackgrounds.length === 2){
+            next(iSidebarBackgrounds);
+        };
+
+        bk_sidebar_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-                background-image: url("\${sidebarBackgrounds[0]}");
-
-                background-position: ${css("backgroundAlignment", "sidebar")};
-                background-repeat: ${css("backgroundRepeat", "sidebar")};
-                background-size: ${css("backgroundSize", "sidebar")};
-
-                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
-
-                filter: blur(${css("backgroundBlur", "sidebar")});
+                background-image: url("\${sidebarBackgrounds[next(iSidebarBackgrounds)]}");
 
             }
             .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-                background-image: url("\${sidebarBackgrounds[1] || sidebarBackgrounds[0]}");
-
-                background-position: ${css("backgroundAlignment", "sidebar")};
-                background-repeat: ${css("backgroundRepeat", "sidebar")};
-                background-size: ${css("backgroundSize", "sidebar")};
-
-                opacity: ${round(1 - +css("backgroundOpacity", "sidebar"), 2)};
-
-                filter: blur(${css("backgroundBlur", "sidebar")});
+                background-image: url("\${sidebarBackgrounds[next(iSidebarBackgrounds)]}");
 
             }
         \`));
     };
+};
 `
-+ // panel
++ // background image - panel
 `
+const bk_panel_image = document.createElement("style");
+bk_panel_image.id = "${identifier}-panel-images";
+bk_panel_image.setAttribute("type", "text/css");
+
+const setPanelBackground = () => {
+    while(bk_panel_image.firstChild){
+        bk_panel_image.removeChild(bk_panel_image.firstChild);
+    };
+
     if(panelBackgrounds.length > 0){
-        bk_image.appendChild(document.createTextNode(\`
+        bk_panel_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-                background-image: url("\${panelBackgrounds[0]}");
-
-                background-position: ${css("backgroundAlignment", "panel")};
-                background-repeat: ${css("backgroundRepeat", "panel")};
-                background-size: ${css("backgroundSize", "panel")};
-
-                opacity: ${round(1 - +css("backgroundOpacity", "panel"), 2)};
-
-                filter: blur(${css("backgroundBlur", "panel")});
+                background-image: url("\${panelBackgrounds[next(iPanelBackgrounds)]}");
 
             }
         \`));
     };
 };
 `
-+ // randomize backgrounds
++ // random
 `
-const randomize = () => {
-    for(const arr of [windowBackgrounds, editorBackgrounds, sidebarBackgrounds, panelBackgrounds]){
-        shuffle(arr);
-    };
-};
-
-const shuffle = (arr) => {
-    for(let i = arr.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    };
-    return arr;
+const next = (arr) => {
+    const i = Math.floor(Math.random() * arr.length / 2);
+    v = arr.splice(i, 1)[0];
+    arr.push(v);
+    return v;
 };
 `
 + // install
 `
 window.onload = () => {
     document.getElementsByTagName("head")[0].appendChild(bk_global);
-    document.getElementsByTagName("head")[0].appendChild(bk_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_window_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_editor_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_sidebar_image);
+    document.getElementsByTagName("head")[0].appendChild(bk_panel_image);
 
-    setBackground();
+    for(const arr of [iWindowBackgrounds, iEditorBackgrounds, iSidebarBackgrounds, iPanelBackgrounds]){
+        for(let i = arr.length - 1; i > 0; i--){
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        };
+    };
+
+    setWindowBackground();
+    setEditorBackground();
+    setSidebarBackground();
+    setPanelBackground();
+
+    if(windowTime > 0 && iWindowBackgrounds.length > 1){
+        setInterval(() => {
+            document.body.setAttribute("windowTransition", true);
+            setTimeout(() => {
+                setWindowBackground();
+                document.body.setAttribute("windowTransition", false);
+            }, 1 * 1000);
+        }, windowTime * 1000);
+    };
+    if(editorTime > 0 && iEditorBackgrounds.length > 1){
+        setInterval(() => {
+            document.body.setAttribute("editorTransition", true);
+            setTimeout(() => {
+                setEditorBackground();
+                document.body.setAttribute("editorTransition", false);
+            }, 1 * 1000);
+        }, editorTime * 1000);
+    };
+    if(sidebarTime > 0 && iSidebarBackgrounds.length > 1){
+        setInterval(() => {
+            document.body.setAttribute("sidebarTransition", true);
+            setTimeout(() => {
+                setSidebarBackground();
+                document.body.setAttribute("sidebarTransition", false);
+            }, 1 * 1000);
+        }, sidebarTime * 1000);
+    };
+    if(panelTime > 0 && iPanelBackgrounds.length > 1){
+        setInterval(() => {
+            document.body.setAttribute("panelTransition", true);
+            setTimeout(() => {
+                setPanelBackground();
+                document.body.setAttribute("panelTransition", false);
+            }, 1 * 1000);
+        }, panelTime * 1000);
+    };
 };
-`)
+`
++
+`})();`)
 // minify
     .trim()
     .replace(/^ +/gm, '') // spaces
