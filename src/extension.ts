@@ -207,8 +207,6 @@ bk_global.appendChild(document.createTextNode(\`
         width: 100%;
         height: 100%;
 
-        z-index: 1000;
-
         position: absolute;
 
         pointer-events: none;
@@ -329,16 +327,6 @@ bk_global.appendChild(document.createTextNode(\`
     div.monaco-list-row[aria-label$=", source: Background (Extension), notification"] ::before {
 
         color: white;
-
-    }
-\`));
-`
-+ // keep webview above background
-`
-bk_global.appendChild(document.createTextNode(\`
-    div[id^="webview-"] {
-
-        z-index: 1001;
 
     }
 \`));
