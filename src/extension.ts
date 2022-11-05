@@ -333,6 +333,16 @@ bk_global.appendChild(document.createTextNode(\`
     }
 \`));
 `
++ // keep webview above background
+`
+bk_global.appendChild(document.createTextNode(\`
+    div[id^="webview-"] {
+
+        z-index: 1001;
+
+    }
+\`));
+`
 + // custom user css
 `
 bk_global.appendChild(document.createTextNode("${cssValue(get("CSS"))}"));
