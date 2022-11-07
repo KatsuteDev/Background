@@ -184,7 +184,7 @@ bk_global.setAttribute("type", "text/css");
 
 bk_global.appendChild(document.createTextNode(\`
 
-    body[windowTransition="true"]::before,
+    body[windowTransition="true"] > div[role=application] > div.monaco-grid-view::after,
     body[editorTransition="true"] .split-view-view > .editor-group-container::after,
     body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
     body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
@@ -194,7 +194,7 @@ bk_global.appendChild(document.createTextNode(\`
 
     }
 
-    body::before,
+    body > div[role=application] > div.monaco-grid-view::after,
     .split-view-view > .editor-group-container::after,
     .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
     .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
@@ -237,7 +237,7 @@ const panelTime = ${get("backgroundChangeTime", "panel", true) == 0 ? 0 : Math.m
 `
 if(windowBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        body::before {
+        body > div[role=application] > div.monaco-grid-view::after {
 
             background-position: ${css("backgroundAlignment", "window")};
             background-repeat: ${css("backgroundRepeat", "window")};
@@ -348,7 +348,7 @@ const setWindowBackground = () => {
 
     if(windowBackgrounds.length > 0){
         bk_window_image.appendChild(document.createTextNode(\`
-            body::before {
+            body > div[role=application] > div.monaco-grid-view::after {
 
                 background-image: url("\${windowBackgrounds[next(iWindowBackgrounds)]}");
 
