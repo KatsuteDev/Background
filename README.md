@@ -132,6 +132,7 @@ The order settings are saved in is:
 | Advanced | Type | Description |
 |---|:-:|---|
 |`background.useWindowOptionsForAllBackgrounds`|`boolean`|If enabled, all backgrounds will use the options set for the windows background. You still need to add background images separately.|
+|`background.renderContentAboveBackground`|`boolean`|If enabled, content like images, pdfs, and markdown previews will render above the background.|
 |`background.CSS`|`string`|**Advanced Users Only.** Apply raw CSS to VSCode.|
 
 ## ⚠️ Known Issues

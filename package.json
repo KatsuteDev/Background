@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "private": true,
     "engines": {
         "vscode": "^1.73.0"
@@ -284,9 +284,15 @@
                     "type": "boolean",
                     "default": false
                 },
+                "background.renderContentAboveBackground": {
+                    "markdownDescription": "If enabled, content like images, pdfs, and markdown previews will render above the background.",
+                    "order": 13,
+                    "type": "boolean",
+                    "default": false
+                },
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 13,
+                    "order": 14,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
