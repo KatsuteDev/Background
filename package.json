@@ -332,6 +332,6 @@
         "@types/vscode": "1.73.0",
         "rimraf": "3.0.2",
         "typescript": "4.8.4",
-        "vsce": "2.13.0"
+        "vsce": "2.14.0"
     }
 }

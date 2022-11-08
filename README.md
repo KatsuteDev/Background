@@ -24,18 +24,6 @@ Add multiple background images for the window, editors, sidebars, or the panel. 
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
 </div>
 
-<!--
-<br>
-
- - [📃 Installation](#-installation)
- - [✨ Features](#-features)
- - [💻 Commands](#-commands)
- - [⚙️ Configuration](#%EF%B8%8F-configuration)
- - [⚠️ Known Issues](#%EF%B8%8F-known-issues)
- - [👨‍💻 Contributing](#-contributing)
- - [💼 License](#-license)
--->
-
 ## 📃 Installation
 
  - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
@@ -119,12 +107,12 @@ The order settings are saved in is:
 | Property | Type | Description |
 |---|:-:|---|
 |`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
-|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property.|
-|`background.backgroundBlur`|`string[4]`|Background image blur in CSS units.|
+|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
+|`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
 |`background.backgroundOpacity`|`number[4]`|The UI opacity. 0 is fully visible and 1 is invisible.|
 |`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
 |`background.backgroundSize`|`enum[4]`|The background image size.|
-|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property.|
+|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
 |`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
 
 <br>
