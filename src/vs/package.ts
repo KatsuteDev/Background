@@ -36,6 +36,7 @@ export type ConfigKey =
     "backgroundSizeValue" |
     "backgroundChangeTime" |
     "useWindowOptionsForAllBackgrounds" |
+    "renderContentAboveBackground" |
     "CSS";
 
 export type Contributes = {

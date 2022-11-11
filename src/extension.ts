@@ -175,6 +175,8 @@ const getJS: () => string = () => {
                 for(const f of glob.sync(g).filter(extensions))
                     images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
+    const after: boolean = get(`renderContentAboveBackground`);
+
     return `/* ${identifier}-start */` + '\n' + `(() => {` +
 // shared background css
 (`
@@ -184,7 +186,7 @@ bk_global.setAttribute("type", "text/css");
 
 bk_global.appendChild(document.createTextNode(\`
 
-    body[windowTransition="true"]::before,
+    body[windowTransition="true"]${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
     body[editorTransition="true"] .split-view-view > .editor-group-container::after,
     body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
     body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
@@ -194,7 +196,7 @@ bk_global.appendChild(document.createTextNode(\`
 
     }
 
-    body::before,
+    body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
     .split-view-view > .editor-group-container::after,
     .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
     .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
@@ -207,7 +209,7 @@ bk_global.appendChild(document.createTextNode(\`
         width: 100%;
         height: 100%;
 
-        z-index: 1000;
+        ${!after ? `z-index: 1000;` : ''}
 
         position: absolute;
 
@@ -239,7 +241,7 @@ const panelTime = ${get("backgroundChangeTime", "panel", true) == 0 ? 0 : Math.m
 `
 if(windowBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        body::before {
+        body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
             background-position: ${css("backgroundAlignment", "window")};
             background-repeat: ${css("backgroundRepeat", "window")};
@@ -350,7 +352,7 @@ const setWindowBackground = () => {
 
     if(windowBackgrounds.length > 0){
         bk_window_image.appendChild(document.createTextNode(\`
-            body::before {
+            body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
                 background-image: url("\${windowBackgrounds[next(iWindowBackgrounds)]}");
 
