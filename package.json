@@ -36,6 +36,9 @@
         "onCommand:background.config",
         "onCommand:background.changelog"
     ],
+    "extensionKind": [
+        "ui"
+    ],
     "contributes": {
         "commands": [
             {
