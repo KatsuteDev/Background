@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.2.0
+
+### ⭐ New Features
+
+* Render content above backgrounds [#57](https://github.com/KatsuteDev/Background/pull/57) ([@Katsute](https://github.com/Katsute))
+
+  Add new option `background.renderContentAboveBackground` to render content above backgrounds
+
+### 📘 Dependencies
+
+* Bump vsce from 2.13.0 to 2.14.0 [#58](https://github.com/KatsuteDev/Background/pull/58) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.1.0...2.2.0`](https://github.com/KatsuteDev/Background/compare/2.1.0...2.2.0)
+
 ## 2.1.0
 
 ### ⭐ New Features
