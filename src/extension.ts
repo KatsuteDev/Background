@@ -28,6 +28,8 @@ import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
 
+import * as fse from "./lib/file";
+import { round } from "./lib/round";
 import { unique } from "./lib/unique";
 
 import * as reload from "./command/reload";
@@ -36,11 +38,9 @@ import * as uninstall from "./command/uninstall";
 import * as changelog from "./command/changelog";
 
 import { config } from "./command/config";
-
 import * as file from "./command/config/file";
 
 import { statusbar } from "./statusbar";
-import { round } from "./lib/round";
 
 //
 
@@ -65,7 +65,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
                 if(!fs.existsSync(backup)){
-                    fs.copyFileSync(file, backup);
+                    fse.copy(file, backup);
                     vscode.window.showInformationMessage(`A backup was created for '${name}'`);
                 }
             }else
@@ -83,7 +83,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
                 if(!fs.existsSync(backup)){
-                    fs.copyFileSync(file, backup);
+                    fse.copy(file, backup);
                     vscode.window.showInformationMessage(`A backup was created for '${name}'`);
                 }
             }else
@@ -114,14 +114,14 @@ let js: string;
 
 export const installJS: () => void = () => {
     if(js){
-        fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS(), "utf-8");
+        fse.write(js, removeJS(fse.read(js)) + '\n' + getJS());
         writeChecksum();
     }
 }
 
 export const uninstallJS: () => void = () => {
     if(js){
-        fs.writeFileSync(js, removeJS(fs.readFileSync(js, "utf-8")), "utf-8");
+        fse.write(js, removeJS(fse.read(js)));
         writeChecksum();
     }
 }
@@ -135,14 +135,14 @@ let json: string;
 const checksum: (file: string) => string = (file: string) =>
     crypto
         .createHash("md5")
-        .update(fs.readFileSync(file, "utf-8"))
+        .update(fse.read(file))
         .digest("base64")
         .replace(/=+$/gm, '');
 
 const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
 
 const writeChecksum: () => void = () => {
-    json && fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum(js)).trim());
+    json && fse.write(json, fse.read(json).replace(replace, checksum(js)).trim());
 }
 
 //
@@ -173,7 +173,7 @@ const getJS: () => string = () => {
                 images[s].push('"' + g + '"');
             else // use glob
                 for(const f of glob.sync(g).filter(extensions))
-                    images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+                    fse.unlock(f) && images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
     const after: boolean = get(`renderContentAboveBackground`);
 
