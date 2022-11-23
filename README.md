@@ -107,12 +107,12 @@ The order settings are saved in is:
 | Property | Type | Description |
 |---|:-:|---|
 |`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
-|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
+|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
+|`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts a [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
 |`background.backgroundOpacity`|`number[4]`|The UI opacity. 0 is fully visible and 1 is invisible.|
 |`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
 |`background.backgroundSize`|`enum[4]`|The background image size.|
-|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
+|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
 |`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
 
 <br>
