@@ -24,8 +24,9 @@ import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from ".
 
 import { unique } from "../../lib/unique";
 
-import { menu as cm, options, title as t } from "../config";
+import { globCount, menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
+import { sn } from "../../lib/str";
 
 // config
 
@@ -94,6 +95,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
             ui: item.ui,
+            description: `${sn(globCount([file]), "matching file")}`,
             handle: (item: CommandQuickPickItem) => updateItem(item.ui!, item)
         }));
 
