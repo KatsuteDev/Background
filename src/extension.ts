@@ -375,13 +375,13 @@ const setEditorBackground = () => {
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
 
-        iEditorBackgrounds.reverse();
+        editorTime > 0 && iEditorBackgrounds.reverse();
 
         for(let i = 1; i <= len; i++){
             bk_editor_image.appendChild(document.createTextNode(\`
                 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-                    background-image: url("\${editorBackgrounds[next(iEditorBackgrounds, editorTime === 3)]}");
+                    background-image: url("\${editorBackgrounds[next(iEditorBackgrounds, editorTime === 0)]}");
 
                 }
             \`));
@@ -401,7 +401,7 @@ const setSidebarBackground = () => {
     };
 
     if(sidebarBackgrounds.length > 0){
-        if(sidebarBackgrounds.length === 2){
+        if(sidebarTime > 0 && sidebarBackgrounds.length === 2){
             iSidebarBackgrounds.reverse();
         };
 
