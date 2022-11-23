@@ -20,9 +20,9 @@
 
 * Add ability to transition between multiple images [#49](https://github.com/KatsuteDev/Background/pull/49) ([@Katsute](https://github.com/Katsute))
   Use this new feature by changing the `background.backgroundChangeTime` field or using the new **Time** option in the configuration menu.
-  
+
   _(below image is a compressed gif, your transitions will look cleaner than this)_
-  
+
   ![multiple images](https://github.com/KatsuteDev/Background/raw/e84db0493ce947761fa1bd0f45adc2e0f09668cc/assets/transition.gif)
 
 ### 📘 Dependencies

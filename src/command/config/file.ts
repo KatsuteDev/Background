@@ -24,35 +24,31 @@ import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from ".
 
 import { unique } from "../../lib/unique";
 
-import { menu as cm, options, title as t } from "../config";
+import { globCount, menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
+import { sn } from "../../lib/str";
 
 // config
 
-const add: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
+const add: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
-    update(`${ui}Backgrounds`, files.filter(unique))
-        .then(() => cm({label: '␀', ui})); // reopen menu
+    await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning);
+    cm({label: '␀', ui}); // reopen menu
 };
 
-const replace: (ui: UI, old: string, glob: string, remove?: boolean) => void = (ui: UI, old: string, glob: string) => {
+const replace: (ui: UI, old: string, glob: string, remove?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     for(let i = 0, l = files.length; i < l; i++)
         if(files[i] === old)
             files[i] = glob;
-    update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob)
-        .then(() => cm({label: '␀', ui})); // reopen menu
+    await update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob);
+    cm({label: '␀', ui}); // reopen menu
 };
 
-const remove: (ui: UI, glob: string) => void = (ui: UI, glob: string) => {
-    update(
-        `${ui}Backgrounds`,
-        (get(`${ui}Backgrounds`) as string[])
-            .filter((f) => f !== glob)
-            .filter(unique)
-    )
-    .then(() => cm({label: '␀', ui})); // reopen files
+const remove: (ui: UI, glob: string) => Promise<void> = async (ui: UI, glob: string) => {
+    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => f !== glob).filter(unique));
+    cm({label: '␀', ui}); // reopen files
 };
 
 // exts
@@ -94,6 +90,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
             ui: item.ui,
+            description: `${sn(globCount([file]), "matching file")}`,
             handle: (item: CommandQuickPickItem) => updateItem(item.ui!, item)
         }));
 
@@ -114,11 +111,10 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     openLabel: "Select Image",
                     filters: {"Images": extensions()}
                 }).then((files?: vscode.Uri[]) => {
-                    if(files){
-                        for(const file of files)
-                            add(item.ui!, file.fsPath.replace(/\\/g, '/'));
-                        files.length > 0 && notify();
-                    }
+                    if(files)
+                        Promise
+                            .all(files.map(file => add(item.ui!, file.fsPath.replace(/\\/g, '/'), true)))
+                            .then(() => files.length > 0 && notify());
                 });
             }
         }),
@@ -132,11 +128,10 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     canSelectMany: true,
                     openLabel: "Select Folder"
                 }).then((files?: vscode.Uri[]) => {
-                    if(files){
-                        for(const file of files)
-                            add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`);
-                        files.length > 0 && notify();
-                    }
+                    if(files)
+                        Promise
+                            .all(files.map(file => add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`, true)))
+                            .then(() => files.length > 0 && notify());
                 });
             }
         }),
