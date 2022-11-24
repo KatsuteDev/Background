@@ -435,7 +435,7 @@ const setPanelBackground = () => {
         bk_panel_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-                background-image: url("\${panelBackgrounds[next(iPanelBackgrounds, sidebarTime === 0)]}");
+                background-image: url("\${panelBackgrounds[next(iPanelBackgrounds, panelTime === 0)]}");
 
             }
         \`));
@@ -445,7 +445,7 @@ const setPanelBackground = () => {
 + // random
 `
 const next = (arr, linear) => {
-    const i = linear ? 0 : Math.floor(Math.random() * arr.length / 2));
+    const i = linear ? 0 : Math.floor(Math.random() * arr.length / 2);
     v = arr.splice(i, 1)[0];
     arr.push(v);
     return v;
