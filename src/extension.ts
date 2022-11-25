@@ -149,7 +149,7 @@ const writeChecksum: () => void = () => {
 
 const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
-const extensions = (v: string, i: number, self: string[]) => { // images only
+export const extensions = (v: string, i: number, self: string[]) => { // images only
     const ext: string = path.extname(v);
     for(const m of file.extensions())
         if(`.${m}` === ext)
