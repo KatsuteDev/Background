@@ -379,14 +379,21 @@ const setEditorBackground = () => {
 
         shuffle(iEditorBackgrounds);
 
-        for(let i = 1; i <= len; i++){
-            bk_editor_image.appendChild(document.createTextNode(\`
-                .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
+        for(let i = 0; i < len; i++){
+            for(let j = 0; j < len; j++){
+                bk_editor_image.appendChild(document.createTextNode(\`
+                    #workbench\\\\.parts\\\\.editor .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) .split-view-container > .split-view-view:nth-child(\${len}n+\${j+1}) > .editor-group-container::after {
 
-                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i-1]]}");
+                        background-image: url("\${editorBackgrounds[iEditorBackgrounds[(i+j+1)%len]]}");
 
-                }
-            \`));
+                    }
+                    #workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
+
+                        background-image: url("\${editorBackgrounds[iEditorBackgrounds[(i+1)%len]]}");
+
+                    }
+                \`));
+            }
         };
     };
 };
