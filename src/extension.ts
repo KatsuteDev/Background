@@ -383,7 +383,7 @@ const setEditorBackground = () => {
             bk_editor_image.appendChild(document.createTextNode(\`
                 #workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
 
-                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i%len]]}");
+                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]]}");
 
                 }
             \`));
