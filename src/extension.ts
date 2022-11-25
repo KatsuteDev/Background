@@ -379,24 +379,24 @@ const setEditorBackground = () => {
 
         shuffle(iEditorBackgrounds);
 
+        let csx = [...Array(len)].map(() => []);
+
+        for(let i = 0; i < len; i++){
+            csx[i].push(\`#workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after\`);
+
+            for(let j = 0; j < len; j++){
+                csx[(i+j)%len].push(\`#workbench\\\\.parts\\\\.editor .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) .split-view-container > .split-view-view:nth-child(\${len}n+\${j+1}) > .editor-group-container::after\`);
+            };
+        };
+
         for(let i = 0; i < len; i++){
             bk_editor_image.appendChild(document.createTextNode(\`
-                #workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
+                \${csx[i].join(',')} {
 
                     background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]]}");
 
                 }
             \`));
-
-            for(let j = 0; j < len; j++){
-                bk_editor_image.appendChild(document.createTextNode(\`
-                    #workbench\\\\.parts\\\\.editor .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) .split-view-container > .split-view-view:nth-child(\${len}n+\${j+1}) > .editor-group-container::after {
-
-                        background-image: url("\${editorBackgrounds[iEditorBackgrounds[(i+j)%len]]}");
-
-                    }
-                \`));
-            };
         };
     };
 };
