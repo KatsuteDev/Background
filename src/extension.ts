@@ -149,7 +149,7 @@ const writeChecksum: () => void = () => {
 
 const remove: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` + `[\\s\\S]*?` + `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
-const extensions = (v: string, i: number, self: string[]) => { // images only
+export const extensions = (v: string, i: number, self: string[]) => { // images only
     const ext: string = path.extname(v);
     for(const m of file.extensions())
         if(`.${m}` === ext)
@@ -351,10 +351,12 @@ const setWindowBackground = () => {
     };
 
     if(windowBackgrounds.length > 0){
+        shuffle(iWindowBackgrounds);
+
         bk_window_image.appendChild(document.createTextNode(\`
             body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
-                background-image: url("\${windowBackgrounds[next(iWindowBackgrounds)]}");
+                background-image: url("\${windowBackgrounds[iWindowBackgrounds[0]]}");
 
             }
         \`));
@@ -375,13 +377,13 @@ const setEditorBackground = () => {
     if(editorBackgrounds.length > 0){
         const len = editorBackgrounds.length;
 
-        next(iEditorBackgrounds);
+        shuffle(iEditorBackgrounds);
 
         for(let i = 1; i <= len; i++){
             bk_editor_image.appendChild(document.createTextNode(\`
                 .split-view-view:nth-child(\${len}n+\${i}) > .editor-group-container::after {
 
-                    background-image: url("\${editorBackgrounds[next(iEditorBackgrounds)]}");
+                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i-1]]}");
 
                 }
             \`));
@@ -401,19 +403,17 @@ const setSidebarBackground = () => {
     };
 
     if(sidebarBackgrounds.length > 0){
-        if(sidebarBackgrounds.length === 2){
-            next(iSidebarBackgrounds);
-        };
+        shuffle(iSidebarBackgrounds);
 
         bk_sidebar_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
 
-                background-image: url("\${sidebarBackgrounds[next(iSidebarBackgrounds)]}");
+                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[0]]}");
 
             }
             .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
 
-                background-image: url("\${sidebarBackgrounds[next(iSidebarBackgrounds)]}");
+                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[1]] ?? sidebarBackgrounds[iSidebarBackgrounds[0]]}");
 
             }
         \`));
@@ -432,10 +432,12 @@ const setPanelBackground = () => {
     };
 
     if(panelBackgrounds.length > 0){
+        shuffle(iPanelBackgrounds);
+
         bk_panel_image.appendChild(document.createTextNode(\`
             .split-view-view > #workbench\\\\.parts\\\\.panel::after {
 
-                background-image: url("\${panelBackgrounds[next(iPanelBackgrounds)]}");
+                background-image: url("\${panelBackgrounds[iPanelBackgrounds[0]]}");
 
             }
         \`));
@@ -444,11 +446,11 @@ const setPanelBackground = () => {
 `
 + // random
 `
-const next = (arr) => {
-    const i = Math.floor(Math.random() * arr.length / 2);
-    v = arr.splice(i, 1)[0];
-    arr.push(v);
-    return v;
+const shuffle = (arr) => {
+    for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * i);
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    };
 };
 `
 + // install

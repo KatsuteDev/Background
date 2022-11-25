@@ -33,6 +33,7 @@ import * as time from "./config/time";
 
 import { capitalize, s, sn } from "../lib/str";
 import { unique } from "../lib/unique";
+import { extensions } from "../extension";
 
 // interface
 
@@ -193,6 +194,6 @@ export const globCount: (globs: string[]) => number = (globs: string[]) => {
         if(g.startsWith("https://"))
             i++;
         else // use glob
-            i += glob.sync(g).filter(file.extensions).length;
+            i += glob.sync(g).filter(extensions).length;
     return i;
 }
