@@ -9,13 +9,14 @@ body:
         Before opening a bug report please check that your issue was not already discussed in the following:
 
         * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22)
+        * [Known Issues](https://github.com/KatsuteDev/Background#%EF%B8%8F-known-issues)
 
         Please also check that:
 
         * This is actually a bug and not a feature.
         * You are running the latest version.
 
-        If you have are trying to change or remove a background please refer to [usage](https://github.com/KatsuteDev/Background#%EF%B8%8F-usage).
+        If you have are trying to change or remove a background please refer to [#52](https://github.com/KatsuteDev/Background/issues/52).
 
         If your VSCode is blank or stops working please check [here](https://github.com/KatsuteDev/Background#%EF%B8%8F-vscode-stopped-working) first.
 

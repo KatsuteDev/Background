@@ -1,5 +1,31 @@
 # Changelog
 
+## 2.3.0
+
+### ⭐ New Features
+
+* Show how many files match a glob [#65](https://github.com/KatsuteDev/Background/pull/65) ([@Katsute](https://github.com/Katsute))
+  To reduce confusion about missing backgrounds, the configuration menu will now show how many files match your globs.
+
+  ![glob](https://user-images.githubusercontent.com/58778985/203458542-ce6456fe-a9dc-4030-b84a-051a5a71d197.gif)
+
+### 🐞 Bug Fixes
+
+* Fix install notification sometimes not installing backgrounds [#66](https://github.com/KatsuteDev/Background/pull/66) ([@Katsute](https://github.com/Katsute))
+  * Fix rare bug where install notification would be sent before settings actually update
+  * Fix multiple install notifications when selecting multiple files at once
+* Override file permissions if file is read only [#64](https://github.com/KatsuteDev/Background/pull/64) ([@Katsute](https://github.com/Katsute))
+  Fixes issue where backgrounds would not install when VSCode was readonly.
+* Fix repeating backgrounds [#67](https://github.com/KatsuteDev/Background/pull/67) ([@Katsute](https://github.com/Katsute))
+* Fix duplicate backgrounds when using horizontal and vertical editor split [#69](https://github.com/KatsuteDev/Background/pull/69) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump typescript from 4.8.4 to 4.9.3 [#61](https://github.com/KatsuteDev/Background/pull/61) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.73.0 to 1.73.1 [#60](https://github.com/KatsuteDev/Background/pull/60) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.2.0...2.3.0`](https://github.com/KatsuteDev/Background/compare/2.2.0...2.3.0)
+
 ## 2.2.0
 
 ### ⭐ New Features
