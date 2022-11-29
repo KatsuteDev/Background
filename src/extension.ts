@@ -16,8 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { ConfigKey } from "./vs/package";
-
 import * as vscode from "vscode";
 
 import { css, cssValue, get } from "./vs/vsconfig";
