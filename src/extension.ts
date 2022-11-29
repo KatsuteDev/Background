@@ -16,21 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { ConfigKey } from "./vs/package";
-
 import * as vscode from "vscode";
 
 import { css, cssValue, get } from "./vs/vsconfig";
-
-import { glob } from "glob";
 
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
 
 import * as fse from "./lib/file";
+import * as glob from "./lib/glob";
 import { round } from "./lib/round";
-import { unique } from "./lib/unique";
 
 import * as reload from "./command/reload";
 import * as install from "./command/install";
@@ -161,19 +157,11 @@ const getJS: () => string = () => {
     // populate images
 
     const images: {[key: string]: string[]} = { // include start and end quotes
-        window: [],
-        editor: [],
-        sidebar: [],
-        panel: []
+        window:  glob.resolve(get(`windowBackgrounds`)),
+        editor:  glob.resolve(get(`editorBackgrounds`)),
+        sidebar: glob.resolve(get(`sidebarBackgrounds`)),
+        panel:   glob.resolve(get(`panelBackgrounds`))
     };
-
-    for(const s of ["window", "editor", "sidebar", "panel"])
-        for(const g of (get(`${s}Backgrounds` as ConfigKey) as string[]).filter(unique))
-            if(g.startsWith("https://")) // use literal URL
-                images[s].push('"' + g + '"');
-            else // use glob
-                for(const f of glob.sync(g).filter(extensions))
-                    fse.unlock(f) && images[s].push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
 
     const after: boolean = get(`renderContentAboveBackground`);
 
@@ -216,6 +204,8 @@ bk_global.appendChild(document.createTextNode(\`
         pointer-events: none;
 
         transition: opacity 1s ease-in-out;
+
+        image-rendering: pixelated;
 
     }
 \`));
