@@ -18,8 +18,6 @@
 
 import * as vscode from "vscode";
 
-import { glob } from "glob";
-
 import { get, UI } from "../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../vs/quickpick";
 
@@ -31,9 +29,8 @@ import * as repeat from "./config/repeat";
 import * as size from "./config/size";
 import * as time from "./config/time";
 
-import { capitalize, s, sn } from "../lib/str";
-import { unique } from "../lib/unique";
-import { extensions } from "../extension";
+import * as str from "../lib/str";
+import * as glob from "../lib/glob";
 
 // interface
 
@@ -42,7 +39,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         // background types
         quickPickItem({
             label: "$(window) Window",
-            description: `${s(get("windowBackgrounds"), "Glob")} (${sn(globCount(get("windowBackgrounds")), "Background")})`,
+            description: `${str.s(get("windowBackgrounds"), "Glob")} (${str.s(glob.count(get("windowBackgrounds")), "Background")})`,
             detail: `${get("backgroundAlignment",   "window")} Alignment`   + ` • ` +
                     `${get("backgroundBlur",        "window")} Blur`        + ` • ` +
                     `${get("backgroundOpacity",     "window")} Opacity`     + ` • ` +
@@ -54,7 +51,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         }),
         quickPickItem({
             label: "$(multiple-windows) Editor",
-            description: `${s(get("editorBackgrounds"), "Glob")} (${sn(globCount(get("editorBackgrounds")), "Background")})`,
+            description: `${str.s(get("editorBackgrounds"), "Glob")} (${str.s(glob.count(get("editorBackgrounds")), "Background")})`,
             detail: `${get("backgroundAlignment",   "editor")} Alignment`   + ` • ` +
                     `${get("backgroundBlur",        "editor")} Blur`        + ` • ` +
                     `${get("backgroundOpacity",     "editor")} Opacity`     + ` • ` +
@@ -66,7 +63,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         }),
         quickPickItem({
             label: "$(layout-sidebar-left) Sidebar",
-            description: `${s(get("sidebarBackgrounds"), "Glob")} (${sn(globCount(get("sidebarBackgrounds")), "Background")})`,
+            description: `${str.s(get("sidebarBackgrounds"), "Glob")} (${str.s(glob.count(get("sidebarBackgrounds")), "Background")})`,
             detail: `${get("backgroundAlignment",   "sidebar")} Alignment`  + ` • ` +
                     `${get("backgroundBlur",        "sidebar")} Blur`       + ` • ` +
                     `${get("backgroundOpacity",     "sidebar")} Opacity`    + ` • ` +
@@ -78,7 +75,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         }),
         quickPickItem({
             label: "$(layout-panel) Panel",
-            description: `${s(get("panelBackgrounds"), "Glob")} (${sn(globCount(get("panelBackgrounds")), "Background")})`,
+            description: `${str.s(get("panelBackgrounds"), "Glob")} (${str.s(glob.count(get("panelBackgrounds")), "Background")})`,
             detail: `${get("backgroundAlignment",   "panel")} Alignment`    + ` • ` +
                     `${get("backgroundBlur",        "panel")} Blur`         + ` • ` +
                     `${get("backgroundOpacity",     "panel")} Opacity`      + ` • ` +
@@ -123,7 +120,7 @@ export const options: vscode.QuickPickOptions = {
     matchOnDescription: true
 }
 
-export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui ? `${capitalize(ui)} ${options.title} - ${s}` : `${options.title} - ${s}`;
+export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui ? `${str.capitalize(ui)} ${options.title} - ${s}` : `${options.title} - ${s}`;
 
 // menu
 
@@ -131,7 +128,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
-            description: `${s(get(`${item.ui!}Backgrounds`), "Glob")} (${sn(globCount(get(`${item.ui!}Backgrounds`)), "Background")})`,
+            description: `${str.s(get(`${item.ui!}Backgrounds`), "Glob")} (${str.s(glob.count(get(`${item.ui!}Backgrounds`)), "Background")})`,
             detail: "Select background image files",
             ui: item.ui!,
             handle: file.menu
@@ -182,18 +179,6 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
     ],
     {
         ...options,
-        title: `${capitalize(item.ui!)} ${options.title}`,
+        title: `${str.capitalize(item.ui!)} ${options.title}`,
     });
 };
-
-// glob
-
-export const globCount: (globs: string[]) => number = (globs: string[]) => {
-    let i = 0;
-    for(const g of globs.filter(unique))
-        if(g.startsWith("https://"))
-            i++;
-        else // use glob
-            i += glob.sync(g).filter(extensions).length;
-    return i;
-}

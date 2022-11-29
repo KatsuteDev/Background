@@ -22,11 +22,12 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, UI, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
+import * as str from "../../lib/str";
+import * as glob from "../../lib/glob";
 import { unique } from "../../lib/unique";
 
-import { globCount, menu as cm, options, title as t } from "../config";
+import { menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
-import { sn } from "../../lib/str";
 
 // config
 
@@ -90,7 +91,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
             ui: item.ui,
-            description: `${sn(globCount([file]), "matching file")}`,
+            description: `${str.s(glob.count(file), "matching file")}`,
             handle: (item: CommandQuickPickItem) => updateItem(item.ui!, item)
         }));
 
