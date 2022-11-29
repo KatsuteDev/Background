@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.1
+
+### 🔧 Optimizations
+
+* Optimize glob [#71](https://github.com/KatsuteDev/Background/pull/71) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.3.0...2.3.1`](https://github.com/KatsuteDev/Background/compare/2.3.0...2.3.1)
+
 ## 2.3.0
 
 ### ⭐ New Features
