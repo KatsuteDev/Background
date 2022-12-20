@@ -46,7 +46,7 @@ Add background images for the whole window, editors, sidebars, or the panel. Tra
     <h6>Full Window</h6>
     <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
     <br>
-    <h6>Editor Windows</h6>
+    <h6>Editor, Sidebar, and Terminal</h6>
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
     <br>
     <h6>Slideshow</h6>
