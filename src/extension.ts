@@ -205,7 +205,7 @@ bk_global.appendChild(document.createTextNode(\`
 
         transition: opacity 1s ease-in-out;
 
-        image-rendering: pixelated;
+        image-rendering: ${get(`smoothImageRendering`) ? "auto" : "pixelated"};
 
     }
 \`));

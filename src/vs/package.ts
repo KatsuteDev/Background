@@ -37,6 +37,7 @@ export type ConfigKey =
     "backgroundChangeTime" |
     "useWindowOptionsForAllBackgrounds" |
     "renderContentAboveBackground" |
+    "smoothImageRendering" |
     "CSS";
 
 export type Contributes = {
