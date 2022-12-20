@@ -43,10 +43,13 @@ Add multiple background images for the window, editors, sidebars, or the panel. 
 Add background images for the whole window, editors, sidebars, or the panel. Transition between multiple background images.
 
 <div align="center">
+    <h6>Full Window</h6>
     <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
-    <br><br>
+    <br>
+    <h6>Editor Windows</h6>
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
-    <br><br>
+    <br>
+    <h6>Slideshow</h6>
     <img alt="multiple backgrounds" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/transition.gif">
 </div>
 
@@ -125,11 +128,15 @@ The order settings are saved in is:
 
 ## ⚠️ Known Issues
 
+#### ⌘ (Mac) EROFS: read-only file system
+
+This extension doesn't natively support Mac, please refer to [#76](https://github.com/KatsuteDev/Background/issues/76) to get this extension working on Mac.
+
 #### ⚠️ Installation appears to be corrupt
 
 This extension modifies an internal file to make backgrounds work, as a result VSCode will warn about the installation being corrupt.
 
-This warning will be removed after you relaunch VSCode, a reload is not enough. Alternatively select **Don't Show Again** to suppress this warning.
+This warning will be removed **after you relaunch VSCode**, a reload is not enough. Alternatively select **Don't Show Again** to suppress this warning.
 
 ![corrupt](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/corrupt.gif)
 
