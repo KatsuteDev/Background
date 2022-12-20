@@ -18,10 +18,8 @@
 
 import { glob, IOptions } from "glob";
 
-import * as fs from "fs";
 import * as path from "path";
 
-import { unlock } from "./file";
 import { extensions } from "../command/config/file";
 import { unique } from "./unique";
 
@@ -50,9 +48,10 @@ export const resolve: (globs: string | string[]) => string[] = (globs: string | 
     let p: string[] = [];
     for(const g of (Array.isArray(globs) ? globs : [globs]).filter(unique))
         if(g.startsWith("https://"))
-            p.push('"' + g + '"');
+            p.push(`"${g}"`);
         else
             for(const f of glob.sync(g, options).filter(filter))
-                unlock(f) && p.push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+                p.push(`"vscode-file://vscode-app/${f}"`);
+                // unlock(f) && p.push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
     return p.filter(unique);
 }
