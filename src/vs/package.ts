@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-export const pkg = require("../../package.json");
+export const pkg = require("../../package.json"); // do not convert to import
 
 export const cfg = pkg.contributes.configuration.properties;
 
