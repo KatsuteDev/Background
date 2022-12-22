@@ -376,13 +376,6 @@ const setEditorBackground = () => {
                     background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]]}");
                 }
             \`));
-            for(let j = 0; j < len; j++){
-                bk_editor_image.appendChild(document.createTextNode(\`
-                    #workbench\\\\.parts\\\\.editor .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) .split-view-container > .split-view-view:nth-child(\${len}n+\${j+1}) > .editor-group-container::after {
-                        background-image: url("\${editorBackgrounds[iEditorBackgrounds[(i+j)%len]]}");
-                    }
-                \`));
-            };
         };
     };
 };
