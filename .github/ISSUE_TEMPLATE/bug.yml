@@ -50,6 +50,6 @@ body:
     attributes:
       label: How to replicate
       description: |
-        Include steps to reproduce this issue.
+        Include steps to reproduce this issue and the settings you are using.
     validations:
       required: true

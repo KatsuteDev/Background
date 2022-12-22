@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.4.0
+
+### ⭐ New Features
+
+* Add option for `image-rendering` [#79](https://github.com/KatsuteDev/Background/pull/79) ([@Katsute](https://github.com/Katsute))
+
+### 🔧 Optimizations
+
+* Use `vscode-file://vscode-app/` for local images instead of base64 [#78](https://github.com/KatsuteDev/Background/pull/78) ([@Katsute](https://github.com/Katsute))
+  This should fix a performance issue caused by using a large amount of images.
+* Revert duplicate background fix for horizontal and vertical editor splits [#82](https://github.com/KatsuteDev/Background/pull/82) ([@Katsute](https://github.com/Katsute))
+  This should fix a performance issue caused by [`2.3.0`](https://github.com/KatsuteDev/Background/releases/tag/2.3.0) when using editor images.
+
+### 🐞 Bug Fixes
+
+* Hide corrupt notification when using VSCode Insiders [#80](https://github.com/KatsuteDev/Background/pull/80) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump vsce from 2.14.0 to 2.15.0 [#72](https://github.com/KatsuteDev/Background/pull/72) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 4.9.3 to 4.9.4 [#73](https://github.com/KatsuteDev/Background/pull/73) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.3.1...2.4.0`](https://github.com/KatsuteDev/Background/compare/2.3.1...2.4.0)
+
 ## 2.3.1
 
 ### 🔧 Optimizations
