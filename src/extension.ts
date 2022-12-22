@@ -205,7 +205,7 @@ bk_global.appendChild(document.createTextNode(\`
 
         transition: opacity 1s ease-in-out;
 
-        image-rendering: ${get(`smoothImageRendering`) ? "auto" : "pixelated"};
+        image-rendering: ${get("smoothImageRendering") ? "auto" : "pixelated"};
 
     }
 \`));
@@ -366,26 +366,14 @@ const setEditorBackground = () => {
     };
 
     if(editorBackgrounds.length > 0){
-        const len = editorBackgrounds.length;
+        const len = Math.min(editorBackgrounds.length, 10);
 
         shuffle(iEditorBackgrounds);
 
-        let csx = [...Array(len)].map(() => []);
-
-        for(let i = 0; i < len; i++){
-            csx[i].push(\`#workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after\`);
-
-            for(let j = 0; j < len; j++){
-                csx[(i+j)%len].push(\`#workbench\\\\.parts\\\\.editor .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) .split-view-container > .split-view-view:nth-child(\${len}n+\${j+1}) > .editor-group-container::after\`);
-            };
-        };
-
         for(let i = 0; i < len; i++){
             bk_editor_image.appendChild(document.createTextNode(\`
-                \${csx[i].join(',')} {
-
+                #workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
                     background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]]}");
-
                 }
             \`));
         };
