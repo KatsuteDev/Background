@@ -205,7 +205,7 @@ bk_global.appendChild(document.createTextNode(\`
 
         transition: opacity 1s ease-in-out;
 
-        image-rendering: pixelated;
+        image-rendering: ${get(`smoothImageRendering`) ? "auto" : "pixelated"};
 
     }
 \`));
@@ -303,7 +303,8 @@ if(panelBackgrounds.length > 0){
 + // notification overrides
 `
 bk_global.appendChild(document.createTextNode(\`
-    div.notifications-toasts div.monaco-list[aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"] {
+    div.notifications-toasts div.monaco-list[aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"],
+    div.notifications-toasts div.monaco-list[aria-label="Your Code - Insiders installation appears to be corrupt. Please reinstall., notification"] {
 
         display: none;
 

@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.3.2",
+    "version": "2.4.0",
     "private": true,
     "engines": {
         "vscode": "^1.74.0"
@@ -293,9 +293,15 @@
                     "type": "boolean",
                     "default": false
                 },
+                "background.smoothImageRendering": {
+                    "markdownDescription": "If enabled, use smooth image rendering rather than pixelated rendering when resizing images.",
+                    "order": 14,
+                    "type": "boolean",
+                    "default": false
+                },
                 "background.CSS": {
                     "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
-                    "order": 14,
+                    "order": 15,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""

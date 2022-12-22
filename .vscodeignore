@@ -1,4 +1,6 @@
 .gitignore
+
+.vscode
 .vscodeignore
 
 .devcontainer
