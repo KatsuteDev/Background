@@ -333,7 +333,7 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "dependencies": {
-        "glob": "8.0.3"
+        "glob": "8.1.0"
     },
     "devDependencies": {
         "@types/glob": "8.0.0",
