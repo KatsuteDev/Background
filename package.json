@@ -25,6 +25,9 @@
         "image",
         "gif"
     ],
+    "sponsor": {
+        "url": "https://ko-fi.com/katsute"
+    },
     "activationEvents": [
         "onStartupFinished",
         "onCommand:background.install",
