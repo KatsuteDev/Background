@@ -69,12 +69,9 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
     <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
 </div>
 
-> ⚠️ **Only use forward-slashes in glob expressions.**
+> ⚠️ **Use only `/` for directories**
 >
-> Though windows uses either `/` or `\` as its path separator, only `/` characters are used by this glob implementation.
-> You must use forward-slashes only in glob expressions. Back-slashes will always be interpreted as escape characters, not path separators.
->
-> ― [node-glob](https://github.com/isaacs/node-glob#windows)
+> [node-glob](https://github.com/isaacs/node-glob#windows) only accepts `/` as path separators, `\` is reserved for escape characters.
 
 ## 💻 Commands
 
@@ -132,14 +129,6 @@ The order settings are saved in is:
 #### ⌘ (Mac) EROFS: read-only file system
 
 This extension doesn't natively support Mac, please refer to [#76](https://github.com/KatsuteDev/Background/issues/76) to get this extension working on Mac.
-
-#### ⚠️ Installation appears to be corrupt
-
-This extension modifies an internal file to make backgrounds work, as a result VSCode will warn about the installation being corrupt.
-
-This warning will be removed **after you relaunch VSCode**, a reload is not enough. Alternatively select **Don't Show Again** to suppress this warning.
-
-![corrupt](https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/corrupt.gif)
 
 #### ⚠️ VSCode stopped working
 

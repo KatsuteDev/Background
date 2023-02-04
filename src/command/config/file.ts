@@ -35,7 +35,7 @@ const add: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = asyn
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning);
-    cm({label: '␀', ui}); // reopen menu
+    skipWarning || cm({label: '␀', ui}); // reopen menu
 };
 
 const replace: (ui: UI, old: string, glob: string, remove?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string) => {
@@ -63,7 +63,7 @@ const updateItem: (ui: UI, item: CommandQuickPickItem) => void = (ui: UI, item: 
         title: `Update ${item!.value}`,
         placeHolder: "File path, glob, or URL, leave blank to remove",
         value: item!.value ?? "",
-        prompt: "Only '/' can be used for paths, '\\' is reserved for escape characters. Leave this field blank to remove.",
+        prompt: "Use only '/' for directories, '\\' is reserved for escape characters only. Leave this field blank to remove.",
         validateInput: (value: string) => {
             if(value.startsWith("file://"))
                 return "Do not include 'file://' as part of the file path";
@@ -115,7 +115,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     if(files)
                         Promise
                             .all(files.map(file => add(item.ui!, file.fsPath.replace(/\\/g, '/'), true)))
-                            .then(() => files.length > 0 && notify());
+                            .then(() => files.length > 0 && notify())
+                            .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
                 });
             }
         }),
@@ -132,7 +133,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     if(files)
                         Promise
                             .all(files.map(file => add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`, true)))
-                            .then(() => files.length > 0 && notify());
+                            .then(() => files.length > 0 && notify())
+                            .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
                 });
             }
         }),
@@ -181,7 +183,15 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                         add(item.ui!, url);
                 });
             }
-        })
+        }),
+        ... items.length > 0 ? [
+            separator(),
+            quickPickItem({
+                label: "$(lightbulb) To modify or remove an image, select the row and press enter",
+                ui: item.ui!,
+                handle: (item: CommandQuickPickItem) => menu(item)
+            })
+        ] : []
     ],
     {
         ...options,
