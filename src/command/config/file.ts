@@ -63,7 +63,7 @@ const updateItem: (ui: UI, item: CommandQuickPickItem) => void = (ui: UI, item: 
         title: `Update ${item!.value}`,
         placeHolder: "File path, glob, or URL, leave blank to remove",
         value: item!.value ?? "",
-        prompt: "Use only '/' for directories, '\\' is reserved for escape characters only. Leave this field blank to remove.",
+        prompt: "Use only '/' for directories, '\\' is reserved for escape characters. Leave this field blank to remove.",
         validateInput: (value: string) => {
             if(value.startsWith("file://"))
                 return "Do not include 'file://' as part of the file path";
@@ -145,7 +145,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 vscode.window.showInputBox({
                     title: "Add File",
                     placeHolder: "File path or glob",
-                    prompt: "Add a file or a glob. Only '/' can be used for paths, '\\' is reserved for escape characters.",
+                    prompt: "Add a file or a glob. Use only '/' for directories, '\\' is reserved for escape characters.",
                     validateInput: (value: string) => {
                         if(value.startsWith("file://"))
                             return "Do not include 'file://' as part of the file path";

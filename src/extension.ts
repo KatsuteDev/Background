@@ -314,7 +314,6 @@ bk_global.appendChild(document.createTextNode(\`
     div.monaco-list-row[aria-label$=", source: Background (Extension), notification"]:hover {
 
         background-color: #0098FF !important;
-        border-radius: .5rem;
         color: white !important;
 
     }
