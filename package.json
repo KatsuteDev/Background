@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "private": true,
     "engines": {
         "vscode": "^1.75.0"
@@ -29,12 +29,7 @@
         "url": "https://ko-fi.com/katsute"
     },
     "activationEvents": [
-        "onStartupFinished",
-        "onCommand:background.install",
-        "onCommand:background.uninstall",
-        "onCommand:background.reload",
-        "onCommand:background.config",
-        "onCommand:background.changelog"
+        "onStartupFinished"
     ],
     "extensionKind": [
         "ui"
@@ -72,7 +67,7 @@
             "order": 0,
             "properties": {
                 "background.windowBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 0,
                     "default": [],
@@ -81,7 +76,7 @@
                     }
                 },
                 "background.editorBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 1,
                     "default": [],
@@ -90,7 +85,7 @@
                     }
                 },
                 "background.sidebarBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 2,
                     "default": [],
@@ -99,7 +94,7 @@
                     }
                 },
                 "background.panelBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Only `/` can be used for paths**, `\\` is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 3,
                     "default": [],
@@ -300,7 +295,7 @@
                     "default": false
                 },
                 "background.CSS": {
-                    "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
+                    "markdownDescription": "Apply raw CSS to VSCode.",
                     "order": 15,
                     "type": "string",
                     "editPresentation": "multilineText",
@@ -337,7 +332,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.1",
-        "@types/node": "18.11.17",
+        "@types/node": "18.11.19",
         "@types/vscode": "1.75.0",
         "@vscode/vsce": "2.17.0",
         "rimraf": "3.0.2",
