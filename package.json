@@ -26,12 +26,7 @@
         "gif"
     ],
     "activationEvents": [
-        "onStartupFinished",
-        "onCommand:background.install",
-        "onCommand:background.uninstall",
-        "onCommand:background.reload",
-        "onCommand:background.config",
-        "onCommand:background.changelog"
+        "onStartupFinished"
     ],
     "extensionKind": [
         "ui"
@@ -297,7 +292,7 @@
                     "default": false
                 },
                 "background.CSS": {
-                    "markdownDescription": "**Advanced Users Only.** Apply raw CSS to VSCode.",
+                    "markdownDescription": "Apply raw CSS to VSCode.",
                     "order": 15,
                     "type": "string",
                     "editPresentation": "multilineText",
@@ -334,7 +329,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.0.1",
-        "@types/node": "18.11.18",
+        "@types/node": "18.11.19",
         "@types/vscode": "1.75.0",
         "@vscode/vsce": "2.17.0",
         "rimraf": "3.0.2",

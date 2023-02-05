@@ -65,13 +65,13 @@ Type `Background: Configuration` in the command pallette or press the **Backgrou
 
 Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
 
-<div align="center">
-    <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
-</div>
-
 > ⚠️ **Use only `/` for directories**
 >
 > [node-glob](https://github.com/isaacs/node-glob#windows) only accepts `/` as path separators, `\` is reserved for escape characters.
+
+<div align="center">
+    <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
+</div>
 
 ## 💻 Commands
 
@@ -122,7 +122,7 @@ The order settings are saved in is:
 |`background.useWindowOptionsForAllBackgrounds`|`boolean`|If enabled, all backgrounds will use the options set for the windows background. You still need to add background images separately.|
 |`background.renderContentAboveBackground`|`boolean`|If enabled, content like images, pdfs, and markdown previews will render above the background.|
 |`background.smoothImageRendering`|`boolean`|If enabled, use smooth image rendering rather than pixelated rendering when resizing images.|
-|`background.CSS`|`string`|**Advanced Users Only.** Apply raw CSS to VSCode.|
+|`background.CSS`|`string`|Apply raw CSS to VSCode.|
 
 ## ⚠️ Known Issues
 
@@ -130,17 +130,17 @@ The order settings are saved in is:
 
 This extension doesn't natively support Mac, please refer to [#76](https://github.com/KatsuteDev/Background/issues/76) to get this extension working on Mac.
 
+#### ⚠️ Doesn't work on WSL
+
+As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
+
 #### ⚠️ VSCode stopped working
 
 This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
 
 This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json`, replace with `product-backup.json` if VSCode stops working.
 
-#### ⚠️ Doesn't work on WSL
-
-As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
-
-## 👨‍💻 Contributing
+## &nbsp;
 
 <!-- GitHub Copilot Disclaimer -->
 <table>
@@ -149,10 +149,5 @@ As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issueco
     <p>GitHub Copilot is <b>strictly prohibited</b> on this repository.<br>Pulls using this will be rejected.</p>
 </table>
 <!-- GitHub Copilot Disclaimer -->
-
- - Found a bug or have a suggestion? Post it in [issues](https://github.com/KatsuteDev/Background/issues).
- - Want to further expand our project? [Fork](https://github.com/KatsuteDev/Background/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Background/pulls).
-
-### 💼 License
 
 This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Background/blob/main/LICENSE).
