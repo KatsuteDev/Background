@@ -20,6 +20,7 @@ import * as vscode from "vscode";
 
 import { css, cssValue, get } from "./vs/vsconfig";
 
+import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
@@ -37,6 +38,8 @@ import { config } from "./command/config";
 import * as file from "./command/config/file";
 
 import { statusbar } from "./statusbar";
+
+import * as sudo from "@vscode/sudo-prompt";
 
 //
 
@@ -106,39 +109,92 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
 //
 
-let js: string;
+const win: boolean = process.platform === "win32";
 
-export const installJS: () => void = () => {
-    if(js){
-        fse.write(js, removeJS(fse.read(js)) + '\n' + getJS());
-        writeChecksum();
-    }
-}
-
-export const uninstallJS: () => void = () => {
-    if(js){
-        fse.write(js, removeJS(fse.read(js)));
-        writeChecksum();
-    }
-}
-
-export const restartVS: () => void = () => {
-    vscode.commands.executeCommand("workbench.action.reloadWindow");
-}
-
-let json: string;
-
-const checksum: (file: string) => string = (file: string) =>
+const getChecksum: (raw: string) => string = (raw: string) =>
     crypto
         .createHash("md5")
-        .update(fse.read(file))
+        .update(raw)
         .digest("base64")
         .replace(/=+$/gm, '');
 
 const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
 
-const writeChecksum: () => void = () => {
-    json && fse.write(json, fse.read(json).replace(replace, checksum(js)).trim());
+let js: string, json: string;
+
+export const installJS: () => void = () => {
+    if(js && json){
+        const content: string = removeJS(fse.read(js)) + '\n' + getJS();
+        const checksum: string = getChecksum(content);
+
+        if(fse.canWrite(js) && fse.canWrite(json)){
+            fse.write(js, content);
+            fse.write(json, fse.read(json).replace(replace, checksum).trim());
+            restartVS();
+        }else{
+            vscode.window.showWarningMessage("Failed to write CSS, run command as administrator?", {detail: "todo", modal: true}, "Yes", "No").then((value?: string) => {
+                if(value === "Yes"){
+                    const jst = path.join(os.tmpdir(), "workbench.desktop.main.js");
+                    fse.write(jst, content);
+                    const jnt = path.join(os.tmpdir(), "product.json");
+                    fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
+
+                    const mv: string = win ? "move /Y" : "mv -f";
+
+                    const cmd: string = win
+                        ? `move /Y ${jst} ${js}; move /Y ${jnt} ${json}` // todo: test
+                        : `-- sh -c '${mv} ${jst} ${js}; ${mv} ${jnt} ${json}'`; // todo: test on codespaces
+
+                    sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR, OUT, IN) => {
+                        if(ERR){
+                            // todo: err
+                        }else{
+                            restartVS();
+                        }
+                    });
+                }
+            });
+        }
+    }
+}
+
+export const uninstallJS: () => void = () => {
+    if(js && json){
+        const content: string = removeJS(fse.read(js));
+        const checksum: string = getChecksum(content);
+
+        if(fse.canWrite(js) && fse.canWrite(json)){
+            fse.write(js, content);
+            fse.write(json, fse.read(json).replace(replace, checksum).trim());
+        }else{
+            vscode.window.showWarningMessage("Failed to write CSS, run command as administrator?", {detail: "todo", modal: true}, "Yes", "No").then((value?: string) => {
+                if(value === "Yes"){
+                    const jst = path.join(os.tmpdir(), "workbench.desktop.main.js");
+                    fse.write(jst, content);
+                    const jnt = path.join(os.tmpdir(), "product.json");
+                    fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
+
+                    const mv: string = win ? "move /Y" : "mv -f";
+
+                    const cmd: string = win
+                        ? `move /Y ${jst} ${js}; move /Y ${jnt} ${json}` // todo: test
+                        : `-- sh -c '${mv} ${jst} ${js}; ${mv} ${jnt} ${json}'`; // todo: test on codespaces
+
+                    sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR, OUT, IN) => {
+                        if(ERR){
+                            // todo: err
+                        }else{
+                            restartVS();
+                        }
+                    });
+                }
+            });
+        }
+    }
+}
+
+export const restartVS: () => void = () => {
+    vscode.commands.executeCommand("workbench.action.reloadWindow");
 }
 
 //

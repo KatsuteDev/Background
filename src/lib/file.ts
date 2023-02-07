@@ -37,33 +37,14 @@ export const canWrite: (path: fs.PathLike) => boolean = (path: fs.PathLike) => {
 }
 
 export const read: (path: fs.PathLike) => string = (path: fs.PathLike) => {
-    return fs.readFileSync(unlock(path), "utf-8");
+    return fs.readFileSync(path, "utf-8");
 }
 
 export const write: (path: fs.PathLike, content: string) => void = (path: fs.PathLike, content: string) => {
-    fs.writeFileSync(unlock(path), content, "utf-8");
+    fs.writeFileSync(path, content, "utf-8");
 }
 
 export const copy: (src: fs.PathLike, dest: fs.PathLike) => void = (src: fs.PathLike, dest: fs.PathLike) => {
-    fs.existsSync(dest) && unlock(dest);
-    fs.copyFileSync(unlock(src), dest);
-}
-
-export const unlock: (path: fs.PathLike) => fs.PathLike = (path: fs.PathLike) => {
-    /**
-     * see <https://nodejs.org/api/fs.html#file-modes>
-     *
-     * first digit is owner, second digit is group, third digit is other
-     *
-     * 7 | read, write, and execute
-     * 6 | read and write
-     * 5 | read and execute
-     * 4 | read only
-     * 3 | write and execute
-     * 2 | write only
-     * 1 | execute only
-     * 0 | no permission
-     */
-     (canRead(path) && canWrite(path)) || fs.chmodSync(path, 0o777);
-     return path;
+    fs.existsSync(dest);
+    fs.copyFileSync(src, dest);
 }

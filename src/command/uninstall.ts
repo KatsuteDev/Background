@@ -22,7 +22,4 @@ import { restartVS, uninstallJS } from "../extension";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", () => {
-    uninstallJS();
-    restartVS();
-});
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.uninstall", uninstallJS);
