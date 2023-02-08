@@ -138,11 +138,9 @@ export const installJS: () => void = () => {
                     const jnt = tmp.fileSync().name;
                     fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
 
-                    const mv: string = win ? "move /Y" : "mv -f";
-
                     const cmd: string = win
                         ? `move /Y ${jst} ${js}; move /Y ${jnt} ${json}` // todo: test
-                        : `-- sh -c '${mv} ${jst} ${js}; ${mv} ${jnt} ${json}'`; // todo: test on codespaces
+                        : `-- sh -c 'mv -f ${jst} ${js}; mv -f ${jnt} ${json}'`; // todo: test on codespaces
 
                     sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR, OUT, IN) => {
                         if(ERR){
