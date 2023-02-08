@@ -16,11 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import * as tmp from "tmp";
 import * as vscode from "vscode";
+import * as sudo from "@vscode/sudo-prompt";
 
 import { css, cssValue, get } from "./vs/vsconfig";
 
-import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
@@ -38,8 +39,6 @@ import { config } from "./command/config";
 import * as file from "./command/config/file";
 
 import { statusbar } from "./statusbar";
-
-import * as sudo from "@vscode/sudo-prompt";
 
 //
 
@@ -134,9 +133,9 @@ export const installJS: () => void = () => {
         }else{
             vscode.window.showWarningMessage("Failed to write CSS, run command as administrator?", {detail: "todo", modal: true}, "Yes", "No").then((value?: string) => {
                 if(value === "Yes"){
-                    const jst = path.join(os.tmpdir(), "workbench.desktop.main.js");
+                    const jst = tmp.fileSync().name;
                     fse.write(jst, content);
-                    const jnt = path.join(os.tmpdir(), "product.json");
+                    const jnt = tmp.fileSync().name;
                     fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
 
                     const mv: string = win ? "move /Y" : "mv -f";
@@ -169,9 +168,9 @@ export const uninstallJS: () => void = () => {
         }else{
             vscode.window.showWarningMessage("Failed to write CSS, run command as administrator?", {detail: "todo", modal: true}, "Yes", "No").then((value?: string) => {
                 if(value === "Yes"){
-                    const jst = path.join(os.tmpdir(), "workbench.desktop.main.js");
+                    const jst = tmp.fileSync().name;
                     fse.write(jst, content);
-                    const jnt = path.join(os.tmpdir(), "product.json");
+                    const jnt = tmp.fileSync().name;
                     fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
 
                     const mv: string = win ? "move /Y" : "mv -f";
