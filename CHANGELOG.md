@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.4.1
+
+### ⭐ New Features
+
+* Add hint for path modification and removal [#96](https://github.com/KatsuteDev/Background/pull/96) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump glob from 8.0.3 to 8.1.0 [#87](https://github.com/KatsuteDev/Background/pull/87) ([@dependabot](https://github.com/dependabot))
+* Bump @types/glob from 8.0.0 to 8.0.1 [#88](https://github.com/KatsuteDev/Background/pull/88) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.16.0 to 2.17.0 [#89](https://github.com/KatsuteDev/Background/pull/89) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 4.9.4 to 4.9.5 [#91](https://github.com/KatsuteDev/Background/pull/91) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.74.0 to 1.75.0 [#95](https://github.com/KatsuteDev/Background/pull/95) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.4.0...2.4.1`](https://github.com/KatsuteDev/Background/compare/2.4.0...2.4.1)
+
 ## 2.4.0
 
 ### ⭐ New Features
