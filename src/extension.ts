@@ -63,7 +63,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
                 if(!fs.existsSync(backup)){
-                    fse.copy(file, backup);
+                    fs.copyFileSync(file, backup);
                     vscode.window.showInformationMessage(`A backup was created for '${name}'`);
                 }
             }else
@@ -81,7 +81,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
                 if(!fs.existsSync(backup)){
-                    fse.copy(file, backup);
+                    fs.copyFileSync(file, backup);
                     vscode.window.showInformationMessage(`A backup was created for '${name}'`);
                 }
             }else
@@ -122,71 +122,41 @@ const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\":
 let js: string, json: string;
 
 export const installJS: () => void = () => {
-    if(js && json){
-        const content: string = removeJS(fse.read(js)) + '\n' + getJS();
-        const checksum: string = getChecksum(content);
-
-        if(fse.canWrite(js) && fse.canWrite(json)){
-            fse.write(js, content);
-            fse.write(json, fse.read(json).replace(replace, checksum).trim());
-            restartVS();
-        }else{
-            vscode.window.showWarningMessage("Failed to write CSS, run command as administrator?", {detail: "todo", modal: true}, "Yes", "No").then((value?: string) => {
-                if(value === "Yes"){
-                    const jst = tmp.fileSync().name;
-                    fse.write(jst, content);
-                    const jnt = tmp.fileSync().name;
-                    fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
-
-                    const cmd: string = win
-                        ? `move /Y ${jst} ${js}; move /Y ${jnt} ${json}` // todo: test
-                        : `-- sh -c 'mv -f ${jst} ${js}; mv -f ${jnt} ${json}'`; // todo: test on codespaces
-
-                    sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR, OUT, IN) => {
-                        if(ERR){
-                            // todo: err
-                        }else{
-                            restartVS();
-                        }
-                    });
-                }
-            });
-        }
-    }
+    js && json && write(removeJS(fse.read(js)) + '\n' + getJS());
 }
 
 export const uninstallJS: () => void = () => {
-    if(js && json){
-        const content: string = removeJS(fse.read(js));
-        const checksum: string = getChecksum(content);
+    js && json && write(removeJS(fse.read(js)));
+}
 
-        if(fse.canWrite(js) && fse.canWrite(json)){
-            fse.write(js, content);
-            fse.write(json, fse.read(json).replace(replace, checksum).trim());
-        }else{
-            vscode.window.showWarningMessage("Failed to write CSS, run command as administrator?", {detail: "todo", modal: true}, "Yes", "No").then((value?: string) => {
-                if(value === "Yes"){
-                    const jst = tmp.fileSync().name;
-                    fse.write(jst, content);
-                    const jnt = tmp.fileSync().name;
-                    fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
+export const write: (content: string) => void = (content: string) => {
+    const checksum: string = getChecksum(content);
 
-                    const mv: string = win ? "move /Y" : "mv -f";
+    if(fse.canWrite(js) && fse.canWrite(json)){
+        fse.write(js, content);
+        fse.write(json, fse.read(json).replace(replace, checksum).trim());
+        restartVS();
+    }else{
+        vscode.window.showWarningMessage("Failed to write file, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
+            if(value === "Yes"){
+                const jst = tmp.fileSync().name;
+                fse.write(jst, content);
+                const jnt = tmp.fileSync().name;
+                fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
 
-                    const cmd: string = win
-                        ? `move /Y ${jst} ${js}; move /Y ${jnt} ${json}` // todo: test
-                        : `-- sh -c '${mv} ${jst} ${js}; ${mv} ${jnt} ${json}'`; // todo: test on codespaces
+                const cmd: string = win
+                    ? `move /Y "${jst}" "${js}" && move /Y "${jnt}" "${json}"`
+                    : `-- sh -c 'mv -f "${jst}" "${js}"; mv -f "${jnt}" "${json}"'`;
 
-                    sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR, OUT, IN) => {
-                        if(ERR){
-                            // todo: err
-                        }else{
-                            restartVS();
-                        }
-                    });
-                }
-            });
-        }
+                sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR: Error | undefined, OUT, IN) => {
+                    if(ERR){
+                        vscode.window.showErrorMessage("Failed to write file", {detail: ERR.message, modal: true});
+                    }else{
+                        restartVS();
+                    }
+                });
+            }
+        });
     }
 }
 

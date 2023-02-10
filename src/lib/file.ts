@@ -43,8 +43,3 @@ export const read: (path: fs.PathLike) => string = (path: fs.PathLike) => {
 export const write: (path: fs.PathLike, content: string) => void = (path: fs.PathLike, content: string) => {
     fs.writeFileSync(path, content, "utf-8");
 }
-
-export const copy: (src: fs.PathLike, dest: fs.PathLike) => void = (src: fs.PathLike, dest: fs.PathLike) => {
-    fs.existsSync(dest);
-    fs.copyFileSync(src, dest);
-}
