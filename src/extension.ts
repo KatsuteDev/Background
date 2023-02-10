@@ -146,7 +146,7 @@ export const write: (content: string) => void = (content: string) => {
 
                 const cmd: string = win
                     ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"`
-                    : `-- sh -c 'mv -f "${jst}" "${js}"; mv -f "${jnt}" "${json}"'`;
+                    : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR: Error | undefined, OUT, IN) => {
                     if(ERR){
