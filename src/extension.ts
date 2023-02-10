@@ -145,7 +145,7 @@ export const write: (content: string) => void = (content: string) => {
                 fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
 
                 const cmd: string = win
-                    ? `move /Y "${jst}" "${js}" && move /Y "${jnt}" "${json}"`
+                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"`
                     : `-- sh -c 'mv -f "${jst}" "${js}"; mv -f "${jnt}" "${json}"'`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR: Error | undefined, OUT, IN) => {
