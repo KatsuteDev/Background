@@ -149,11 +149,10 @@ export const write: (content: string) => void = (content: string) => {
                     : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR: Error | undefined, OUT, IN) => {
-                    if(ERR){
+                    if(ERR)
                         vscode.window.showErrorMessage("Failed to write file", {detail: ERR.message, modal: true});
-                    }else{
+                    else
                         restartVS();
-                    }
                 });
             }
         });
