@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.4.2
+
+### 🐞 Bug Fixes
+
+* Fix file URI on linux and mac [#101](https://github.com/KatsuteDev/Background/pull/101) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump @types/node from 18.11.19 to 18.13.0 [#98](https://github.com/KatsuteDev/Background/pull/98) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.75.0 to 1.75.1 [#99](https://github.com/KatsuteDev/Background/pull/99) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.4.1...2.4.2`](https://github.com/KatsuteDev/Background/compare/2.4.1...2.4.2)
+
 ## 2.4.1
 
 ### ⭐ New Features
