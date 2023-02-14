@@ -51,7 +51,6 @@ export const resolve: (globs: string | string[]) => string[] = (globs: string | 
             p.push(`"${g}"`);
         else
             for(const f of glob.sync(g, options).filter(filter))
-                p.push(`"vscode-file://vscode-app/${f}"`);
-                // unlock(f) && p.push('"' + `data:image/${path.extname(f).substring(1)};base64,${fs.readFileSync(f, "base64")}` + '"');
+                p.push(`"vscode-file://vscode-app/${f.replace(/^\/+/gm, "")}"`);
     return p.filter(unique);
 }
