@@ -26,7 +26,6 @@ import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
 
-import * as fse from "./lib/file";
 import * as glob from "./lib/glob";
 import { round } from "./lib/round";
 
@@ -111,28 +110,37 @@ const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\":
 
 let js: string, json: string;
 
+const canWrite: (path: fs.PathLike) => boolean = (path: fs.PathLike) => {
+    try{
+        fs.accessSync(path, fs.constants.W_OK);
+        return true;
+    }catch(error: any){
+        return false;
+    }
+}
+
 export const installJS: () => void = () => {
-    js && json && write(removeJS(fse.read(js)) + '\n' + getJS());
+    js && json && write(removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS());
 }
 
 export const uninstallJS: () => void = () => {
-    js && json && write(removeJS(fse.read(js)));
+    js && json && write(removeJS(fs.readFileSync(js, "utf-8")));
 }
 
 export const write: (content: string) => void = (content: string) => {
     const checksum: string = getChecksum(content);
 
-    if(fse.canWrite(js) && fse.canWrite(json)){
-        fse.write(js, content);
-        fse.write(json, fse.read(json).replace(replace, checksum).trim());
+    if(canWrite(js) && canWrite(json)){
+        fs.writeFileSync(js, content, "utf-8");
+        fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
     }else{
         vscode.window.showWarningMessage("Failed to write file, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
-                fse.write(jst, content);
+                fs.writeFileSync(jst, content, "utf-8");
                 const jnt = tmp.fileSync().name;
-                fse.write(jnt, fse.read(json).replace(replace, checksum).trim());
+                fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
 
                 const cmd: string = win
                     ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"`

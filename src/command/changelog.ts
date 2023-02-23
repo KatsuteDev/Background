@@ -22,6 +22,6 @@ import { clog } from "../extension";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.changelog", (context: vscode.ExtensionContext) => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.changelog", () => {
     vscode.commands.executeCommand("markdown.showPreview", clog);
 });
