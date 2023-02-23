@@ -45,13 +45,9 @@ const identifier: string = "KatsuteDev/Background";
 export let clog: vscode.Uri;
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
-
-    // backend
-
+    // internal files
     if(require.main && require.main.filename){
-
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-
         {
             const base: string = path.join(path.dirname(require.main.filename), "vs", "workbench");
 
@@ -60,16 +56,13 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
-                if(!fs.existsSync(backup)){
+                if(!fs.existsSync(backup))
                     fse.copy(file, backup);
-                    vscode.window.showInformationMessage(`A backup was created for '${name}'`);
-                }
             }else
                 vscode.window.showErrorMessage(`Failed to find '${name}'`);
         }
 
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-
         {
             const base: string = path.join(path.dirname(require.main.filename), "../");
 
@@ -78,14 +71,11 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
-                if(!fs.existsSync(backup)){
+                if(!fs.existsSync(backup))
                     fse.copy(file, backup);
-                    vscode.window.showInformationMessage(`A backup was created for '${name}'`);
-                }
             }else
                 vscode.window.showErrorMessage(`Failed to find '${name}'`);
         }
-
     }else
         vscode.window.showErrorMessage("Failed to find main file");
 

@@ -7,5 +7,6 @@
         "sourceMap": true,
         "removeComments": true,
         "resolveJsonModule": true,
+        "noUnusedLocals": true
     }
 }
