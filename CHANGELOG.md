@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.5.0
+
+### ⭐ New Features
+
+* Prompt for admin permission if write is denied [#97](https://github.com/KatsuteDev/Background/pull/97) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump @types/node from 18.13.0 to 18.14.0 [#102](https://github.com/KatsuteDev/Background/pull/102) ([@dependabot](https://github.com/dependabot))
+* Bump @types/glob from 8.0.1 to 8.1.0 [#104](https://github.com/KatsuteDev/Background/pull/104) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.4.2...2.5.0`](https://github.com/KatsuteDev/Background/compare/2.4.2...2.5.0)
+
 ## 2.4.2
 
 ### 🐞 Bug Fixes
