@@ -135,7 +135,7 @@ export const write: (content: string) => void = (content: string) => {
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
     }else{
-        vscode.window.showWarningMessage("Failed to write file, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
+        vscode.window.showWarningMessage("Failed to install background, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
                 fs.writeFileSync(jst, content, "utf-8");
@@ -148,7 +148,7 @@ export const write: (content: string) => void = (content: string) => {
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR: Error | undefined, OUT, IN) => {
                     if(ERR)
-                        vscode.window.showErrorMessage("Failed to write file", {detail: ERR.message, modal: true});
+                        vscode.window.showErrorMessage("Failed to install background", {detail: ERR.message, modal: true});
                     else
                         restartVS();
                 });
