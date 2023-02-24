@@ -16,7 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import * as tmp from "tmp";
 import * as vscode from "vscode";
+import * as sudo from "@vscode/sudo-prompt";
 
 import { css, cssValue, get } from "./vs/vsconfig";
 
@@ -24,7 +26,6 @@ import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
 
-import * as fse from "./lib/file";
 import * as glob from "./lib/glob";
 import { round } from "./lib/round";
 
@@ -57,7 +58,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
                 if(!fs.existsSync(backup))
-                    fse.copy(file, backup);
+                    fs.copyFileSync(file, backup);
             }else
                 vscode.window.showErrorMessage(`Failed to find '${name}'`);
         }
@@ -72,7 +73,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             if(fs.existsSync(file)){
                 const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
                 if(!fs.existsSync(backup))
-                    fse.copy(file, backup);
+                    fs.copyFileSync(file, backup);
             }else
                 vscode.window.showErrorMessage(`Failed to find '${name}'`);
         }
@@ -96,39 +97,68 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
 //
 
-let js: string;
+const win: boolean = process.platform === "win32";
 
-export const installJS: () => void = () => {
-    if(js){
-        fse.write(js, removeJS(fse.read(js)) + '\n' + getJS());
-        writeChecksum();
-    }
-}
-
-export const uninstallJS: () => void = () => {
-    if(js){
-        fse.write(js, removeJS(fse.read(js)));
-        writeChecksum();
-    }
-}
-
-export const restartVS: () => void = () => {
-    vscode.commands.executeCommand("workbench.action.reloadWindow");
-}
-
-let json: string;
-
-const checksum: (file: string) => string = (file: string) =>
+const getChecksum: (raw: string) => string = (raw: string) =>
     crypto
         .createHash("md5")
-        .update(fse.read(file))
+        .update(raw)
         .digest("base64")
         .replace(/=+$/gm, '');
 
 const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
 
-const writeChecksum: () => void = () => {
-    json && fse.write(json, fse.read(json).replace(replace, checksum(js)).trim());
+let js: string, json: string;
+
+const canWrite: (path: fs.PathLike) => boolean = (path: fs.PathLike) => {
+    try{
+        fs.accessSync(path, fs.constants.W_OK);
+        return true;
+    }catch(error: any){
+        return false;
+    }
+}
+
+export const installJS: () => void = () => {
+    js && json && write(removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS());
+}
+
+export const uninstallJS: () => void = () => {
+    js && json && write(removeJS(fs.readFileSync(js, "utf-8")));
+}
+
+export const write: (content: string) => void = (content: string) => {
+    const checksum: string = getChecksum(content);
+
+    if(canWrite(js) && canWrite(json)){
+        fs.writeFileSync(js, content, "utf-8");
+        fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
+        restartVS();
+    }else{
+        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
+            if(value === "Yes"){
+                const jst = tmp.fileSync().name;
+                fs.writeFileSync(jst, content, "utf-8");
+                const jnt = tmp.fileSync().name;
+                fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
+
+                const cmd: string = win
+                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"`
+                    : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
+
+                sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
+                    if(ERR)
+                        vscode.window.showErrorMessage("Failed to write changes", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
+                    else
+                        restartVS();
+                });
+            }
+        });
+    }
+}
+
+export const restartVS: () => void = () => {
+    vscode.commands.executeCommand("workbench.action.reloadWindow");
 }
 
 //
