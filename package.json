@@ -337,7 +337,7 @@
         "@types/node": "18.14.1",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.75.1",
-        "@vscode/vsce": "2.17.0",
+        "@vscode/vsce": "2.18.0",
         "rimraf": "3.0.2",
         "typescript": "4.9.5"
     }
