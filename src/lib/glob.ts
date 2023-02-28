@@ -16,14 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { glob, IOptions } from "glob";
+import { globSync } from "glob";
+import { GlobOptions } from "glob/dist/cjs";
 
 import * as path from "path";
 
 import { extensions } from "../command/config/file";
 import { unique } from "./unique";
 
-const filter = (v: string) => { // images only
+const filter: (v: any) => boolean = (v : string): v is string => { // images only
     const ext: string = path.extname(v);
     for(const m of extensions())
         if(`.${m}` === ext)
@@ -31,16 +32,15 @@ const filter = (v: string) => { // images only
     return false;
 }
 
-const options: IOptions = {
+const options: GlobOptions = {
     absolute: true,
-    nodir: true,
-    nosort: true
+    nodir: true
 }
 
 export const count: (globs: string | string[]) => number = (globs: string | string[]) => {
     let i = 0;
     for(const g of (Array.isArray(globs) ? globs : [globs]).filter(unique))
-        i += +g.startsWith("https://") || glob.sync(g, options).filter(filter).length;
+        i += +g.startsWith("https://") || globSync(g, options).filter(filter).length;
     return i;
 }
 
@@ -50,7 +50,7 @@ export const resolve: (globs: string | string[]) => string[] = (globs: string | 
         if(g.startsWith("https://"))
             p.push(`"${g}"`);
         else
-            for(const f of glob.sync(g, options).filter(filter))
+            for(const f of globSync(g, options).filter(filter) as string[])
                 p.push(`"vscode-file://vscode-app/${f.replace(/^\/+/gm, "")}"`);
     return p.filter(unique);
 }
