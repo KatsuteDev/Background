@@ -11,7 +11,7 @@
     "version": "2.5.0",
     "private": true,
     "engines": {
-        "vscode": "^1.75.0"
+        "vscode": "^1.76.0"
     },
     "categories": [
         "Other"
@@ -336,7 +336,7 @@
         "@types/glob": "8.1.0",
         "@types/node": "18.14.4",
         "@types/tmp": "0.2.3",
-        "@types/vscode": "1.75.1",
+        "@types/vscode": "1.76.0",
         "@vscode/vsce": "2.18.0",
         "rimraf": "3.0.2",
         "typescript": "4.9.5"
