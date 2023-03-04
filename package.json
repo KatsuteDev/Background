@@ -307,7 +307,7 @@
     "main": "dist/extension.js",
     "scripts": {
         "// -- dev -- //": "",
-        "clean": "rimraf dist & rimraf dist & rimraf code-background-*.vsix",
+        "clean": "rimraf --glob dist & rimraf --glob code-background-*.vsix",
         "prune": "npm prune && npm i --package-lock --ignore-scripts",
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
