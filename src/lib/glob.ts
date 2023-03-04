@@ -24,7 +24,7 @@ import * as path from "path";
 import { extensions } from "../command/config/file";
 import { unique } from "./unique";
 
-const filter: (v: any) => boolean = (v : string): v is string => { // images only
+const filter: (v: string) => boolean = (v : string) => {
     const ext: string = path.extname(v);
     for(const m of extensions())
         if(`.${m}` === ext)
@@ -47,7 +47,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
         else
             globs.push(g);
 
-    return i + globSync(globs, options).filter(filter).length;
+    return i + (globSync(globs, options) as string[]).filter(filter).length;
 }
 
 export const resolve: (glob: string | string[]) => string[] = (glob: string | string[]) => {
