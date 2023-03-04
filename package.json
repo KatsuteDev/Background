@@ -329,12 +329,12 @@
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "dependencies": {
         "@vscode/sudo-prompt": "9.3.1",
-        "glob": "9.1.2",
+        "glob": "9.2.1",
         "tmp": "0.2.1"
     },
     "devDependencies": {
         "@types/glob": "8.1.0",
-        "@types/node": "18.14.4",
+        "@types/node": "18.14.6",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.76.0",
         "@vscode/vsce": "2.18.0",
