@@ -47,7 +47,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
         else
             globs.push(g);
 
-    return i + (globSync(globs, options) as string[]).filter(filter).length;
+    return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
 }
 
 export const resolve: (glob: string | string[]) => string[] = (glob: string | string[]) => {
@@ -56,7 +56,9 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
 
     (Array.isArray(glob) ? glob.filter(unique) : [glob]).forEach(g => (g.startsWith("https://") ? p : globs).push(g));
 
-    return p.concat((globSync(globs, options) as string[]).map(path => `vscode-file://vscode-app/${path.replace(/^\/+/gm, "")}`))
+    return p.concat((globSync(globs, options) as string[])
+                .filter(filter)
+                .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
             .filter(unique)
             .map(path => '"' + path + '"');
 }
