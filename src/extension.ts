@@ -110,15 +110,6 @@ const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\":
 
 let js: string, json: string;
 
-const canWrite: (path: fs.PathLike) => boolean = (path: fs.PathLike) => {
-    try{
-        fs.accessSync(path, fs.constants.W_OK);
-        return true;
-    }catch(error: any){
-        return false;
-    }
-}
-
 export const installJS: () => void = () => {
     js && json && write(removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS());
 }
@@ -130,12 +121,12 @@ export const uninstallJS: () => void = () => {
 export const write: (content: string) => void = (content: string) => {
     const checksum: string = getChecksum(content);
 
-    if(canWrite(js) && canWrite(json)){
+    try{
         fs.writeFileSync(js, content, "utf-8");
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
-    }else{
-        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
+    }catch(err: any){
+        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
                 fs.writeFileSync(jst, content, "utf-8");
