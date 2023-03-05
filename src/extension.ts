@@ -126,7 +126,7 @@ export const write: (content: string) => void = (content: string) => {
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
     }catch(err: any){
-        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: "VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?", modal: true}, "Yes").then((value?: string) => {
+        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
                 fs.writeFileSync(jst, content, "utf-8");
