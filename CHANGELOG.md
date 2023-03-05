@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.5.1
+
+### 🐞 Bug Fixes
+
+* Fix write sometimes not prompting for admin permission [#114](https://github.com/KatsuteDev/Background/pull/114) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump @vscode/vsce from 2.17.0 to 2.18.0 [#105](https://github.com/KatsuteDev/Background/pull/105) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.75.1 to 1.76.0 [#110](https://github.com/KatsuteDev/Background/pull/110) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 3.0.2 to 4.3.0 [#112](https://github.com/KatsuteDev/Background/pull/112) ([@dependabot](https://github.com/dependabot))
+* Update to glob v9 [#107](https://github.com/KatsuteDev/Background/pull/107) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.5.0...2.5.1`](https://github.com/KatsuteDev/Background/compare/2.5.0...2.5.1)
+
 ## 2.5.0
 
 ### ⭐ New Features
