@@ -16,14 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { glob, IOptions } from "glob";
+import { globSync } from "glob";
+import { GlobOptions } from "glob/dist/cjs";
 
 import * as path from "path";
 
 import { extensions } from "../command/config/file";
 import { unique } from "./unique";
 
-const filter = (v: string) => { // images only
+const filter: (v: string) => boolean = (v : string) => {
     const ext: string = path.extname(v);
     for(const m of extensions())
         if(`.${m}` === ext)
@@ -31,26 +32,33 @@ const filter = (v: string) => { // images only
     return false;
 }
 
-const options: IOptions = {
+const options: GlobOptions = {
     absolute: true,
-    nodir: true,
-    nosort: true
+    nodir: true
 }
 
-export const count: (globs: string | string[]) => number = (globs: string | string[]) => {
+export const count: (glob: string | string[]) => number = (glob: string | string[]) => {
     let i = 0;
-    for(const g of (Array.isArray(globs) ? globs : [globs]).filter(unique))
-        i += +g.startsWith("https://") || glob.sync(g, options).filter(filter).length;
-    return i;
+
+    let globs: string[] = [];
+    for(const g of (Array.isArray(glob) ? glob.filter(unique) : [glob]))
+        if(g.startsWith("https://"))
+            i++;
+        else
+            globs.push(g);
+
+    return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
 }
 
-export const resolve: (globs: string | string[]) => string[] = (globs: string | string[]) => {
+export const resolve: (glob: string | string[]) => string[] = (glob: string | string[]) => {
     let p: string[] = [];
-    for(const g of (Array.isArray(globs) ? globs : [globs]).filter(unique))
-        if(g.startsWith("https://"))
-            p.push(`"${g}"`);
-        else
-            for(const f of glob.sync(g, options).filter(filter))
-                p.push(`"vscode-file://vscode-app/${f.replace(/^\/+/gm, "")}"`);
-    return p.filter(unique);
+    let globs: string[] = [];
+
+    (Array.isArray(glob) ? glob.filter(unique) : [glob]).forEach(g => (g.startsWith("https://") ? p : globs).push(g));
+
+    return p.concat((globSync(globs, options) as string[])
+                .filter(filter)
+                .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
+            .filter(unique)
+            .map(path => '"' + path + '"');
 }

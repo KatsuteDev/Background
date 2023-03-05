@@ -16,4 +16,4 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-export const unique = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
+export const unique: (v: string, i: number, self: string[]) => boolean = (v: string, i: number, self: string[]) => self.indexOf(v) === i;
