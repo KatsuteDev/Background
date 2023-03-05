@@ -122,9 +122,7 @@ export const write: (content: string) => void = (content: string) => {
     const checksum: string = getChecksum(content);
 
     try{
-        fs.accessSync(js, fs.constants.W_OK);
         fs.writeFileSync(js, content, "utf-8");
-        fs.accessSync(json, fs.constants.W_OK);
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
     }catch(err: any){
