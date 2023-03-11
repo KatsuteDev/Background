@@ -2,26 +2,22 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
-    labels:
-      - dependencies
-    assignees:
-      - Katsute
+    labels: [dependencies]
+    assignees: [Katsute]
     schedule:
       interval: daily
-      time: '07:00'
+      time: "07:00"
       timezone: US/Eastern
-    open-pull-requests-limit: 99
+    open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: /
-    labels:
-      - dependencies
-    assignees:
-      - Katsute
+    labels: [dependencies]
+    assignees: [Katsute]
     schedule:
       interval: daily
-      time: '07:00'
+      time: "07:00"
       timezone: US/Eastern
-    open-pull-requests-limit: 99
+    open-pull-requests-limit: 10
     ignore:
       - dependency-name: "@types/node"
         update-types:
