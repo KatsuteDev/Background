@@ -1,0 +1,26 @@
+name: Repository Manager
+on:
+  workflow_dispatch:
+  create:
+  issues:
+    types: [opened, reopened, closed]
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, closed]
+  issue_comment:
+    types: [created]
+  release:
+    types: [published]
+
+jobs:
+  manager:
+    name: Repository Manager
+    uses: Katsute/Workflows/.github/workflows/manager.yml@main
+    if: >-
+      ${{
+      (github.repository_owner == 'Katsute' || github.repository_owner == 'KatsuteDev') &&
+      github.actor != 'mashiro-san' &&
+      !endsWith(github.actor, '[bot]')
+      }}
+    secrets:
+      token: ${{ secrets.BOT }}
