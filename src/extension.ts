@@ -45,36 +45,38 @@ const identifier: string = "KatsuteDev/Background";
 
 export let clog: vscode.Uri;
 
+const win: boolean = process.platform === "win32";
+
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
     // internal files
     if(require.main && require.main.filename){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        const workbench: string = path.join(path.dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
+        const workbench: string = js = path.join(path.dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-        const product: string = path.join(path.dirname(require.main.filename), "../", "product.json");
+        const product: string = json = path.join(path.dirname(require.main.filename), "../", "product.json");
 
         if(!fs.existsSync(workbench))
             vscode.window.showErrorMessage(`Failed to find '${workbench}`);
         else if(!fs.existsSync(product))
             vscode.window.showErrorMessage(`Failed to find '${product}`);
         else{ // workbench & product exists
-            const workbench_backup: string = workbench.replace(".js", ".backup.js");
-            const product_backup: string = product.replace(".json", ".backup.json");
+            const workbench_backup: string = workbench.replace(".js", "-backup.js");
+            const product_backup: string = product.replace(".json", "-backup.json");
 
             if(!fs.existsSync(workbench_backup) || !fs.existsSync(product_backup)){ // backup missing
                 try{
                     fs.copyFileSync(workbench, workbench_backup);
                     fs.copyFileSync(product, product_backup);
                 }catch(err: any){
-                    vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+                    vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
                             const cmd: string = win
-                                ? `xcopy /r /y "${workbench}" "${workbench_backup}" && xcopy /r /y "${product}" "${product_backup}"`
+                                ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * to force file and not interactive
                                 : `-- sh -c "cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'"`;
 
                             sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                                 if(ERR)
-                                    vscode.window.showErrorMessage("Failed to write changes", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
+                                    vscode.window.showErrorMessage("Failed to backup files", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
                                 else
                                     restartVS();
                             });
@@ -102,8 +104,6 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 };
 
 //
-
-const win: boolean = process.platform === "win32";
 
 const getChecksum: (raw: string) => string = (raw: string) =>
     crypto
