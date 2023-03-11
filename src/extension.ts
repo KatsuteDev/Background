@@ -56,9 +56,9 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
         const product: string = json = path.join(path.dirname(require.main.filename), "../", "product.json");
 
         if(!fs.existsSync(workbench))
-            vscode.window.showErrorMessage(`Failed to find '${workbench}`);
+            vscode.window.showErrorMessage(`Failed to find '${workbench}, please report this issue`);
         else if(!fs.existsSync(product))
-            vscode.window.showErrorMessage(`Failed to find '${product}`);
+            vscode.window.showErrorMessage(`Failed to find '${product}, please report this issue`);
         else{ // workbench & product exists
             const workbench_backup: string = workbench.replace(".js", "-backup.js");
             const product_backup: string = product.replace(".json", "-backup.json");
@@ -68,7 +68,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                     fs.copyFileSync(workbench, workbench_backup);
                     fs.copyFileSync(product, product_backup);
                 }catch(err: any){
-                    vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+                    vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
                             const cmd: string = win
                                 ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * to force file and not interactive
@@ -80,7 +80,8 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                                 else
                                     restartVS();
                             });
-                        }
+                        }else
+                            vscode.window.showWarningMessage("Background extension is running without backup files");
                     });
                 }
             }
@@ -132,7 +133,7 @@ export const write: (content: string) => void = (content: string) => {
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
     }catch(err: any){
-        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `The Background extension does not have permission to write changes, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
                 fs.writeFileSync(jst, content, "utf-8");
