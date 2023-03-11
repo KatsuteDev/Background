@@ -49,33 +49,39 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
     // internal files
     if(require.main && require.main.filename){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        {
-            const base: string = path.join(path.dirname(require.main.filename), "vs", "workbench");
-
-            const file: string = js = path.join(base, "workbench.desktop.main.js");
-            const name: string = path.basename(file);
-
-            if(fs.existsSync(file)){
-                const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
-                if(!fs.existsSync(backup))
-                    fs.copyFileSync(file, backup);
-            }else
-                vscode.window.showErrorMessage(`Failed to find '${name}'`);
-        }
-
+        const workbench: string = path.join(path.dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-        {
-            const base: string = path.join(path.dirname(require.main.filename), "../");
+        const product: string = path.join(path.dirname(require.main.filename), "../", "product.json");
 
-            const file: string = json = path.join(base, "product.json");
-            const name: string = path.basename(file);
+        if(!fs.existsSync(workbench))
+            vscode.window.showErrorMessage(`Failed to find '${workbench}`);
+        else if(!fs.existsSync(product))
+            vscode.window.showErrorMessage(`Failed to find '${product}`);
+        else{ // workbench & product exists
+            const workbench_backup: string = workbench.replace(".js", ".backup.js");
+            const product_backup: string = product.replace(".json", ".backup.json");
 
-            if(fs.existsSync(file)){
-                const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
-                if(!fs.existsSync(backup))
-                    fs.copyFileSync(file, backup);
-            }else
-                vscode.window.showErrorMessage(`Failed to find '${name}'`);
+            if(!fs.existsSync(workbench_backup) || !fs.existsSync(product_backup)){ // backup missing
+                try{
+                    fs.copyFileSync(workbench, workbench_backup);
+                    fs.copyFileSync(product, product_backup);
+                }catch(err: any){
+                    vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+                        if(value === "Yes"){
+                            const cmd: string = win
+                                ? `xcopy /r /y "${workbench}" "${workbench_backup}" && xcopy /r /y "${product}" "${product_backup}"`
+                                : `-- sh -c "cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'"`;
+
+                            sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
+                                if(ERR)
+                                    vscode.window.showErrorMessage("Failed to write changes", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
+                                else
+                                    restartVS();
+                            });
+                        }
+                    });
+                }
+            }
         }
     }else
         vscode.window.showErrorMessage("Failed to find main file");
