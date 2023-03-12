@@ -87,7 +87,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
             }
         }
     }else
-        vscode.window.showErrorMessage("Failed to find main file");
+        vscode.window.showErrorMessage("Failed to find main file, please report this issue");
 
     // extension
 
@@ -141,7 +141,7 @@ export const write: (content: string) => void = (content: string) => {
                 fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
 
                 const cmd: string = win
-                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"`
+                    ? `xcopy /r /y "${jst}" "${js}*" && xcopy /r /y "${jnt}" "${json}*"`
                     : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
