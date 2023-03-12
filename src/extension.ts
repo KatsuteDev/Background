@@ -71,7 +71,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                     vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
                             const cmd: string = win
-                                ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * to force file and not interactive
+                                ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * force file, xcopy defect
                                 : `-- sh -c "cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'"`;
 
                             sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
@@ -141,7 +141,7 @@ export const write: (content: string) => void = (content: string) => {
                 fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
 
                 const cmd: string = win
-                    ? `xcopy /r /y "${jst}" "${js}*" && xcopy /r /y "${jnt}" "${json}*"`
+                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"` // do not use *, xcopy defect
                     : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
