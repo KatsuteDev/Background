@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.5.2
+
+### 🐞 Bug Fixes
+
+* Fix backup write not prompting for admin permission [#119](https://github.com/KatsuteDev/Background/pull/119) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump rimraf from 4.3.0 to 4.3.1 [#115](https://github.com/KatsuteDev/Background/pull/115) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 4.3.1 to 4.4.0 [#116](https://github.com/KatsuteDev/Background/pull/116) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 18.14.6 to 18.15.0 [#117](https://github.com/KatsuteDev/Background/pull/117) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 9.2.1 to 9.3.0 [#121](https://github.com/KatsuteDev/Background/pull/121) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.5.1...2.5.2`](https://github.com/KatsuteDev/Background/compare/2.5.1...2.5.2)
+
 ## 2.5.1
 
 ### 🐞 Bug Fixes

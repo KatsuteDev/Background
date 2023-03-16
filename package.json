@@ -334,7 +334,7 @@
     },
     "devDependencies": {
         "@types/glob": "8.1.0",
-        "@types/node": "18.15.0",
+        "@types/node": "18.15.3",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.76.0",
         "@vscode/vsce": "2.18.0",
