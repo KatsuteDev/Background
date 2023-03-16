@@ -45,40 +45,49 @@ const identifier: string = "KatsuteDev/Background";
 
 export let clog: vscode.Uri;
 
+const win: boolean = process.platform === "win32";
+
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
     // internal files
     if(require.main && require.main.filename){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        {
-            const base: string = path.join(path.dirname(require.main.filename), "vs", "workbench");
-
-            const file: string = js = path.join(base, "workbench.desktop.main.js");
-            const name: string = path.basename(file);
-
-            if(fs.existsSync(file)){
-                const backup: string = path.join(base, `${path.parse(name).name}-backup.js`);
-                if(!fs.existsSync(backup))
-                    fs.copyFileSync(file, backup);
-            }else
-                vscode.window.showErrorMessage(`Failed to find '${name}'`);
-        }
-
+        const workbench: string = js = path.join(path.dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-        {
-            const base: string = path.join(path.dirname(require.main.filename), "../");
+        const product: string = json = path.join(path.dirname(require.main.filename), "../", "product.json");
 
-            const file: string = json = path.join(base, "product.json");
-            const name: string = path.basename(file);
+        if(!fs.existsSync(workbench))
+            vscode.window.showErrorMessage(`Failed to find '${workbench}, please report this issue`);
+        else if(!fs.existsSync(product))
+            vscode.window.showErrorMessage(`Failed to find '${product}, please report this issue`);
+        else{ // workbench & product exists
+            const workbench_backup: string = workbench.replace(".js", "-backup.js");
+            const product_backup: string = product.replace(".json", "-backup.json");
 
-            if(fs.existsSync(file)){
-                const backup: string = path.join(base, `${path.parse(name).name}-backup.json`);
-                if(!fs.existsSync(backup))
-                    fs.copyFileSync(file, backup);
-            }else
-                vscode.window.showErrorMessage(`Failed to find '${name}'`);
+            if(!fs.existsSync(workbench_backup) || !fs.existsSync(product_backup)){ // backup missing
+                try{
+                    fs.copyFileSync(workbench, workbench_backup);
+                    fs.copyFileSync(product, product_backup);
+                }catch(err: any){
+                    vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+                        if(value === "Yes"){
+                            const cmd: string = win
+                                ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * force file, xcopy defect
+                                : `-- sh -c "cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'"`;
+
+                            sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
+                                if(ERR)
+                                    vscode.window.showErrorMessage("Failed to backup files", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
+                                else
+                                    restartVS();
+                            });
+                        }else
+                            vscode.window.showWarningMessage("Background extension is running without backup files");
+                    });
+                }
+            }
         }
     }else
-        vscode.window.showErrorMessage("Failed to find main file");
+        vscode.window.showErrorMessage("Failed to find main file, please report this issue");
 
     // extension
 
@@ -96,8 +105,6 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 };
 
 //
-
-const win: boolean = process.platform === "win32";
 
 const getChecksum: (raw: string) => string = (raw: string) =>
     crypto
@@ -126,7 +133,7 @@ export const write: (content: string) => void = (content: string) => {
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
         restartVS();
     }catch(err: any){
-        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `VSCode does not have permission to write to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+        vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `The Background extension does not have permission to write changes, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
                 fs.writeFileSync(jst, content, "utf-8");
@@ -134,7 +141,7 @@ export const write: (content: string) => void = (content: string) => {
                 fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
 
                 const cmd: string = win
-                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"`
+                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"` // do not use *, xcopy defect
                     : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
