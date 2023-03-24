@@ -6,10 +6,10 @@
  - [ ] No sensitive information is exposed.
  - [ ] Relevant comments have been added.
 
-### GitHub Copilot Disclaimer
-*The use of GitHub Copilot is **strictly prohibited** on this repository.*
+### Code Generators
+*The use of GitHub Copilot or ChatGPT is **strictly prohibited** on this repository.*
 
- - [ ] This pull does not use GitHub Copilot.
+ - [ ] This pull does not use GitHub Copilot or ChatGPT.
 
 ### Changes Made
 *List any changes made and/or other relevant issues.*
