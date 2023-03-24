@@ -19,6 +19,7 @@
 import * as vscode from "vscode";
 
 import { get, UI } from "../vs/vsconfig";
+import { pkg } from "../vs/package";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../vs/quickpick";
 
 import * as file from "./config/file";
@@ -33,6 +34,8 @@ import * as str from "../lib/str";
 import * as glob from "../lib/glob";
 
 // interface
+
+const issues: vscode.Uri = vscode.Uri.parse(pkg.bugs.url);
 
 export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
     showQuickPick([
@@ -106,9 +109,12 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         // changelog
         quickPickItem({
             label: "$(output) Changelog",
-            description: "Open extension changelog",
             handle: () => vscode.commands.executeCommand("background.changelog")
         }),
+        quickPickItem({
+            label: `$(bug) Report an Issue`,
+            handle: () => vscode.env.openExternal(issues)
+        })
     ], options);
 });
 
