@@ -67,7 +67,7 @@
             "order": 0,
             "properties": {
                 "background.windowBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from.\n\n* Use only `/` for directories, `\\` is reserved for escape characters.\n\n* Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 0,
                     "default": [],
@@ -76,7 +76,7 @@
                     }
                 },
                 "background.editorBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from.\n\n* Use only `/` for directories, `\\` is reserved for escape characters.\n\n* Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 1,
                     "default": [],
@@ -85,7 +85,7 @@
                     }
                 },
                 "background.sidebarBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from.\n\n* Use only `/` for directories, `\\` is reserved for escape characters.\n\n* Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 2,
                     "default": [],
@@ -94,7 +94,7 @@
                     }
                 },
                 "background.panelBackgrounds": {
-                    "markdownDescription": "The list of files, globs, or URLs to pull background images from. **Use only '/' for directories**, '\\' is reserved for escape characters. Image URLs must be served over HTTPS.",
+                    "markdownDescription": "The list of files, globs, or URLs to pull background images from.\n\n* Use only `/` for directories, `\\` is reserved for escape characters.\n\n* Image URLs must be served over HTTPS.",
                     "type": "array",
                     "order": 3,
                     "default": [],
@@ -165,7 +165,7 @@
                     }
                 },
                 "background.backgroundOpacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change. 0 is fully visible and 1 is invisible.",
+                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.\n\n`0` is fully visible and `1` is invisible.",
                     "type": "array",
                     "order": 7,
                     "default": [
@@ -260,7 +260,7 @@
                     }
                 },
                 "background.backgroundChangeTime": {
-                    "markdownDescription": "How long in seconds before the background should automatically change. Set to 0 to always use the same image.",
+                    "markdownDescription": "How long in seconds before the background should automatically change.\n\nSet to `0` to always use the same image.",
                     "type": "array",
                     "order": 11,
                     "default": [
