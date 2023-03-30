@@ -1,7 +1,6 @@
 name: Test
 on:
   workflow_dispatch:
-  push:
 
 jobs:
   test:
@@ -32,3 +31,7 @@ jobs:
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
         run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+
+      - name: List Files
+        shell: bash
+        run: ls
