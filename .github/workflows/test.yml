@@ -56,5 +56,5 @@ jobs:
                     return commands.join("; ");
             };
 
-            console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]]));
-            console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]], true));
+            console.log(cp([["A.txt", "C.txt"], ["B.txt", "D.txt"]]));
+            console.log(cp([["A.txt", "C.txt"], ["B.txt", "D.txt"]], true));
