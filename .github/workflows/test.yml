@@ -21,15 +21,15 @@ jobs:
 
       - name: Copy (Windows)
         if: matrix.os == 'windows-latest'
-        run: xcopy /r /y "A.txt" "C.txt*"; xcopy /r /y "B.txt" "D.txt*"
+        run: xcopy /r /y "A.txt" "C.txt*" && xcopy /r /y "B.txt" "D.txt*"
 
       - name: Copy (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: cp -f 'A.txt' 'C.txt' && cp -f 'B.txt' 'D.txt'
 
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
-        run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: cp -f 'A.txt' 'C.txt' && cp -f 'B.txt' 'D.txt'
 
       - name: List Files
         shell: bash
@@ -47,8 +47,13 @@ jobs:
                     commands.push(platform == "win32"
                         ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
                         : `cp -f '${file[0]}' '${file[1]}'`);
-                if(platform == "win32")
                     return commands.join(" && ");
+                    return commands.join(" && ");
+                else if(platform == "darwin")
+                    return `sh -c "${commands.join("; ")}"`;
+                else
+                    return commands.join("; ");
+                return commands.join(" && ");
                 else if(platform == "darwin")
                     return `sh -c "${commands.join("; ")}"`;
                 else
