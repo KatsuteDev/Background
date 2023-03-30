@@ -48,16 +48,6 @@ jobs:
                         ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
                         : `cp -f '${file[0]}' '${file[1]}'`);
                     return commands.join(" && ");
-                    return commands.join(" && ");
-                else if(platform == "darwin")
-                    return `sh -c "${commands.join("; ")}"`;
-                else
-                    return commands.join("; ");
-                return commands.join(" && ");
-                else if(platform == "darwin")
-                    return `sh -c "${commands.join("; ")}"`;
-                else
-                    return commands.join("; ");
             };
 
             console.log(cp([["A.txt", "C.txt"], ["B.txt", "D.txt"]]));
