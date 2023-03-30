@@ -45,12 +45,12 @@ const identifier: string = "KatsuteDev/Background";
 
 export let clog: vscode.Uri;
 
-const platform: NodeJS.Platform = process.platform;
+const win: boolean = process.platform === "win32";
 
 const cp: (files: [string, string][], asterisk?: boolean) => string = (files: [string, string][], asterisk: boolean = false) => {
     let commands: string[] = [];
     for(const file of files)
-        commands.push(platform == "win32"
+        commands.push(win
             ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
             : `cp -f '${file[0]}' '${file[1]}'`);
     return commands.join(" && ");
@@ -148,7 +148,7 @@ export const write: (content: string) => void = (content: string) => {
                 const jnt = tmp.fileSync().name;
                 fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
 
-                const cmd: string = cp([[jst, js], [jnt, json]], true);
+                const cmd: string = cp([[jst, js], [jnt, json]]);
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                     if(ERR)
                         vscode.window.showErrorMessage("Failed to write changes", {

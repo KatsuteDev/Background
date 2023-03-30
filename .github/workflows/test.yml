@@ -39,12 +39,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const platform = process.platform;
+            const win = process.platform === "win32"
 
             const cp = (files, asterisk = false) => {
                 let commands = [];
                 for(const file of files)
-                    commands.push(platform == "win32"
+                    commands.push(win
                         ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
                         : `cp -f '${file[0]}' '${file[1]}'`);
                     return commands.join(" && ");
