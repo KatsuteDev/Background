@@ -45,7 +45,21 @@ const identifier: string = "KatsuteDev/Background";
 
 export let clog: vscode.Uri;
 
-const win: boolean = process.platform === "win32";
+const platform: NodeJS.Platform = process.platform;
+
+const cp: (files: [string, string][], asterisk?: boolean) => string = (files: [string, string][], asterisk: boolean = false) => {
+    let commands: string[] = [];
+    for(const file of files)
+        commands.push(platform == "win32"
+            ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
+            : `cp -f '${file[0]}' '${file[1]}'`);
+    if(platform == "win32")
+        return commands.join("&&");
+    else if(platform == "darwin")
+        return `-- sh -c "${commands.join("; ")}"`;
+    else
+        return commands.join("; ");
+};
 
 export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
     // internal files
@@ -70,13 +84,12 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                 }catch(err: any){
                     vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
-                            const cmd: string = win
-                                ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * force file, xcopy defect
-                                : `cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'`;
-
+                            const cmd: string = cp([[workbench, workbench_backup], [product, product_backup]], true);
                             sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                                 if(ERR)
-                                    vscode.window.showErrorMessage("Failed to backup files", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
+                                    vscode.window.showErrorMessage("Failed to backup files", {
+                                        detail: `OS: ${process.platform}\nUsing command: ${cmd}\n\n${ERR.message}`, modal: true
+                                    });
                                 else
                                     restartVS();
                             });
@@ -140,13 +153,12 @@ export const write: (content: string) => void = (content: string) => {
                 const jnt = tmp.fileSync().name;
                 fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
 
-                const cmd: string = win
-                    ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"` // do not use *, xcopy defect
-                    : `cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'`;
-
+                const cmd: string = cp([[jst, js], [jnt, json]], true);
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                     if(ERR)
-                        vscode.window.showErrorMessage("Failed to write changes", {detail: `Using command: ${cmd}\n\n${ERR.message}`, modal: true});
+                        vscode.window.showErrorMessage("Failed to write changes", {
+                            detail: `OS: ${process.platform}\nUsing command: ${cmd}\n\n${ERR.message}`, modal: true
+                        });
                     else
                         restartVS();
                 });

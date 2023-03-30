@@ -27,12 +27,35 @@ jobs:
 
       - name: Copy (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: sudo -- sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
 
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
-        run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: sudo -- sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
 
       - name: List Files
         shell: bash
         run: ls
+
+      - name: Script
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const platform = process.platform;
+
+            const cp = (files, asterisk = false) => {
+                let commands = [];
+                for(const file of files)
+                    commands.push(platform == "win32"
+                        ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
+                        : `cp -f '${file[0]}' '${file[1]}'`);
+                if(platform == "win32")
+                    return commands.join("&&");
+                else if(platform == "darwin")
+                    return `-- sh -c "${commands.join("; ")}"`;
+                else
+                    return commands.join("; ");
+            };
+
+            console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]]));
+            console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]]), true);
