@@ -50,7 +50,7 @@ jobs:
                 if(platform == "win32")
                     return commands.join(" && ");
                 else if(platform == "darwin")
-                    return `-- sh -c "${commands.join("; ")}"`;
+                    return `sh -c "${commands.join("; ")}"`;
                 else
                     return commands.join("; ");
             };
