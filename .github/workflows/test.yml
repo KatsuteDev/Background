@@ -8,9 +8,6 @@ jobs:
     name: Test
     timeout-minutes: 2
     runs-on: ${{ matrix.os }}
-    concurrency:
-       group: test
-       cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
@@ -28,11 +25,11 @@ jobs:
 
       - name: Copy (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo -- sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
 
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
-        run: sudo -- sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: sudo sh -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
 
       - name: List Files
         shell: bash

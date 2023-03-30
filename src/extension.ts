@@ -56,7 +56,7 @@ const cp: (files: [string, string][], asterisk?: boolean) => string = (files: [s
     if(platform == "win32")
         return commands.join(" && ");
     else if(platform == "darwin")
-        return `-- sh -c "${commands.join("; ")}"`;
+        return `sh -c "${commands.join("; ")}"`;
     else
         return commands.join("; ");
 };
