@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.5.3
+
+### ⭐ New Features
+
+* Add button to report issues [#127](https://github.com/KatsuteDev/Background/pull/127) ([@Katsute](https://github.com/Katsute))
+* Update settings descriptions [#129](https://github.com/KatsuteDev/Background/pull/129) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump typescript from 4.9.5 to 5.0.2 [#122](https://github.com/KatsuteDev/Background/pull/122) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 9.3.0 to 9.3.1 [#124](https://github.com/KatsuteDev/Background/pull/124) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 4.4.0 to 4.4.1 [#126](https://github.com/KatsuteDev/Background/pull/126) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 9.3.1 to 9.3.2 [#125](https://github.com/KatsuteDev/Background/pull/125) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.5.2...2.5.3`](https://github.com/KatsuteDev/Background/compare/2.5.2...2.5.3)
+
 ## 2.5.2
 
 ### 🐞 Bug Fixes
