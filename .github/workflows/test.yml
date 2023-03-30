@@ -10,6 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       max-parallel: 1
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -20,13 +21,17 @@ jobs:
           echo "A" > A.txt
           echo "B" > B.txt
 
+      - name: Sudo (Windows)
+        if: matrix.os == 'windows-latest'
+        run: choco install gsudo
+
       - name: Copy (Windows)
         if: matrix.os == 'windows-latest'
-        run: xcopy /r /y "A.txt" "C.txt*"; xcopy /r /y "B.txt" "D.txt*"
+        run: gsudo 'xcopy /r /y "A.txt" "C.txt*"; xcopy /r /y "B.txt" "D.txt*"'
 
       - name: Copy (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
+        run: sudo -c "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
 
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
