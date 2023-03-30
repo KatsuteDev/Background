@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.5.4
+
+### 🐞 Bug Fixes
+
+* Fix copy on linux [#132](https://github.com/KatsuteDev/Background/pull/132) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.5.3...2.5.4`](https://github.com/KatsuteDev/Background/compare/2.5.3...2.5.4)
+
 ## 2.5.3
 
 ### ⭐ New Features
