@@ -72,7 +72,7 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
                         if(value === "Yes"){
                             const cmd: string = win
                                 ? `xcopy /r /y "${workbench}" "${workbench_backup}*" && xcopy /r /y "${product}" "${product_backup}*"` // * force file, xcopy defect
-                                : `-- sh -c "cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'"`;
+                                : `cp -f '${workbench}' '${workbench_backup}'; cp -f '${product}' '${product_backup}'`;
 
                             sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                                 if(ERR)
@@ -142,7 +142,7 @@ export const write: (content: string) => void = (content: string) => {
 
                 const cmd: string = win
                     ? `xcopy /r /y "${jst}" "${js}" && xcopy /r /y "${jnt}" "${json}"` // do not use *, xcopy defect
-                    : `-- sh -c "cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'"`;
+                    : `cp -f '${jst}' '${js}'; cp -f '${jnt}' '${json}'`;
 
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                     if(ERR)
