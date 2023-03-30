@@ -54,7 +54,7 @@ const cp: (files: [string, string][], asterisk?: boolean) => string = (files: [s
             ? `xcopy /r /y "${file[0]}" "${file[1]}${asterisk ? '*' : ''}"`
             : `cp -f '${file[0]}' '${file[1]}'`);
     if(platform == "win32")
-        return commands.join("&&");
+        return commands.join(" && ");
     else if(platform == "darwin")
         return `-- sh -c "${commands.join("; ")}"`;
     else
