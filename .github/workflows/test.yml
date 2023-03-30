@@ -11,7 +11,6 @@ jobs:
 
     strategy:
       fail-fast: false
-      max-parallel: 1
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
@@ -58,4 +57,4 @@ jobs:
             };
 
             console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]]));
-            console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]]), true);
+            console.log(cp([["A.txt", "C.txt", ["B.txt", "D.txt"]], true));
