@@ -1,0 +1,25 @@
+name: Test
+on:
+  workflow_dispatch:
+
+jobs:
+  win:
+    name: Windows
+    timeout-minutes: 2
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Create File
+        run: |
+          echo "A" > A.txt
+          echo "B" > B.txt
+
+      - name: Copy (Windows)
+        if: matrix.os == 'windows-latest'
+        run: xcopy /r /y "A.txt" "C.txt*"; xcopy /r /y "B.txt" "D.txt*"
+
+      - name: Copy (Linux)
+        if: matrix.os != 'windows-latest'
+        run: sudo "cp -f 'A.txt' 'C.txt'; cp -f 'B.txt' 'D.txt'"
