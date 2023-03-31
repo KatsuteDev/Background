@@ -339,6 +339,6 @@
         "@types/vscode": "1.76.0",
         "@vscode/vsce": "2.18.0",
         "rimraf": "4.4.1",
-        "typescript": "5.0.2"
+        "typescript": "5.0.3"
     }
 }
