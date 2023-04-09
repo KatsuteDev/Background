@@ -144,11 +144,11 @@ This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resource
 
 <!-- Copilot -->
 <table>
-    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/Katsute/Repository-Manager/main/assets/copilot-dark.png#gh-dark-mode-only" width="50">
-    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/Katsute/Repository-Manager/main/assets/openai-dark.png#gh-dark-mode-only" width="50">
-    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/Katsute/Repository-Manager/main/assets/copilot-light.png#gh-light-mode-only" width="50">
-    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/Katsute/Repository-Manager/main/assets/openai-light.png#gh-light-mode-only" width="50">
-    <p>GitHub Copilot and ChatGPT are <b>strictly prohibited</b> on this repository.
+    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/Katsute/Manager/main/assets/copilot-dark.png#gh-dark-mode-only" width="50">
+    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/Katsute/Manager/main/assets/openai-dark.png#gh-dark-mode-only" width="50">
+    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/Katsute/Manager/main/assets/copilot-light.png#gh-light-mode-only" width="50">
+    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/Katsute/Manager/main/assets/openai-light.png#gh-light-mode-only" width="50">
+    <p>GitHub Copilot and ChatGPT are <b>strictly prohibited</b> on this repository.</p>
 </table>
 <!-- Copilot -->
 
