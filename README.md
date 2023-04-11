@@ -126,9 +126,13 @@ The order settings are saved in is:
 
 ## ⚠️ Known Issues
 
-#### ⌘ (Mac) EROFS: read-only file system
+#### ⚠️ (Mac) read-only file system
 
 This extension doesn't natively support Mac, please refer to [#76](https://github.com/KatsuteDev/Background/issues/76) to get this extension working on Mac.
+
+#### ⚠️ (Linux) snap: read-only file system
+
+Applications installed using [snap](https://snapcraft.io/) are inherently read-only, install VSCode using [deb](https://code.visualstudio.com/download) or [rpm](https://code.visualstudio.com/download).
 
 #### ⚠️ Doesn't work on WSL
 
