@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.5.5
+
+### 📘 Dependencies
+
+* Bump typescript from 5.0.2 to 5.0.3 [#134](https://github.com/KatsuteDev/Background/pull/134) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.76.0 to 1.77.0 [#133](https://github.com/KatsuteDev/Background/pull/133) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 9.3.2 to 9.3.4 [#135](https://github.com/KatsuteDev/Background/pull/135) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.0.3 to 5.0.4 [#136](https://github.com/KatsuteDev/Background/pull/136) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 9.3.4 to 10.0.0 [#139](https://github.com/KatsuteDev/Background/pull/139) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 4.4.1 to 5.0.0 [#138](https://github.com/KatsuteDev/Background/pull/138) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.18.0 to 2.19.0 [#141](https://github.com/KatsuteDev/Background/pull/141) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.0.0 to 10.1.0 [#142](https://github.com/KatsuteDev/Background/pull/142) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.5.4...2.5.5`](https://github.com/KatsuteDev/Background/compare/2.5.4...2.5.5)
+
 ## 2.5.4
 
 ### 🐞 Bug Fixes

@@ -16,8 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { globSync } from "glob";
-import { GlobOptions } from "glob/dist/cjs";
+import { GlobOptions, globSync } from "glob";
 
 import * as path from "path";
 
