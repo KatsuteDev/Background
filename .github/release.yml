@@ -1,34 +1,34 @@
 changelog:
   categories:
-    - title: ⚠️ Breaking Change
+    - title: Breaking Change
       labels:
         - breaking change
-    - title: ⚠️ Deprecated
+    - title: Deprecated
       labels:
         - deprecated
-    - title: ❌ Removed
+    - title: Removed
       labels:
         - removed
-    - title: 🔐 Security
+    - title: Security
       labels:
         - security
-    - title: ⭐ New Features
+    - title: New Features
       labels:
         - enhancements
         - experimental
         - feature
         - feature request
-    - title: 🐞 Bug Fixes
+    - title: Fixes
       labels:
         - bug
         - critical bug
         - critical issue
-    - title: 📄 Documentation
+    - title: Documentation
       labels:
         - documentation
-    - title: 🔧 Optimizations
+    - title: Optimizations
       labels:
         - optimization
-    - title: 📘 Dependencies
+    - title: Dependencies
       labels:
         - dependencies
