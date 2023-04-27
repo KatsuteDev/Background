@@ -276,6 +276,14 @@ const panelTime = ${get("backgroundChangeTime", "panel", true) == 0 ? 0 : Math.m
 `
 if(windowBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
+        body > iframe {
+
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+        }
+
         body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
             background-position: ${css("backgroundAlignment", "window")};
@@ -388,13 +396,27 @@ const setWindowBackground = () => {
     if(windowBackgrounds.length > 0){
         shuffle(iWindowBackgrounds);
 
-        bk_window_image.appendChild(document.createTextNode(\`
-            body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
+        const bg = windowBackgrounds[iWindowBackgrounds[0]];
+        const lc = bg.toLowerCase();
+        if(lc.startsWith("https://youtube.com/") ||
+           lc.startsWith("https://youtu.be/") ||
+           lc.startsWith("https://www.youtube.com/") ||
+           lc.startsWith("https://www.youtu.be/")){
+            document.querySelector("body > iframe") && document.querySelector("body > iframe").remove();
+            const url = lc;
 
-                background-image: url("\${windowBackgrounds[iWindowBackgrounds[0]]}");
+            const iframe = document.createElement("iframe");
+            iframe.src = url + "?autoplay=1&loop=1&mute=1";
+            iframe.frameBorder = "0";
+        }else{
+            bk_window_image.appendChild(document.createTextNode(\`
+                body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
-            }
-        \`));
+                    background-image: url("\${bg}");
+
+                }
+            \`));
+        }
     };
 };
 `

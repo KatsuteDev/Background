@@ -23,7 +23,11 @@
         "cover",
         "theme",
         "image",
-        "gif"
+        "gif",
+        "youtube",
+        "yt",
+        "embed",
+        "iframe"
     ],
     "sponsor": {
         "url": "https://ko-fi.com/katsute"

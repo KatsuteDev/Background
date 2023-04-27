@@ -173,6 +173,11 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                             return "File URLs not accepted, use Add File option";
                         else if(value.startsWith("http://"))
                             return "Images must be served over HTTPS";
+                        else if(value.startsWith("https://youtube.com/") ||
+                                value.startsWith("https://youtu.be/") ||
+                                value.startsWith("https://www.youtube.com/") ||
+                                value.startsWith("https://www.youtu.be/"))
+                            return "Youtube URLs not accepted, use Add Youtube Video option";
                         else if(value.startsWith("https://"))
                             return null;
                         else
@@ -184,6 +189,31 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 });
             }
         }),
+        ... item.ui == "window" ? [
+            quickPickItem({
+                label: "$(play) Add a YouTube Video",
+                ui: item.ui,
+                handle: (item: CommandQuickPickItem) => {
+                    vscode.window.showInputBox({
+                        title: "Add a YouTube Video",
+                        placeHolder: "YouTube Video URL",
+                        prompt: "Add a YouTube URL. Must be served over HTTPS",
+                        validateInput: (value: string) => {
+                            if(value.startsWith("https://youtube.com/") ||
+                               value.startsWith("https://youtu.be/") ||
+                               value.startsWith("https://www.youtube.com/") ||
+                               value.startsWith("https://www.youtu.be/"))
+                                return null;
+                            else
+                                return "Invalid YouTube URL";
+                        }
+                    }).then((url?: string) => {
+                        if(url)
+                            add(item.ui!, url);
+                    });
+                }
+            })
+        ] : [],
         ... items.length > 0 ? [
             separator(),
             quickPickItem({
