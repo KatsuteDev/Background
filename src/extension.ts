@@ -145,13 +145,13 @@ export const write: (content: string, uninstall: boolean) => void = (content: st
     const csp: (content: string) => string = (content: string) =>
         !uninstall
         ? content
-            .replace(" https://youtube.com/", "")
-            .replace("frame-src 'self'", "frame-src 'self' https://youtube.com/")
-            .replace("media-src 'self'", "frame-src 'self' https://youtube.com/").trim()
+            .replace(" https://www.youtube.com/", "")
+            .replace("frame-src 'self'", "frame-src 'self' https://www.youtube.com/")
+            .replace("media-src 'self'", "frame-src 'self' https://www.youtube.com/").trim()
         : content
-            .replace(" https://youtube.com/", "")
-            .replace("frame-src 'self' https://youtube.com/", "frame-src 'self'")
-            .replace("media-src 'self' https://youtube.com/", "frame-src 'self'").trim();
+            .replace(" https://www.youtube.com/", "")
+            .replace("frame-src 'self' https://www.youtube.com/", "frame-src 'self'")
+            .replace("media-src 'self' https://www.youtube.com/", "frame-src 'self'").trim();
 
     try{
         fs.writeFileSync(js, content, "utf-8");
@@ -403,11 +403,12 @@ const setWindowBackground = () => {
            lc.startsWith("https://www.youtube.com/") ||
            lc.startsWith("https://www.youtu.be/")){
             document.querySelector("body > iframe") && document.querySelector("body > iframe").remove();
-            const url = lc;
 
             const iframe = document.createElement("iframe");
-            iframe.src = url + "?autoplay=1&loop=1&mute=1";
+            iframe.src = \`https://youtube.com/embed/\${bg.split("?v=")[1]}?autoplay=1&loop=1&mute=1\`;
             iframe.frameBorder = "0";
+            iframe.allow = "autoplay";
+            document.querySelector("body").appendChild(iframe);
         }else{
             bk_window_image.appendChild(document.createTextNode(\`
                 body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {

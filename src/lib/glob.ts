@@ -55,16 +55,9 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
 
     (Array.isArray(glob) ? glob.filter(unique) : [glob]).forEach(g => (g.startsWith("https://") ? p : globs).push(g));
 
-    return p.filter(url => {
-                const lc = url.toLowerCase();
-                return !lc.startsWith("https://youtube.com/") &&
-                       !lc.startsWith("https://youtu.be/") &&
-                       !lc.startsWith("https://www.youtube.com/") &&
-                       !lc.startsWith("https://www.youtu.be/");
-            })
-            .concat((globSync(globs, options) as string[])
-                .filter(filter)
-                .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
+    return p.concat((globSync(globs, options) as string[])
+            .filter(filter)
+            .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
             .filter(unique)
             .map(path => '"' + path + '"');
 }
