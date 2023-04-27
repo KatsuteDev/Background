@@ -127,7 +127,8 @@ const getChecksum: (raw: string) => string = (raw: string) =>
         .digest("base64")
         .replace(/=+$/gm, '');
 
-const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
+const jsregex: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
+const htregex: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.html\": \").*(?=\",\s*$)/gm;
 
 let js: string, json: string, html: string;
 
@@ -140,31 +141,31 @@ export const uninstallJS: () => void = () => {
 }
 
 export const write: (content: string, uninstall: boolean) => void = (content: string, uninstall: boolean) => {
-    const checksum: string = getChecksum(content);
+    let csp: string = fs.readFileSync(html, "utf-8").replace("'self' *", "'self'");
+    if(!uninstall)
+        csp = csp
+            .replace("frame-src 'self'", "frame-src 'self' *")
+            .replace("media-src 'self'", "media-src 'self' *")
+            .replace("script-src 'self'", "script-src 'self' *").trim();
 
-    const csp: (content: string) => string = (content: string) =>
-        !uninstall
-        ? content
-            .replace(" https://youtube,com/ https://www.youtube.com/", "")
-            .replace("frame-src 'self'", "frame-src 'self' https://youtube.com/ https://www.youtube.com/")
-            .replace("media-src 'self'", "media-src 'self' https://youtube.com/ https://www.youtube.com/").trim()
-        : content
-            .replace(" https://youtube,com/ https://www.youtube.com/", "").trim()
+    const jssum: string = getChecksum(content);
+    const htsum: string = getChecksum(csp);
 
     try{
         fs.writeFileSync(js, content, "utf-8");
-        fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
-        fs.writeFileSync(html, csp(fs.readFileSync(html, "utf-8")), "utf-8");
+        fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(jsregex, jssum).replace(htregex, htsum).trim(), "utf-8");
+        fs.writeFileSync(html, csp, "utf-8");
         restartVS();
     }catch(err: any){
         vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `The Background extension does not have permission to write changes, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
             if(value === "Yes"){
                 const jst = tmp.fileSync().name;
-                fs.writeFileSync(jst, content, "utf-8");
                 const jnt = tmp.fileSync().name;
-                fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
                 const htt = tmp.fileSync().name;
-                fs.writeFileSync(htt, csp(fs.readFileSync(html, "utf-8")), "utf-8");
+
+                fs.writeFileSync(jst, content, "utf-8");
+                fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(jsregex, jssum).replace(htregex, htsum).trim(), "utf-8");
+                fs.writeFileSync(htt, csp, "utf-8");
 
                 const cmd: string = cp([[jst, js], [jnt, json], [htt, html]]);
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
@@ -405,7 +406,8 @@ const setWindowBackground = () => {
             const iframe = document.createElement("iframe");
             iframe.src = \`https://youtube.com/embed/\${bg.split("?v=")[1]}?autoplay=1&loop=1&mute=1\`;
             iframe.frameBorder = "0";
-            iframe.allow = "autoplay";
+            iframe.allow = "autoplay; encrypted-media";
+            iframe.referrerPolicy  = "no-referrer-when-downgrade";
             document.querySelector("body").appendChild(iframe);
         }else{
             bk_window_image.appendChild(document.createTextNode(\`
