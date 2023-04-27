@@ -145,13 +145,11 @@ export const write: (content: string, uninstall: boolean) => void = (content: st
     const csp: (content: string) => string = (content: string) =>
         !uninstall
         ? content
-            .replace(" https://www.youtube.com/", "")
-            .replace("frame-src 'self'", "frame-src 'self' https://www.youtube.com/")
-            .replace("media-src 'self'", "frame-src 'self' https://www.youtube.com/").trim()
+            .replace(" https://youtube,com/ https://www.youtube.com/", "")
+            .replace("frame-src 'self'", "frame-src 'self' https://youtube.com/ https://www.youtube.com/")
+            .replace("media-src 'self'", "media-src 'self' https://youtube.com/ https://www.youtube.com/").trim()
         : content
-            .replace(" https://www.youtube.com/", "")
-            .replace("frame-src 'self' https://www.youtube.com/", "frame-src 'self'")
-            .replace("media-src 'self' https://www.youtube.com/", "frame-src 'self'").trim();
+            .replace(" https://youtube,com/ https://www.youtube.com/", "").trim()
 
     try{
         fs.writeFileSync(js, content, "utf-8");
