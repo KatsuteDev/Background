@@ -63,23 +63,29 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
         const workbench: string = js = path.join(path.dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
         const product: string = json = path.join(path.dirname(require.main.filename), "../", "product.json");
+        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
+        const sandbox: string = html = path.join(path.dirname(require.main.filename), "vs", "code", "electron-sandbox", "workbench", "workbench.html");
 
         if(!fs.existsSync(workbench))
             vscode.window.showErrorMessage(`Failed to find '${workbench}, please report this issue`);
         else if(!fs.existsSync(product))
             vscode.window.showErrorMessage(`Failed to find '${product}, please report this issue`);
+        else if(!fs.existsSync(sandbox))
+            vscode.window.showErrorMessage(`Failed to find '${sandbox}, please report this issue`);
         else{ // workbench & product exists
             const workbench_backup: string = workbench.replace(".js", "-backup.js");
             const product_backup: string = product.replace(".json", "-backup.json");
+            const sandbox_backup: string = sandbox.replace(".html", "-backup.html");
 
-            if(!fs.existsSync(workbench_backup) || !fs.existsSync(product_backup)){ // backup missing
+            if(!fs.existsSync(workbench_backup) || !fs.existsSync(product_backup) || !fs.existsSync(sandbox_backup)){ // backup missing
                 try{
                     fs.copyFileSync(workbench, workbench_backup);
                     fs.copyFileSync(product, product_backup);
+                    fs.copyFileSync(sandbox, sandbox_backup);
                 }catch(err: any){
                     vscode.window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
-                            const cmd: string = cp([[workbench, workbench_backup], [product, product_backup]], true);
+                            const cmd: string = cp([[workbench, workbench_backup], [product, product_backup], [sandbox, sandbox_backup]], true);
                             sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                                 if(ERR)
                                     vscode.window.showErrorMessage("Failed to backup files", {
@@ -123,22 +129,34 @@ const getChecksum: (raw: string) => string = (raw: string) =>
 
 const replace: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
 
-let js: string, json: string;
+let js: string, json: string, html: string;
 
 export const installJS: () => void = () => {
-    js && json && write(removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS());
+    js && json && html && write(removeJS(fs.readFileSync(js, "utf-8")) + '\n' + getJS(), false);
 }
 
 export const uninstallJS: () => void = () => {
-    js && json && write(removeJS(fs.readFileSync(js, "utf-8")));
+    js && json && html && write(removeJS(fs.readFileSync(js, "utf-8")), true);
 }
 
-export const write: (content: string) => void = (content: string) => {
+export const write: (content: string, uninstall: boolean) => void = (content: string, uninstall: boolean) => {
     const checksum: string = getChecksum(content);
+
+    const csp: (content: string) => string = (content: string) =>
+        !uninstall
+        ? content
+            .replace(" https://youtube.com/", "")
+            .replace("frame-src 'self'", "frame-src 'self' https://youtube.com/")
+            .replace("media-src 'self'", "frame-src 'self' https://youtube.com/").trim()
+        : content
+            .replace(" https://youtube.com/", "")
+            .replace("frame-src 'self' https://youtube.com/", "frame-src 'self'")
+            .replace("media-src 'self' https://youtube.com/", "frame-src 'self'").trim();
 
     try{
         fs.writeFileSync(js, content, "utf-8");
         fs.writeFileSync(json, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
+        fs.writeFileSync(html, csp(fs.readFileSync(html, "utf-8")), "utf-8");
         restartVS();
     }catch(err: any){
         vscode.window.showWarningMessage("Failed to write changes, run command as administrator?", {detail: `The Background extension does not have permission to write changes, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
@@ -147,8 +165,10 @@ export const write: (content: string) => void = (content: string) => {
                 fs.writeFileSync(jst, content, "utf-8");
                 const jnt = tmp.fileSync().name;
                 fs.writeFileSync(jnt, fs.readFileSync(json, "utf-8").replace(replace, checksum).trim(), "utf-8");
+                const htt = tmp.fileSync().name;
+                fs.writeFileSync(htt, csp(fs.readFileSync(html, "utf-8")), "utf-8");
 
-                const cmd: string = cp([[jst, js], [jnt, json]]);
+                const cmd: string = cp([[jst, js], [jnt, json], [htt, html]]);
                 sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                     if(ERR)
                         vscode.window.showErrorMessage("Failed to write changes", {

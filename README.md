@@ -140,9 +140,13 @@ As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issueco
 
 #### ⚠️ VSCode stopped working
 
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
+This extension modifies an few internal files to make backgrounds work, if VSCode stops working replace:
 
-This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json`, replace with `product-backup.json` if VSCode stops working.
+ * `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
+ * `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json` with `product-backup.json`.
+ * `%LocalAppData%\Programs/Microsoft VS Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html` with `workbench-backup.html`.
+
+Reinstall VSCode if this does not fix the issue.
 
 ## &nbsp;
 
