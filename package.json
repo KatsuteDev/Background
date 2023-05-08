@@ -333,7 +333,7 @@
         "tmp": "0.2.1"
     },
     "devDependencies": {
-        "@types/node": "18.16.0",
+        "@types/node": "20.1.0",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.77.0",
         "@vscode/vsce": "2.19.0",
