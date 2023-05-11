@@ -112,11 +112,14 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     openLabel: "Select Image",
                     filters: {"Images": extensions()}
                 }).then((files?: vscode.Uri[]) => {
-                    if(files)
-                        Promise
-                            .all(files.map(file => add(item.ui!, file.fsPath.replace(/\\/g, '/'), true)))
+                    if(files){
+                        let promise: Promise<void> = Promise.resolve();
+                        for(const file of files)
+                            promise = promise.then(() => add(item.ui!, file.fsPath.replace(/\\/g, '/'), true)); // append promise to chain
+                        promise = promise
                             .then(() => files.length > 0 && notify())
                             .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
+                    }
                 });
             }
         }),
@@ -130,11 +133,14 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     canSelectMany: true,
                     openLabel: "Select Folder"
                 }).then((files?: vscode.Uri[]) => {
-                    if(files)
-                        Promise
-                            .all(files.map(file => add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`, true)))
+                    if(files){
+                        let promise: Promise<void> = Promise.resolve();
+                        for(const file of files)
+                            promise = promise.then(() => add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`, true)); // append promise to chain
+                        promise = promise
                             .then(() => files.length > 0 && notify())
                             .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
+                    }
                 });
             }
         }),
