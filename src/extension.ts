@@ -468,7 +468,10 @@ const shuffle = (arr) => {
 `
 + // install
 `
-window.onload = () => {
+let loading = false;
+const init = () => {
+    if(loading) return; else loading = true;
+
     document.getElementsByTagName("head")[0].appendChild(bk_global);
     document.getElementsByTagName("head")[0].appendChild(bk_window_image);
     document.getElementsByTagName("head")[0].appendChild(bk_editor_image);
@@ -524,6 +527,9 @@ window.onload = () => {
         }, panelTime * 1000);
     };
 };
+
+window.onload = init;
+init();
 `
 +
 `})();`)
