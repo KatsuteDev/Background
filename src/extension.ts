@@ -468,68 +468,60 @@ const shuffle = (arr) => {
 `
 + // install
 `
-let loading = false;
-const init = () => {
-    if(loading) return; else loading = true;
+document.getElementsByTagName("head")[0].appendChild(bk_global);
+document.getElementsByTagName("head")[0].appendChild(bk_window_image);
+document.getElementsByTagName("head")[0].appendChild(bk_editor_image);
+document.getElementsByTagName("head")[0].appendChild(bk_sidebar_image);
+document.getElementsByTagName("head")[0].appendChild(bk_panel_image);
 
-    document.getElementsByTagName("head")[0].appendChild(bk_global);
-    document.getElementsByTagName("head")[0].appendChild(bk_window_image);
-    document.getElementsByTagName("head")[0].appendChild(bk_editor_image);
-    document.getElementsByTagName("head")[0].appendChild(bk_sidebar_image);
-    document.getElementsByTagName("head")[0].appendChild(bk_panel_image);
-
-    for(const arr of [iWindowBackgrounds, iEditorBackgrounds, iSidebarBackgrounds, iPanelBackgrounds]){
-        for(let i = arr.length - 1; i > 0; i--){
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        };
-    };
-
-    setWindowBackground();
-    setEditorBackground();
-    setSidebarBackground();
-    setPanelBackground();
-
-    if(windowTime > 0 && iWindowBackgrounds.length > 1){
-        setInterval(() => {
-            document.body.setAttribute("windowTransition", true);
-            setTimeout(() => {
-                setWindowBackground();
-                document.body.setAttribute("windowTransition", false);
-            }, 1 * 1000);
-        }, windowTime * 1000);
-    };
-    if(editorTime > 0 && iEditorBackgrounds.length > 1){
-        setInterval(() => {
-            document.body.setAttribute("editorTransition", true);
-            setTimeout(() => {
-                setEditorBackground();
-                document.body.setAttribute("editorTransition", false);
-            }, 1 * 1000);
-        }, editorTime * 1000);
-    };
-    if(sidebarTime > 0 && iSidebarBackgrounds.length > 1){
-        setInterval(() => {
-            document.body.setAttribute("sidebarTransition", true);
-            setTimeout(() => {
-                setSidebarBackground();
-                document.body.setAttribute("sidebarTransition", false);
-            }, 1 * 1000);
-        }, sidebarTime * 1000);
-    };
-    if(panelTime > 0 && iPanelBackgrounds.length > 1){
-        setInterval(() => {
-            document.body.setAttribute("panelTransition", true);
-            setTimeout(() => {
-                setPanelBackground();
-                document.body.setAttribute("panelTransition", false);
-            }, 1 * 1000);
-        }, panelTime * 1000);
+for(const arr of [iWindowBackgrounds, iEditorBackgrounds, iSidebarBackgrounds, iPanelBackgrounds]){
+    for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     };
 };
 
-window.onload = init;
-init();
+setWindowBackground();
+setEditorBackground();
+setSidebarBackground();
+setPanelBackground();
+
+if(windowTime > 0 && iWindowBackgrounds.length > 1){
+    setInterval(() => {
+        document.body.setAttribute("windowTransition", true);
+        setTimeout(() => {
+            setWindowBackground();
+            document.body.setAttribute("windowTransition", false);
+        }, 1 * 1000);
+    }, windowTime * 1000);
+};
+if(editorTime > 0 && iEditorBackgrounds.length > 1){
+    setInterval(() => {
+        document.body.setAttribute("editorTransition", true);
+        setTimeout(() => {
+            setEditorBackground();
+            document.body.setAttribute("editorTransition", false);
+        }, 1 * 1000);
+    }, editorTime * 1000);
+};
+if(sidebarTime > 0 && iSidebarBackgrounds.length > 1){
+    setInterval(() => {
+        document.body.setAttribute("sidebarTransition", true);
+        setTimeout(() => {
+            setSidebarBackground();
+            document.body.setAttribute("sidebarTransition", false);
+        }, 1 * 1000);
+    }, sidebarTime * 1000);
+};
+if(panelTime > 0 && iPanelBackgrounds.length > 1){
+    setInterval(() => {
+        document.body.setAttribute("panelTransition", true);
+        setTimeout(() => {
+            setPanelBackground();
+            document.body.setAttribute("panelTransition", false);
+        }, 1 * 1000);
+    }, panelTime * 1000);
+};
 `
 +
 `})();`)
