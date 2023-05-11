@@ -27,7 +27,7 @@ import { round } from "../lib/round";
 
 // vs
 
-const config = () => vscode.workspace.getConfiguration("background");
+const config: () => vscode.WorkspaceConfiguration = () => vscode.workspace.getConfiguration("background");
 
 // UI
 
