@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.5.6
+
+### Fixes
+
+* Fix add multiple files not working [#154](https://github.com/KatsuteDev/Background/pull/154) ([@Katsute](https://github.com/Katsute))
+* Fix background sometimes not loading [#156](https://github.com/KatsuteDev/Background/pull/156) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump @types/node from 18.15.11 to 18.16.0 [#147](https://github.com/KatsuteDev/Background/pull/147) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.2.1 to 10.2.2 [#146](https://github.com/KatsuteDev/Background/pull/146) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 18.16.0 to 20.1.0 [#149](https://github.com/KatsuteDev/Background/pull/149) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.77.0 to 1.78.0 [#150](https://github.com/KatsuteDev/Background/pull/150) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.5.5...2.5.6`](https://github.com/KatsuteDev/Background/compare/2.5.5...2.5.6)
+
 ## 2.5.5
 
 ### 📘 Dependencies
