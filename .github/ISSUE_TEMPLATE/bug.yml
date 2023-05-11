@@ -48,8 +48,16 @@ body:
 
   - type: textarea
     attributes:
+      label: Settings
+      description: |
+        Include `background.*` settings from the [settings.json](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) file. Remove any sensitive information.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
       label: How to replicate
       description: |
-        Include steps to reproduce this issue and the settings you are using.
+        Include steps to reproduce this issue. Add a video if possible.
     validations:
       required: true
