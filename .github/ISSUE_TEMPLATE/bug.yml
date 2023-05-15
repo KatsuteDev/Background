@@ -14,7 +14,7 @@ body:
         Please also check that:
 
         * This is actually a bug and not a feature.
-        * You are running the latest version.
+        * You are running the latest extension version.
 
         If you have are trying to change or remove a background please refer to [#52](https://github.com/KatsuteDev/Background/issues/52).
 
@@ -51,8 +51,6 @@ body:
       label: Settings
       description: |
         Include `background.*` settings from the [settings.json](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) file. Remove any sensitive information.
-    validations:
-      required: true
 
   - type: textarea
     attributes:

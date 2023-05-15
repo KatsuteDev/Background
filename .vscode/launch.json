@@ -3,6 +3,7 @@
     "configurations": [
         {
             "args": [
+                "--profile-temp",
                 "--extensionDevelopmentPath=${workspaceFolder}"
             ],
             "name": "Launch Extension",
