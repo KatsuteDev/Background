@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.5.6",
+    "version": "2.5.7",
     "private": true,
     "engines": {
         "vscode": "^1.78.0"
@@ -277,7 +277,7 @@
                     }
                 },
                 "background.useWindowOptionsForAllBackgrounds": {
-                    "markdownDescription": "If enabled, all backgrounds will use the options set for the windows background.",
+                    "markdownDescription": "If enabled, all background images will use the options set for the windows background.\n\nThis does not include the backgrounds, you still need to add background images separately.",
                     "order": 12,
                     "type": "boolean",
                     "default": false
@@ -329,15 +329,15 @@
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "dependencies": {
         "@vscode/sudo-prompt": "9.3.1",
-        "glob": "10.2.4",
+        "glob": "10.2.5",
         "tmp": "0.2.1"
     },
     "devDependencies": {
-        "@types/node": "20.1.4",
+        "@types/node": "20.2.1",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.78.0",
         "@vscode/vsce": "2.19.0",
-        "rimraf": "5.0.0",
+        "rimraf": "5.0.1",
         "typescript": "5.0.4"
     }
 }

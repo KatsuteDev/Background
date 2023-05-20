@@ -21,6 +21,8 @@ body:
   - type: textarea
     attributes:
       label: Feature
+      description: |
+        Explain the feature.
     validations:
       required: true
 

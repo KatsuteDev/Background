@@ -29,6 +29,8 @@ body:
   - type: input
     attributes:
       label: VSCode Version
+      description: |
+        Include the [version](https://code.visualstudio.com/docs/supporting/FAQ#_how-do-i-find-the-version) and type.
     validations:
       required: true
 
@@ -43,6 +45,8 @@ body:
   - type: textarea
     attributes:
       label: Issue
+      description: |
+        Explain the issue.
     validations:
       required: true
 
