@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.5.7
+
+* Adjust settings descriptions
+
+### Dependencies
+
+* Bump glob from 10.2.3 to 10.2.4 [#158](https://github.com/KatsuteDev/Background/pull/158) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.2.5 to 10.2.6 [#160](https://github.com/KatsuteDev/Background/pull/160) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.5.6...2.5.7`](https://github.com/KatsuteDev/Background/compare/2.5.6...2.5.7)
+
 ## 2.5.6
 
 ### Fixes
