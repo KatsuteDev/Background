@@ -1,0 +1,7 @@
+name: Bump VSCode Version
+on: [pull_request_target]
+
+jobs:
+  vscode:
+    name: Bump VSCode Version
+    uses: Katsute/Workflows/.github/workflows/dependabot-vscode.yml@main
