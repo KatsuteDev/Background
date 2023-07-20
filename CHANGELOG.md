@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.5.8
+
+### Dependencies
+
+* Bump @types/vscode from 1.78.0 to 1.78.1 [#161](https://github.com/KatsuteDev/Background/pull/161) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.0.4 to 5.1.3 [#162](https://github.com/KatsuteDev/Background/pull/162) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.2.3 to 20.3.0 [#163](https://github.com/KatsuteDev/Background/pull/163) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.2.6 to 10.2.7 [#165](https://github.com/KatsuteDev/Background/pull/165) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.78.1 to 1.79.0 [#164](https://github.com/KatsuteDev/Background/pull/164) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.79.0 to 1.79.1 [#166](https://github.com/KatsuteDev/Background/pull/166) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.2.7 to 10.3.0 [#167](https://github.com/KatsuteDev/Background/pull/167) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.1.3 to 5.1.6 [#170](https://github.com/KatsuteDev/Background/pull/170) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.0 to 10.3.1 [#169](https://github.com/KatsuteDev/Background/pull/169) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.3.0 to 20.4.1 [#172](https://github.com/KatsuteDev/Background/pull/172) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.1 to 10.3.3 [#173](https://github.com/KatsuteDev/Background/pull/173) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.79.1 to 1.80.0 [#171](https://github.com/KatsuteDev/Background/pull/171) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.5.7...2.5.8`](https://github.com/KatsuteDev/Background/compare/2.5.7...2.5.8)
+
 ## 2.5.7
 
 * Adjust settings descriptions
