@@ -112,6 +112,8 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
     statusbar.show();
 
     return {
+        install: () => installJS(),
+        uninstall: () => uninstallJS(),
         get: (ui: string) => {
             switch(ui){
                 case "window":
