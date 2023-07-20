@@ -56,7 +56,7 @@ const cp: (files: [string, string][], asterisk?: boolean) => string = (files: [s
     return commands.join(" && ");
 };
 
-export const activate: (context: vscode.ExtensionContext) => void = (context: vscode.ExtensionContext) => {
+export const activate: (context: vscode.ExtensionContext) => any = (context: vscode.ExtensionContext) => {
     // internal files
     if(require.main && require.main.filename){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
@@ -110,6 +110,56 @@ export const activate: (context: vscode.ExtensionContext) => void = (context: vs
 
     context.subscriptions.push(statusbar);
     statusbar.show();
+
+    return {
+        get: (ui: string) => {
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    return file.view(ui);
+                default:
+                    return undefined;
+            }
+        },
+        add: async (ui: string, glob: string) => {
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    await file.add(ui, glob);
+                    return true;
+                default:
+                    return false;
+            }
+        },
+        replace: async (ui: string, old: string, glob: string) => {
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    await file.replace(ui, old, glob);
+                    return true;
+                default:
+                    return false;
+            }
+        },
+        remove: async (ui: string, glob: string) => {
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    await file.remove(ui, glob);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
 };
 
 //
