@@ -159,7 +159,7 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
                     return false;
             }
         }
-    }
+    };
 };
 
 //
