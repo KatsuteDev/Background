@@ -144,6 +144,56 @@ This extension modifies an internal file to make backgrounds work, if VSCode sto
 
 This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json`, replace with `product-backup.json` if VSCode stops working.
 
+## 🔌 API
+
+Add this extension to your `package.json`.
+
+```json
+{
+    ...
+    "extensionDependencies": [
+        "katsute.code-background"
+    ]
+    ...
+}
+```
+
+Access the api by using:
+
+```js
+const background = vscode.extensions.getExtension("katsute.code-background").exports;
+```
+
+* `install(): void`
+
+  Runs the `Background: Install` command.
+* `uninstall(): void`
+
+  Runs the `Background: Uninstall` command.
+* `reload(): void`
+
+  Runs the `Background: Reload` command.
+* `get(ui): string[]?`
+  * `ui` : Background to get from; either `window`, `editor`, `sidebar`, `panel`.
+
+  Returns an array of globs for the specified background.
+* `add(ui, glob): boolean`
+  * `ui` : Background to add to; either `window`, `editor`, `sidebar`, `panel`.
+  * `glob`: Glob to add.
+
+  Returns true if successful.
+* `replace(ui, old, glob): boolean`
+  * `ui` : Background to replace to; either `window`, `editor`, `sidebar`, `panel`.
+  * `old`: Glob to replace.
+  * `glob`: Updated glob.
+
+  Returns true if successful.
+* `remove(ui, glob): boolean`
+  * `ui` : Background to remove from; either `window`, `editor`, `sidebar`, `panel`.
+  * `glob`: Glob to remove.
+
+  Returns true if successful.
+
 ## &nbsp;
 
 <!-- Copilot -->

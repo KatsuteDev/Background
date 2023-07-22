@@ -114,6 +114,7 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
     return {
         install: () => installJS(),
         uninstall: () => uninstallJS(),
+        reload: () => vscode.commands.executeCommand("workbench.action.reloadWindow"),
         get: (ui: string) => {
             switch(ui){
                 case "window":
@@ -131,7 +132,7 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
                 case "editor":
                 case "sidebar":
                 case "panel":
-                    await file.add(ui, glob);
+                    await file.add(ui, glob, true);
                     return true;
                 default:
                     return false;
@@ -143,7 +144,7 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
                 case "editor":
                 case "sidebar":
                 case "panel":
-                    await file.replace(ui, old, glob);
+                    await file.replace(ui, old, glob, true);
                     return true;
                 default:
                     return false;
