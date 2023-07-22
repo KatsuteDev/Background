@@ -156,7 +156,7 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
                 case "editor":
                 case "sidebar":
                 case "panel":
-                    await file.remove(ui, glob);
+                    await file.remove(ui, glob, true);
                     return true;
                 default:
                     return false;

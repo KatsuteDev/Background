@@ -9,7 +9,7 @@ const images = path.join(__dirname, "*.png").replace(/\\/gm, '/');
 
 module.exports = {
     run: () => new Promise(async () => {
-        await wait(3);
+        await wait(5);
 
         const background = vscode.extensions.getExtension("katsute.code-background").exports;
 
