@@ -31,25 +31,29 @@ import { notify } from "../install";
 
 // config
 
-const add: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
+export const view: (ui: UI) => string[] = (ui: UI) => {
+    return get(`${ui}Backgrounds`) as string[];
+}
+
+export const add: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(glob);
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning);
     skipWarning || cm({label: '␀', ui}); // reopen menu
 };
 
-const replace: (ui: UI, old: string, glob: string, remove?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string) => {
+export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string, skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     for(let i = 0, l = files.length; i < l; i++)
         if(files[i] === old)
             files[i] = glob;
-    await update(`${ui}Backgrounds`, files.filter(unique), undefined, old === glob);
-    cm({label: '␀', ui}); // reopen menu
+    await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning || old === glob);
+    skipWarning || cm({label: '␀', ui}); // reopen menu
 };
 
-const remove: (ui: UI, glob: string) => Promise<void> = async (ui: UI, glob: string) => {
-    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => f !== glob).filter(unique));
-    cm({label: '␀', ui}); // reopen files
+export const remove: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
+    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => f !== glob).filter(unique), undefined, skipWarning);
+    skipWarning || cm({label: '␀', ui}); // reopen files
 };
 
 // exts
