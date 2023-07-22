@@ -183,7 +183,7 @@ const background = vscode.extensions.getExtension("katsute.code-background").exp
 
   Returns true if successful.
 * `replace(ui, old, glob): boolean`
-  * `ui` : Background to replace to; either `window`, `editor`, `sidebar`, `panel`.
+  * `ui` : Background to replace from; either `window`, `editor`, `sidebar`, `panel`.
   * `old`: Glob to replace.
   * `glob`: Updated glob.
 
