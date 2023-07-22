@@ -177,18 +177,18 @@ const background = vscode.extensions.getExtension("katsute.code-background").exp
   * `ui` : Background to get from; either `window`, `editor`, `sidebar`, `panel`.
 
   Returns an array of globs for the specified background.
-* `add(ui, glob): boolean`
+* `add(ui, glob): Promise<boolean>`
   * `ui` : Background to add to; either `window`, `editor`, `sidebar`, `panel`.
   * `glob`: Glob to add.
 
   Returns true if successful.
-* `replace(ui, old, glob): boolean`
+* `replace(ui, old, glob): Promise<boolean>`
   * `ui` : Background to replace from; either `window`, `editor`, `sidebar`, `panel`.
   * `old`: Glob to replace.
   * `glob`: Updated glob.
 
   Returns true if successful.
-* `remove(ui, glob): boolean`
+* `remove(ui, glob): Promise<boolean>`
   * `ui` : Background to remove from; either `window`, `editor`, `sidebar`, `panel`.
   * `glob`: Glob to remove.
 
