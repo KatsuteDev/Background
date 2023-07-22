@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.6.0
+
+### New Features
+
+* Add extension API [#176](https://github.com/KatsuteDev/Background/pull/176) ([@Katsute](https://github.com/Katsute))
+
+  Extension developers can now access the background API for this extension, refer to [API](https://github.com/KatsuteDev/Background#-api) for details.
+
+**Full Changelog**: [`2.5.8...2.6.0`](https://github.com/KatsuteDev/Background/compare/2.5.8...2.6.0)
+
 ## 2.5.8
 
 ### Dependencies
