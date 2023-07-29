@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.1
+
+* Update README
+
+**Full Changelog**: [`2.6.0...2.6.1`](https://github.com/KatsuteDev/Background/compare/2.6.0...2.6.1)
+
 ## 2.6.0
 
 ### New Features

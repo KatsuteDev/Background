@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.6.0",
+    "version": "2.6.1",
     "private": true,
     "engines": {
         "vscode": "^1.80.0"
@@ -335,11 +335,11 @@
         "tmp": "0.2.1"
     },
     "devDependencies": {
-        "@types/node": "20.4.1",
+        "@types/node": "20.4.5",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.80.0",
         "@vscode/test-electron": "2.3.3",
-        "@vscode/vsce": "2.19.0",
+        "@vscode/vsce": "2.20.0",
         "rimraf": "5.0.1",
         "typescript": "5.1.6"
     }
