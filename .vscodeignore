@@ -13,3 +13,7 @@ src
 test
 
 tsconfig.json
+
+node_modules/**/*.md
+node_modules/**/*.ts
+node_modules/**/*.ts.map
