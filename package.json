@@ -337,7 +337,7 @@
     "devDependencies": {
         "@types/node": "20.4.5",
         "@types/tmp": "0.2.3",
-        "@types/vscode": "1.80.0",
+        "@types/vscode": "1.81.0",
         "@vscode/test-electron": "2.3.3",
         "@vscode/vsce": "2.20.1",
         "rimraf": "5.0.1",
