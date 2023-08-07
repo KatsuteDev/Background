@@ -339,7 +339,7 @@
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.80.0",
         "@vscode/test-electron": "2.3.3",
-        "@vscode/vsce": "2.20.0",
+        "@vscode/vsce": "2.20.1",
         "rimraf": "5.0.1",
         "typescript": "5.1.6"
     }
