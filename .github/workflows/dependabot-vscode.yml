@@ -5,5 +5,3 @@ jobs:
   vscode:
     name: Bump VSCode Version
     uses: Katsute/Workflows/.github/workflows/dependabot-vscode.yml@main
-    secrets:
-      token: ${{ secrets.BOT }}
