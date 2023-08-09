@@ -19,19 +19,18 @@
 import * as vscode from "vscode";
 
 import { showInputBox } from "../../vs/inputbox";
-import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem } from "../../vs/quickpick";
+import { UI, get, update } from "../../vs/vsconfig";
 
 import { round } from "../../lib/round";
 import { menu as cm, title } from "../config";
 
 //
 
-export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const current: number = round(get("backgroundOpacity", item.ui!) as number, 2);
+export const menu: (ui: UI) => void = (ui: UI) => {
+    const current: number = round(get("backgroundOpacity", ui) as number, 2);
 
     showInputBox({
-        title: title("Opacity", item.ui!),
+        title: title("Opacity", ui),
         placeHolder: "Background opacity",
         value: current.toString(),
         prompt: `Background opacity (${current}). 0 is fully visible and 1 is invisible.`,
@@ -47,8 +46,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
             if(!isNaN(+value)){
                 const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
                 if(o > .1){
-                    update("backgroundOpacity", o, item.ui!)
-                        .then(() => cm(item)); // reopen menu
+                    update("backgroundOpacity", o, ui)
+                        .then(() => cm(ui)); // reopen menu
                 }else{
                     vscode.window.showWarningMessage(
                         "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -57,8 +56,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                         "Yes"
                     ).then((c?: "Yes") => {
                         if(c === "Yes")
-                            update("backgroundOpacity", o, item.ui!)
-                                .then(() => cm(item)); // reopen menu
+                            update("backgroundOpacity", o, ui)
+                                .then(() => cm(ui)); // reopen menu
                     });
                 }
             }

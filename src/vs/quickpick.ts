@@ -23,7 +23,7 @@ import { UI } from "./vsconfig";
 // types
 
 export interface CommandQuickPickItem extends vscode.QuickPickItem {
-    handle?: (item: CommandQuickPickItem) => void;
+    onclick?: (item: CommandQuickPickItem) => void;
     value?: string,
     ui?: UI
 }
@@ -32,7 +32,7 @@ export interface CommandQuickPickItem extends vscode.QuickPickItem {
 
 export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}) => {
     vscode.window.showQuickPick(items, options).then((item?: CommandQuickPickItem) => {
-        item && item.handle && new Promise(() => item.handle!(item)); // run then in a promise
+        item && item.onclick && new Promise(() => item.onclick!(item)); // run then in a promise
     });
 }
 
