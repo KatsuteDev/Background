@@ -194,12 +194,41 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                 });
             }
         }),
+        // delete
         ... items.length > 0 ? [
             separator(),
             quickPickItem({
-                label: "$(lightbulb) To modify or remove an image, select the row and press enter",
+                label: "$(trash) Delete a background",
                 ui: item.ui!,
-                handle: (item: CommandQuickPickItem) => menu(item)
+                handle: (item: CommandQuickPickItem) => {
+                    const items: CommandQuickPickItem[] = (get(`${item.ui!}Backgrounds`) as string[])
+                        .filter(unique)
+                        .map(file => quickPickItem({
+                            label: file.replace(/(\${\w+})/g, "\\$1"),
+                            value: file,
+                            ui: item.ui,
+                            description: `${str.s(glob.count(file), "matching file")}`
+                        }));
+
+                    vscode.window.showQuickPick(
+                        items,
+                        {
+                            ...options,
+                            title: t("Delete", item.ui!),
+                            placeHolder: "Files",
+                            canPickMany: true
+                        }
+                    ).then((selected?: CommandQuickPickItem[]) => {
+                        if(selected){
+                            let promise: Promise<void> = Promise.resolve();
+                            for(const file of selected)
+                                promise = promise.then(() => remove(item.ui!, file.value!, true)); // append promise to chain
+                            promise = promise
+                                .then(() => selected.length > 0 && notify())
+                                .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
+                        }
+                    });
+                }
             })
         ] : []
     ],
