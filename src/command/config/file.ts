@@ -56,7 +56,7 @@ export const remove: (ui: UI, glob: string, skipWarning?: boolean) => Promise<vo
     skipWarning || cm({label: '␀', ui}); // reopen files
 };
 
-// exts
+// extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
 
 export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "gif", "bmp", "svg"];
 
