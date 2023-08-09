@@ -1,13 +1,13 @@
 <div id="top" align="center">
     <br>
     <a href="https://github.com/KatsuteDev/Background#readme">
-        <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png" width="100" height="100">
+        <img alt="logo" width="100" height="100" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png">
     </a>
     <h3>Background</h3>
     <h4>The most advanced background image extension for VSCode</h4>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="installs" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="downloads" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
 </div>
 
 <br>
