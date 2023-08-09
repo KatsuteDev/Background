@@ -27,7 +27,6 @@ import * as glob from "../../lib/glob";
 import { unique } from "../../lib/unique";
 
 import { menu as cm, options, title as t } from "../config";
-import { notify } from "../install";
 
 // config
 
@@ -36,11 +35,15 @@ export const view: (ui: UI) => string[] = (ui: UI) => {
 }
 
 export const add: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
+    await addMultiple(ui, [glob], skipWarning);
+}
+
+export const addMultiple: (ui: UI, globs: string[], skipWarning?: boolean) => Promise<void> = async (ui: UI, globs: string[], skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
-    files.push(glob);
+    files.push(...globs);
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning);
     skipWarning || cm(ui); // reopen menu
-};
+}
 
 export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string, skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
@@ -52,9 +55,13 @@ export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean)
 };
 
 export const remove: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
-    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => f !== glob).filter(unique), undefined, skipWarning);
-    skipWarning || cm(ui); // reopen files
-};
+    await removeMultiple(ui, [glob], skipWarning);
+}
+
+export const removeMultiple: (ui: UI, globs: string[], skipWarning?: boolean) => Promise<void> = async (ui: UI, globs: string[], skipWarning: boolean = false) => {
+    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => !globs.includes(f)).filter(unique), undefined, skipWarning);
+    skipWarning || cm(ui); // reopen menu
+}
 
 // extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
 
@@ -116,14 +123,8 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                     openLabel: "Select Image",
                     filters: {"Images": extensions()}
                 }).then((files?: vscode.Uri[]) => {
-                    if(files){
-                        let promise: Promise<void> = Promise.resolve();
-                        for(const file of files)
-                            promise = promise.then(() => add(ui, file.fsPath.replace(/\\/g, '/'), true)); // append promise to chain
-                        promise = promise
-                            .then(() => files.length > 0 && notify())
-                            .then(() => cm(ui)) // reopen menu
-                    }
+                    if(files)
+                        addMultiple(ui, files.map((f) => f.fsPath.replace(/\\/g, '/')));
                 });
             }
         }),
@@ -137,14 +138,8 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                     canSelectMany: true,
                     openLabel: "Select Folder"
                 }).then((files?: vscode.Uri[]) => {
-                    if(files){
-                        let promise: Promise<void> = Promise.resolve();
-                        for(const file of files)
-                            promise = promise.then(() => add(ui, `${file.fsPath.replace(/\\/g, '/')}/**`, true)); // append promise to chain
-                        promise = promise
-                            .then(() => files.length > 0 && notify())
-                            .then(() => cm(ui)) // reopen menu
-                    }
+                    if(files)
+                        addMultiple(ui, files.map((f) => `${f.fsPath.replace(/\\/g, '/')}/**`));
                 });
             }
         }),
@@ -219,14 +214,8 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                             canPickMany: true
                         }
                     ).then((selected?: CommandQuickPickItem[]) => {
-                        if(selected){
-                            let promise: Promise<void> = Promise.resolve();
-                            for(const file of selected)
-                                promise = promise.then(() => remove(ui, file.value!, true)); // append promise to chain
-                            promise = promise
-                                .then(() => selected.length > 0 && notify())
-                                .then(() => cm(ui)) // reopen menu
-                        }
+                        if(selected)
+                            removeMultiple(ui, selected.map((f) => f.value!));
                     });
                 }
             })
