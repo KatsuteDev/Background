@@ -39,22 +39,22 @@ export const menu: (ui: UI) => void = (ui: UI) => {
 
     showQuickPick([
         // top
-        quickPickItem({ label: prop.items!.enum![0], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![1], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![2], onclick: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![1], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![2], handle, ui }, current),
         separator(),
         // center
-        quickPickItem({ label: prop.items!.enum![3], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![4], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![5], onclick: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![3], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![4], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![5], handle, ui }, current),
         separator(),
         // bottom
-        quickPickItem({ label: prop.items!.enum![6], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![7], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![8], onclick: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![6], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![7], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![8], handle, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items!.enum![9], description: "Manual position", ui, onclick: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![9], description: "Manual position", ui, handle: (item: CommandQuickPickItem) => {
             const currentValue: string = get("backgroundAlignmentValue", ui);
             showInputBox({
                 title: title("Alignment", ui),

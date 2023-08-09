@@ -41,12 +41,12 @@ export const menu: (ui: UI) => void = (ui: UI) => {
 
     showQuickPick([
         // size
-        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], onclick: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: ui, onclick: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: ui, handle: (item: CommandQuickPickItem) => {
             const currentValue: string = get("backgroundSizeValue", ui);
             showInputBox({
                 title,

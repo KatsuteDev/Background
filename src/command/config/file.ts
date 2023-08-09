@@ -96,7 +96,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
             value: file,
             ui,
             description: `${str.s(glob.count(file), "matching file")}`,
-            onclick: (item: CommandQuickPickItem) => updateItem(ui, item)
+            handle: (item: CommandQuickPickItem) => updateItem(ui, item)
         }));
 
     // show menu
@@ -108,7 +108,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         quickPickItem({
             label: "$(file-add) Add a File",
             ui,
-            onclick: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: true,
                     canSelectFolders: false,
@@ -130,7 +130,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         quickPickItem({
             label: "$(file-directory-create) Add a Folder",
             ui: ui,
-            onclick: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: false,
                     canSelectFolders: true,
@@ -151,7 +151,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         quickPickItem({
             label: "$(kebab-horizontal) Add a Glob",
             ui,
-            onclick: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add File",
                     placeHolder: "File path or glob",
@@ -173,7 +173,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         quickPickItem({
             label: "$(ports-open-browser-icon) Add a URL",
             ui,
-            onclick: (item: CommandQuickPickItem) => {
+            handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add URL",
                     placeHolder: "Image URL",
@@ -200,7 +200,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
             quickPickItem({
                 label: "$(trash) Delete a background",
                 ui: ui,
-                onclick: (item: CommandQuickPickItem) => {
+                handle: (item: CommandQuickPickItem) => {
                     const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
                         .filter(unique)
                         .map(file => quickPickItem({

@@ -36,12 +36,12 @@ export const menu: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundRepeat", ui) as string;
 
     showQuickPick([
-        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![4], description: prop.items!.enumDescriptions![4], onclick: handle, ui }, current),
-        quickPickItem({ label: prop.items!.enum![5], description: prop.items!.enumDescriptions![5], onclick: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![1], description: prop.items!.enumDescriptions![1], handle: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], handle: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![4], description: prop.items!.enumDescriptions![4], handle: handle, ui }, current),
+        quickPickItem({ label: prop.items!.enum![5], description: prop.items!.enumDescriptions![5], handle: handle, ui }, current),
     ],
     {
         ...options,
