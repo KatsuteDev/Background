@@ -30,32 +30,26 @@ export interface CommandQuickPickItem extends vscode.QuickPickItem {
 
 // quick pick
 
-export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}) => {
-    vscode.window.showQuickPick(items, options).then((item?: CommandQuickPickItem) => {
-        item && item.handle && new Promise(() => item.handle!(item)); // run then in a promise
-    });
+export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions, menu?: () => void) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}, menu?: () => void) => {
+    vscode.window.showQuickPick(
+        menu
+        // back button
+        ? [quickPickItem({
+            alwaysShow: true,
+            label: "$(arrow-left) Back",
+            handle: () => menu()
+        }), separator(),...items]
+        : items, options)
+        .then((item?: CommandQuickPickItem) => {
+            item && item.handle && new Promise(() => item.handle!(item)); // run then in a promise
+        }
+    );
 }
 
 export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
     ...item,
     description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim() // mark as selected if matches
 } as CommandQuickPickItem);
-
-export const simpleBackPickItem: (menu: () => void) => [CommandQuickPickItem, vscode.QuickPickItem] = (menu: () => void)  => {
-    return [quickPickItem({
-        alwaysShow: true,
-        label: "$(arrow-left) Back",
-        handle: () => menu()
-    }), separator()];
-}
-
-export const backPickItem: (ui: UI, menu: (ui: UI) => void) => [CommandQuickPickItem, vscode.QuickPickItem] = (ui: UI, menu: (ui: UI) => void)  => {
-    return [quickPickItem({
-        alwaysShow: true,
-        label: "$(arrow-left) Back",
-        handle: () => menu(ui)
-    }), separator()];
-}
 
 // separator
 

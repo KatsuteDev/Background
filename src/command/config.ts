@@ -20,7 +20,7 @@ import * as vscode from "vscode";
 
 import { get, UI } from "../vs/vsconfig";
 import { pkg } from "../vs/package";
-import { backPickItem, quickPickItem, separator, showQuickPick, simpleBackPickItem } from "../vs/quickpick";
+import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -93,16 +93,19 @@ export const config: () => void = () => {
         separator(),
         // extension options
         quickPickItem({
+            alwaysShow: true,
             label: "$(check) Install",
             description: "Install background",
             handle: () => vscode.commands.executeCommand("background.install")
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(close) Uninstall",
             description: "Uninstall background",
             handle: () => vscode.commands.executeCommand("background.uninstall")
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(refresh) Reload Background",
             description: "Randomizes current backgrounds",
             handle: () => vscode.commands.executeCommand("background.reload")
@@ -134,7 +137,6 @@ export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui 
 
 export const menu: (ui: UI) => void = (ui: UI) => {
     showQuickPick([
-        ...simpleBackPickItem(config),
         quickPickItem({
             label: "$(file-media) File",
             description: `${str.s(get(`${ui}Backgrounds`), "Glob")} (${str.s(glob.count(get(`${ui}Backgrounds`)), "Background")})`,
@@ -189,5 +191,6 @@ export const menu: (ui: UI) => void = (ui: UI) => {
     {
         ...options,
         title: `${str.capitalize(ui)} ${options.title}`,
-    });
+    },
+    config);
 };
