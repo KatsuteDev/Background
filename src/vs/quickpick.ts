@@ -41,6 +41,22 @@ export const quickPickItem: (item: CommandQuickPickItem, current?: string) => Co
     description: ((item.description ?? "") + (item.label === current ? " (selected)" : "")).trim() // mark as selected if matches
 } as CommandQuickPickItem);
 
+export const simpleBackPickItem: (menu: () => void) => [CommandQuickPickItem, vscode.QuickPickItem] = (menu: () => void)  => {
+    return [quickPickItem({
+        alwaysShow: true,
+        label: "$(arrow-left) Back",
+        handle: () => menu()
+    }), separator()];
+}
+
+export const backPickItem: (ui: UI, menu: (ui: UI) => void) => [CommandQuickPickItem, vscode.QuickPickItem] = (ui: UI, menu: (ui: UI) => void)  => {
+    return [quickPickItem({
+        alwaysShow: true,
+        label: "$(arrow-left) Back",
+        handle: () => menu(ui)
+    }), separator()];
+}
+
 // separator
 
 export const separator: () => vscode.QuickPickItem = () => ({

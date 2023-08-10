@@ -20,7 +20,7 @@ import * as vscode from "vscode";
 
 import { get, UI } from "../vs/vsconfig";
 import { pkg } from "../vs/package";
-import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
+import { backPickItem, quickPickItem, separator, showQuickPick, simpleBackPickItem } from "../vs/quickpick";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -37,7 +37,9 @@ import * as glob from "../lib/glob";
 
 const issues: vscode.Uri = vscode.Uri.parse(pkg.bugs.url);
 
-export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.config", () => config());
+
+export const config: () => void = () => {
     showQuickPick([
         // background types
         quickPickItem({
@@ -116,7 +118,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
             handle: () => vscode.env.openExternal(issues)
         })
     ], options);
-});
+}
 
 // shared options
 
@@ -132,6 +134,7 @@ export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui 
 
 export const menu: (ui: UI) => void = (ui: UI) => {
     showQuickPick([
+        ...simpleBackPickItem(config),
         quickPickItem({
             label: "$(file-media) File",
             description: `${str.s(get(`${ui}Backgrounds`), "Glob")} (${str.s(glob.count(get(`${ui}Backgrounds`)), "Background")})`,
