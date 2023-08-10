@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.7.0
+
+### New Features
+
+* Add menu to delete backgrounds [#185](https://github.com/KatsuteDev/Background/pull/185) ([@Katsute](https://github.com/Katsute))
+
+  ![delete](https://github.com/KatsuteDev/Background/assets/58778985/31bf6a03-f495-451e-ba9c-375953075e2e)
+* Add back button to some menus [#186](https://github.com/KatsuteDev/Background/pull/186) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump @vscode/vsce from 2.20.0 to 2.20.1 [#180](https://github.com/KatsuteDev/Background/pull/180) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.3 to 2.3.4 [#182](https://github.com/KatsuteDev/Background/pull/182) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.80.0 to 1.81.0 [#181](https://github.com/KatsuteDev/Background/pull/181) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.6.1...2.7.0`](https://github.com/KatsuteDev/Background/compare/2.6.1...2.7.0)
+
 ## 2.6.1
 
 * Update README
