@@ -29,12 +29,12 @@ import * as crypto from "crypto";
 import * as glob from "./lib/glob";
 import { round } from "./lib/round";
 
+import * as config from "./command/config";
 import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
 import * as changelog from "./command/changelog";
 
-import { config } from "./command/config";
 import * as file from "./command/config/file";
 
 import { statusbar } from "./statusbar";
@@ -106,7 +106,7 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
     context.subscriptions.push(uninstall.command);
     context.subscriptions.push(changelog.command);
 
-    context.subscriptions.push(config);
+    context.subscriptions.push(config.command);
 
     context.subscriptions.push(statusbar);
     statusbar.show();

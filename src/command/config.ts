@@ -37,7 +37,9 @@ import * as glob from "../lib/glob";
 
 const issues: vscode.Uri = vscode.Uri.parse(pkg.bugs.url);
 
-export const config: vscode.Disposable = vscode.commands.registerCommand("background.config", () => {
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.config", () => config());
+
+export const config: () => void = () => {
     showQuickPick([
         // background types
         quickPickItem({
@@ -91,16 +93,19 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
         separator(),
         // extension options
         quickPickItem({
+            alwaysShow: true,
             label: "$(check) Install",
             description: "Install background",
             handle: () => vscode.commands.executeCommand("background.install")
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(close) Uninstall",
             description: "Uninstall background",
             handle: () => vscode.commands.executeCommand("background.uninstall")
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(refresh) Reload Background",
             description: "Randomizes current backgrounds",
             handle: () => vscode.commands.executeCommand("background.reload")
@@ -116,7 +121,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
             handle: () => vscode.env.openExternal(issues)
         })
     ], options);
-});
+}
 
 // shared options
 
@@ -186,5 +191,6 @@ export const menu: (ui: UI) => void = (ui: UI) => {
     {
         ...options,
         title: `${str.capitalize(ui)} ${options.title}`,
-    });
+    },
+    config);
 };

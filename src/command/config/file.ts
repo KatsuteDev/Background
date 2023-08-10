@@ -42,7 +42,7 @@ export const addMultiple: (ui: UI, globs: string[], skipWarning?: boolean) => Pr
     const files: string[] = get(`${ui}Backgrounds`) as string[];
     files.push(...globs);
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning);
-    skipWarning || cm(ui); // reopen menu
+    skipWarning || menu(ui); // reopen menu
 }
 
 export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string, skipWarning: boolean = false) => {
@@ -51,7 +51,7 @@ export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean)
         if(files[i] === old)
             files[i] = glob;
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning || old === glob);
-    skipWarning || cm(ui); // reopen menu
+    skipWarning || menu(ui); // reopen menu
 };
 
 export const remove: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
@@ -60,7 +60,7 @@ export const remove: (ui: UI, glob: string, skipWarning?: boolean) => Promise<vo
 
 export const removeMultiple: (ui: UI, globs: string[], skipWarning?: boolean) => Promise<void> = async (ui: UI, globs: string[], skipWarning: boolean = false) => {
     await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => !globs.includes(f)).filter(unique), undefined, skipWarning);
-    skipWarning || cm(ui); // reopen menu
+    skipWarning || menu(ui); // reopen menu
 }
 
 // extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
@@ -113,6 +113,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         separator(),
         // add
         quickPickItem({
+            alwaysShow: true,
             label: "$(file-add) Add a File",
             ui,
             handle: (item: CommandQuickPickItem) => {
@@ -129,6 +130,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
             }
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(file-directory-create) Add a Folder",
             ui: ui,
             handle: (item: CommandQuickPickItem) => {
@@ -144,6 +146,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
             }
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(kebab-horizontal) Add a Glob",
             ui,
             handle: (item: CommandQuickPickItem) => {
@@ -166,6 +169,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
             }
         }),
         quickPickItem({
+            alwaysShow: true,
             label: "$(ports-open-browser-icon) Add a URL",
             ui,
             handle: (item: CommandQuickPickItem) => {
@@ -193,6 +197,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         ... items.length > 0 ? [
             separator(),
             quickPickItem({
+                alwaysShow: true,
                 label: "$(trash) Delete a background",
                 ui: ui,
                 handle: (item: CommandQuickPickItem) => {
@@ -225,5 +230,6 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         ...options,
         title: t("Files", ui),
         placeHolder: "Files"
-    });
+    },
+    () => cm(ui));
 };

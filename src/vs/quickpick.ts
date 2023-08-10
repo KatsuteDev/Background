@@ -30,10 +30,20 @@ export interface CommandQuickPickItem extends vscode.QuickPickItem {
 
 // quick pick
 
-export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}) => {
-    vscode.window.showQuickPick(items, options).then((item?: CommandQuickPickItem) => {
-        item && item.handle && new Promise(() => item.handle!(item)); // run then in a promise
-    });
+export const showQuickPick: (items: CommandQuickPickItem[], options?: vscode.QuickPickOptions, menu?: () => void) => void = (items: CommandQuickPickItem[], options: vscode.QuickPickOptions = {}, menu?: () => void) => {
+    vscode.window.showQuickPick(
+        menu
+        // back button
+        ? [quickPickItem({
+            alwaysShow: true,
+            label: "$(arrow-left) Back",
+            handle: () => menu()
+        }), separator(),...items]
+        : items, options)
+        .then((item?: CommandQuickPickItem) => {
+            item && item.handle && new Promise(() => item.handle!(item)); // run then in a promise
+        }
+    );
 }
 
 export const quickPickItem: (item: CommandQuickPickItem, current?: string) => CommandQuickPickItem = (item: CommandQuickPickItem, current?: string) => ({
