@@ -20,7 +20,7 @@ import * as vscode from "vscode";
 
 import { get, UI } from "../vs/vsconfig";
 import { pkg } from "../vs/package";
-import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../vs/quickpick";
+import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -50,7 +50,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundSize",        "window")} Size`        + ` • ` +
                     `${get("backgroundChangeTime",  "window")} second${get("backgroundChangeTime", "window") === 1 ? '' : 's'}`,
             ui: "window",
-            handle: menu
+            handle: () => menu("window")
         }),
         quickPickItem({
             label: "$(multiple-windows) Editor",
@@ -62,7 +62,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundSize",        "editor")} Size`        + ` • ` +
                     `${get("backgroundChangeTime",  "editor")} second${get("backgroundChangeTime", "editor") === 1 ? '' : 's'}`,
             ui: "editor",
-            handle: menu
+            handle: () => menu("editor")
         }),
         quickPickItem({
             label: "$(layout-sidebar-left) Sidebar",
@@ -74,7 +74,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundSize",        "sidebar")} Size`       + ` • ` +
                     `${get("backgroundChangeTime",  "sidebar")} second${get("backgroundChangeTime", "sidebar") === 1 ? '' : 's'}`,
             ui: "sidebar",
-            handle: menu
+            handle: () => menu("sidebar")
         }),
         quickPickItem({
             label: "$(layout-panel) Panel",
@@ -86,7 +86,7 @@ export const config: vscode.Disposable = vscode.commands.registerCommand("backgr
                     `${get("backgroundSize",        "panel")} Size`         + ` • ` +
                     `${get("backgroundChangeTime",  "panel")} second${get("backgroundChangeTime", "panel") === 1 ? '' : 's'}`,
             ui: "panel",
-            handle: menu
+            handle: () => menu("panel")
         }),
         separator(),
         // extension options
@@ -130,61 +130,61 @@ export const title: (s: string, ui?: UI) => string = (s: string, ui?: UI) => ui 
 
 // menu
 
-export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+export const menu: (ui: UI) => void = (ui: UI) => {
     showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
-            description: `${str.s(get(`${item.ui!}Backgrounds`), "Glob")} (${str.s(glob.count(get(`${item.ui!}Backgrounds`)), "Background")})`,
+            description: `${str.s(get(`${ui}Backgrounds`), "Glob")} (${str.s(glob.count(get(`${ui}Backgrounds`)), "Background")})`,
             detail: "Select background image files",
-            ui: item.ui!,
-            handle: file.menu
+            ui,
+            handle: () => file.menu(ui)
         }),
         separator(),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${get("backgroundAlignment", item.ui!)}`,
+            description: `${get("backgroundAlignment", ui)}`,
             detail: "Background image alignment",
-            ui: item.ui!,
-            handle: align.menu
+            ui,
+            handle: () => align.menu(ui)
         }),
         quickPickItem({
             label: "$(eye) Blur",
-            description: `${get("backgroundBlur", item.ui!)}`,
+            description: `${get("backgroundBlur", ui)}`,
             detail: "Background image blur",
-            ui: item.ui!,
-            handle: blur.menu
+            ui,
+            handle: () => blur.menu(ui)
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
-            description: `${get("backgroundOpacity", item.ui!)}`,
+            description: `${get("backgroundOpacity", ui)}`,
             detail: "Background image opacity",
-            ui: item.ui!,
-            handle: opacity.menu
+            ui,
+            handle: () => opacity.menu(ui)
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
-            description: `${get("backgroundRepeat", item.ui!)}`,
+            description: `${get("backgroundRepeat", ui)}`,
             detail: "Background image repeat",
-            ui: item.ui!,
-            handle: repeat.menu
+            ui,
+            handle: () => repeat.menu(ui)
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${get("backgroundSize", item.ui!)}`,
+            description: `${get("backgroundSize", ui)}`,
             detail: "Background image size",
-            ui: item.ui!,
-            handle: size.menu
+            ui,
+            handle: () => size.menu(ui)
         }),
         quickPickItem({
             label: "$(clock) Time",
-            description: `${get("backgroundChangeTime", item.ui!)} second${get("backgroundChangeTime", item.ui!) === 1 ? '' : 's'}`,
+            description: `${get("backgroundChangeTime", ui)} second${get("backgroundChangeTime", ui) === 1 ? '' : 's'}`,
             detail: "How often to change the background",
-            ui: item.ui!,
-            handle: time.menu
+            ui,
+            handle: () => time.menu(ui)
         })
     ],
     {
         ...options,
-        title: `${str.capitalize(item.ui!)} ${options.title}`,
+        title: `${str.capitalize(ui)} ${options.title}`,
     });
 };

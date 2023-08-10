@@ -17,27 +17,26 @@
  */
 
 import { showInputBox } from "../../vs/inputbox";
-import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem } from "../../vs/quickpick";
+import { UI, get, update } from "../../vs/vsconfig";
 
 import { menu as cm, title } from "../config";
 import { validCSS } from "../../lib/str";
 
 //
 
-export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const current: string = get("backgroundBlur", item.ui!) as string;
+export const menu: (ui: UI) => void = (ui: UI) => {
+    const current: string = get("backgroundBlur", ui) as string;
 
     showInputBox({
-        title: title("Blur", item.ui!),
+        title: title("Blur", ui),
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
         validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
         handle: (value: string) => {
             if(validCSS(value))
-                update("backgroundBlur", value, item.ui!)
-                    .then(() => cm(item)); // reopen menu
+                update("backgroundBlur", value, ui)
+                    .then(() => cm(ui)); // reopen menu
         }
     });
 };

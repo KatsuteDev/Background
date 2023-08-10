@@ -17,19 +17,18 @@
  */
 
 import { showInputBox } from "../../vs/inputbox";
-import { get, update } from "../../vs/vsconfig";
-import { CommandQuickPickItem } from "../../vs/quickpick";
+import { UI, get, update } from "../../vs/vsconfig";
 
 import { round } from "../../lib/round";
 import { menu as cm, title } from "../config";
 
 //
 
-export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
-    const current: number = round(get("backgroundChangeTime", item.ui!) as number, 2);
+export const menu: (ui: UI) => void = (ui: UI) => {
+    const current: number = round(get("backgroundChangeTime", ui) as number, 2);
 
     showInputBox({
-        title: title("Change Time", item.ui!),
+        title: title("Change Time", ui),
         placeHolder: "Background change time",
         value: current.toString(),
         prompt: `Background change time (${current}). How long in seconds before the background should automatically change. Set to 0 to always use the same image.`,
@@ -44,8 +43,8 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         handle: (value: string) => {
             if(!isNaN(+value)){
                 const o: number = Math.max(round(+value, 2), 0);
-                update("backgroundChangeTime", o, item.ui!)
-                    .then(() => cm(item)); // reopen menu
+                update("backgroundChangeTime", o, ui)
+                    .then(() => cm(ui)); // reopen menu
             }
         }
     });

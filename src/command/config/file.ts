@@ -27,7 +27,6 @@ import * as glob from "../../lib/glob";
 import { unique } from "../../lib/unique";
 
 import { menu as cm, options, title as t } from "../config";
-import { notify } from "../install";
 
 // config
 
@@ -36,11 +35,15 @@ export const view: (ui: UI) => string[] = (ui: UI) => {
 }
 
 export const add: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
+    await addMultiple(ui, [glob], skipWarning);
+}
+
+export const addMultiple: (ui: UI, globs: string[], skipWarning?: boolean) => Promise<void> = async (ui: UI, globs: string[], skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
-    files.push(glob);
+    files.push(...globs);
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning);
-    skipWarning || cm({label: '␀', ui}); // reopen menu
-};
+    skipWarning || cm(ui); // reopen menu
+}
 
 export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, old: string, glob: string, skipWarning: boolean = false) => {
     const files: string[] = get(`${ui}Backgrounds`) as string[];
@@ -48,13 +51,17 @@ export const replace: (ui: UI, old: string, glob: string, skipWarning?: boolean)
         if(files[i] === old)
             files[i] = glob;
     await update(`${ui}Backgrounds`, files.filter(unique), undefined, skipWarning || old === glob);
-    skipWarning || cm({label: '␀', ui}); // reopen menu
+    skipWarning || cm(ui); // reopen menu
 };
 
 export const remove: (ui: UI, glob: string, skipWarning?: boolean) => Promise<void> = async (ui: UI, glob: string, skipWarning: boolean = false) => {
-    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => f !== glob).filter(unique), undefined, skipWarning);
-    skipWarning || cm({label: '␀', ui}); // reopen files
-};
+    await removeMultiple(ui, [glob], skipWarning);
+}
+
+export const removeMultiple: (ui: UI, globs: string[], skipWarning?: boolean) => Promise<void> = async (ui: UI, globs: string[], skipWarning: boolean = false) => {
+    await update(`${ui}Backgrounds`, (get(`${ui}Backgrounds`) as string[]).filter((f) => !globs.includes(f)).filter(unique), undefined, skipWarning);
+    skipWarning || cm(ui); // reopen menu
+}
 
 // extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
 
@@ -87,16 +94,16 @@ const updateItem: (ui: UI, item: CommandQuickPickItem) => void = (ui: UI, item: 
 
 // files
 
-export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+export const menu: (ui: UI) => void = (ui: UI) => {
     // existing items
-    const items: CommandQuickPickItem[] = (get(`${item.ui!}Backgrounds`) as string[])
+    const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
         .filter(unique)
         .map(file => quickPickItem({
             label: file.replace(/(\${\w+})/g, "\\$1"),
             value: file,
-            ui: item.ui,
+            ui,
             description: `${str.s(glob.count(file), "matching file")}`,
-            handle: (item: CommandQuickPickItem) => updateItem(item.ui!, item)
+            handle: (item: CommandQuickPickItem) => updateItem(ui, item)
         }));
 
     // show menu
@@ -107,7 +114,7 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
         // add
         quickPickItem({
             label: "$(file-add) Add a File",
-            ui: item.ui!,
+            ui,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: true,
@@ -116,20 +123,14 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     openLabel: "Select Image",
                     filters: {"Images": extensions()}
                 }).then((files?: vscode.Uri[]) => {
-                    if(files){
-                        let promise: Promise<void> = Promise.resolve();
-                        for(const file of files)
-                            promise = promise.then(() => add(item.ui!, file.fsPath.replace(/\\/g, '/'), true)); // append promise to chain
-                        promise = promise
-                            .then(() => files.length > 0 && notify())
-                            .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
-                    }
+                    if(files)
+                        addMultiple(ui, files.map((f) => f.fsPath.replace(/\\/g, '/')));
                 });
             }
         }),
         quickPickItem({
             label: "$(file-directory-create) Add a Folder",
-            ui: item.ui!,
+            ui: ui,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showOpenDialog({
                     canSelectFiles: false,
@@ -137,20 +138,14 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     canSelectMany: true,
                     openLabel: "Select Folder"
                 }).then((files?: vscode.Uri[]) => {
-                    if(files){
-                        let promise: Promise<void> = Promise.resolve();
-                        for(const file of files)
-                            promise = promise.then(() => add(item.ui!, `${file.fsPath.replace(/\\/g, '/')}/**`, true)); // append promise to chain
-                        promise = promise
-                            .then(() => files.length > 0 && notify())
-                            .then(() => cm({label: '␀', ui: item.ui!})) // reopen menu
-                    }
+                    if(files)
+                        addMultiple(ui, files.map((f) => `${f.fsPath.replace(/\\/g, '/')}/**`));
                 });
             }
         }),
         quickPickItem({
             label: "$(kebab-horizontal) Add a Glob",
-            ui: item.ui!,
+            ui,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add File",
@@ -166,13 +161,13 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     }
                 }).then((glob?: string) => {
                     if(glob)
-                        add(item.ui!, glob);
+                        add(ui, glob);
                 });
             }
         }),
         quickPickItem({
             label: "$(ports-open-browser-icon) Add a URL",
-            ui: item.ui!,
+            ui,
             handle: (item: CommandQuickPickItem) => {
                 vscode.window.showInputBox({
                     title: "Add URL",
@@ -190,22 +185,45 @@ export const menu: (item: CommandQuickPickItem) => void = (item: CommandQuickPic
                     }
                 }).then((url?: string) => {
                     if(url)
-                        add(item.ui!, url);
+                        add(ui, url);
                 });
             }
         }),
+        // delete
         ... items.length > 0 ? [
             separator(),
             quickPickItem({
-                label: "$(lightbulb) To modify or remove an image, select the row and press enter",
-                ui: item.ui!,
-                handle: (item: CommandQuickPickItem) => menu(item)
+                label: "$(trash) Delete a background",
+                ui: ui,
+                handle: (item: CommandQuickPickItem) => {
+                    const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
+                        .filter(unique)
+                        .map(file => quickPickItem({
+                            label: file.replace(/(\${\w+})/g, "\\$1"),
+                            value: file,
+                            ui: item.ui,
+                            description: `${str.s(glob.count(file), "matching file")}`
+                        }));
+
+                    vscode.window.showQuickPick(
+                        items,
+                        {
+                            ...options,
+                            title: t("Delete", ui),
+                            placeHolder: "Files",
+                            canPickMany: true
+                        }
+                    ).then((selected?: CommandQuickPickItem[]) => {
+                        if(selected)
+                            removeMultiple(ui, selected.map((f) => f.value!));
+                    });
+                }
             })
         ] : []
     ],
     {
         ...options,
-        title: t("Files", item.ui!),
+        title: t("Files", ui),
         placeHolder: "Files"
     });
 };
