@@ -75,6 +75,7 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 |`Background: Uninstall`|Uninstalls and disables the background.|
 |`Background: Reload`|Randomizes the backgrounds. Background must already be installed.|
 |`Background: Configuration`|Opens the configuration menu.|
+|`Background: Changelog`|Opens changelog.|
 
 ## ⚙️ Configuration
 
