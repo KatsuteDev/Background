@@ -335,7 +335,7 @@
         "tmp": "0.2.1"
     },
     "devDependencies": {
-        "@types/node": "20.4.9",
+        "@types/node": "20.5.0",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.81.0",
         "@vscode/test-electron": "2.3.4",
