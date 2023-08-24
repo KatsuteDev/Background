@@ -312,7 +312,7 @@
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
         "vscode:prepublish": "npm run prepare",
-        "build": "esbuild src/extension.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node --minify",
+        "build": "esbuild src/extension.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node --minify --legal-comments=none",
         "prepare": "npm run clean && npm run build",
         "// -- deploy -- //": "",
         "package": "vsce package",
