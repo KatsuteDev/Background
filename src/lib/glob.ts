@@ -20,6 +20,8 @@ import { GlobOptions, globSync } from "glob";
 
 import * as path from "path";
 
+import * as env from "../lib/env";
+
 import { extensions } from "../command/config/file";
 import { unique } from "./unique";
 
@@ -44,7 +46,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
         if(g.startsWith("https://"))
             i++;
         else
-            globs.push(g);
+            globs.push(env.resolve(g).replace(/\\/gm, '/'));
 
     return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
 }
@@ -53,10 +55,11 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
     let p: string[] = [];
     let globs: string[] = [];
 
-    (Array.isArray(glob) ? glob.filter(unique) : [glob]).forEach(g => (g.startsWith("https://") ? p : globs).push(g));
+    (Array.isArray(glob) ? glob.filter(unique) : [glob]) // need to normalize '/' before so glob works properly ↓
+        .forEach(g => (g.startsWith("https://") ? p : globs).push(g.startsWith("https://") ? g : env.resolve(g).replace(/\\/gm, '/')));
 
     return p.concat((globSync(globs, options) as string[])
-                .filter(filter)
+                .filter(filter) // need to normalize '/' again ↓ because glob uses the wrong slash
                 .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
             .filter(unique)
             .map(path => '"' + path + '"');

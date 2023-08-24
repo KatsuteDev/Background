@@ -22,6 +22,7 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, UI, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
+import * as env from "../../lib/env";
 import * as str from "../../lib/str";
 import * as glob from "../../lib/glob";
 import { unique } from "../../lib/unique";
@@ -99,7 +100,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
     const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
         .filter(unique)
         .map(file => quickPickItem({
-            label: file.replace(/(\${\w+})/g, "\\$1"),
+            label: file.replace(/(\${.*})/g, "\$1"),
             value: file,
             ui,
             description: `${str.s(glob.count(file), "matching file")}`,
