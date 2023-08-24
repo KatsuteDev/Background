@@ -304,7 +304,7 @@
             }
         }
     },
-    "main": "dist/extension.js",
+    "main": "dist/index.js",
     "scripts": {
         "// -- dev -- //": "",
         "clean": "rimraf --glob dist & rimraf --glob code-background-*.vsix",
@@ -312,7 +312,7 @@
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
         "vscode:prepublish": "npm run prepare",
-        "build": "tsc --outDir dist",
+        "build": "esbuild src/extension.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node --minify --legal-comments=none",
         "prepare": "npm run clean && npm run build",
         "// -- deploy -- //": "",
         "package": "vsce package",
@@ -329,18 +329,17 @@
         "url": "https://github.com/KatsuteDev/Background/issues"
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
-    "dependencies": {
-        "@vscode/sudo-prompt": "9.3.1",
-        "glob": "10.3.3",
-        "tmp": "0.2.1"
-    },
     "devDependencies": {
-        "@types/node": "20.5.0",
+        "@types/node": "20.5.4",
         "@types/tmp": "0.2.3",
         "@types/vscode": "1.81.0",
+        "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.3.4",
         "@vscode/vsce": "2.20.1",
+        "esbuild": "0.19.2",
+        "glob": "10.3.3",
         "rimraf": "5.0.1",
-        "typescript": "5.1.6"
+        "tmp": "0.2.1",
+        "typescript": "5.2.2"
     }
 }
