@@ -22,7 +22,6 @@ import { showInputBox } from "../../vs/inputbox";
 import { get, UI, update } from "../../vs/vsconfig";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
 
-import * as env from "../../lib/env";
 import * as str from "../../lib/str";
 import * as glob from "../../lib/glob";
 import { unique } from "../../lib/unique";
