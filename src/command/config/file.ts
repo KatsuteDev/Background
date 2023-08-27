@@ -99,7 +99,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
     const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
         .filter(unique)
         .map(file => quickPickItem({
-            label: file.replace(/(\${\w+})/g, "\\$1"),
+            label: file.replace(/(\$\(\w+\))/g, "\\$1"),
             value: file,
             ui,
             description: `${str.s(glob.count(file), "matching file")}`,
@@ -204,7 +204,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                     const items: CommandQuickPickItem[] = (get(`${ui}Backgrounds`) as string[])
                         .filter(unique)
                         .map(file => quickPickItem({
-                            label: file.replace(/(\${\w+})/g, "\\$1"),
+                            label: file.replace(/(\$\(\w+\))/g, "\\$1"),
                             value: file,
                             ui: item.ui,
                             description: `${str.s(glob.count(file), "matching file")}`
