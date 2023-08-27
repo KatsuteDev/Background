@@ -32,7 +32,7 @@ for(const dep of Object.keys(meta.inputs)
                        .map(p => p.split('/')[1])
                        .filter((p, i, self) => self.indexOf(p) === i)
                        .sort((a, b) => a.length - b.length)){
-    for(const license of glob.sync(`node_modules/${dep}/**/LICENSE*`, {nodir: true}).map(p => p.replace(/\\/g, '/'))){
+    for(const license of glob.sync(`node_modules/${dep}/**/LICENSE*`, {nodir: true, nocase: true}).map(p => p.replace(/\\/g, '/'))){
         files.push(license);
     }
 }
