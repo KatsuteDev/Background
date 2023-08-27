@@ -1,8 +1,11 @@
-node_modules
-dist
+/node_modules
+/dist
 
-.vscode-test
+/.vscode-test
 
-test/__*
+/test/__*
 
-*.vsix
+/meta.json
+/LICENSES.txt
+
+/*.vsix
