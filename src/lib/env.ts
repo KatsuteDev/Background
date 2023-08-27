@@ -19,7 +19,7 @@
 import * as vscode from "vscode";
 
 export const resolve: (str: string) => string = (str: string) =>
-    str.replace(/\${(.*)}/gm, (_, envvar) => {
+    str.replace(/\${(.*)}/g, (_, envvar) => {
         if(envvar == "workspace" && vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0] && vscode.workspace.workspaceFolders[0].uri){
             return vscode.workspace.workspaceFolders[0].uri.fsPath.toString();
         }else if(envvar in process.env){

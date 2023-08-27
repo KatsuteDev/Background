@@ -5,7 +5,7 @@ const vscode = require("vscode");
 
 const file = path.join(__dirname, "__testno__");
 
-const images = path.join(__dirname, "*.png").replace(/\\/gm, '/');
+const images = path.join(__dirname, "*.png").replace(/\\/g, '/');
 
 module.exports = {
     run: () => new Promise(async () => {

@@ -46,7 +46,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
         if(g.startsWith("https://"))
             i++;
         else // need to normalize '/' ↓ so glob works properly
-            globs.push(env.resolve(g).replace(/\\/gm, '/'));
+            globs.push(env.resolve(g).replace(/\\/g, '/'));
 
     return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
 }
@@ -59,11 +59,11 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
         if(g.startsWith("https://"))
             urls.push(g);
         else // need to normalize '/' ↓ so glob works properly
-            globs.push(env.resolve(g).replace(/\\/gm, '/'));
+            globs.push(env.resolve(g).replace(/\\/g, '/'));
 
     return urls.concat((globSync(globs, options) as string[])
                     .filter(filter) // need to normalize '/' again ↓ because glob uses the wrong slash
-                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
+                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/g, '/').replace(/^\/+/g, "")}`))
                .filter(unique)
                .map(path => '"' + path + '"');
 }
