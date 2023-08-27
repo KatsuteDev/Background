@@ -24,30 +24,34 @@ const mp = path.join(__dirname, "meta.json");
 
 const meta = JSON.parse(fs.readFileSync(mp, "utf-8"));
 
-let licenses = "# Licenses\n\n---";
+let files = [];
 
+// glob all potential license files
 for(const dep of Object.keys(meta.inputs)
                        .filter(k => k.startsWith("node_modules/"))
-                       .map(p => p.split('/'))
-                       .map(p => p.slice(0, p.length - 1).join('/'))
+                       .map(p => p.split('/')[1])
                        .filter((p, i, self) => self.indexOf(p) === i)
-                       .sort()){
-    // todo: use glob to grab all LICENSE files, then use the folder name (split on node_modules) as the dependency name
-
-    for(const LICENSE of [path.join(__dirname, dep, "LICENSE"),
-                          path.join(__dirname, dep, "LICENSE.txt"),
-                          path.join(__dirname, dep, "LICENSE.md")]){
-        if(fs.existsSync(LICENSE)){
-            let name = LICENSE.split("node_modules").slice(-1)[0].replace(/\\/g, '/').split('/');
-                name = name.slice(0, name.length - 1).join('/').slice(1);
-
-            licenses += '\n\n# ' + name;
-            licenses += '\n\n' + fs.readFileSync(LICENSE, "utf-8").trim();
-            break;
-        }else
-            console.warn(`License was missing for ${dep}`);
+                       .sort((a, b) => a.length - b.length)){
+    for(const license of glob.sync(`node_modules/${dep}/**/LICENSE*`, {nodir: true}).map(p => p.replace(/\\/g, '/'))){
+        files.push(license);
     }
 }
 
-fs.writeFileSync(path.join(__dirname, "LICENSES.txt"), licenses, "utf-8");
+let licenses = {};
+
+// sort so top level (newer) dependency licenses overwrite transient (potentially older) dependency licenses
+for(const license of files.sort((a, b) => b.length - a.length)){
+    const name = license.split("node_modules").splice(-1)[0].split('/').slice(0, -1).join('/').substring(1);
+    licenses[name] = fs.readFileSync(license, "utf-8").trim();
+}
+
+let out = "# Licenses\n\n---";
+
+// write sorted licenses
+for(const k of Object.keys(licenses).sort()){
+    out += `\n\n# ${k}`;
+    out += `\n\n${licenses[k]}`;
+}
+
+fs.writeFileSync(path.join(__dirname, "LICENSES.txt"), out, "utf-8");
 fs.rmSync(mp);
