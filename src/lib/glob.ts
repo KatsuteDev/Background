@@ -52,15 +52,18 @@ export const count: (glob: string | string[]) => number = (glob: string | string
 }
 
 export const resolve: (glob: string | string[]) => string[] = (glob: string | string[]) => {
-    let p: string[] = [];
+    let urls: string[] = [];
     let globs: string[] = [];
 
-    (Array.isArray(glob) ? glob.filter(unique) : [glob]) // need to normalize '/' so glob works properly ↓
-        .forEach(g => (g.startsWith("https://") ? p : globs).push(g.startsWith("https://") ? g : env.resolve(g).replace(/\\/gm, '/')));
+    for(const g of (Array.isArray(glob) ? glob.filter(unique) : [glob]))
+        if(g.startsWith("https://"))
+            urls.push(g);
+        else // need to normalize '/' ↓ so glob works properly
+            globs.push(env.resolve(g).replace(/\\/gm, '/'));
 
-    return p.concat((globSync(globs, options) as string[])
-                .filter(filter) // need to normalize '/' again ↓ because glob uses the wrong slash
-                .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
-            .filter(unique)
-            .map(path => '"' + path + '"');
+    return urls.concat((globSync(globs, options) as string[])
+                    .filter(filter) // need to normalize '/' again ↓ because glob uses the wrong slash
+                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/gm, '/').replace(/^\/+/gm, "")}`))
+               .filter(unique)
+               .map(path => '"' + path + '"');
 }
