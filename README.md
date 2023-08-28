@@ -55,7 +55,7 @@ Type `Background: Configuration` in the command pallette or press the **Backgrou
     <img alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
 </div>
 
-#### ✱ Glob and URL Support
+#### ✱ Glob, URL, and Environment Variable Support
 
 Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
 
@@ -115,9 +115,17 @@ The order settings are saved in is:
 | Advanced | Type | Description |
 |---|:-:|---|
 |`background.useWindowOptionsForAllBackgrounds`|`boolean`|If enabled, all background images will use the options set for the windows background. This does not include the backgrounds, you still need to add background images separately.|
-|`background.renderContentAboveBackground`|`boolean`|If enabled, content like images, pdfs, and markdown previews will render above the background.|
+|`background.renderContentAboveBackground`|`boolean`|If enabled, content like images, PDFs, and markdown previews will render above the background.|
 |`background.smoothImageRendering`|`boolean`|If enabled, use smooth image rendering rather than pixelated rendering when resizing images.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
+
+## 💻 Environment Variables
+
+| Variable | Description |
+|---|---|
+|`${vscode:workspace}`|Current VSCode project folder|
+|`${user:home}`|Current user's home directory|
+|`${...}`|System environment variable|
 
 ## ⚠️ Known Issues
 

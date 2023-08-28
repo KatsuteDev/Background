@@ -283,7 +283,7 @@
                     "default": false
                 },
                 "background.renderContentAboveBackground": {
-                    "markdownDescription": "If enabled, content like images, pdfs, and markdown previews will render above the background.",
+                    "markdownDescription": "If enabled, content like images, PDFs, and markdown previews will render above the background.",
                     "order": 13,
                     "type": "boolean",
                     "default": false
