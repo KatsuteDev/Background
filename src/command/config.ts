@@ -36,6 +36,7 @@ import * as glob from "../lib/glob";
 // interface
 
 const issues: vscode.Uri = vscode.Uri.parse(pkg.bugs.url);
+const sponsor: vscode.Uri = vscode.Uri.parse(pkg.sponsor.url);
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config", () => config());
 
@@ -106,8 +107,8 @@ export const config: () => void = () => {
         }),
         quickPickItem({
             alwaysShow: true,
-            label: "$(refresh) Reload Background",
-            description: "Randomizes current backgrounds",
+            label: "$(refresh) Reload",
+            description: "Randomizes the current background",
             handle: () => vscode.commands.executeCommand("background.reload")
         }),
         separator(),
@@ -117,8 +118,12 @@ export const config: () => void = () => {
             handle: () => vscode.commands.executeCommand("background.changelog")
         }),
         quickPickItem({
-            label: `$(bug) Report an Issue`,
+            label: `$(bug) Report an issue`,
             handle: () => vscode.env.openExternal(issues)
+        }),
+        quickPickItem({
+            label: "$(heart) Sponsor this extension",
+            handle: () => vscode.env.openExternal(sponsor)
         })
     ], options);
 }
