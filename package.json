@@ -337,7 +337,7 @@
         "@types/vscode": "1.81.0",
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.3.4",
-        "@vscode/vsce": "2.20.1",
+        "@vscode/vsce": "2.21.0",
         "esbuild": "0.19.2",
         "glob": "10.3.3",
         "rimraf": "5.0.1",
