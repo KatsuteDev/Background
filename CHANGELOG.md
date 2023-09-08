@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.8.0
+
+### New Features
+
+* Add support for environmental variables [#196](https://github.com/KatsuteDev/Background/pull/196) ([@Katsute](https://github.com/Katsute))
+
+  * `${vscode:workspace}` → The current project folder
+  * `${user:home}` → The user's home directory
+  * `${...}` → Any system environment variable
+
+### Fixes
+
+* Fix VSCode product icon escape on file and delete menus [#200](https://github.com/KatsuteDev/Background/pull/200) ([@Katsute](https://github.com/Katsute))
+
+### Optimizations
+
+* Bundle extension with ESBuild [#195](https://github.com/KatsuteDev/Background/pull/195) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump @types/node from 20.4.9 to 20.5.0 [#187](https://github.com/KatsuteDev/Background/pull/187) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.20.1 to 2.21.0 [#204](https://github.com/KatsuteDev/Background/pull/204) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.3 to 10.3.4 [#203](https://github.com/KatsuteDev/Background/pull/203) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.81.0 to 1.82.0 [#206](https://github.com/KatsuteDev/Background/pull/206) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.7.0...2.8.0`](https://github.com/KatsuteDev/Background/compare/2.7.0...2.8.0)
+
 ## 2.7.0
 
 ### New Features
