@@ -11,7 +11,7 @@
     "version": "2.7.0",
     "private": true,
     "engines": {
-        "vscode": "^1.81.0"
+        "vscode": "^1.82.0"
     },
     "categories": [
         "Other"
@@ -334,7 +334,7 @@
     "devDependencies": {
         "@types/node": "20.5.4",
         "@types/tmp": "0.2.3",
-        "@types/vscode": "1.81.0",
+        "@types/vscode": "1.82.0",
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.3.4",
         "@vscode/vsce": "2.21.0",
