@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: "07:00"
+      time: "06:00"
       timezone: US/Eastern
     open-pull-requests-limit: 10
   - package-ecosystem: npm
@@ -17,7 +17,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: "07:00"
+      time: "06:00"
       timezone: US/Eastern
     open-pull-requests-limit: 10
     ignore:

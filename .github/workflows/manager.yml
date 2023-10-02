@@ -6,12 +6,12 @@ on:
     - cron: 0 10 * 3-10 1
   create:
   issues:
-    types: [opened, reopened, closed]
+    types: [opened, reopened, closed, edited]
   pull_request:
     branches: [main]
-    types: [opened, reopened, closed]
+    types: [opened, reopened, closed, edited]
   issue_comment:
-    types: [created]
+    types: [created, edited]
   release:
     types: [published]
 
