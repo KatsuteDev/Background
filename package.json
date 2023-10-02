@@ -339,7 +339,7 @@
         "@vscode/test-electron": "2.3.4",
         "@vscode/vsce": "2.21.0",
         "esbuild": "0.19.4",
-        "glob": "10.3.7",
+        "glob": "10.3.10",
         "rimraf": "5.0.5",
         "tmp": "0.2.1",
         "typescript": "5.2.2"
