@@ -332,7 +332,7 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "devDependencies": {
-        "@types/node": "20.6.0",
+        "@types/node": "20.8.0",
         "@types/tmp": "0.2.4",
         "@types/vscode": "1.82.0",
         "@vscode/sudo-prompt": "9.3.1",
