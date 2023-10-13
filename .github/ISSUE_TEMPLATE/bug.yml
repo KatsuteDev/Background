@@ -19,12 +19,14 @@ body:
         If your VSCode is blank or stops working please check [here](https://github.com/KatsuteDev/Background#%EF%B8%8F-vscode-stopped-working) first.
 
   - type: input
+    id: os
     attributes:
       label: Operating System
     validations:
       required: true
 
   - type: input
+    id: vs
     attributes:
       label: VSCode Version
       description: |
@@ -33,6 +35,7 @@ body:
       required: true
 
   - type: input
+    id: version
     attributes:
       label: Extension Version
       description: |
@@ -49,6 +52,7 @@ body:
       required: true
 
   - type: textarea
+    id: settings
     attributes:
       label: Settings
       description: |
