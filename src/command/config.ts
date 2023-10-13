@@ -18,6 +18,8 @@
 
 import * as vscode from "vscode";
 
+import * as os from "os";
+
 import { get, UI } from "../vs/vsconfig";
 import { pkg } from "../vs/package";
 import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
@@ -35,7 +37,7 @@ import * as glob from "../lib/glob";
 
 // interface
 
-const issues: vscode.Uri = vscode.Uri.parse(pkg.bugs.url);
+const yt: vscode.Uri = vscode.Uri.parse("https://issues.katsute.dev/form/"); // TODO
 const sponsor: vscode.Uri = vscode.Uri.parse(pkg.sponsor.url);
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config", () => config());
@@ -118,8 +120,16 @@ export const config: () => void = () => {
             handle: () => vscode.commands.executeCommand("background.changelog")
         }),
         quickPickItem({
-            label: `$(bug) Report an issue`,
-            handle: () => vscode.env.openExternal(issues)
+            label: `$(bug) Report an issue via email`,
+            handle: () => vscode.env.openExternal(yt)
+        }),
+        quickPickItem({
+            label: `$(github) Report an issue via GitHub`,
+            handle: () => {
+                // TODO: config & glob parsing + matches
+
+                vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}`));
+            }
         }),
         quickPickItem({
             label: "$(heart) Sponsor this extension",
