@@ -319,7 +319,9 @@
         "// -- deploy -- //": "",
         "package": "vsce package",
         "// -- test -- //": "",
-        "test": "node ./test/index.js"
+        "test": "node ./test/index.js",
+        "// -- extension -- //": "",
+        "vscode:uninstall": "node dist/uninstall.js"
     },
     "repository": {
         "type": "git",
