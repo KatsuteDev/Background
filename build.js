@@ -55,3 +55,7 @@ for(const k of Object.keys(licenses).sort()){
 
 fs.writeFileSync(path.join(__dirname, "LICENSES.txt"), out, "utf-8");
 fs.rmSync(mp);
+
+// uninstall
+
+fs.copyFileSync(path.join(__dirname, "src", "uninstall.js"), path.join(__dirname, "dist", "uninstall.js"));
