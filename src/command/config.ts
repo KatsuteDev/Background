@@ -38,7 +38,6 @@ import * as glob from "../lib/glob";
 
 // interface
 
-const yt: vscode.Uri = vscode.Uri.parse("https://issues.katsute.dev/form/"); // TODO
 const sponsor: vscode.Uri = vscode.Uri.parse(pkg.sponsor.url);
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config", () => config());
@@ -121,11 +120,7 @@ export const config: () => void = () => {
             handle: () => vscode.commands.executeCommand("background.changelog")
         }),
         quickPickItem({
-            label: `$(bug) Report an issue via email`,
-            handle: () => vscode.env.openExternal(yt)
-        }),
-        quickPickItem({
-            label: `$(github) Report an issue via GitHub`,
+            label: `$(github) Report an issue on GitHub`,
             handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&settings=${encodeURI("```json\n" + JSON.stringify(cfg.config(), null, 4) + "\n```")}`))
         }),
         quickPickItem({
