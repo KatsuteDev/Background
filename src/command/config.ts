@@ -126,7 +126,7 @@ export const config: () => void = () => {
         }),
         quickPickItem({
             label: `$(github) Report an issue via GitHub`,
-            handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&config=${encodeURI("```json\n" + JSON.stringify(cfg.config(), null, 4) + "\n```")}`))
+            handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&settings=${encodeURI("```json\n" + JSON.stringify(cfg.config(), null, 4) + "\n```")}`))
         }),
         quickPickItem({
             label: "$(heart) Sponsor this extension",
