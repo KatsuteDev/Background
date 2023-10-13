@@ -23,6 +23,7 @@ import * as os from "os";
 import { get, UI } from "../vs/vsconfig";
 import { pkg } from "../vs/package";
 import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
+import * as cfg from "../vs/vsconfig";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -125,11 +126,7 @@ export const config: () => void = () => {
         }),
         quickPickItem({
             label: `$(github) Report an issue via GitHub`,
-            handle: () => {
-                // TODO: config & glob parsing + matches
-
-                vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}`));
-            }
+            handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&config=${encodeURI("```json\n" + JSON.stringify(cfg.config(), null, 4) + "\n```")}`))
         }),
         quickPickItem({
             label: "$(heart) Sponsor this extension",
