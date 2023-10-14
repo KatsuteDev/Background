@@ -18,9 +18,12 @@
 
 import * as vscode from "vscode";
 
+import * as os from "os";
+
 import { get, UI } from "../vs/vsconfig";
 import { pkg } from "../vs/package";
 import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
+import * as cfg from "../vs/vsconfig";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -35,7 +38,6 @@ import * as glob from "../lib/glob";
 
 // interface
 
-const issues: vscode.Uri = vscode.Uri.parse(pkg.bugs.url);
 const sponsor: vscode.Uri = vscode.Uri.parse(pkg.sponsor.url);
 
 export const command: vscode.Disposable = vscode.commands.registerCommand("background.config", () => config());
@@ -118,8 +120,8 @@ export const config: () => void = () => {
             handle: () => vscode.commands.executeCommand("background.changelog")
         }),
         quickPickItem({
-            label: `$(bug) Report an issue`,
-            handle: () => vscode.env.openExternal(issues)
+            label: `$(github) Report an issue on GitHub`,
+            handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&settings=${encodeURI("```json\n" + JSON.stringify(cfg.config(), null, 4) + "\n```")}`))
         }),
         quickPickItem({
             label: "$(heart) Sponsor this extension",
