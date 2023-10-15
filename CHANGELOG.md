@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.8.1
+
+### New Features
+
+* Autofill bug reports [#222](https://github.com/KatsuteDev/Background/pull/222) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump @types/node from 20.5.4 to 20.6.0 [#207](https://github.com/KatsuteDev/Background/pull/207) ([@dependabot](https://github.com/dependabot))
+* Bump @types/tmp from 0.2.3 to 0.2.4 [#208](https://github.com/KatsuteDev/Background/pull/208) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.19.2 to 0.19.3 [#209](https://github.com/KatsuteDev/Background/pull/209) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.4 to 10.3.7 [#210](https://github.com/KatsuteDev/Background/pull/210) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.6.0 to 20.8.0 [#216](https://github.com/KatsuteDev/Background/pull/216) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 5.0.1 to 5.0.5 [#214](https://github.com/KatsuteDev/Background/pull/214) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.19.3 to 0.19.4 [#213](https://github.com/KatsuteDev/Background/pull/213) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.7 to 10.3.10 [#212](https://github.com/KatsuteDev/Background/pull/212) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.21.0 to 2.21.1 [#215](https://github.com/KatsuteDev/Background/pull/215) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.4 to 2.3.5 [#217](https://github.com/KatsuteDev/Background/pull/217) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.82.0 to 1.83.0 [#218](https://github.com/KatsuteDev/Background/pull/218) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.8.0...2.8.1`](https://github.com/KatsuteDev/Background/compare/2.8.0...2.8.1)
+
 ## 2.8.0
 
 ### New Features
