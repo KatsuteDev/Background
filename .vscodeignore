@@ -12,4 +12,6 @@ assets/*
 src
 test
 
+build.js
+
 tsconfig.json
