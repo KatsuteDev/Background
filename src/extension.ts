@@ -34,6 +34,7 @@ import * as reload from "./command/reload";
 import * as install from "./command/install";
 import * as uninstall from "./command/uninstall";
 import * as changelog from "./command/changelog";
+import * as help from "./command/help";
 
 import * as file from "./command/config/file";
 
@@ -43,7 +44,8 @@ import { statusbar } from "./statusbar";
 
 const identifier: string = "KatsuteDev/Background";
 
-export let clog: vscode.Uri;
+export let mdchange: vscode.Uri;
+export let mdhelp: vscode.Uri;
 
 const win: boolean = process.platform === "win32";
 
@@ -99,16 +101,19 @@ export const activate: (context: vscode.ExtensionContext) => any = (context: vsc
 
     // extension
 
-    clog = vscode.Uri.file(path.join(context.extensionPath, "CHANGELOG.md"));
+    mdchange = vscode.Uri.file(path.join(context.extensionPath, "CHANGELOG.md"));
+    mdhelp   = vscode.Uri.file(path.join(context.extensionPath, "HELP.md"));
 
-    context.subscriptions.push(reload.command);
-    context.subscriptions.push(install.command);
-    context.subscriptions.push(uninstall.command);
-    context.subscriptions.push(changelog.command);
+    context.subscriptions.push(
+        reload.command,
+        install.command,
+        uninstall.command,
+        changelog.command,
+        help.command,
+        config.command,
+        statusbar
+    );
 
-    context.subscriptions.push(config.command);
-
-    context.subscriptions.push(statusbar);
     statusbar.show();
 
     return {

@@ -127,26 +127,6 @@ The order settings are saved in is:
 |`${user:home}`|Current user's home directory|
 |`${...}`|System environment variable|
 
-## ⚠️ Known Issues
-
-#### ⚠️ (Mac) read-only file system
-
-This extension doesn't natively support Mac, please refer to [#76](https://github.com/KatsuteDev/Background/issues/76) to get this extension working on Mac.
-
-#### ⚠️ (Linux) snap: read-only file system
-
-Applications installed using [snap](https://snapcraft.io/) are inherently read-only, install VSCode using [deb](https://code.visualstudio.com/download) or [rpm](https://code.visualstudio.com/download).
-
-#### ⚠️ Doesn't work on WSL
-
-As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
-
-#### ⚠️ VSCode stopped working
-
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
-
-This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json`, replace with `product-backup.json` if VSCode stops working.
-
 ## 🔌 API
 
 Add this extension to your `package.json`.
