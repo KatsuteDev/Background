@@ -9,7 +9,7 @@ body:
         Before opening a bug report please check that your issue was not already discussed in the following:
 
         * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22)
-        * [Known Issues](https://github.com/KatsuteDev/Background#%EF%B8%8F-known-issues)
+        * [Common Issues](https://github.com/KatsuteDev/Background/blob/main/HELP.md)
 
         Please also check that:
 
@@ -30,6 +30,8 @@ body:
     attributes:
       label: VSCode Version
       description: |
+        Do not write 'latest'
+
         Include the [version](https://code.visualstudio.com/docs/supporting/FAQ#_how-do-i-find-the-version) and type.
     validations:
       required: true
@@ -56,7 +58,9 @@ body:
     attributes:
       label: Settings
       description: |
-        Include `background.*` settings from the [settings.json](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) file. Remove any sensitive information.
+        Include `background.*` settings from the [settings.json](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) file.
+
+        Make sure to remove any sensitive information.
 
   - type: textarea
     attributes:
