@@ -114,10 +114,13 @@ export const config: () => void = () => {
             handle: () => vscode.commands.executeCommand("background.reload")
         }),
         separator(),
-        // changelog
         quickPickItem({
             label: "$(output) Changelog",
             handle: () => vscode.commands.executeCommand("background.changelog")
+        }),
+        quickPickItem({
+            label: "$(question) Help",
+            handle: () => vscode.commands.executeCommand("background.help")
         }),
         quickPickItem({
             label: `$(github) Report an issue on GitHub`,

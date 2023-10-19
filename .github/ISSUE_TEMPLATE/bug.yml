@@ -30,9 +30,9 @@ body:
     attributes:
       label: VSCode Version
       description: |
-        Do not write 'latest'
-
         Include the [version](https://code.visualstudio.com/docs/supporting/FAQ#_how-do-i-find-the-version) and type.
+
+        Do not write 'latest'
     validations:
       required: true
 
