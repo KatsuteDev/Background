@@ -18,10 +18,10 @@
 
 import * as vscode from "vscode";
 
-import { mdchange } from "../extension";
+import { mdhelp } from "../extension";
 
 //
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.changelog", () => {
-    vscode.commands.executeCommand("markdown.showPreview", mdchange);
+export const command: vscode.Disposable = vscode.commands.registerCommand("background.help", () => {
+    vscode.commands.executeCommand("markdown.showPreview", mdhelp);
 });
