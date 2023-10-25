@@ -18,21 +18,21 @@ Add multiple background images for the window, editors, sidebars, or the panel. 
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
 </div>
 
-## 📃 Installation
+## Installation
 
  - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
  - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
-#### 🖼️ Usage
+#### Usage
 
  1. Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar.
  2. Select where you want to add a background (Window, Editor, Sidebar, Panel).
  3. Add backgrounds and change how it should be displayed.
  4. Use `Background: Install` or press the install button.
 
-## ✨ Features
+## Features
 
-#### 🖼️ Multiple Backgrounds
+#### Multiple Backgrounds
 
 Add background images for the whole window, editors, sidebars, or the panel. Transition between multiple background images.
 
@@ -47,7 +47,7 @@ Add background images for the whole window, editors, sidebars, or the panel. Tra
     <img alt="multiple backgrounds" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/transition.gif">
 </div>
 
-#### ⚙️ Configuration Menu
+#### Configuration Menu
 
 Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar to access the configuration menu.
 
@@ -55,7 +55,7 @@ Type `Background: Configuration` in the command pallette or press the **Backgrou
     <img alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
 </div>
 
-#### ✱ Glob, URL, and Environment Variable Support
+#### Glob, URL, and Environment Variable Support
 
 Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
 
@@ -67,7 +67,9 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
     <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
 </div>
 
-## 💻 Commands
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+## Commands
 
 | Command | Description |
 |---|---|
@@ -77,7 +79,9 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 |`Background: Configuration`|Opens the configuration menu.|
 |`Background: Changelog`|Opens changelog.|
 
-## ⚙️ Configuration
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+## Configuration
 
 Use the `Background: Configuration` command to access the configuration menu.
 
@@ -119,7 +123,9 @@ The order settings are saved in is:
 |`background.smoothImageRendering`|`boolean`|If enabled, use smooth image rendering rather than pixelated rendering when resizing images.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
 
-## 💻 Environment Variables
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+## Environment Variables
 
 | Variable | Description |
 |---|---|
@@ -127,7 +133,9 @@ The order settings are saved in is:
 |`${user:home}`|Current user's home directory|
 |`${...}`|System environment variable|
 
-## 🔌 API
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+## API
 
 Add this extension to your `package.json`.
 
@@ -147,35 +155,37 @@ Access the api by using:
 const background = vscode.extensions.getExtension("katsute.code-background").exports;
 ```
 
-* `install(): void`
+ * `install(): void`
 
-  Runs the `Background: Install` command.
-* `uninstall(): void`
+   Runs the `Background: Install` command.
+ * `uninstall(): void`
 
-  Runs the `Background: Uninstall` command.
-* `reload(): void`
+   Runs the `Background: Uninstall` command.
+ * `reload(): void`
 
-  Runs the `Background: Reload` command.
-* `get(ui): string[]?`
-  * `ui` : Background to get from; either `window`, `editor`, `sidebar`, `panel`.
+   Runs the `Background: Reload` command.
+ * `get(ui): string[]?`
+   * `ui` : Background to get from; either `window`, `editor`, `sidebar`, `panel`.
 
-  Returns an array of globs for the specified background.
-* `add(ui, glob): Promise<boolean>`
-  * `ui` : Background to add to; either `window`, `editor`, `sidebar`, `panel`.
-  * `glob`: Glob to add.
+   Returns an array of globs for the specified background.
+ * `add(ui, glob): Promise<boolean>`
+   * `ui` : Background to add to; either `window`, `editor`, `sidebar`, `panel`.
+   * `glob`: Glob to add.
 
-  Returns true if successful.
-* `replace(ui, old, glob): Promise<boolean>`
-  * `ui` : Background to replace from; either `window`, `editor`, `sidebar`, `panel`.
-  * `old`: Glob to replace.
-  * `glob`: Updated glob.
+   Returns true if successful.
+ * `replace(ui, old, glob): Promise<boolean>`
+   * `ui` : Background to replace from; either `window`, `editor`, `sidebar`, `panel`.
+   * `old`: Glob to replace.
+   * `glob`: Updated glob.
 
-  Returns true if successful.
-* `remove(ui, glob): Promise<boolean>`
-  * `ui` : Background to remove from; either `window`, `editor`, `sidebar`, `panel`.
-  * `glob`: Glob to remove.
+   Returns true if successful.
+ * `remove(ui, glob): Promise<boolean>`
+   * `ui` : Background to remove from; either `window`, `editor`, `sidebar`, `panel`.
+   * `glob`: Glob to remove.
 
-  Returns true if successful.
+   Returns true if successful.
+
+<div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## &nbsp;
 
