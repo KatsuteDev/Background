@@ -26,7 +26,7 @@ Options will not change if `background.useWindowOptionsForAllBackgrounds` is set
 
 ### (Windows) Doesn't work on WSL [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914)
 
-As described in [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914), you can not change the background while running this extension in a remote WSL window. You can however still use custom backgrounds by installing and making changes in the main VSCode window, then opening a remote WSL window.
+Backgrounds can not be changed while running this extension in a remote WSL window. Backgrounds must be changed by making changes in the main VSCode window, then opening the remote WSL window.
 
 ### (Mac) read-only file system [#76](https://github.com/KatsuteDev/Background/issues/76)
 
