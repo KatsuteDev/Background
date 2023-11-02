@@ -259,9 +259,9 @@ bk_global.appendChild(document.createTextNode(\`
 
     body[windowTransition="true"]${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
     body[editorTransition="true"] .split-view-view > .editor-group-container::after,
-    body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-    body[sidebarTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
-    body[panelTransition="true"] .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+    body[sidebarTransition="true"] .split-view-view > .part.sidebar::after,
+    body[sidebarTransition="true"] .split-view-view > .part.auxiliarybar::after,
+    body[panelTransition="true"] .split-view-view > .part.panel::after {
 
         opacity: 0;
 
@@ -269,9 +269,9 @@ bk_global.appendChild(document.createTextNode(\`
 
     body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
     .split-view-view > .editor-group-container::after,
-    .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-    .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after,
-    .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+    .split-view-view > .part.sidebar::after,
+    .split-view-view > .part.auxiliarybar::after,
+    .split-view-view > .part.panel::after {
 
         content: "";
 
@@ -350,8 +350,8 @@ if(editorBackgrounds.length > 0){
 `
 if(sidebarBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        .split-view-view > #workbench\\\\.parts\\\\.sidebar::after,
-        .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+        .split-view-view > .part.sidebar::after,
+        .split-view-view > .part.auxiliarybar::after {
 
             background-position: ${css("backgroundAlignment", "sidebar")};
             background-repeat: ${css("backgroundRepeat", "sidebar")};
@@ -369,7 +369,7 @@ if(sidebarBackgrounds.length > 0){
 `
 if(panelBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+        .split-view-view > .part.panel::after {
 
             background-position: ${css("backgroundAlignment", "panel")};
             background-repeat: ${css("backgroundRepeat", "panel")};
@@ -454,7 +454,7 @@ const setEditorBackground = () => {
 
         for(let i = 0; i < len; i++){
             bk_editor_image.appendChild(document.createTextNode(\`
-                #workbench\\\\.parts\\\\.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
+                .part.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
                     background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]]}");
                 }
             \`));
@@ -477,12 +477,12 @@ const setSidebarBackground = () => {
         shuffle(iSidebarBackgrounds);
 
         bk_sidebar_image.appendChild(document.createTextNode(\`
-            .split-view-view > #workbench\\\\.parts\\\\.sidebar::after {
+            .split-view-view > .part.sidebar::after {
 
                 background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[0]]}");
 
             }
-            .split-view-view > #workbench\\\\.parts\\\\.auxiliarybar::after {
+            .split-view-view > .part.auxiliarybar::after {
 
                 background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[1]] ?? sidebarBackgrounds[iSidebarBackgrounds[0]]}");
 
@@ -506,7 +506,7 @@ const setPanelBackground = () => {
         shuffle(iPanelBackgrounds);
 
         bk_panel_image.appendChild(document.createTextNode(\`
-            .split-view-view > #workbench\\\\.parts\\\\.panel::after {
+            .split-view-view > .part.panel::after {
 
                 background-image: url("\${panelBackgrounds[iPanelBackgrounds[0]]}");
 
