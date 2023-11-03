@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.8.2
+
+### New Features
+
+* Add help page [#225](https://github.com/KatsuteDev/Background/pull/225) ([@Katsute](https://github.com/Katsute))
+
+### Fixes
+
+* Fix editor background for floating windows [#237](https://github.com/KatsuteDev/Background/pull/237) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.19.4 to 0.19.5 [#228](https://github.com/KatsuteDev/Background/pull/228) ([@dependabot](https://github.com/dependabot))
+* Bump @types/tmp from 0.2.4 to 0.2.5 [#229](https://github.com/KatsuteDev/Background/pull/229) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.83.0 to 1.83.1 [#230](https://github.com/KatsuteDev/Background/pull/230) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.5 to 2.3.6 [#234](https://github.com/KatsuteDev/Background/pull/234) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.21.1 to 2.22.0 [#233](https://github.com/KatsuteDev/Background/pull/233) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.83.1 to 1.84.0 [#238](https://github.com/KatsuteDev/Background/pull/238) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.8.1...2.8.2`](https://github.com/KatsuteDev/Background/compare/2.8.1...2.8.2)
+
 ## 2.8.1
 
 ### New Features
