@@ -268,10 +268,7 @@ bk_global.appendChild(document.createTextNode(\`
     }
 
     body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
-    .split-view-view > .editor-group-container::after,
-    .split-view-view > .part.sidebar::after,
-    .split-view-view > .part.auxiliarybar::after,
-    .split-view-view > .part.panel::after {
+    .split-view-view > :is(.editor-group-container, .part.sidebar, .part.auxiliarybar, .part.panel)::after {
 
         content: "";
 
@@ -350,8 +347,7 @@ if(editorBackgrounds.length > 0){
 `
 if(sidebarBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        .split-view-view > .part.sidebar::after,
-        .split-view-view > .part.auxiliarybar::after {
+        .split-view-view > :is(.part.sidebar, .part.auxiliarybar)::after {
 
             background-position: ${css("backgroundAlignment", "sidebar")};
             background-repeat: ${css("backgroundRepeat", "sidebar")};
@@ -386,8 +382,7 @@ if(panelBackgrounds.length > 0){
 + // notification overrides
 `
 bk_global.appendChild(document.createTextNode(\`
-    div.notification-toast:has(> div.notifications-list-container > div.monaco-list[aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"]),
-    div.notification-toast:has(> div.notifications-list-container > div.monaco-list[aria-label="Your Code - Insiders installation appears to be corrupt. Please reinstall., notification"]) {
+    div.notification-toast:has(> div.notifications-list-container > div.monaco-list:is([aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"], [aria-label="Your Code - Insiders installation appears to be corrupt. Please reinstall., notification"])) {
 
         display: none;
 
