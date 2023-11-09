@@ -452,13 +452,15 @@ const setEditorBackground = () => {
 
         shuffle(iEditorBackgrounds);
 
+        let buf = '';
         for(let i = 0; i < len; i++){
-            bk_editor_image.appendChild(document.createTextNode(\`
+            buf += \`
                 .part.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
                     background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]]}");
                 }
-            \`));
+            \`;
         };
+        bk_editor_image.appendChild(document.createTextNode(buf));
     };
 };
 `
