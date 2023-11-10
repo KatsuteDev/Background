@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.8.3
+
+### Fixes
+
+* Fix timer not working for floating windows [#242](https://github.com/KatsuteDev/Background/pull/242) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.8.2...2.8.3`](https://github.com/KatsuteDev/Background/compare/2.8.2...2.8.3)
+
 ## 2.8.2
 
 ### New Features
