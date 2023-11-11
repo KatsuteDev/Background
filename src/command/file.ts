@@ -18,14 +18,14 @@
 
 import * as vscode from "vscode";
 
-import { get, UI, update } from "../../extension/config";
-import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../../lib/vscode";
+import { get, UI, update } from "../extension/config";
+import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
-import * as glob from "../../lib/glob";
-import * as str from "../../lib/string";
-import { unique } from "../../lib/array";
+import * as glob from "../lib/glob";
+import * as str from "../lib/string";
+import { unique } from "../lib/array";
 
-import { menu as cm, options, title as t } from "../config";
+import { menu as cm, options, title as t } from "./config";
 
 // config
 

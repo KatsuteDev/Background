@@ -22,7 +22,7 @@ import * as path from "path";
 
 import * as env from "../extension/env";
 
-import { extensions } from "../command/config/file";
+import { extensions } from "../command/file";
 import { unique } from "./array";
 
 const filter: (v: string) => boolean = (v : string) => {

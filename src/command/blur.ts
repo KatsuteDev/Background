@@ -16,11 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { showInputBox } from "../../lib/vscode";
-import { UI, get, update } from "../../extension/config";
+import { showInputBox } from "../lib/vscode";
+import { UI, get, update } from "../extension/config";
 
-import { menu as cm, title } from "../config";
-import { isValidCSS } from "../../lib/css";
+import { menu as cm, title } from "./config";
+import { isValidCSS } from "../lib/css";
 
 //
 

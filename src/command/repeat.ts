@@ -16,12 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { getConfigurationProperty, Properties } from "../../extension/package";
+import { getConfigurationProperty, Properties } from "../extension/package";
 
-import { get, UI, updateFromLabel } from "../../extension/config";
-import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../../lib/vscode";
+import { get, UI, updateFromLabel } from "../extension/config";
+import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../lib/vscode";
 
-import { menu as cm, options, title } from "../config";
+import { menu as cm, options, title } from "./config";
 
 //
 

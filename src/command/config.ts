@@ -24,13 +24,13 @@ import { configuration, get, UI } from "../extension/config";
 import { pkg } from "../extension/package";
 import { quickPickItem, separator, showQuickPick } from "../lib/vscode";
 
-import * as file from "./config/file";
-import * as align from "./config/align";
-import * as blur from "./config/blur";
-import * as opacity from "./config/opacity";
-import * as repeat from "./config/repeat";
-import * as size from "./config/size";
-import * as time from "./config/time";
+import * as file from "./file";
+import * as align from "./align";
+import * as blur from "./blur";
+import * as opacity from "./opacity";
+import * as repeat from "./repeat";
+import * as size from "./size";
+import * as time from "./time";
 
 import * as str from "../lib/string";
 import * as glob from "../lib/glob";

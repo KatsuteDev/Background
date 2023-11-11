@@ -17,6 +17,7 @@
  */
 
 import { ConfigurationTarget, WorkspaceConfiguration, commands, window, workspace } from "vscode";
+
 import { ConfigurationKey, Properties, getConfigurationProperty } from "./package";
 
 import { round } from "../lib/math";

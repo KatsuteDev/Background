@@ -17,7 +17,7 @@
  */
 
 import { commands } from "vscode";
-import * as file from "../command/config/file";
+import * as file from "../command/file";
 
 export const api = {
     install: commands.executeCommand("background.install"),

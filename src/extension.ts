@@ -16,21 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as sudo from "@vscode/sudo-prompt";
-
 import * as path from "path";
+import { exec } from "@vscode/sudo-prompt";
+import { existsSync, copyFileSync } from "fs";
+import { ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
 
 import * as config from "./command/config";
 
-
 import { copyCommand } from "./lib/file";
-import { api } from "./extension/api";
-
 import { reload as r, reload } from "./lib/vscode";
-import { ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
-import { install, uninstall } from "./extension/writer";
 
-import { existsSync, copyFileSync } from "fs";
+import { api } from "./extension/api";
+import { install, uninstall } from "./extension/writer";
 
 //
 
@@ -61,12 +58,19 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
                 }catch(err: any){
                     window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
-                            const cmd: string = copyCommand([[workbench, workbench_backup], [product, product_backup]]);
-                            sudo.exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
+                            const cmd: string = copyCommand([
+                                [workbench, workbench_backup],
+                                [product, product_backup]
+                            ]);
+                            exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
                                 if(ERR)
-                                    window.showErrorMessage("Failed to backup files", {
-                                        detail: `OS: ${process.platform}\nUsing command: ${cmd}\n\n${ERR.message}`, modal: true
-                                    });
+                                    window.showErrorMessage(
+                                        "Failed to backup files",
+                                        {
+                                            detail: `OS: ${process.platform}\nUsing command: ${cmd}\n\n${ERR.message}`,
+                                            modal: true
+                                        }
+                                    );
                                 else
                                     r();
                             });
