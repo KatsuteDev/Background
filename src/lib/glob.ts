@@ -20,7 +20,7 @@ import { GlobOptions, globSync } from "glob";
 
 import * as path from "path";
 
-import * as env from "../lib/env";
+import * as env from "../extension/env";
 
 import { extensions } from "../command/config/file";
 import { unique } from "./array";

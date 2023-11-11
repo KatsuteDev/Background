@@ -20,6 +20,8 @@ import { platform } from "process";
 import { createHash } from "crypto";
 import { PathOrFileDescriptor } from "fs";
 
+// copy
+
 const windows: boolean = platform === "win32";
 
 export const copyCommand:
@@ -32,6 +34,8 @@ export const copyCommand:
             : `cp -f '${file[0]}' '${file[1]}'`
         )
         .join(" && ");
+
+// checksum
 
 export const generateChecksum: (content: string) => string = (content: string) =>
     createHash("md5")

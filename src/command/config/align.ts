@@ -18,11 +18,10 @@
 
 import { getConfigurationProperty, Properties } from "../../extension/package";
 import { showInputBox } from "../../lib/vscode";
-import { get, UI, update, updateFromLabel } from "../../extension/config";
+import { get, notify, UI, update, updateFromLabel } from "../../extension/config";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../lib/vscode";
 
 import { menu as cm, options, title } from "../config";
-import { notify } from "../install";
 import { isValidCSS } from "../../lib/css";
 
 //

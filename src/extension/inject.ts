@@ -16,10 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { sanitizeCSS } from "../lib/css";
+
 import * as glob from "../lib/glob";
 import { round } from "../lib/math";
-import { UI, get, getCSS } from "./config";
+
+import { get, getCSS } from "./config";
+import { sanitizeCSS } from "../lib/css";
 
 const identifier: string = "KatsuteDev/Background";
 

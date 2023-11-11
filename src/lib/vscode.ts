@@ -16,8 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { InputBoxOptions, QuickPickItem, QuickPickItemKind, QuickPickOptions, window } from "vscode";
+import { InputBoxOptions, QuickPickItem, QuickPickItemKind, QuickPickOptions, commands, window } from "vscode";
+
 import { UI } from "../extension/config";
+
+// reload
+
+export const reload: () => void = () => commands.executeCommand("workbench.action.reloadWindow");
 
 // input
 

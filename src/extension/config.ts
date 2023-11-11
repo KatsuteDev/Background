@@ -16,14 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { ConfigurationTarget, WorkspaceConfiguration, workspace } from "vscode";
+import { ConfigurationTarget, WorkspaceConfiguration, commands, window, workspace } from "vscode";
 import { ConfigurationKey, Properties, getConfigurationProperty } from "./package";
 
 import { round } from "../lib/math";
 import { sanitizeUnits } from "../lib/css";
 import { CommandQuickPickItem } from "../lib/vscode";
-
-import { notify } from "../command/install";
 
 // UI
 
@@ -39,6 +37,12 @@ const Index: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
 }
 
 export const configuration: () => WorkspaceConfiguration = () => workspace.getConfiguration("background");
+
+export const notify: () => void = () =>
+    window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Reload", "Ignore")
+        .then((value?: string) => {
+            value === "Install and Reload" && commands.executeCommand("background.install")
+        });
 
 // get
 

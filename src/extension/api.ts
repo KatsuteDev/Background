@@ -16,21 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode"
-
-import { install, uninstall } from "./writer";
+import { commands } from "vscode";
+import * as file from "../command/config/file";
 
 export const api = {
-    install,
-    uninstall,
-    reload: () => vscode.commands.executeCommand("workbench.action.reloadWindow"),
+    install: commands.executeCommand("background.install"),
+    uninstall: commands.executeCommand("background.uninstall"),
+    reload: () => commands.executeCommand("workbench.action.reloadWindow"),
     get: (ui: string) => {
         switch(ui){
             case "window":
             case "editor":
             case "sidebar":
             case "panel":
-
+                return file.view(ui);
             default:
                 return undefined;
         }
@@ -41,7 +40,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-
+                await file.add(ui, glob, true);
                 return true;
             default:
                 return false;
@@ -53,7 +52,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-
+                await file.replace(ui, old, glob, true);
                 return true;
             default:
                 return false;
@@ -65,7 +64,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-
+                await file.remove(ui, glob, true);
                 return true;
             default:
                 return false;
