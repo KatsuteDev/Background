@@ -16,10 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-export const s: (obj: any[] | number, str: string) => string = (obj: any[] | number, str: string) => Array.isArray(obj) ? s(obj.length, str) : `${obj} ${str}${obj != 1 ? 's' : ''}`;
+// sanitize
 
-export const capitalize: (s: string) => string = (s: string) => `${(s[0] ?? "").toUpperCase() + (s ?? "").substring(1)}`;
+export const sanitizeCSS: (css: string) => string = (css: string) =>
+    css
+        .replace(/\r?\n/gm, ' ') // make single line
+        .replace(/"/gm, `'`)     // prevent escaping quotes
+        .replace(/\\+$/gm, '');  // prevent escaping inject script quote
 
-const invalidCSS: RegExp = /[^\w.% +-]/gmi;
+export const sanitizeUnits: (unit: string) => string = (unit: string) =>
+    unit.replace(/[^\w.% +-]/gmi, "");
 
-export const validCSS: (s: string) => boolean = (s: string) => !s.match(invalidCSS);
+// validation
+
+const invalidCSS: RegExp = /[^\w.% +-]/gm;
+
+export const isValidCSS: (css: string) => boolean = (css: string) => !css.match(invalidCSS);

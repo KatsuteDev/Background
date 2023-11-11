@@ -20,18 +20,18 @@ import { platform } from "process";
 import { createHash } from "crypto";
 import { PathOrFileDescriptor } from "fs";
 
+const windows: boolean = platform === "win32";
+
 export const copyCommand:
-    (files: [source: PathOrFileDescriptor, dest: PathOrFileDescriptor][], os?: NodeJS.Platform) => string =
-    (files: [PathOrFileDescriptor, PathOrFileDescriptor][], os: NodeJS.Platform = platform) => {
-    const windows: boolean = os === "win32";
-    return files
+    (files: [source: PathOrFileDescriptor, dest: PathOrFileDescriptor][]) => string =
+    (files: [PathOrFileDescriptor, PathOrFileDescriptor][]) =>
+    files
         .map((file: [source: PathOrFileDescriptor, dest: PathOrFileDescriptor]) =>
             windows
             ? `xcopy /r /y "${file[0]}" "${file[1]}*"` // asterisk required so windows treats as file and skips prompt asking if path is file or directory
             : `cp -f '${file[0]}' '${file[1]}'`
         )
         .join(" && ");
-};
 
 export const generateChecksum: (content: string) => string = (content: string) =>
     createHash("md5")

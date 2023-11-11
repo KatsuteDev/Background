@@ -20,10 +20,9 @@ import * as vscode from "vscode";
 
 import * as os from "os";
 
-import { get, UI } from "../vs/vsconfig";
-import { pkg } from "../vs/package";
-import { quickPickItem, separator, showQuickPick } from "../vs/quickpick";
-import * as cfg from "../vs/vsconfig";
+import { configuration, get, UI } from "../extension/config";
+import { pkg } from "../extension/package";
+import { quickPickItem, separator, showQuickPick } from "../lib/vscode";
 
 import * as file from "./config/file";
 import * as align from "./config/align";
@@ -33,7 +32,7 @@ import * as repeat from "./config/repeat";
 import * as size from "./config/size";
 import * as time from "./config/time";
 
-import * as str from "../lib/str";
+import * as str from "../lib/string";
 import * as glob from "../lib/glob";
 
 // interface
@@ -124,7 +123,7 @@ export const config: () => void = () => {
         }),
         quickPickItem({
             label: `$(github) Report an issue on GitHub`,
-            handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&settings=${encodeURI("```json\n" + JSON.stringify(cfg.config(), null, 4) + "\n```")}`))
+            handle: () => vscode.env.openExternal(vscode.Uri.parse(`https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${os.platform()} ${os.release()}`)}&vs=${encodeURI(vscode.version)}&version=${encodeURI(pkg.version)}&settings=${encodeURI("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`))
         }),
         quickPickItem({
             label: "$(heart) Sponsor this extension",

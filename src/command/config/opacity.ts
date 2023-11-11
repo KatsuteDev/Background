@@ -18,10 +18,10 @@
 
 import * as vscode from "vscode";
 
-import { showInputBox } from "../../vs/inputbox";
-import { UI, get, update } from "../../vs/vsconfig";
+import { showInputBox } from "../../lib/vscode";
+import { UI, get, update } from "../../extension/config";
 
-import { round } from "../../lib/round";
+import { round } from "../../lib/math";
 import { menu as cm, title } from "../config";
 
 //

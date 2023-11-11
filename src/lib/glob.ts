@@ -23,7 +23,7 @@ import * as path from "path";
 import * as env from "../lib/env";
 
 import { extensions } from "../command/config/file";
-import { unique } from "./unique";
+import { unique } from "./array";
 
 const filter: (v: string) => boolean = (v : string) => {
     const ext: string = path.extname(v);

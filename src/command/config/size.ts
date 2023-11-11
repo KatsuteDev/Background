@@ -16,18 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config, Props } from "../../vs/package";
-import { showInputBox } from "../../vs/inputbox";
-import { get, UI, update, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../vs/quickpick";
+import { getConfigurationProperty, Properties } from "../../extension/package";
+
+import { showInputBox } from "../../lib/vscode";
+import { get, UI, update, updateFromLabel } from "../../extension/config";
+import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../../lib/vscode";
 
 import { menu as cm, options, title as t } from "../config";
 import { notify } from "../install";
-import { validCSS } from "../../lib/str";
+import { isValidCSS } from "../../lib/css";
 
 //
 
-const prop: Props = config("backgroundSize");
+const prop: Properties = getConfigurationProperty("backgroundSize");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
     updateFromLabel("backgroundSize", item, item.ui!)
@@ -53,9 +54,9 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                 placeHolder: "Background size",
                 value: currentValue,
                 prompt: `Background size (${currentValue}). The literal value for the 'background-size' css property.`,
-                validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
+                validateInput: (value: string) => !isValidCSS(value) ? "Invalid CSS" : null,
                 handle: (value: string) => {
-                    if(validCSS(value)){
+                    if(isValidCSS(value)){
                         let changed: boolean = get("backgroundSize", ui) !== prop.items!.enum![3] || currentValue !== value;
 
                         update("backgroundSize", prop.items!.enum![3], ui, true)
