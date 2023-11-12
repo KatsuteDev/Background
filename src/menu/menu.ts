@@ -107,7 +107,7 @@ const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, ic
     const time: number = +get("backgroundChangeTime", ui);
 
     if(time > 0)
-        detail += " • " + `${time} ${s(time, "second")}`;
+        detail += " • " + s(time, "second");
 
     // quick pick
     return quickPickItem({
@@ -121,10 +121,8 @@ const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, ic
 
 // ui menu
 
-export const open: (ui: UI) => void = (ui: UI) => {
-    const time: number = +get("backgroundChangeTime", ui);
-
-    return showQuickPick([
+export const open: (ui: UI) => void = (ui: UI) =>
+    showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
             description: `${s(get(`${ui}Backgrounds`), "Glob")} (${s(count(get(`${ui}Backgrounds`)), "Background")})`,
@@ -171,7 +169,7 @@ export const open: (ui: UI) => void = (ui: UI) => {
         }),
         quickPickItem({
             label: "$(clock) Time",
-            description: `${time} ${s(time, "second")}`,
+            description: `${s(+get("backgroundChangeTime", ui), "second")}`,
             detail: "How often to change the background",
             ui,
             handle: () => timeMenu(ui)
@@ -181,7 +179,6 @@ export const open: (ui: UI) => void = (ui: UI) => {
         matchOnDescription: true,
         matchOnDetail: true
     });
-}
 
 // title
 

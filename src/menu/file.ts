@@ -201,7 +201,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                                 label: glob.replace(/(\$\(\w+\))/g, "\\$1"),
                                 value: glob,
                                 ui: item.ui,
-                                description: `${matches} matching ${s(matches, "file")}`
+                                description: `${s(matches, "matching file")}`
                             });
                         });
 
