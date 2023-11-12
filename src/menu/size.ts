@@ -16,28 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { getConfigurationProperty, Properties } from "../extension/package";
+import { UI, get, notify, update, updateFromLabel } from "../extension/config";
+import { Properties, getConfigurationProperty } from "../extension/package";
 
-import { showInputBox } from "../lib/vscode";
-import { get, notify, UI, update, updateFromLabel } from "../extension/config";
-import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../lib/vscode";
-
-import { menu as cm, options, title as t } from "./config";
 import { isValidCSS } from "../lib/css";
+import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
-//
+import { title } from "./menu";
 
 const prop: Properties = getConfigurationProperty("backgroundSize");
 
-const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) =>
     updateFromLabel("backgroundSize", item, item.ui!)
-        .then(() => cm(item.ui!)); // reopen menu
-};
+        .then(() => open(item.ui!)); // reopen menu
 
-export const menu: (ui: UI) => void = (ui: UI) => {
+export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundSize", ui) as string;
-
-    const title: string = t("Size", ui);
 
     showQuickPick([
         // size
@@ -49,7 +43,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: ui, handle: (item: CommandQuickPickItem) => {
             const currentValue: string = get("backgroundSizeValue", ui);
             showInputBox({
-                title,
+                title: title("Size", ui),
                 placeHolder: "Background size",
                 value: currentValue,
                 prompt: `Background size (${currentValue}). The literal value for the 'background-size' css property.`,
@@ -62,7 +56,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                             .then(() => update("backgroundSizeValue", value, ui, true))
                             .then(() => {
                                 changed && notify();
-                                cm(ui); // reopen menu
+                                open(ui); // reopen menu
                             });
                     }
                 }
@@ -70,8 +64,8 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         }}, current)
     ],
     {
-        ...options,
-        title,
+        title: title("Size", ui),
+        matchOnDescription: true,
         placeHolder: "Background size"
     });
-};
+}

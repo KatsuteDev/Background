@@ -52,16 +52,16 @@ export const quickPickItem:
 });
 
 export const showQuickPick:
-    (items: CommandQuickPickItem[], options?: QuickPickOptions, menu?: () => void) => void =
-    (items: CommandQuickPickItem[], options: QuickPickOptions = {}, menu?: () => void) => {
+    (items: CommandQuickPickItem[], options?: QuickPickOptions, reference?: () => void) => void =
+    (items: CommandQuickPickItem[], options: QuickPickOptions = {}, reference?: () => void) => {
     window.showQuickPick(
         [
             ... // add back button only if reference menu exists
-                menu
+                reference
                 ? [quickPickItem({
                     alwaysShow: true,
                     label: "$(arrow-left) Back",
-                    handle: menu
+                    handle: reference
                 }), separator()]
                 : [],
             ...items

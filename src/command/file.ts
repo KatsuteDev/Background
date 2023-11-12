@@ -24,8 +24,7 @@ import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuick
 import * as glob from "../lib/glob";
 import * as str from "../lib/string";
 import { unique } from "../lib/array";
-
-import { menu as cm, options, title as t } from "./config";
+import { open, title } from "../menu/menu";
 
 // config
 
@@ -212,8 +211,8 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                     vscode.window.showQuickPick(
                         items,
                         {
-                            ...options,
-                            title: t("Delete", ui),
+                            // ...options,
+                            title: title("Delete", ui),
                             placeHolder: "Files",
                             canPickMany: true
                         }
@@ -226,9 +225,9 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         ] : []
     ],
     {
-        ...options,
-        title: t("Files", ui),
+        // ...options,
+        title: title("Files", ui),
         placeHolder: "Files"
     },
-    () => cm(ui));
+    () => open(ui));
 };

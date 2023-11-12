@@ -21,13 +21,12 @@ import { exec } from "@vscode/sudo-prompt";
 import { existsSync, copyFileSync } from "fs";
 import { ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
 
-import * as config from "./command/config";
-
 import { copyCommand } from "./lib/file";
 import { reload as r, reload } from "./lib/vscode";
 
 import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
+import { show } from "./menu/menu";
 
 //
 
@@ -103,7 +102,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
         commands.registerCommand("background.reload", reload),
         commands.registerCommand("background.help", () => commands.executeCommand("markdown.showPreview", help)),
         commands.registerCommand("background.changelog", () => commands.executeCommand("markdown.showPreview", changelog)),
-        config.command,
+        commands.registerCommand("background.config", show),
         statusbar
     );
 

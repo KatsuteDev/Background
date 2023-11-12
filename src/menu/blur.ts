@@ -16,15 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { showInputBox } from "../lib/vscode";
 import { UI, get, update } from "../extension/config";
 
-import { menu as cm, title } from "./config";
 import { isValidCSS } from "../lib/css";
+import { showInputBox } from "../lib/vscode";
 
-//
+import { open, title } from "./menu";
 
-export const menu: (ui: UI) => void = (ui: UI) => {
+export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundBlur", ui) as string;
 
     showInputBox({
@@ -36,7 +35,7 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         handle: (value: string) => {
             if(isValidCSS(value))
                 update("backgroundBlur", value, ui)
-                    .then(() => cm(ui)); // reopen menu
+                    .then(() => open(ui)); // reopen menu
         }
     });
-};
+}

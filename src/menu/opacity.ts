@@ -16,17 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+import { window } from "vscode";
 
-import { showInputBox } from "../lib/vscode";
 import { UI, get, update } from "../extension/config";
 
 import { round } from "../lib/math";
-import { menu as cm, title } from "./config";
+import { showInputBox } from "../lib/vscode";
 
-//
+import { open, title } from "./menu";
 
-export const menu: (ui: UI) => void = (ui: UI) => {
+export const show: (ui: UI) => void = (ui: UI) => {
     const current: number = round(get("backgroundOpacity", ui) as number, 2);
 
     showInputBox({
@@ -47,9 +46,9 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                 const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
                 if(o > .1){
                     update("backgroundOpacity", o, ui)
-                        .then(() => cm(ui)); // reopen menu
+                        .then(() => open(ui)); // reopen menu
                 }else{
-                    vscode.window.showWarningMessage(
+                    window.showWarningMessage(
                         "An opacity of " + o + " might make it difficult to see the UI, " +
                         "are you sure you want to use this opacity?",
                         { modal: true },
@@ -57,10 +56,10 @@ export const menu: (ui: UI) => void = (ui: UI) => {
                     ).then((c?: "Yes") => {
                         if(c === "Yes")
                             update("backgroundOpacity", o, ui)
-                                .then(() => cm(ui)); // reopen menu
+                                .then(() => open(ui)); // reopen menu
                     });
                 }
             }
         }
     });
-};
+}
