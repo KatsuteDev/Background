@@ -110,7 +110,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
 
 // update
 
-export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotification?: boolean) => Promise<void> = async (key: ConfigurationKey, value: any, ui?: UI, skipWarning: boolean = false) => {
+export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotification?: boolean) => Promise<void> = async (key: ConfigurationKey, value: any, ui?: UI, skipNotification: boolean = false) => {
     let changed: boolean = false;
     if(!ui){
         changed = get(key) !== value;
@@ -129,7 +129,7 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
 
         await configuration().update(key, current, ConfigurationTarget.Global);
     }
-    skipWarning === false && changed && notify();
+    skipNotification === false && changed && notify();
 }
 
 export const updateFromLabel: (key: ConfigurationKey, item: CommandQuickPickItem, ui?: UI) => Promise<void> = async (key: ConfigurationKey, item: CommandQuickPickItem, ui?: UI) => {

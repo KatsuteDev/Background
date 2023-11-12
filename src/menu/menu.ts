@@ -26,7 +26,7 @@ import { count } from "../lib/glob";
 import { capitalize, s } from "../lib/string";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../lib/vscode"
 
-import { menu as fileMenu } from "../command/file";
+import { show as fileMenu } from "./file";
 import { show as alignMenu } from "./align";
 import { show as blurMenu } from "./blur";
 import { show as opacityMenu } from "./opacity";

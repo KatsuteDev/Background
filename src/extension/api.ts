@@ -17,7 +17,7 @@
  */
 
 import { commands } from "vscode";
-import * as file from "../command/file";
+import { add, get, remove, replace } from "../menu/file";
 
 export const api = {
     install: commands.executeCommand("background.install"),
@@ -29,7 +29,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-                return file.view(ui);
+                return get(ui);
             default:
                 return undefined;
         }
@@ -40,7 +40,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-                await file.add(ui, glob, true);
+                await add(ui, glob, true);
                 return true;
             default:
                 return false;
@@ -52,7 +52,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-                await file.replace(ui, old, glob, true);
+                await replace(ui, old, glob, true);
                 return true;
             default:
                 return false;
@@ -64,7 +64,7 @@ export const api = {
             case "editor":
             case "sidebar":
             case "panel":
-                await file.remove(ui, glob, true);
+                await remove(ui, glob, true);
                 return true;
             default:
                 return false;

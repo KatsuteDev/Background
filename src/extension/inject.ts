@@ -28,6 +28,10 @@ const partition: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` +
                                      `[\\s\\S]*?` +
                                      `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
 
+// extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
+
+export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "gif", "bmp", "svg"];
+
 // inject
 
 export const inject: (content: string) => string = (content: string) =>
