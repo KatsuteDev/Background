@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [main]
     types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
 
 jobs:
   npm_ci:
