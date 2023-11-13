@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as path from "path";
+import { dirname, join } from "path";
 import { exec } from "@vscode/sudo-prompt";
 import { existsSync, copyFileSync } from "fs";
 import { ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
 
 import { copyCommand } from "./lib/file";
-import { reload as r, reload } from "./lib/vscode";
+import { reload } from "./lib/vscode";
 
 import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
@@ -36,9 +36,9 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     // internal files
     if(require?.main?.filename){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        workbench = path.join(path.dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
+        workbench = join(dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-        product = path.join(path.dirname(require.main.filename), "../", "product.json");
+        product = join(dirname(require.main.filename), "../", "product.json");
 
         if(!existsSync(workbench)){
             window.showErrorMessage(`Failed to find '${workbench}, please report this issue`);
@@ -70,8 +70,6 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
                                             modal: true
                                         }
                                     );
-                                else
-                                    r();
                             });
                         }else
                             window.showWarningMessage("Background extension is running without backup files");
@@ -86,8 +84,8 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     // extension
 
-    const changelog: Uri = Uri.file(path.join(context.extensionPath, "CHANGELOG.md"));
-    const help: Uri = Uri.file(path.join(context.extensionPath, "HELP.md"));
+    const changelog: Uri = Uri.file(join(context.extensionPath, "CHANGELOG.md"));
+    const help: Uri = Uri.file(join(context.extensionPath, "HELP.md"));
 
     const statusbar: StatusBarItem = window.createStatusBarItem(StatusBarAlignment.Right);
 

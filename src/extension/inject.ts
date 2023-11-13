@@ -16,11 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as glob from "../lib/glob";
 import { round } from "../lib/math";
 
 import { get, getCSS } from "./config";
 import { sanitizeCSS } from "../lib/css";
+import { resolve } from "../lib/glob";
 
 const identifier: string = "KatsuteDev/Background";
 
@@ -35,7 +35,7 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 // inject
 
 export const inject: (content: string) => string = (content: string) =>
-    clean(content) +
+    clean(content) + '\n' +
     `/* ${identifier}-start */` + '\n' +
     minifyJavaScript(getJavaScript()) + '\n' +
     `/* ${identifier}-end */`;
@@ -47,10 +47,10 @@ export const clean: (content: string) => string = (s: string) =>
 
 const getJavaScript: () => string = () => {
     const images: {[key: string]: string[]} = {
-        window:  glob.resolve(get("windowBackgrounds")),
-        editor:  glob.resolve(get("editorBackgrounds")),
-        sidebar: glob.resolve(get("sidebarBackgrounds")),
-        panel:   glob.resolve(get("panelBackgrounds"))
+        window:  resolve(get("windowBackgrounds")),
+        editor:  resolve(get("editorBackgrounds")),
+        sidebar: resolve(get("sidebarBackgrounds")),
+        panel:   resolve(get("panelBackgrounds"))
     };
 
     const after: boolean = get("renderContentAboveBackground");
@@ -396,7 +396,6 @@ if(panelTime > 0 && iPanelBackgrounds.length > 1){
 const minifyJavaScript: (javascript: string) => string = (javascript: string) =>
     javascript
         .trim()
-        .replace(/(?<=\)|})$/gm, ';')  // add semicolon to end of ) and }
         .replace(/\/\/ .*$/gm, '')     // remove line // comments
         .replace(/\/\*.*?\*\//gms, '') // remove multiline /* */ comments
         .replace(/^ +/gm, '')          // remove trailing space

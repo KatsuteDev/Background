@@ -20,8 +20,8 @@ import { commands } from "vscode";
 import { add, get, remove, replace } from "../menu/file";
 
 export const api = {
-    install: commands.executeCommand("background.install"),
-    uninstall: commands.executeCommand("background.uninstall"),
+    install: () => commands.executeCommand("background.install"),
+    uninstall: () => commands.executeCommand("background.uninstall"),
     reload: () => commands.executeCommand("workbench.action.reloadWindow"),
     get: (ui: string) => {
         switch(ui){
