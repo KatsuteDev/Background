@@ -22,7 +22,7 @@ import { Properties, getConfigurationProperty } from "../extension/package";
 import { isValidCSS } from "../lib/css";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
-import { title } from "./menu";
+import { open, title } from "./menu";
 
 const prop: Properties = getConfigurationProperty("backgroundSize");
 

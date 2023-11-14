@@ -21,9 +21,9 @@ import { Properties, getConfigurationProperty } from "../extension/package";
 
 import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../lib/vscode";
 
-import { title } from "./menu";
+import { open, title } from "./menu";
 
-const prop: Properties = getConfigurationProperty("backgroundAlignment");
+const prop: Properties = getConfigurationProperty("backgroundRepeat");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) =>
     updateFromLabel("backgroundRepeat", item, item.ui!)

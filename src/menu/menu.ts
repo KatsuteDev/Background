@@ -178,7 +178,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
         title: `${capitalize(ui)} Background`,
         matchOnDescription: true,
         matchOnDetail: true
-    });
+    }, show);
 
 // title
 

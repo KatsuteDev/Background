@@ -25,6 +25,7 @@ import { appendS } from "../lib/string";
 import { count } from "../lib/glob";
 import { unique } from "../lib/array";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
+
 import { open, title } from "./menu";
 
 // config
@@ -119,7 +120,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
             handle: (item: CommandQuickPickItem) =>
                 window.showOpenDialog({
                     canSelectFiles: true,
-                    canSelectFolders: true,
+                    canSelectFolders: false,
                     canSelectMany: true,
                     openLabel: "Select Image",
                     filters: {"Images": extensions()}
