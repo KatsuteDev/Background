@@ -21,7 +21,7 @@ import { Uri, window } from "vscode";
 import { extensions } from "../extension/inject";
 import { UI, get as getConfig, update } from "../extension/config";
 
-import { s } from "../lib/string";
+import { appendS } from "../lib/string";
 import { count } from "../lib/glob";
 import { unique } from "../lib/array";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
@@ -79,7 +79,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
             label: glob.replace(/(\$\(\w+\))/g, "\\$1"),
             value: glob,
             ui,
-            description: `${s(count(glob), "matching file")}`,
+            description: `${appendS(count(glob), "matching file")}`,
             // update input
             handle: (item: CommandQuickPickItem) =>
                 showInputBox({
@@ -201,7 +201,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                                 label: glob.replace(/(\$\(\w+\))/g, "\\$1"),
                                 value: glob,
                                 ui: item.ui,
-                                description: `${s(matches, "matching file")}`
+                                description: `${appendS(matches, "matching file")}`
                             });
                         });
 

@@ -23,7 +23,7 @@ import { pkg } from "../extension/package";
 import { UI, configuration, get } from "../extension/config";
 
 import { count } from "../lib/glob";
-import { capitalize, s } from "../lib/string";
+import { capitalize, appendS } from "../lib/string";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../lib/vscode"
 
 import { show as fileMenu } from "./file";
@@ -93,7 +93,7 @@ export const show: () => void = () =>
 const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, icon: string) => {
     // description
     const backgrounds: string[] = get(`${ui}Backgrounds`);
-    const description: string = `${s(backgrounds, "Glob")} (${s(count(backgrounds), "Background")})`;
+    const description: string = `${appendS(backgrounds, "Glob")} (${appendS(count(backgrounds), "Background")})`;
 
     // detail
     let detail: string =
@@ -107,7 +107,7 @@ const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, ic
     const time: number = +get("backgroundChangeTime", ui);
 
     if(time > 0)
-        detail += " • " + s(time, "second");
+        detail += " • " + appendS(time, "second");
 
     // quick pick
     return quickPickItem({
@@ -125,7 +125,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
     showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
-            description: `${s(get(`${ui}Backgrounds`), "Glob")} (${s(count(get(`${ui}Backgrounds`)), "Background")})`,
+            description: `${appendS(get(`${ui}Backgrounds`), "Glob")} (${appendS(count(get(`${ui}Backgrounds`)), "Background")})`,
             detail: "Select background image files",
             ui,
             handle: () => fileMenu(ui)
@@ -169,7 +169,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
         }),
         quickPickItem({
             label: "$(clock) Time",
-            description: `${s(+get("backgroundChangeTime", ui), "second")}`,
+            description: `${appendS(+get("backgroundChangeTime", ui), "second")}`,
             detail: "How often to change the background",
             ui,
             handle: () => timeMenu(ui)

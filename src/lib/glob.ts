@@ -16,17 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import { extname } from "path";
 import { GlobOptions, globSync } from "glob";
 
-import * as path from "path";
-
-import * as env from "../extension/env";
 import { extensions } from "../extension/inject";
 
 import { unique } from "./array";
+import { resolve as resolveEnv } from "../extension/env";
 
 const filter: (v: string) => boolean = (v : string) => {
-    const ext: string = path.extname(v);
+    const ext: string = extname(v);
     for(const m of extensions())
         if(`.${m}` === ext)
             return true;
@@ -46,7 +45,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
         if(g.startsWith("https://"))
             i++;
         else // need to normalize '/' ↓ so glob works properly
-            globs.push(env.resolve(g).replace(/\\/g, '/'));
+            globs.push(resolveEnv(g).replace(/\\/g, '/'));
 
     return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
 }
@@ -59,7 +58,7 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
         if(g.startsWith("https://"))
             urls.push(g);
         else // need to normalize '/' ↓ so glob works properly
-            globs.push(env.resolve(g).replace(/\\/g, '/'));
+            globs.push(resolveEnv(g).replace(/\\/g, '/'));
 
     return urls.concat((globSync(globs, options) as string[])
                     .filter(filter) // need to normalize '/' again ↓ because glob uses the wrong slash

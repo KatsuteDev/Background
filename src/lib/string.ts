@@ -16,6 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-export const s: (obj: any[] | number, str: string) => string = (obj: any[] | number, str: string) => Array.isArray(obj) ? s(obj.length, str) : `${obj} ${str}${obj != 1 ? 's' : ''}`;
+export const appendS: (obj: any[] | number, str: string) => string = (obj: any[] | number, str: string) => Array.isArray(obj) ? appendS(obj.length, str) : `${obj} ${str}${obj != 1 ? 's' : ''}`;
 
 export const capitalize: (s: string) => string = (s: string) => `${(s[0] ?? "").toUpperCase() + (s ?? "").substring(1)}`;
