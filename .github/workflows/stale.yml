@@ -1,8 +1,13 @@
 name: Stale
 on:
+  workflow_dispatch:
   schedule:
     - cron: 0 11 * 1-2,11-12 1
     - cron: 0 10 * 3-10 1
+  issues:
+    types: [closed]
+  pull_request:
+    types: [closed]
 
 jobs:
   stale:
