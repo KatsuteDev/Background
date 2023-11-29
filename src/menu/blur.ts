@@ -16,15 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { showInputBox } from "../../vs/inputbox";
-import { UI, get, update } from "../../vs/vsconfig";
+import { UI, get, update } from "../extension/config";
 
-import { menu as cm, title } from "../config";
-import { validCSS } from "../../lib/str";
+import { isValidCSS } from "../lib/css";
+import { showInputBox } from "../lib/vscode";
 
-//
+import { open, title } from "./menu";
 
-export const menu: (ui: UI) => void = (ui: UI) => {
+export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundBlur", ui) as string;
 
     showInputBox({
@@ -32,11 +31,11 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         placeHolder: "Background blur",
         value: current,
         prompt: `Background blur (${current})`,
-        validateInput: (value: string) => !validCSS(value) ? "Invalid CSS" : null,
+        validateInput: (value: string) => !isValidCSS(value) ? "Invalid CSS" : null,
         handle: (value: string) => {
-            if(validCSS(value))
+            if(isValidCSS(value))
                 update("backgroundBlur", value, ui)
-                    .then(() => cm(ui)); // reopen menu
+                    .then(() => open(ui)); // reopen menu
         }
     });
-};
+}

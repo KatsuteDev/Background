@@ -16,16 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+// sanitize
 
-import { installJS } from "../extension";
+export const sanitizeCSS: (css: string) => string = (css: string) =>
+    css
+        .replace(/\r?\n/gm, ' ') // make single line
+        .replace(/"/gm, `'`)     // prevent escaping quotes
+        .replace(/\\+$/gm, '');  // prevent escaping inject script quote
 
-//
+export const sanitizeUnits: (unit: string) => string = (unit: string) =>
+    unit.replace(/[^\w.% +-]/gmi, "");
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.install", () => installJS());
+// validation
 
-export const notify: () => void = () => {
-    vscode.window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Reload", "Ignore").then((value?: string) => {
-        value === "Install and Reload" && vscode.commands.executeCommand("background.install");
-    });
-}
+const invalidCSS: RegExp = /[^\w.% +-]/gm;
+
+export const isValidCSS: (css: string) => boolean = (css: string) => !css.match(invalidCSS);

@@ -16,23 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { config, Props } from "../../vs/package";
+import { UI, get, updateFromLabel } from "../extension/config";
+import { Properties, getConfigurationProperty } from "../extension/package";
 
-import { get, UI, updateFromLabel } from "../../vs/vsconfig";
-import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../../vs/quickpick";
+import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../lib/vscode";
 
-import { menu as cm, options, title } from "../config";
+import { open, title } from "./menu";
 
-//
+const prop: Properties = getConfigurationProperty("backgroundRepeat");
 
-const prop: Props = config("backgroundRepeat");
-
-const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) => {
+const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) =>
     updateFromLabel("backgroundRepeat", item, item.ui!)
-        .then(() => cm(item.ui!)); // reopen menu
-};
+        .then(() => open(item.ui!)); // reopen menu
 
-export const menu: (ui: UI) => void = (ui: UI) => {
+export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundRepeat", ui) as string;
 
     showQuickPick([
@@ -42,10 +39,9 @@ export const menu: (ui: UI) => void = (ui: UI) => {
         quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], handle: handle, ui }, current),
         quickPickItem({ label: prop.items!.enum![4], description: prop.items!.enumDescriptions![4], handle: handle, ui }, current),
         quickPickItem({ label: prop.items!.enum![5], description: prop.items!.enumDescriptions![5], handle: handle, ui }, current),
-    ],
-    {
-        ...options,
+    ], {
         title: title("Repeat", ui),
-        placeHolder: "Background repeat",
+        matchOnDescription: true,
+        placeHolder: "Background repeat"
     });
 };

@@ -16,10 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as vscode from "vscode";
+import { homedir } from "os";
+import { workspace } from "vscode";
 
-//
+const home: string = homedir();
 
-export const command: vscode.Disposable = vscode.commands.registerCommand("background.reload", () => {
-    vscode.commands.executeCommand("workbench.action.reloadWindow");
-});
+export const resolve: (str: string) => string = (str: string) =>
+    str.replace(/\${(.*)}/g, (_, envvar) => {
+        if(envvar == "vscode:workspace" && workspace.workspaceFolders && workspace.workspaceFolders.length > 0 && workspace.workspaceFolders[0].uri){
+            return workspace.workspaceFolders[0].uri.fsPath.toString();
+        }else if(envvar == "user:home"){
+            return home;
+        }else if(envvar in process.env){
+            return process.env[envvar] || '';
+        }else{
+            return '';
+        }
+    });

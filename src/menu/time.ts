@@ -16,15 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { showInputBox } from "../../vs/inputbox";
-import { UI, get, update } from "../../vs/vsconfig";
+import { UI, get, update } from "../extension/config";
 
-import { round } from "../../lib/round";
-import { menu as cm, title } from "../config";
+import { round } from "../lib/math";
+import { showInputBox } from "../lib/vscode";
 
-//
+import { open, title } from "./menu";
 
-export const menu: (ui: UI) => void = (ui: UI) => {
+export const show: (ui: UI) => void = (ui: UI) => {
     const current: number = round(get("backgroundChangeTime", ui) as number, 2);
 
     showInputBox({
@@ -44,8 +43,8 @@ export const menu: (ui: UI) => void = (ui: UI) => {
             if(!isNaN(+value)){
                 const o: number = Math.max(round(+value, 2), 0);
                 update("backgroundChangeTime", o, ui)
-                    .then(() => cm(ui)); // reopen menu
+                    .then(() => open(ui)); // reopen menu
             }
         }
     });
-};
+}
