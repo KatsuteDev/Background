@@ -29,26 +29,6 @@ jobs:
         shell: bash
         run: ls
 
-      - name: Copy (Windows)
-        if: matrix.os == 'windows-latest' && !matrix.exists
-        run: echo "NUL" > "C.txt" && xcopy /r /y "A" "C.txt" && echo "NUL" > "D.txt" && xcopy /r /y "B" "D.txt"
-
-      - name: Copy Existing (Windows)
-        if: matrix.os == 'windows-latest' && matrix.exists
-        run: xcopy /r /y "A" "C.txt" && xcopy /r /y "B" "D.txt"
-
-      - name: Copy (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
-
-      - name: Copy (Mac)
-        if: matrix.os == 'macos-latest'
-        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
-
-      - name: List Files
-        shell: bash
-        run: ls
-
       - name: Script
         uses: actions/github-script@v7
         with:
@@ -68,3 +48,23 @@ jobs:
             };
 
             console.log(cp([["A", "C.txt"], ["B", "D.txt"]]));
+
+      - name: Copy (Windows)
+        if: matrix.os == 'windows-latest' && !matrix.exists
+        run: echo "NUL" > "C.txt" && xcopy /r /y "A" "C.txt" && echo "NUL" > "D.txt" && xcopy /r /y "B" "D.txt"
+
+      - name: Copy Existing (Windows)
+        if: matrix.os == 'windows-latest' && matrix.exists
+        run: xcopy /r /y "A" "C.txt" && xcopy /r /y "B" "D.txt"
+
+      - name: Copy (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
+
+      - name: Copy (Mac)
+        if: matrix.os == 'macos-latest'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
+
+      - name: List Files
+        shell: bash
+        run: ls
