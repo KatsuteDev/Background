@@ -3,7 +3,7 @@ on: [workflow_dispatch]
 
 jobs:
   test:
-    name: Test
+    name: Test Copy [${{matrix.os}}] (existing ${{matrix.exists}})
     timeout-minutes: 2
     runs-on: ${{ matrix.os }}
     strategy:
@@ -33,7 +33,7 @@ jobs:
         if: matrix.os == 'windows-latest' && !matrix.exists
         run: echo "NUL" > "C.txt" && xcopy /r /y "A" "C.txt" && echo "NUL" > "D.txt" && xcopy /r /y "B" "D.txt"
 
-      - name: Copy (Windows)
+      - name: Copy Existing (Windows)
         if: matrix.os == 'windows-latest' && matrix.exists
         run: xcopy /r /y "A" "C.txt" && xcopy /r /y "B" "D.txt"
 
