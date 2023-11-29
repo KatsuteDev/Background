@@ -17,6 +17,7 @@
  */
 
 import { dirname, join } from "path";
+import { platform, release } from "os";
 import { exec } from "@vscode/sudo-prompt";
 import { existsSync, copyFileSync } from "fs";
 import { ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
@@ -57,16 +58,16 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
                 }catch(err: any){
                     window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                         if(value === "Yes"){
-                            const cmd: string = copyCommand([
+                            const command: string = copyCommand([
                                 [workbench, workbench_backup],
                                 [product, product_backup]
                             ]);
-                            exec(cmd, {name: "VSCode Extension Host"}, (ERR?: Error) => {
-                                if(ERR)
+                            exec(command, {name: "VSCode Extension Host"}, (err?: Error) => {
+                                if(err)
                                     window.showErrorMessage(
                                         "Failed to backup files",
                                         {
-                                            detail: `OS: ${process.platform}\nUsing command: ${cmd}\n\n${ERR.message}`,
+                                            detail: `OS: ${platform()} ${release()}\nUsing command: ${command}\n\n${err.name}\n${err.message}`.trim(),
                                             modal: true
                                         }
                                     );

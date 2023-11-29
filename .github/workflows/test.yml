@@ -10,24 +10,40 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        exists: [true, false]
     steps:
       - name: Create File
         shell: bash
         run: |
-          echo "A" > A.txt
-          echo "B" > B.txt
+          echo "A" > A
+          echo "B" > B
+
+      - name: Create Existing File
+        shell: bash
+        if: matrix.exists
+        run: |
+          echo "A" > C.txt
+          echo "B" > D.txt
+
+      - name: List Files
+        shell: bash
+        run: ls
 
       - name: Copy (Windows)
-        if: matrix.os == 'windows-latest'
-        run: xcopy /r /y "A.txt" "C.txt*" && xcopy /r /y "B.txt" "D.txt*"
+        if: matrix.os == 'windows-latest' && !matrix.exists
+        run: echo "NUL" > "C.txt" && xcopy /r /y "A" "C.txt" && echo "NUL" > "D.txt" && xcopy /r /y "B" "D.txt"
+
+      - name: Copy (Windows)
+        if: matrix.os == 'windows-latest' && matrix.exists
+        run: xcopy /r /y "A" "C.txt" && xcopy /r /y "B" "D.txt"
 
       - name: Copy (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: cp -f 'A.txt' 'C.txt' && cp -f 'B.txt' 'D.txt'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
 
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
-        run: cp -f 'A.txt' 'C.txt' && cp -f 'B.txt' 'D.txt'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
 
       - name: List Files
         shell: bash
@@ -37,17 +53,18 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const existsSync = require("fs").existsSync;
             const windows = process.platform === "win32"
 
             const cp = (files) => {
                 return files
                     .map((file) =>
                         windows
-                        ? `xcopy /r /y "${file[0]}" "${file[1]}*"`
+                        ? (!existsSync(file[1]) ? `echo "NUL" > "${file[1]}" && ` : '') +
+                          `xcopy /r /y "${file[0]}" "${file[1]}"`
                         : `cp -f '${file[0]}' '${file[1]}'`
                     )
                     .join(" && ");
             };
 
-            console.log(cp([["A.txt", "C.txt"], ["B.txt", "D.txt"]]));
-            console.log(cp([["A.txt", "C.txt"], ["B.txt", "D.txt"]], true));
+            console.log(cp([["A", "C.txt"], ["B", "D.txt"]]));

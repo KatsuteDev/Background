@@ -18,19 +18,20 @@
 
 import { platform } from "process";
 import { createHash } from "crypto";
-import { PathOrFileDescriptor } from "fs";
+import { PathLike, existsSync } from "fs";
 
 // copy
 
 const windows: boolean = platform === "win32";
 
 export const copyCommand:
-    (files: [source: PathOrFileDescriptor, dest: PathOrFileDescriptor][]) => string =
-    (files: [PathOrFileDescriptor, PathOrFileDescriptor][]) =>
+    (files: [source: PathLike, dest: PathLike][]) => string =
+    (files: [PathLike, PathLike][]) =>
     files
-        .map((file: [source: PathOrFileDescriptor, dest: PathOrFileDescriptor]) =>
+        .map((file: [source: PathLike, dest: PathLike]) =>
             windows
-            ? `xcopy /r /y "${file[0]}" "${file[1]}*"` // asterisk required so windows treats as file and skips prompt asking if path is file or directory
+            ? (!existsSync(file[1]) ? `echo "NUL" > "${file[1]}" && ` : '') + // create file to avoid F/D prompt
+              `xcopy /r /y "${file[0]}" "${file[1]}"` // must use xcopy, copy doesn't overwrite read-only files
             : `cp -f '${file[0]}' '${file[1]}'`
         )
         .join(" && ");

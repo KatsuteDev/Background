@@ -18,6 +18,7 @@
 
 import { fileSync } from "tmp";
 import { window } from "vscode";
+import { platform, release } from "os";
 import { exec } from "@vscode/sudo-prompt";
 
 import { PathOrFileDescriptor, readFileSync, writeFileSync } from "fs";
@@ -72,7 +73,7 @@ const write: (workbench: PathOrFileDescriptor, product: PathOrFileDescriptor, co
                         window.showErrorMessage(
                             "Failed to write changes",
                             {
-                                detail: `OS: ${process.platform}\nUsing command: ${command}\n\n${err.message}`,
+                                detail: `OS: ${platform()} ${release()}\nUsing command: ${command}\n\n${err.name}\n${err.message}`.trim(),
                                 modal: true
                             }
                         );
