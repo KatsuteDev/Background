@@ -49,11 +49,11 @@ const write: (workbench: PathLike, product: PathLike, content: string) => void =
         reload();
     }catch(error: any){
         const snap: boolean = platform() === "linux" &&
-        /* also in         */ workbench.toString().replace('\\', '/').includes("/snap/") &&
-        /* extension.ts    */ product.toString().replace('\\', '/').includes("/snap/");
+        /* also in         */ workbench.toString().replace(/\\/g, '/').includes("/snap/") &&
+        /* extension.ts    */ product.toString().replace(/\\/g, '/').includes("/snap/");
 
         if(snap){
-            // TODO
+            window.showErrorMessage("Background extension does not support snap installations, use deb or rpm");
         }else{
             window.showWarningMessage(
                 "Failed to write changes, run command as administrator?",

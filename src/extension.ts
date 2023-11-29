@@ -57,11 +57,12 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
                     copyFileSync(product, product_backup);
                 }catch(err: any){
                     const snap: boolean = platform() === "linux" &&
-                    /* also in         */ workbench.toString().replace('\\', '/').includes("/snap/") &&
-                    /* writer.ts       */ product.toString().replace('\\', '/').includes("/snap/");
+                    /* also in         */ workbench.toString().replace(/\\/g, '/').includes("/snap/") &&
+                    /* writer.ts       */ product.toString().replace(/\\/g, '/').includes("/snap/");
 
                     if(snap){
-                        // TODO
+                        window.showErrorMessage("Background extension does not support snap installations, use deb or rpm");
+                        return;
                     }else{
                         window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
                             if(value === "Yes"){
