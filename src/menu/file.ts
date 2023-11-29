@@ -87,7 +87,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                     title: `Update ${item.value}`,
                     placeHolder: "File path, glob, or URL; leave blank to remove",
                     value: item.value ?? "",
-                    prompt: "Use only '/' for directories, /\\/g is reserved for escape characters. Leave this field blank to remove.",
+                    prompt: "Use only '/' for directories, '\\' is reserved for escape characters. Leave this field blank to remove.",
                     // validation
                     validateInput: (value: string) => {
                         if(value.startsWith("file://"))
@@ -150,7 +150,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                 window.showInputBox({
                     title: "Add Glob",
                     placeHolder: "File path or glob",
-                    prompt: "Add a file or a glob. Use only '/' for directories, /\\/g is reserved for escape characters.",
+                    prompt: "Add a file or a glob. Use only '/' for directories, '\\' is reserved for escape characters.",
                     validateInput: (value: string) => {
                         if(value.startsWith("file://"))
                             return "Do not include 'file://' as part of the file path";
