@@ -56,25 +56,33 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
                     copyFileSync(workbench, workbench_backup);
                     copyFileSync(product, product_backup);
                 }catch(err: any){
-                    window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
-                        if(value === "Yes"){
-                            const command: string = copyCommand([
-                                [workbench, workbench_backup],
-                                [product, product_backup]
-                            ]);
-                            exec(command, {name: "VSCode Extension Host"}, (err?: Error) => {
-                                if(err)
-                                    window.showErrorMessage(
-                                        "Failed to backup files",
-                                        {
-                                            detail: `OS: ${platform()} ${release()}\nUsing command: ${command}\n\n${err.name}\n${err.message}`.trim(),
-                                            modal: true
-                                        }
-                                    );
-                            });
-                        }else
-                            window.showWarningMessage("Background extension is running without backup files");
-                    });
+                    const snap: boolean = platform() === "linux" &&
+                    /* also in         */ workbench.toString().replace('\\', '/').includes("/snap/") &&
+                    /* writer.ts       */ product.toString().replace('\\', '/').includes("/snap/");
+
+                    if(snap){
+                        // TODO
+                    }else{
+                        window.showWarningMessage("Failed to backup files, run command as administrator?", {detail: `The Background extension does not have permission to backup to the VSCode folder, run command using administrator permissions?\n\n${err.message}`, modal: true}, "Yes").then((value?: string) => {
+                            if(value === "Yes"){
+                                const command: string = copyCommand([
+                                    [workbench, workbench_backup],
+                                    [product, product_backup]
+                                ]);
+                                exec(command, {name: "VSCode Extension Host"}, (err?: Error) => {
+                                    if(err)
+                                        window.showErrorMessage(
+                                            "Failed to backup files",
+                                            {
+                                                detail: `OS: ${platform()} ${release()}\nUsing command: ${command}\n\n${err.name}\n${err.message}`.trim(),
+                                                modal: true
+                                            }
+                                        );
+                                });
+                            }else
+                                window.showWarningMessage("Background extension is running without backup files");
+                        });
+                    }
                 }
             }
         }
