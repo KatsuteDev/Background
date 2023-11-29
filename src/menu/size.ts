@@ -40,7 +40,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
         quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items!.enum![3], description: prop.items!.enumDescriptions![3], ui: ui, handle: (item: CommandQuickPickItem) => {
+        quickPickItem({ label: prop.items!.enum![3], description: `(${get("backgroundSizeValue", ui)})`, ui: ui, handle: (item: CommandQuickPickItem) => {
             const currentValue: string = get("backgroundSizeValue", ui);
             showInputBox({
                 title: title("Size", ui),

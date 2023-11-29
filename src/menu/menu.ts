@@ -23,7 +23,7 @@ import { pkg } from "../extension/package";
 import { UI, configuration, get } from "../extension/config";
 
 import { count } from "../lib/glob";
-import { capitalize, appendS } from "../lib/string";
+import { appendS, appendIf, capitalize } from "../lib/string";
 import { CommandQuickPickItem, quickPickItem, separator, showQuickPick } from "../lib/vscode"
 
 import { show as fileMenu } from "./file";
@@ -134,7 +134,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
         separator(),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${get("backgroundAlignment", ui)}`,
+            description: `${appendIf(get("backgroundAlignment", ui), s => s === "Manual", ` (${get("backgroundAlignmentValue", ui)})`)}`,
             detail: "Background image alignment",
             ui,
             handle: () => alignMenu(ui)
@@ -162,7 +162,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${get("backgroundSize", ui)}`,
+            description: `${appendIf(get("backgroundSize", ui), s => s === "Manual", ` (${get("backgroundSizeValue", ui)})`)}`,
             detail: "Background image size",
             ui,
             handle: () => sizeMenu(ui)
