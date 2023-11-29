@@ -51,7 +51,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
         // manual
         separator(),
         quickPickItem({ label: prop.items!.enum![9],
-            description: "Manual position",
+            description: `(${get("backgroundAlignmentValue", ui)})`,
             ui,
             handle: (item: CommandQuickPickItem) => {
                 const currentValue: string = get("backgroundAlignmentValue", ui);
@@ -75,7 +75,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                     }
                 });
             }
-        })
+        }, current)
     ], {
         title: title("Alignment", ui),
         matchOnDescription: true,
