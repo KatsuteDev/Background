@@ -1,17 +1,24 @@
-### Prerequisites
-*Issues must meet the following criteria:*
+<!-- PLEASE READ BEFORE SUBMITTING PR
 
- - [ ] No similar pull request exists.
- - [ ] Code follows the general code style of this project.
- - [ ] No sensitive information is exposed.
- - [ ] Relevant comments have been added.
+Before opening a PR please make sure that:
 
-### Code Generators
-*The use of GitHub Copilot or ChatGPT is **strictly prohibited** on this repository.*
+ * No similar PR exists.
+ * No sensitive information is exposed.
+ * Code follows the general style of the repository.
+ * Relevant comments are added.
 
- - [ ] This pull does not use GitHub Copilot or ChatGPT.
+!!! Important !!!
+
+ * Does not include AI generated code, such as GitHub Copilot or ChatGPT.
+
+-->
+
+### Relevant Issues
+*List any closed and/or relevant issues*
+
+ *
 
 ### Changes Made
-*List any changes made and/or other relevant issues.*
+*List any changes made.*
 
- -
+ *
