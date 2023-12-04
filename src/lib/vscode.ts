@@ -79,3 +79,12 @@ export const separator: () => QuickPickItem = () => ({
     label: "",
     kind: QuickPickItemKind.Separator
 });
+
+// webview
+
+export interface WebviewPage {
+    body: string,
+    css?: string,
+    js?: string,
+    onDidUpdate?: (e: any) => void
+}
