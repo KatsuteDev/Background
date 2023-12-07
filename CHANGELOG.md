@@ -1,5 +1,35 @@
 # Changelog
 
+## 2.9.0
+
+### New Features
+
+* Show manual alignment/size value in menu [#260](https://github.com/KatsuteDev/Background/pull/260) ([@Katsute](https://github.com/Katsute))
+* Show error message when using extension on snap installation [#261](https://github.com/KatsuteDev/Background/pull/261) ([@Katsute](https://github.com/Katsute))
+
+### Optimizations
+
+* Internal optimizations [#244](https://github.com/KatsuteDev/Background/pull/244) ([@Katsute](https://github.com/Katsute))
+
+  * Remove unnecessary reload on sudo init
+  * Fix sudo potentially failing on Windows
+
+### Dependencies
+
+* Bump @types/tmp from 0.2.5 to 0.2.6 [#246](https://github.com/KatsuteDev/Background/pull/246) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.84.0 to 1.84.1 [#247](https://github.com/KatsuteDev/Background/pull/247) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.19.5 to 0.19.6 [#252](https://github.com/KatsuteDev/Background/pull/252) ([@dependabot](https://github.com/dependabot))
+* Bump actions/github-script from 6 to 7 [#251](https://github.com/KatsuteDev/Background/pull/251) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.9.0 to 20.10.0 [#256](https://github.com/KatsuteDev/Background/pull/256) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.6 to 2.3.8 [#253](https://github.com/KatsuteDev/Background/pull/253) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.2.2 to 5.3.2 [#255](https://github.com/KatsuteDev/Background/pull/255) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.19.6 to 0.19.8 [#257](https://github.com/KatsuteDev/Background/pull/257) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.84.1 to 1.84.2 [#254](https://github.com/KatsuteDev/Background/pull/254) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.3.2 to 5.3.3 [#265](https://github.com/KatsuteDev/Background/pull/265) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.84.2 to 1.85.0 [#264](https://github.com/KatsuteDev/Background/pull/264) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.8.3...2.9.0`](https://github.com/KatsuteDev/Background/compare/2.8.3...2.9.0)
+
 ## 2.8.3
 
 ### Fixes
