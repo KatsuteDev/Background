@@ -22,7 +22,7 @@ import { extensions } from "../extension/inject";
 import { UI, get as getConfig, update } from "../extension/config";
 
 import { appendS } from "../lib/string";
-import { count } from "../lib/glob";
+import { count, escape as esc } from "../lib/glob";
 import { unique } from "../lib/array";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
@@ -125,7 +125,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                     openLabel: "Select Image",
                     filters: {"Images": extensions()}
                 }).then((files?: Uri[]) =>
-                    files && add(ui, files.map(file => file.fsPath.replace(/\\/g, '/')))
+                    files && add(ui, files.map(file => esc(file)))
                 )
         }),
         quickPickItem({ // folder
@@ -139,7 +139,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                     canSelectMany: true,
                     openLabel: "Select Folder"
                 }).then((files?: Uri[]) =>
-                    files && add(ui, files.map(file => `${file.fsPath.replace(/\\/g, '/')}/**`))
+                    files && add(ui, files.map(file => `${esc(file)}/**`))
                 )
         }),
         quickPickItem({ // glob
