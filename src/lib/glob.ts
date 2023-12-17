@@ -17,12 +17,13 @@
  */
 
 import { extname } from "path";
-import { GlobOptions, globSync } from "glob";
+import { GlobOptions, globSync, escape as esc } from "glob";
 
 import { extensions } from "../extension/inject";
 
 import { unique } from "./array";
 import { resolve as resolveEnv } from "../extension/env";
+import { Uri } from "vscode";
 
 const filter: (v: string) => boolean = (v : string) => {
     const ext: string = extname(v);
@@ -36,6 +37,9 @@ const options: GlobOptions = {
     absolute: true,
     nodir: true
 }
+
+export const escape: (path: Uri) => string = (path: Uri) =>
+    esc(path.fsPath.replace(/\\/g, '/'));
 
 export const count: (glob: string | string[]) => number = (glob: string | string[]) => {
     let i = 0;
