@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.9.1
+
+### Fixes
+
+* Fix add file and add directory not escaping glob symbols [#268](https://github.com/KatsuteDev/Background/pull/268) ([@Katsute](https://github.com/Katsute))
+* Fix glob escape characters not working [#269](https://github.com/KatsuteDev/Background/pull/269) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.19.8 to 0.19.9 [#266](https://github.com/KatsuteDev/Background/pull/266) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.9.0...2.9.1`](https://github.com/KatsuteDev/Background/compare/2.9.0...2.9.1)
+
 ## 2.9.0
 
 ### New Features
