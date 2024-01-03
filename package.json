@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.9.1",
+    "version": "2.10.0",
     "private": true,
     "engines": {
         "vscode": "^1.85.0"
@@ -282,7 +282,7 @@
                     }
                 },
                 "background.useWindowOptionsForAllBackgrounds": {
-                    "markdownDescription": "If enabled, all background images will use the options set for the windows background.\n\nThis does not include the backgrounds, you still need to add background images separately.",
+                    "markdownDescription": "**Deprecated:** This setting is being removed to reduce confusion for new users, please set options separately.\n\n~~If enabled, all background images will use the options set for the windows background.~~\n\n~~This does not include the backgrounds, you still need to add background images separately.~~",
                     "order": 12,
                     "type": "boolean",
                     "default": false
