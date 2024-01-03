@@ -33,6 +33,8 @@ export type ConfigurationKey =
     "backgroundChangeTime" |
     "useWindowOptionsForAllBackgrounds" |
     "renderContentAboveBackground" |
+    "editorBackgroundScrollWithContent" |
+    "sidebarBackgroundScrollWithContent" |
     "smoothImageRendering" |
     "CSS";
 

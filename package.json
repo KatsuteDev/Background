@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.9.1",
+    "version": "2.10.0",
     "private": true,
     "engines": {
         "vscode": "^1.85.0"
@@ -293,15 +293,27 @@
                     "type": "boolean",
                     "default": false
                 },
+                "background.editorBackgroundScrollWithContent": {
+                    "markdownDescription": "If enabled, editor background images scroll with the content.",
+                    "order": 14,
+                    "type": "boolean",
+                    "default": false
+                },
+                "background.sidebarBackgroundScrollWithContent": {
+                    "markdownDescription": "If enabled, sidebar background images scroll with the content.",
+                    "order": 15,
+                    "type": "boolean",
+                    "default": false
+                },
                 "background.smoothImageRendering": {
                     "markdownDescription": "If enabled, use smooth image rendering rather than pixelated rendering when resizing images.",
-                    "order": 14,
+                    "order": 16,
                     "type": "boolean",
                     "default": false
                 },
                 "background.CSS": {
                     "markdownDescription": "Apply raw CSS to VSCode.",
-                    "order": 15,
+                    "order": 17,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
