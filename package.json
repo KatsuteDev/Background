@@ -305,6 +305,12 @@
                     "type": "boolean",
                     "default": false
                 },
+                "background.panelBackgroundScrollWithContent": {
+                    "markdownDescription": "If enabled, panel background images scroll with the content.",
+                    "order": 15,
+                    "type": "boolean",
+                    "default": false
+                },
                 "background.smoothImageRendering": {
                     "markdownDescription": "If enabled, use smooth image rendering rather than pixelated rendering when resizing images.",
                     "order": 16,
