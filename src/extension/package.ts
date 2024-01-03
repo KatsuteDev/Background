@@ -35,6 +35,7 @@ export type ConfigurationKey =
     "renderContentAboveBackground" |
     "editorBackgroundScrollWithContent" |
     "sidebarBackgroundScrollWithContent" |
+    "panelBackgroundScrollWithContent" |
     "smoothImageRendering" |
     "CSS";
 
