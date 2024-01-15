@@ -12,4 +12,4 @@ on:
 jobs:
   npm_ci:
     name: npm CI
-    uses: Katsute/Workflows/.github/workflows/npm.ci.yml@main
+    uses: KatsuteDev/Workflows/.github/workflows/npm.ci.yml@main
