@@ -14,14 +14,14 @@ jobs:
     steps:
       - name: Create File
         shell: bash
-        run: |
+        run: |-
           echo "A" > A
           echo "B" > B
 
       - name: Create Existing File
         shell: bash
         if: matrix.exists
-        run: |
+        run: |-
           echo "A" > C.txt
           echo "B" > D.txt
 
@@ -32,7 +32,7 @@ jobs:
       - name: Script
         uses: actions/github-script@v7
         with:
-          script: |
+          script: |-
             const existsSync = require("fs").existsSync;
             const windows = process.platform === "win32"
 

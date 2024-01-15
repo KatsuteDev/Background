@@ -13,6 +13,3 @@ jobs:
   npm_ci:
     name: npm CI
     uses: Katsute/Workflows/.github/workflows/npm.ci.yml@main
-    with:
-      compile-post: npm run package
-      test: false
