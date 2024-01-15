@@ -322,9 +322,7 @@
         "build": "npm run build:esbuild && npm run build:post",
         "prepare": "npm run clean && npm run build",
         "// -- deploy -- //": "",
-        "package": "vsce package",
-        "// -- test -- //": "",
-        "test": "node ./test/index.js"
+        "package": "vsce package"
     },
     "repository": {
         "type": "git",
