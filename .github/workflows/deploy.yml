@@ -9,6 +9,5 @@ jobs:
     name: Deploy
     uses: KatsuteDev/Workflows/.github/workflows/npm.deploy.vs.yml@main
     with:
-      file: '**.vsix'
       environment: VSCE Package
     secrets: inherit
