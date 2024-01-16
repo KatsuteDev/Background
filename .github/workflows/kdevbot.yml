@@ -1,4 +1,4 @@
-name: Repository Manager
+name: kdevbot[bot]
 on:
   workflow_dispatch:
   schedule:
@@ -16,14 +16,10 @@ on:
     types: [published]
 
 jobs:
-  manager:
-    name: Repository Manager
-    uses: Katsute/Workflows/.github/workflows/manager.yml@main
+  kdevbot:
+    name: kdevbot[bot]
+    uses: KatsuteDev/kdevbot/.github/workflows/kdevbot.yml@main
     if: >-
-      ${{
-      (github.repository_owner == 'Katsute' || github.repository_owner == 'KatsuteDev') &&
-      github.actor != 'mashiro-san' &&
+      github.repository_owner == 'KatsuteDev' &&
       !endsWith(github.actor, '[bot]')
-      }}
-    secrets:
-      token: ${{ secrets.BOT }}
+    secrets: inherit

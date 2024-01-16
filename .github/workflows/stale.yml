@@ -12,7 +12,6 @@ on:
 jobs:
   stale:
     name: Stale
-    uses: Katsute/Workflows/.github/workflows/stale.yml@main
-    if: github.repository_owner == 'Katsute' || github.repository_owner == 'KatsuteDev'
-    secrets:
-      token: ${{ secrets.BOT }}
+    uses: KatsuteDev/Workflows/.github/workflows/stale.yml@main
+    if: github.repository_owner == 'KatsuteDev'
+    secrets: inherit
