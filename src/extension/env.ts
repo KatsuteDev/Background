@@ -19,10 +19,12 @@
 import { homedir } from "os";
 import { workspace } from "vscode";
 
+import { escape as esc } from "../lib/glob";
+
 const home: string = homedir();
 
 export const resolve: (str: string) => string = (str: string) =>
-    str.replace(/\${(.*?)}/g, (_, envvar) => {
+    esc(str.replace(/\${(.*?)}/g, (_, envvar) => {
         if(envvar == "vscode:workspace" && workspace.workspaceFolders && workspace.workspaceFolders.length > 0 && workspace.workspaceFolders[0].uri){
             return workspace.workspaceFolders[0].uri.fsPath.toString();
         }else if(envvar == "user:home"){
@@ -32,4 +34,4 @@ export const resolve: (str: string) => string = (str: string) =>
         }else{
             return '';
         }
-    });
+    }));
