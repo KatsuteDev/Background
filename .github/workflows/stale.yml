@@ -12,6 +12,6 @@ on:
 jobs:
   stale:
     name: Stale
-    uses: KatsuteDev/Workflows/.github/workflows/stale.yml@main
+    uses: KatsuteDev/workflows/.github/workflows/stale.yml@main
     if: github.repository_owner == 'KatsuteDev'
     secrets: inherit
