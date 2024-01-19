@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.9.2
+
+### Deprecated
+
+* `useWindowOptionsForAllBackgrounds` is now deprecated [#274](https://github.com/KatsuteDev/Background/pull/274) ([@Katsute](https://github.com/Katsute))
+
+  This options is being removed to reduce confusion from new users, please set options for backgrounds separately.
+
+### Fixes
+
+* Fix using multiple environment variables [#281](https://github.com/KatsuteDev/Background/pull/281) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.19.9 to 0.19.10 [#270](https://github.com/KatsuteDev/Background/pull/270) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.19.10 to 0.19.11 [#272](https://github.com/KatsuteDev/Background/pull/272) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.10.0 to 20.11.2 [#279](https://github.com/KatsuteDev/Background/pull/279) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.9.1...2.9.2`](https://github.com/KatsuteDev/Background/compare/2.9.1...2.9.2)
+
 ## 2.9.1
 
 ### Fixes
