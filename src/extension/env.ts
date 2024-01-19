@@ -19,16 +19,18 @@
 import { homedir } from "os";
 import { workspace } from "vscode";
 
+import { escape as esc } from "../lib/glob";
+
 const home: string = homedir();
 
 export const resolve: (str: string) => string = (str: string) =>
-    str.replace(/\${(.*)}/g, (_, envvar) => {
+    str.replace(/\${(.*?)}/g, (_, envvar) => {
         if(envvar == "vscode:workspace" && workspace.workspaceFolders && workspace.workspaceFolders.length > 0 && workspace.workspaceFolders[0].uri){
-            return workspace.workspaceFolders[0].uri.fsPath.toString();
+            return esc(workspace.workspaceFolders[0].uri.fsPath.toString());
         }else if(envvar == "user:home"){
-            return home;
+            return esc(home);
         }else if(envvar in process.env){
-            return process.env[envvar] || '';
+            return esc(process.env[envvar] || '');
         }else{
             return '';
         }

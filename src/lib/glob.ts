@@ -38,8 +38,11 @@ const options: GlobOptions = {
     nodir: true
 }
 
-export const escape: (path: Uri) => string = (path: Uri) =>
-    esc(path.fsPath.replace(/\\/g, '/'));
+export const escapePath: (path: Uri) => string = (path: Uri) =>
+    escape(path.fsPath);
+
+export const escape: (path: string) => string = (path: string) =>
+    esc(path.replace(/\\/g, '/'));
 
 export const count: (glob: string | string[]) => number = (glob: string | string[]) => {
     let i = 0;
