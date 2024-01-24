@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.9.2",
+    "version": "2.9.3",
     "private": true,
     "engines": {
         "vscode": "^1.85.0"
@@ -25,9 +25,6 @@
         "image",
         "gif"
     ],
-    "sponsor": {
-        "url": "https://ko-fi.com/katsute"
-    },
     "activationEvents": [
         "onStartupFinished"
     ],

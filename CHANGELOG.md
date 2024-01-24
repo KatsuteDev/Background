@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.9.3
+
+### Dependencies
+
+* Bump esbuild from 0.19.11 to 0.19.12 [#283](https://github.com/KatsuteDev/Background/pull/283) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.9.2...2.9.3`](https://github.com/KatsuteDev/Background/compare/2.9.2...2.9.3)
+
 ## 2.9.2
 
 ### Deprecated
