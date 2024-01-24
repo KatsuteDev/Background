@@ -36,8 +36,6 @@ import { show as timeMenu } from "./time";
 
 const issueUrl: string = `https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${platform()} ${release()}`)}&vs=${encodeURI(version)}&version=${encodeURI(pkg.version)}`;
 
-const sponsor: Uri = Uri.parse(pkg.sponsor.url);
-
 // main menu
 
 export const show: () => void = () =>
@@ -80,10 +78,6 @@ export const show: () => void = () =>
         quickPickItem({
             label: `$(github) Report an issue on GitHub`,
             handle: () => env.openExternal(Uri.parse(`${issueUrl}&settings=${encodeURI("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`))
-        }),
-        quickPickItem({
-            label: "$(heart) Sponsor this extension",
-            handle: () => env.openExternal(sponsor)
         })
     ], {
         title: "Background",
