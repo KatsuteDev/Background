@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.9.4
+
+### Fixes
+
+* Fix extension activation [#285](https://github.com/KatsuteDev/Background/pull/285) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.9.3...2.9.4`](https://github.com/KatsuteDev/Background/compare/2.9.3...2.9.4)
+
 ## 2.9.3
 
 ### Dependencies
