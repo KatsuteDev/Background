@@ -20,7 +20,7 @@ import { dirname, join } from "path";
 import { platform, release } from "os";
 import { exec } from "@vscode/sudo-prompt";
 import { existsSync, copyFileSync } from "fs";
-import { ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
+import { ConfigurationTarget, ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
 
 import { copyCommand } from "./lib/file";
 import { reload } from "./lib/vscode";
@@ -28,6 +28,7 @@ import { reload } from "./lib/vscode";
 import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
 import { show } from "./menu/menu";
+import { configuration } from "./extension/config";
 
 //
 
@@ -105,8 +106,11 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     statusbar.tooltip = "Open background configuration";
 
     context.subscriptions.push(
-        commands.registerCommand("background.install", () => install(workbench, product)),
-        commands.registerCommand("background.uninstall", () => uninstall(workbench, product)),
+        commands.registerCommand("background.install", () => install(workbench, product, true)),
+        commands.registerCommand("background.uninstall", () => {
+            uninstall(workbench, product, true);
+            configuration().update("autoInstall", false, ConfigurationTarget.Global); // turn off auto install on uninstall
+        }),
         commands.registerCommand("background.reload", reload),
         commands.registerCommand("background.help", () => commands.executeCommand("markdown.showPreview", help)),
         commands.registerCommand("background.changelog", () => commands.executeCommand("markdown.showPreview", changelog)),
@@ -115,6 +119,9 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     );
 
     statusbar.show();
+
+    if(configuration().get("autoInstall"))
+        install(workbench, product, false);
 
     return api;
 };

@@ -279,7 +279,7 @@
                     }
                 },
                 "background.autoInstall": {
-                    "markdownDescription": "Automatically install backgrounds on startup if changes are detected or VSCode updates.",
+                    "markdownDescription": "Automatically install backgrounds on startup if changes are detected or VSCode updates. This option is disabled when you run the uninstall command.",
                     "order": 12,
                     "type": "boolean",
                     "default": false
