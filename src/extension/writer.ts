@@ -53,7 +53,7 @@ const write: (workbench: PathLike, product: PathLike, content: string, force?: b
             writeFileSync(product, pJson, "utf-8");
             changed = true;
         }
-        changed && reload();
+        changed && setTimeout(reload, 1000); // artificial delay because VSCode is not updating the background for no reason
     }catch(error: any){
         const snap: boolean = platform() === "linux" &&
         /* also in         */ workbench.toString().replace(/\\/g, '/').includes("/snap/") &&

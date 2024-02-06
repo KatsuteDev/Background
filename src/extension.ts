@@ -107,10 +107,11 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     context.subscriptions.push(
         commands.registerCommand("background.install", () => install(workbench, product, true)),
-        commands.registerCommand("background.uninstall", () => {
-            uninstall(workbench, product, true);
-            configuration().update("autoInstall", false, ConfigurationTarget.Global); // turn off auto install on uninstall
-        }),
+        commands.registerCommand("background.uninstall", () =>
+            configuration()
+                .update("autoInstall", false, ConfigurationTarget.Global)
+                .then(() => uninstall(workbench, product, true))
+        ),
         commands.registerCommand("background.reload", reload),
         commands.registerCommand("background.help", () => commands.executeCommand("markdown.showPreview", help)),
         commands.registerCommand("background.changelog", () => commands.executeCommand("markdown.showPreview", changelog)),
