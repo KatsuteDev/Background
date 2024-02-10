@@ -118,9 +118,9 @@ The order settings are saved in is:
 
 | Advanced | Type | Description |
 |---|:-:|---|
-|`background.useWindowOptionsForAllBackgrounds`|`boolean`|If enabled, all background images will use the options set for the windows background. This does not include the backgrounds, you still need to add background images separately.|
-|`background.renderContentAboveBackground`|`boolean`|If enabled, content like images, PDFs, and markdown previews will render above the background.|
-|`background.smoothImageRendering`|`boolean`|If enabled, use smooth image rendering rather than pixelated rendering when resizing images.|
+|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.\n\nThis option is disabled when you run the uninstall command.|
+|`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
+|`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>

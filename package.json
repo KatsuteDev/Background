@@ -291,13 +291,13 @@
                     "default": false
                 },
                 "background.renderContentAboveBackground": {
-                    "markdownDescription": "If enabled, content like images, PDFs, and markdown previews will render above the background.",
+                    "markdownDescription": "Render content like images, PDFs, and markdown previews above the background.",
                     "order": 14,
                     "type": "boolean",
                     "default": false
                 },
                 "background.smoothImageRendering": {
-                    "markdownDescription": "If enabled, use smooth image rendering rather than pixelated rendering when resizing images.",
+                    "markdownDescription": "Use smooth image rendering rather than pixelated rendering when resizing images.",
                     "order": 15,
                     "type": "boolean",
                     "default": false
