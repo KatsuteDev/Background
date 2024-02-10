@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.9.4",
+    "version": "2.10.0",
     "private": true,
     "engines": {
         "vscode": "^1.86.0"
@@ -278,27 +278,33 @@
                         "minimum": 0
                     }
                 },
-                "background.useWindowOptionsForAllBackgrounds": {
-                    "markdownDescription": "**Deprecated:** This setting is being removed to reduce confusion for new users, please set options separately.\n\n~~If enabled, all background images will use the options set for the windows background.~~\n\n~~This does not include the backgrounds, you still need to add background images separately.~~",
+                "background.autoInstall": {
+                    "markdownDescription": "Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.\n\nThis option is disabled when you run the uninstall command.",
                     "order": 12,
                     "type": "boolean",
                     "default": false
                 },
-                "background.renderContentAboveBackground": {
-                    "markdownDescription": "If enabled, content like images, PDFs, and markdown previews will render above the background.",
+                "background.useWindowOptionsForAllBackgrounds": {
+                    "markdownDescription": "**Deprecated:** This setting is being removed to reduce confusion for new users, please set options separately.\n\n~~If enabled, all background images will use the options set for the windows background.~~\n\n~~This does not include the backgrounds, you still need to add background images separately.~~",
                     "order": 13,
                     "type": "boolean",
                     "default": false
                 },
-                "background.smoothImageRendering": {
-                    "markdownDescription": "If enabled, use smooth image rendering rather than pixelated rendering when resizing images.",
+                "background.renderContentAboveBackground": {
+                    "markdownDescription": "Render content like images, PDFs, and markdown previews above the background.",
                     "order": 14,
+                    "type": "boolean",
+                    "default": false
+                },
+                "background.smoothImageRendering": {
+                    "markdownDescription": "Use smooth image rendering rather than pixelated rendering when resizing images.",
+                    "order": 15,
                     "type": "boolean",
                     "default": false
                 },
                 "background.CSS": {
                     "markdownDescription": "Apply raw CSS to VSCode.",
-                    "order": 15,
+                    "order": 16,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""

@@ -28,25 +28,32 @@ import { copyCommand, generateChecksum } from "../lib/file";
 
 import { clean, inject } from "./inject"
 
-export const install: (workbench: PathLike, product: PathLike) => void = (workbench: PathLike, product: PathLike) => {
-    write(workbench, product, inject(readFileSync(workbench, "utf-8")));
+export const install: (workbench: PathLike, product: PathLike, force?: boolean) => void = (workbench: PathLike, product: PathLike, force: boolean = false) => {
+    write(workbench, product, inject(readFileSync(workbench, "utf-8")), force);
 }
 
-export const uninstall: (workbench: PathLike, product: PathLike) => void = (workbench: PathLike, product: PathLike) => {
-    write(workbench, product, clean(readFileSync(workbench, "utf-8")));
+export const uninstall: (workbench: PathLike, product: PathLike, force?: boolean) => void = (workbench: PathLike, product: PathLike, force: boolean = false) => {
+    write(workbench, product, clean(readFileSync(workbench, "utf-8")), force);
 }
 
 // write
 
 const workbenchChecksum: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
 
-const write: (workbench: PathLike, product: PathLike, content: string) => void = (workbench: PathLike, product: PathLike, content: string) => {
+const write: (workbench: PathLike, product: PathLike, content: string, force?: boolean) => void = (workbench: PathLike, product: PathLike, content: string, force: boolean = false) => {
     const pJson: string = readFileSync(product, "utf-8").replace(workbenchChecksum, generateChecksum(content));
 
     try{ // write changes
-        writeFileSync(workbench, content, "utf-8");
-        writeFileSync(product, pJson, "utf-8");
-        reload();
+        let changed: boolean = force;
+        if(readFileSync(workbench, "utf-8") !== content){
+            writeFileSync(workbench, content, "utf-8");
+            changed = true;
+        }
+        if(readFileSync(product, "utf-8") !== pJson){
+            writeFileSync(product, pJson, "utf-8");
+            changed = true;
+        }
+        changed && setTimeout(reload, 1000); // artificial delay because VSCode is not updating the background for no reason
     }catch(error: any){
         const snap: boolean = platform() === "linux" &&
         /* also in         */ workbench.toString().replace(/\\/g, '/').includes("/snap/") &&
