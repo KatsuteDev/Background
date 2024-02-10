@@ -32,6 +32,26 @@ import { configuration } from "./extension/config";
 
 //
 
+const forcedDelay: number = 1000; // how long to delay install when VSCode is operational
+
+export let installDelay = 7000; // how long to delay install when VSCode is init
+
+export const setActive: (active?: boolean) => void = (active?: boolean) => {
+    console.log(active);
+    statusbar.text = `$(${active === false ? "file-media" : "loading~spin"}) Background`;
+}
+
+export const statusbar: StatusBarItem = (() => {
+    const item: StatusBarItem = window.createStatusBarItem(StatusBarAlignment.Right);
+
+    item.command = "background.config";
+    item.name = "Background";
+    item.text = "$(file-media) Background";
+    item.tooltip = "Open background configuration";
+
+    return item;
+})();
+
 export const activate: (context: ExtensionContext) => any = (context: ExtensionContext) => {
     let workbench: string;
     let product: string;
@@ -98,13 +118,6 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     const changelog: Uri = Uri.file(join(context.extensionPath, "CHANGELOG.md"));
     const help: Uri = Uri.file(join(context.extensionPath, "HELP.md"));
 
-    const statusbar: StatusBarItem = window.createStatusBarItem(StatusBarAlignment.Right);
-
-    statusbar.command = "background.config";
-    statusbar.name = "Background";
-    statusbar.text = "$(file-media) Background";
-    statusbar.tooltip = "Open background configuration";
-
     context.subscriptions.push(
         commands.registerCommand("background.install", () => install(workbench, product, true)),
         commands.registerCommand("background.uninstall", () =>
@@ -123,6 +136,10 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     if(configuration().get("autoInstall"))
         install(workbench, product, false);
+
+    // delay before VSCode will actually refresh properly
+    for(let i = installDelay; i > forcedDelay; i -= 1000)
+        setTimeout(() => installDelay -= 1000, i);
 
     return api;
 };

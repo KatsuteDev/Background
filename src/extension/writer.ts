@@ -27,6 +27,7 @@ import { reload } from "../lib/vscode";
 import { copyCommand, generateChecksum } from "../lib/file";
 
 import { clean, inject } from "./inject"
+import { installDelay, setActive } from "../extension";
 
 export const install: (workbench: PathLike, product: PathLike, force?: boolean) => void = (workbench: PathLike, product: PathLike, force: boolean = false) => {
     write(workbench, product, inject(readFileSync(workbench, "utf-8")), force);
@@ -44,6 +45,8 @@ const write: (workbench: PathLike, product: PathLike, content: string, force?: b
     const pJson: string = readFileSync(product, "utf-8").replace(workbenchChecksum, generateChecksum(content));
 
     try{ // write changes
+        setActive(true);
+
         let changed: boolean = force;
         if(readFileSync(workbench, "utf-8") !== content){
             writeFileSync(workbench, content, "utf-8");
@@ -53,7 +56,11 @@ const write: (workbench: PathLike, product: PathLike, content: string, force?: b
             writeFileSync(product, pJson, "utf-8");
             changed = true;
         }
-        changed && setTimeout(reload, 1000); // artificial delay because VSCode is not updating the background for no reason
+
+        if(changed)
+            setTimeout(reload, installDelay); // artificial delay because VSCode is not updating the background for no reason
+        else
+            setActive(false);
     }catch(error: any){
         const snap: boolean = platform() === "linux" &&
         /* also in         */ workbench.toString().replace(/\\/g, '/').includes("/snap/") &&
@@ -83,7 +90,7 @@ const write: (workbench: PathLike, product: PathLike, content: string, force?: b
                         [productTemp, product]
                     ]);
                     exec(command, { name: "VSCode Extension Host" }, (err: any) => {
-                        if(err)
+                        if(err){
                             window.showErrorMessage(
                                 "Failed to write changes",
                                 {
@@ -91,9 +98,13 @@ const write: (workbench: PathLike, product: PathLike, content: string, force?: b
                                     modal: true
                                 }
                             );
-                        else
+                            setActive(false);
+                        }else{
                             reload();
+                        }
                     });
+                }else{
+                    setActive(false);
                 }
             });
         }
