@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.10.0
+
+### New Features
+
+* Add option to install on startup [#290](https://github.com/KatsuteDev/Background/pull/290) ([@Katsute](https://github.com/Katsute))
+
+### Optimizations
+
+* Installation improvements [#293](https://github.com/KatsuteDev/Background/pull/293) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.19.12 to 0.20.0 [#286](https://github.com/KatsuteDev/Background/pull/286) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.8 to 2.3.9 [#288](https://github.com/KatsuteDev/Background/pull/288) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.22.0 to 2.23.0 [#287](https://github.com/KatsuteDev/Background/pull/287) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.85.0 to 1.86.0 [#291](https://github.com/KatsuteDev/Background/pull/291) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.9.4...2.10.0`](https://github.com/KatsuteDev/Background/compare/2.9.4...2.10.0)
+
 ## 2.9.4
 
 ### Fixes
