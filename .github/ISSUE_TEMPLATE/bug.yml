@@ -46,14 +46,6 @@ body:
       required: true
 
   - type: textarea
-    attributes:
-      label: Issue
-      description: |
-        Explain the issue.
-    validations:
-      required: true
-
-  - type: textarea
     id: settings
     attributes:
       label: Settings
@@ -61,6 +53,14 @@ body:
         Include `background.*` settings from the [settings.json](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) file.
 
         Make sure to remove any sensitive information.
+
+  - type: textarea
+    attributes:
+      label: Issue
+      description: |
+        Explain the issue.
+    validations:
+      required: true
 
   - type: textarea
     attributes:
