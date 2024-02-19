@@ -189,14 +189,4 @@ const background = vscode.extensions.getExtension("katsute.code-background").exp
 
 ## &nbsp;
 
-<!-- Copilot -->
-<table>
-    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/copilot-dark.png#gh-dark-mode-only" width="50">
-    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/openai-dark.png#gh-dark-mode-only" width="50">
-    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/copilot-light.png#gh-light-mode-only" width="50">
-    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/openai-light.png#gh-light-mode-only" width="50">
-    <p>AI generated code is <b>strictly prohibited</b> on this repository.</p>
-</table>
-<!-- Copilot -->
-
 This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Background/blob/main/LICENSE).
