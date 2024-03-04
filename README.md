@@ -118,7 +118,7 @@ The order settings are saved in is:
 
 | Advanced | Type | Description |
 |---|:-:|---|
-|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.\n\nThis option is disabled when you run the uninstall command.|
+|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br>This option is disabled when you run the uninstall command.|
 |`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
 |`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
