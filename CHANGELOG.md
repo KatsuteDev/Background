@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.10.1
+
+### Fixes
+
+* Fix paths and URLs using quotes [#304](https://github.com/KatsuteDev/Background/pull/304) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.20.0 to 0.20.1 [#296](https://github.com/KatsuteDev/Background/pull/296) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.23.0 to 2.24.0 [#297](https://github.com/KatsuteDev/Background/pull/297) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.86.0 to 1.87.0 [#299](https://github.com/KatsuteDev/Background/pull/299) ([@dependabot](https://github.com/dependabot))
+* Bump tmp from 0.2.1 to 0.2.3 [#298](https://github.com/KatsuteDev/Background/pull/298) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.3.3 to 5.4.2 [#301](https://github.com/KatsuteDev/Background/pull/301) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.20.1 to 0.20.2 [#302](https://github.com/KatsuteDev/Background/pull/302) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.10.0...2.10.1`](https://github.com/KatsuteDev/Background/compare/2.10.0...2.10.1)
+
 ## 2.10.0
 
 ### New Features
