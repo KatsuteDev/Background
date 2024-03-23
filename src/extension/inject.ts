@@ -263,7 +263,7 @@ const setEditorBackground = () => {
         for(let i = 0; i < len; i++){
             buf += \`
                 .part.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
-                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]].replace(/"/g, \`\\"\`)}");
+                    background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]].replace(/"/g, \`\\\\"\`)}");
                 }
             \`;
         };
@@ -288,7 +288,7 @@ const setSidebarBackground = () => {
         bk_sidebar_image.appendChild(document.createTextNode(\`
             .split-view-view > .part.sidebar::after {
 
-                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[0]].replace(/"/g, \`\\"\`)}");
+                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[0]].replace(/"/g, \`\\\\"\`)}");
 
             }
             .split-view-view > .part.auxiliarybar::after {
@@ -317,7 +317,7 @@ const setPanelBackground = () => {
         bk_panel_image.appendChild(document.createTextNode(\`
             .split-view-view > .part.panel::after {
 
-                background-image: url("\${panelBackgrounds[iPanelBackgrounds[0]].replace(/"/g, \`\\"\`)}");
+                background-image: url("\${panelBackgrounds[iPanelBackgrounds[0]].replace(/"/g, \`\\\\"\`)}");
 
             }
         \`));
