@@ -71,5 +71,5 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
                     .filter(filter) // must use '/' for URL ↓
                     .map(path => `vscode-file://vscode-app/${path.replace(/\\/g, '/').replace(/^\/+/g, "")}`))
                .filter(unique)
-               .map(path => '"' + path + '"');
+               .map(path => '"' + path.replace(/"/g, `\\"`) + '"');
 }
