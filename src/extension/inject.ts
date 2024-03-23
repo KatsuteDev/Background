@@ -293,7 +293,7 @@ const setSidebarBackground = () => {
             }
             .split-view-view > .part.auxiliarybar::after {
 
-                background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[1]] ?? sidebarBackgrounds[iSidebarBackgrounds[0]]}");
+                background-image: url("\${(sidebarBackgrounds[iSidebarBackgrounds[1]] ?? sidebarBackgrounds[iSidebarBackgrounds[0]]).replace(/"/g, \`\\\\"\`)}");
 
             }
         \`));
