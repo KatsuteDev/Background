@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.10.2
+
+### Fixes
+
+* Fix bug report button when using CSS [#309](https://github.com/KatsuteDev/Background/pull/309) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump typescript from 5.4.2 to 5.4.3 [#305](https://github.com/KatsuteDev/Background/pull/305) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.11.2 to 20.12.2 [#308](https://github.com/KatsuteDev/Background/pull/308) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.10 to 10.3.12 [#307](https://github.com/KatsuteDev/Background/pull/307) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.10.1...2.10.2`](https://github.com/KatsuteDev/Background/compare/2.10.1...2.10.2)
+
 ## 2.10.1
 
 ### Fixes
