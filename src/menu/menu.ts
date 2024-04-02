@@ -17,7 +17,7 @@
  */
 
 import { platform, release } from "os";
-import { Uri, commands, env, version } from "vscode";
+import { commands, env, version } from "vscode";
 
 import { pkg } from "../extension/package";
 import { UI, configuration, get } from "../extension/config";
@@ -34,7 +34,7 @@ import { show as repeatMenu } from "./repeat";
 import { show as sizeMenu } from "./size";
 import { show as timeMenu } from "./time";
 
-const issueUrl: string = `https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURI(`${platform()} ${release()}`)}&vs=${encodeURI(version)}&version=${encodeURI(pkg.version)}`;
+const issueUrl: string = `https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURIComponent(`${platform()} ${release()}`)}&vs=${encodeURIComponent(version)}&version=${encodeURIComponent(pkg.version)}`;
 
 // main menu
 
@@ -77,7 +77,9 @@ export const show: () => void = () =>
         }),
         quickPickItem({
             label: `$(github) Report an issue on GitHub`,
-            handle: () => env.openExternal(Uri.parse(`${issueUrl}&settings=${encodeURI("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`))
+            // unfixed bug in vscode https://github.com/microsoft/vscode/issues/85930
+			// @ts-ignore
+            handle: () => env.openExternal(`${issueUrl}&settings=${encodeURIComponent("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`)
         })
     ], {
         title: "Background",
