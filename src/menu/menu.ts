@@ -78,7 +78,7 @@ export const show: () => void = () =>
         quickPickItem({
             label: `$(github) Report an issue on GitHub`,
             // unfixed bug in vscode https://github.com/microsoft/vscode/issues/85930
-			// @ts-ignore
+            // @ts-ignore
             handle: () => env.openExternal(`${issueUrl}&settings=${encodeURIComponent("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`)
         })
     ], {
