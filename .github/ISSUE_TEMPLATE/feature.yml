@@ -6,6 +6,13 @@ body:
   - type: markdown
     attributes:
       value: |
+        This form is for the VSCode desktop extension, if you are using the browser extension open an issue [here](https://github.com/KatsuteDev/BackgroundX/issues/new/choose)
+
+        ## &nbsp;
+
+  - type: markdown
+    attributes:
+      value: |
         Before opening a feature request please check that your idea was not already discussed in the following:
 
         * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3A%22feature+request%22)
