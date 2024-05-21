@@ -342,7 +342,7 @@
         "@types/tmp": "0.2.6",
         "@types/vscode": "1.89.0",
         "@vscode/sudo-prompt": "9.3.1",
-        "@vscode/test-electron": "2.3.9",
+        "@vscode/test-electron": "2.3.10",
         "@vscode/vsce": "2.26.1",
         "esbuild": "0.21.3",
         "glob": "10.3.15",
