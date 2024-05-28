@@ -89,7 +89,7 @@ export const show: () => void = () =>
 const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, icon: string) => {
     // description
     const backgrounds: string[] = get(`${ui}Backgrounds`);
-    const description: string = `${appendS(backgrounds, "Glob")} (${appendS(count(backgrounds), "Background")})`;
+    const description: string = `${appendS(count(backgrounds), "Background")}`;
 
     // detail
     let detail: string =
@@ -121,7 +121,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
     showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
-            description: `${appendS(get(`${ui}Backgrounds`), "Glob")} (${appendS(count(get(`${ui}Backgrounds`)), "Background")})`,
+            description: `${appendS(count(get(`${ui}Backgrounds`)), "Background")}`,
             detail: "Select background image files",
             ui,
             handle: () => fileMenu(ui)

@@ -80,7 +80,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
             label: glob.replace(/(\$\(\w+\))/g, "\\$1"),
             value: glob,
             ui,
-            description: `${appendS(count(glob), "matching file")}`,
+            description: `${appendS(count(glob), "Background")}`,
             // update input
             handle: (item: CommandQuickPickItem) =>
                 showInputBox({
@@ -202,7 +202,7 @@ export const show: (ui: UI) => void = (ui: UI) =>{
                                 label: glob.replace(/(\$\(\w+\))/g, "\\$1"),
                                 value: glob,
                                 ui: item.ui,
-                                description: `${appendS(matches, "matching file")}`
+                                description: `${appendS(matches, "Background")}`
                             });
                         });
 
