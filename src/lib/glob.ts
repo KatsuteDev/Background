@@ -26,11 +26,8 @@ import { resolve as resolveEnv } from "../extension/env";
 import { Uri } from "vscode";
 
 const filter: (v: string) => boolean = (v : string) => {
-    const ext: string = extname(v);
-    for(const m of extensions())
-        if(`.${m}` === ext)
-            return true;
-    return false;
+    const ext: string = extname(v).slice(1);
+    return extensions().includes(ext);
 }
 
 const options: GlobOptions = {
