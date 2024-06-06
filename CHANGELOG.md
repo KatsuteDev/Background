@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.10.3
+
+### New Features
+
+* Add button to feature request form [#341](https://github.com/KatsuteDev/Background/pull/341) ([@Katsute](https://github.com/Katsute))
+
+### Optimizations
+
+* Optimize extension filtering [#340](https://github.com/KatsuteDev/Background/pull/340) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump typescript from 5.4.3 to 5.4.4 [#311](https://github.com/KatsuteDev/Background/pull/311) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.87.0 to 1.88.0 [#312](https://github.com/KatsuteDev/Background/pull/312) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.24.0 to 2.25.0 [#315](https://github.com/KatsuteDev/Background/pull/315) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.4.4 to 5.4.5 [#316](https://github.com/KatsuteDev/Background/pull/316) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.25.0 to 2.26.0 [#318](https://github.com/KatsuteDev/Background/pull/318) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.88.0 to 1.89.0 [#322](https://github.com/KatsuteDev/Background/pull/322) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.26.0 to 2.26.1 [#321](https://github.com/KatsuteDev/Background/pull/321) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 5.0.5 to 5.0.7 [#328](https://github.com/KatsuteDev/Background/pull/328) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.20.2 to 0.21.2 [#326](https://github.com/KatsuteDev/Background/pull/326) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.12 to 10.3.15 [#327](https://github.com/KatsuteDev/Background/pull/327) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.21.2 to 0.21.3 [#330](https://github.com/KatsuteDev/Background/pull/330) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.9 to 2.3.10 [#329](https://github.com/KatsuteDev/Background/pull/329) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.21.3 to 0.21.4 [#333](https://github.com/KatsuteDev/Background/pull/333) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.3.15 to 10.4.1 [#332](https://github.com/KatsuteDev/Background/pull/332) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.3.10 to 2.4.0 [#342](https://github.com/KatsuteDev/Background/pull/342) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.12.2 to 20.14.0 [#343](https://github.com/KatsuteDev/Background/pull/343) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.89.0 to 1.90.0 [#345](https://github.com/KatsuteDev/Background/pull/345) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.26.1 to 2.27.0 [#344](https://github.com/KatsuteDev/Background/pull/344) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.10.2...2.10.3`](https://github.com/KatsuteDev/Background/compare/2.10.2...2.10.3)
+
 ## 2.10.2
 
 ### Fixes

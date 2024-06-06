@@ -37,7 +37,6 @@ const forcedDelay: number = 1000; // how long to delay install when VSCode is op
 export let installDelay = 7000; // how long to delay install when VSCode is init
 
 export const setActive: (active?: boolean) => void = (active?: boolean) => {
-    console.log(active);
     statusbar.text = `$(${active === false ? "file-media" : "loading~spin"}) Background`;
 }
 
