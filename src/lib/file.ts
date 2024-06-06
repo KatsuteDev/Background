@@ -39,7 +39,7 @@ export const copyCommand:
 // checksum
 
 export const generateChecksum: (content: string) => string = (content: string) =>
-    createHash("md5")
+    createHash("sha256")
         .update(content)
         .digest("base64")
         .replace(/=+$/gm, '');
