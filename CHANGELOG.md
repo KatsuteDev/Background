@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.10.4
+
+### Fixes
+
+* Fix checksum calculation [#347](https://github.com/KatsuteDev/Background/pull/347) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`2.10.3...2.10.4`](https://github.com/KatsuteDev/Background/compare/2.10.3...2.10.4)
+
 ## 2.10.3
 
 ### New Features
