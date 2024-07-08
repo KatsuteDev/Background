@@ -348,6 +348,6 @@
         "glob": "10.4.2",
         "rimraf": "5.0.7",
         "tmp": "0.2.3",
-        "typescript": "5.5.2"
+        "typescript": "5.5.3"
     }
 }
