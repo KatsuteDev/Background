@@ -346,7 +346,7 @@
         "@vscode/vsce": "2.29.0",
         "esbuild": "0.23.0",
         "glob": "10.4.3",
-        "rimraf": "5.0.8",
+        "rimraf": "6.0.1",
         "tmp": "0.2.3",
         "typescript": "5.5.3"
     }
