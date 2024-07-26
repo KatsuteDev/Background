@@ -82,11 +82,42 @@ export const show: () => void = () =>
             // unfixed bug in vscode https://github.com/microsoft/vscode/issues/85930
             // @ts-ignore
             handle: () => env.openExternal(`${issueUrl}&settings=${encodeURIComponent("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`)
+        }),
+        quickPickItem({
+            label: "more options",
+            handle: () => more()
         })
     ], {
         title: "Background",
         matchOnDescription: true
     });
+
+// more options
+
+const more: () => void = () => {
+    showQuickPick([
+        quickPickItem({
+            label: "$(output) Changelog",
+            handle: () => commands.executeCommand("background.changelog")
+        }),
+        quickPickItem({
+            label: "$(question) Help",
+            handle: () => commands.executeCommand("background.help")
+        }),
+        quickPickItem({
+            label: "$(add) Request a feature",
+            handle: () => env.openExternal(Uri.parse(featureUrl))
+        }),
+        quickPickItem({
+            label: "$(bug) Report an issue",
+            // unfixed bug in vscode https://github.com/microsoft/vscode/issues/85930
+            // @ts-ignore
+            handle: () => env.openExternal(`${issueUrl}&settings=${encodeURIComponent("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`)
+        })
+    ]);
+}
+
+// quick pick
 
 const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, icon: string) => {
     // description
