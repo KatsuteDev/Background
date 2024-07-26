@@ -284,12 +284,6 @@
                     "type": "boolean",
                     "default": false
                 },
-                "background.useWindowOptionsForAllBackgrounds": {
-                    "markdownDescription": "**Deprecated:** This setting is being removed to reduce confusion for new users, please set options separately.\n\n~~If enabled, all background images will use the options set for the windows background.~~\n\n~~This does not include the backgrounds, you still need to add background images separately.~~",
-                    "order": 13,
-                    "type": "boolean",
-                    "default": false
-                },
                 "background.renderContentAboveBackground": {
                     "markdownDescription": "Render content like images, PDFs, and markdown previews above the background.",
                     "order": 14,

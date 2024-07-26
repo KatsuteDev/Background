@@ -47,17 +47,17 @@ export const notify: () => void = () =>
 
 // get
 
-export const get: (key: ConfigurationKey, ui?: UI, fallbackToWindowOption?: boolean) => any = (key: ConfigurationKey, ui?: UI, fallbackToWindowOption: boolean = false) =>
+export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) =>
     !ui
     ? configuration().get(key)
       ?? getConfigurationProperty(key).default
       ?? "null"
-    : (configuration().get(key) as any[])[fallbackToWindowOption && get("useWindowOptionsForAllBackgrounds") === true ? 0 : Index(ui)]
+    : (configuration().get(key) as any[])[Index(ui)]
       ?? getConfigurationProperty(key).default[0]
       ?? "null";
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
-    const value: string = get(key, ui, true);
+    const value: string = get(key, ui);
     const prop: Properties = getConfigurationProperty(key);
 
     switch(key){
