@@ -26,7 +26,7 @@ import { count, escapePath } from "../lib/glob";
 import { unique } from "../lib/array";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 // config
 
@@ -223,5 +223,5 @@ export const show: (ui: UI) => void = (ui: UI) =>{
         title: title("Files", ui),
         placeHolder: "Files"
     },
-    () => open(ui));
+    () => backgroundMenu(ui));
 }

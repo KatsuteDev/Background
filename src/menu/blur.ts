@@ -21,7 +21,7 @@ import { UI, get, update } from "../extension/config";
 import { isValidCSS } from "../lib/css";
 import { showInputBox } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundBlur", ui) as string;
@@ -35,7 +35,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
         handle: (value: string) => {
             if(isValidCSS(value))
                 update("backgroundBlur", value, ui)
-                    .then(() => open(ui)); // reopen menu
+                    .then(() => backgroundMenu(ui)); // reopen menu
         }
     });
 }

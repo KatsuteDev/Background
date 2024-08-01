@@ -20,7 +20,7 @@ import { platform, release } from "os";
 import { Uri, commands, env, version } from "vscode";
 
 import { pkg } from "../extension/package";
-import { UI, configuration, get } from "../extension/config";
+import { UI, configuration, get, update } from "../extension/config";
 
 import { count } from "../lib/glob";
 import { appendS, appendIf, capitalize } from "../lib/string";
@@ -39,7 +39,7 @@ const featureUrl: string = "https://github.com/KatsuteDev/Background/issues/new?
 
 // main menu
 
-export const show: () => void = () =>
+export const optionMenu: () => void = () =>
     showQuickPick([
         // backgrounds
         getQuickPick("window", "window"),
@@ -63,30 +63,15 @@ export const show: () => void = () =>
             label: "$(refresh) Reload",
             handle: () => commands.executeCommand("background.reload")
         }),
-        // pages
-        separator(),
         quickPickItem({
-            label: "$(output) Changelog",
-            handle: () => commands.executeCommand("background.changelog")
+            label: "$(settings-gear) More Options",
+            handle: () => moreMenu()
         }),
+        separator(),
         quickPickItem({
             label: "$(question) Help",
             handle: () => commands.executeCommand("background.help")
         }),
-        quickPickItem({
-            label: "$(add) Request a feature",
-            handle: () => env.openExternal(Uri.parse(featureUrl))
-        }),
-        quickPickItem({
-            label: "$(bug) Report an issue",
-            // unfixed bug in vscode https://github.com/microsoft/vscode/issues/85930
-            // @ts-ignore
-            handle: () => env.openExternal(`${issueUrl}&settings=${encodeURIComponent("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`)
-        }),
-        quickPickItem({
-            label: "more options",
-            handle: () => more()
-        })
     ], {
         title: "Background",
         matchOnDescription: true
@@ -94,27 +79,48 @@ export const show: () => void = () =>
 
 // more options
 
-const more: () => void = () => {
+const moreMenu: () => void = () => {
     showQuickPick([
+        quickPickItem({
+            label: "Auto Install",
+            description: `[$(${get("autoInstall") ? "check" : "close"})]`,
+            detail: "Automatically install background on startup or when VSCode updates",
+            handle: () => update("autoInstall", !get("autoInstall")).then(moreMenu)
+        }),
+        quickPickItem({
+            label: "Render Content Above Background",
+            description: `[$(${get("renderContentAboveBackground") ? "check" : "close"})]`,
+            detail: "Render content like images, PDFs, and markdown previews above the background",
+            handle: () => update("renderContentAboveBackground", !get("renderContentAboveBackground")).then(moreMenu)
+        }),
+        quickPickItem({
+            label: "Smooth Image Rendering",
+            description: `[$(${get("smoothImageRendering") ? "check" : "close"})]`,
+            detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
+            handle: () => update("smoothImageRendering", !get("smoothImageRendering")).then(moreMenu)
+        }),
+        separator(),
         quickPickItem({
             label: "$(output) Changelog",
             handle: () => commands.executeCommand("background.changelog")
-        }),
-        quickPickItem({
-            label: "$(question) Help",
-            handle: () => commands.executeCommand("background.help")
-        }),
-        quickPickItem({
-            label: "$(add) Request a feature",
-            handle: () => env.openExternal(Uri.parse(featureUrl))
         }),
         quickPickItem({
             label: "$(bug) Report an issue",
             // unfixed bug in vscode https://github.com/microsoft/vscode/issues/85930
             // @ts-ignore
             handle: () => env.openExternal(`${issueUrl}&settings=${encodeURIComponent("```json\n" + JSON.stringify(configuration(), null, 4) + "\n```")}`)
-        })
-    ]);
+        }),
+        quickPickItem({
+            label: "$(add) Request a feature",
+            handle: () => env.openExternal(Uri.parse(featureUrl))
+        }),
+    ],
+    {
+        title: `More Options`,
+        matchOnDescription: true,
+        matchOnDetail: true
+    },
+     () => optionMenu());
 }
 
 // quick pick
@@ -144,13 +150,13 @@ const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, ic
         description,
         detail,
         ui,
-        handle: () => open(ui)
+        handle: () => backgroundMenu(ui)
     });
 }
 
 // ui menu
 
-export const open: (ui: UI) => void = (ui: UI) =>
+export const backgroundMenu: (ui: UI) => void = (ui: UI) =>
     showQuickPick([
         quickPickItem({
             label: "$(file-media) File",
@@ -207,7 +213,7 @@ export const open: (ui: UI) => void = (ui: UI) =>
         title: `${capitalize(ui)} Background`,
         matchOnDescription: true,
         matchOnDetail: true
-    }, show);
+    }, optionMenu);
 
 // title
 
