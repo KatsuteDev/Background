@@ -127,7 +127,7 @@ if(windowBackgrounds.length > 0){
             background-repeat: ${getCSS("backgroundRepeat", "window")};
             background-size: ${getCSS("backgroundSize", "window")};
 
-            opacity: ${round(1 - +getCSS("backgroundOpacity", "window"), 2)};
+            opacity: ${round(+getCSS("backgroundOpacity", "window"), 2)};
 
             filter: blur(${getCSS("backgroundBlur", "window")});
 
@@ -145,7 +145,7 @@ if(editorBackgrounds.length > 0){
             background-repeat: ${getCSS("backgroundRepeat", "editor")};
             background-size: ${getCSS("backgroundSize", "editor")};
 
-            opacity: ${round(1 - +getCSS("backgroundOpacity", "editor"), 2)};
+            opacity: ${round(+getCSS("backgroundOpacity", "editor"), 2)};
 
             filter: blur(${getCSS("backgroundBlur", "editor")});
 
@@ -164,7 +164,7 @@ if(sidebarBackgrounds.length > 0){
             background-repeat: ${getCSS("backgroundRepeat", "sidebar")};
             background-size: ${getCSS("backgroundSize", "sidebar")};
 
-            opacity: ${round(1 - +getCSS("backgroundOpacity", "sidebar"), 2)};
+            opacity: ${round(+getCSS("backgroundOpacity", "sidebar"), 2)};
 
             filter: blur(${getCSS("backgroundBlur", "sidebar")});
 
@@ -182,7 +182,7 @@ if(panelBackgrounds.length > 0){
             background-repeat: ${getCSS("backgroundRepeat", "panel")};
             background-size: ${getCSS("backgroundSize", "panel")};
 
-            opacity: ${round(1 - +getCSS("backgroundOpacity", "panel"), 2)};
+            opacity: ${round(+getCSS("backgroundOpacity", "panel"), 2)};
 
             filter: blur(${getCSS("backgroundBlur", "panel")});
 

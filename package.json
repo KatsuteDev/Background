@@ -167,14 +167,14 @@
                     }
                 },
                 "background.backgroundOpacity": {
-                    "markdownDescription": "The UI opacity, make sure this number is not to low, otherwise you may not be able to see the UI and revert this change.\n\n`0` is fully visible and `1` is invisible.",
+                    "markdownDescription": "The background opacity, make sure this number is not to high, otherwise you may not be able to see the UI and revert this change.\n\n`1` is fully visible and `0` is invisible.",
                     "type": "array",
                     "order": 7,
                     "default": [
-                        0.9,
-                        0.9,
-                        0.9,
-                        0.9
+                        0.1,
+                        0.1,
+                        0.1,
+                        0.1
                     ],
                     "minItems": 4,
                     "maxItems": 4,
