@@ -75,7 +75,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
                 case prop.items!.enum![6]: return "left bottom";
                 case prop.items!.enum![7]: return "center bottom";
                 case prop.items!.enum![8]: return "right bottom";
-                case prop.items!.enum![9]: return sanitizeUnits(get("backgroundAlignmentValue", ui, true));
+                case prop.items!.enum![9]: return sanitizeUnits(get("backgroundAlignmentValue", ui));
             }
         }
         case "backgroundBlur": {
@@ -99,7 +99,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
                 case prop.items!.enum![0]: return "auto";
                 case prop.items!.enum![1]: return "contain";
                 case prop.items!.enum![2]: return "cover";
-                case prop.items!.enum![3]: return sanitizeUnits(get("backgroundSizeValue", ui, true));
+                case prop.items!.enum![3]: return sanitizeUnits(get("backgroundSizeValue", ui));
             }
         }
         default: {
