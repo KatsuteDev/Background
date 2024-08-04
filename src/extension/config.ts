@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { ConfigurationTarget, WorkspaceConfiguration, commands, window, workspace } from "vscode";
+import { ConfigurationScope, ConfigurationTarget, WorkspaceConfiguration, commands, window, workspace } from "vscode";
 
 import { ConfigurationKey, Properties, getConfigurationProperty } from "./package";
 
@@ -37,7 +37,9 @@ const Index: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
     }[ui] as 0 | 1 | 2 | 3;
 }
 
-export const configuration: () => WorkspaceConfiguration = () => workspace.getConfiguration("background");
+export const configuration: (scope?: ConfigurationScope | null) => WorkspaceConfiguration = (scope?: ConfigurationScope | null) => workspace.getConfiguration("background", scope);
+
+export const target: () => ConfigurationTarget = () => configuration().get("settingScope") === "Workspace" && workspace.workspaceFolders ? ConfigurationTarget.Workspace : ConfigurationTarget.Global;
 
 export const notify: () => void = () =>
     window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Reload", "Ignore")
@@ -49,10 +51,11 @@ export const notify: () => void = () =>
 
 export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) =>
     !ui
-    ? configuration().get(key)
+    ? configuration().get(key) // non ui settings are global
       ?? getConfigurationProperty(key).default
       ?? "null"
-    : (configuration().get(key) as any[])[Index(ui)]
+    // use first workspace for settings if set, default to global
+    : (configuration(target() === ConfigurationTarget.Workspace && workspace.workspaceFolders![0] ? workspace.workspaceFolders![0] : null).get(key) as any[])[Index(ui)]
       ?? getConfigurationProperty(key).default[0]
       ?? "null";
 
@@ -114,7 +117,7 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
     let changed: boolean = false;
     if(!ui){
         changed = get(key) !== value;
-        await configuration().update(key, value, ConfigurationTarget.Global);
+        await configuration().update(key, value, ConfigurationTarget.Global); // non ui settings are global
     }else{
         const current: any = get(key);
 
@@ -127,8 +130,7 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
         changed = current[i] !== value;
         current[i] = value;
 
-        // update to workspace if scope is workspace and in a workspace | default to global
-        await configuration().update(key, current, get("settingScope") === "Workspace" && workspace.workspaceFolders ? ConfigurationTarget.Workspace : ConfigurationTarget.Global);
+        await configuration().update(key, current, target()); // update to target
     }
     skipNotification === false && changed && notify();
 }
