@@ -49,15 +49,19 @@ export const notify: () => void = () =>
 
 // get
 
-export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) =>
-    !ui
-    ? configuration().get(key) // non ui settings are global
-      ?? getConfigurationProperty(key).default
-      ?? "null"
-    // use first workspace for settings if set, default to global
-    : (configuration(target() === ConfigurationTarget.Workspace && workspace.workspaceFolders![0] ? workspace.workspaceFolders![0] : null).get(key) as any[])[Index(ui)]
-      ?? getConfigurationProperty(key).default[0]
-      ?? "null";
+export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) => {
+    const option = configuration().inspect(key);
+    return  !ui
+            ? option!.globalValue ?? option!.defaultValue // non ui use global option
+            : target() === ConfigurationTarget.Workspace
+                    // use workspace, default to global
+                ?      (option!.workspaceValue as any[] | undefined)?.[Index(ui)]
+                    ?? (option!.globalValue as any[] | undefined)?.[Index(ui)]
+                    ?? (option!.defaultValue as any[])[Index(ui)]
+                    // use global
+                :      (option!.globalValue as any[] | undefined)?.[Index(ui)]
+                    ?? (option!.defaultValue as any[])[Index(ui)];
+}
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
     const value: string = get(key, ui);
