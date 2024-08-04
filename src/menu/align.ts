@@ -22,13 +22,13 @@ import { UI, get, notify, update, updateFromLabel } from "../extension/config";
 import { isValidCSS } from "../lib/css";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 const prop: Properties = getConfigurationProperty("backgroundAlignment");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) =>
     updateFromLabel("backgroundAlignment", item, item.ui!)
-        .then(() => open(item.ui!)); // reopen menu
+        .then(() => backgroundMenu(item.ui!)); // reopen menu
 
 export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundAlignment", ui);
@@ -69,7 +69,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                                 .then(() => update("backgroundAlignmentValue", value, ui, true))
                                 .then(() => {
                                     changed && notify();
-                                    open(ui); // reopen menu
+                                    backgroundMenu(ui); // reopen menu
                                 });
                         }
                     }

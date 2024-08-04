@@ -22,13 +22,13 @@ import { Properties, getConfigurationProperty } from "../extension/package";
 import { isValidCSS } from "../lib/css";
 import { CommandQuickPickItem, quickPickItem, separator, showInputBox, showQuickPick } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 const prop: Properties = getConfigurationProperty("backgroundSize");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) =>
     updateFromLabel("backgroundSize", item, item.ui!)
-        .then(() => open(item.ui!)); // reopen menu
+        .then(() => backgroundMenu(item.ui!)); // reopen menu
 
 export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundSize", ui) as string;
@@ -56,7 +56,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                             .then(() => update("backgroundSizeValue", value, ui, true))
                             .then(() => {
                                 changed && notify();
-                                open(ui); // reopen menu
+                                backgroundMenu(ui); // reopen menu
                             });
                     }
                 }

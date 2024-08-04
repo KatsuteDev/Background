@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { InputBoxOptions, QuickPickItem, QuickPickItemKind, QuickPickOptions, commands, window } from "vscode";
+import { InputBoxOptions, QuickPick, QuickPickItem, QuickPickItemKind, QuickPickOptions, commands, window } from "vscode";
 
 import { UI } from "../extension/config";
 
@@ -52,25 +52,39 @@ export const quickPickItem:
 });
 
 export const showQuickPick:
-    (items: CommandQuickPickItem[], options?: QuickPickOptions, reference?: () => void) => void =
-    (items: CommandQuickPickItem[], options: QuickPickOptions = {}, reference?: () => void) => {
-    window.showQuickPick(
-        [
-            ... // add back button only if reference menu exists
-                reference
-                ? [quickPickItem({
-                    alwaysShow: true,
-                    label: "$(arrow-left) Back",
-                    handle: reference
-                }), separator()]
-                : [],
-            ...items
-        ],
-        options
-    ).then((item?: CommandQuickPickItem) => {
+    (items: CommandQuickPickItem[], options?: QuickPickOptions, reference?: () => void, selected?: number) => void =
+    (items: CommandQuickPickItem[], options: QuickPickOptions = {}, reference?: () => void, selected?: number) => {
+    const quickPick: QuickPick<QuickPickItem> = window.createQuickPick();
+
+    quickPick.items = [
+        ... // add back button only if reference menu exists
+        reference
+            ? [quickPickItem({
+                alwaysShow: true,
+                label: "$(arrow-left) Back",
+                handle: reference
+            }), separator()]
+            : [],
+        ...items
+    ];
+
+    // options
+    for(const [k, v] of Object.entries(options)){
+        // @ts-ignore
+        quickPick[k] = v;
+    }
+
+    // action
+    quickPick.onDidAccept(() => {
+        const item: CommandQuickPickItem = quickPick.selectedItems[0];
         // run in a promise
         item?.handle && new Promise(() => item.handle!(item));
     });
+
+    // selected
+    selected !== undefined && (quickPick.activeItems = [quickPick.items[selected + (reference ? 2 : 0)]]);
+
+    quickPick.show();
 }
 
 // separator

@@ -21,13 +21,13 @@ import { Properties, getConfigurationProperty } from "../extension/package";
 
 import { CommandQuickPickItem, quickPickItem, showQuickPick } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 const prop: Properties = getConfigurationProperty("backgroundRepeat");
 
 const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem) =>
     updateFromLabel("backgroundRepeat", item, item.ui!)
-        .then(() => open(item.ui!)); // reopen menu
+        .then(() => backgroundMenu(item.ui!)); // reopen menu
 
 export const show: (ui: UI) => void = (ui: UI) => {
     const current: string = get("backgroundRepeat", ui) as string;
