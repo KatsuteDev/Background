@@ -286,15 +286,25 @@
                 },
                 "background.renderContentAboveBackground": {
                     "markdownDescription": "Render content like images, PDFs, and markdown previews above the background.",
-                    "order": 14,
+                    "order": 13,
                     "type": "boolean",
                     "default": false
                 },
                 "background.smoothImageRendering": {
                     "markdownDescription": "Use smooth image rendering rather than pixelated rendering when resizing images.",
-                    "order": 15,
+                    "order": 14,
                     "type": "boolean",
                     "default": false
+                },
+                "background.settingScope": {
+                    "markdownDescription": "Where to save background settings.",
+                    "order": 15,
+                    "type": "string",
+                    "enum": [
+                        "Global",
+                        "Workspace"
+                    ],
+                    "default": "Global"
                 },
                 "background.CSS": {
                     "markdownDescription": "Apply raw CSS to VSCode.",

@@ -33,6 +33,7 @@ export type ConfigurationKey =
     "backgroundChangeTime" |
     "autoInstall" |
     "renderContentAboveBackground" |
+    "settingScope" |
     "smoothImageRendering" |
     "CSS";
 

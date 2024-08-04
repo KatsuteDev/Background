@@ -102,6 +102,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
             handle: handleBool("smoothImageRendering", 2)
         }),
+        quickPickItem({
+            label: "Setting Scope",
+            description: `[${get("settingScope")}]`,
+            detail: "Where to save background settings",
+            handle: () => update("settingScope", get("settingScope") === "Global" ? "Workspace" : "Global").then(() => moreMenu(3))
+        }),
         separator(),
         quickPickItem({
             label: "$(output) Changelog",

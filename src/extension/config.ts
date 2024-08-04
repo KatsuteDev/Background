@@ -127,7 +127,8 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
         changed = current[i] !== value;
         current[i] = value;
 
-        await configuration().update(key, current, ConfigurationTarget.Global);
+        // update to workspace if scope is workspace and in a workspace | default to global
+        await configuration().update(key, current, get("settingScope") === "Workspace" && workspace.workspaceFolders ? ConfigurationTarget.Workspace : ConfigurationTarget.Global);
     }
     skipNotification === false && changed && notify();
 }
