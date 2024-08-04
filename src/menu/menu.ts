@@ -79,25 +79,25 @@ export const optionMenu: () => void = () =>
 
 // more options
 
-const moreMenu: () => void = () => {
+const moreMenu: (selected?: number) => void = (selected?: number) => {
     showQuickPick([
         quickPickItem({
             label: "Auto Install",
             description: `[$(${get("autoInstall") ? "check" : "close"})]`,
             detail: "Automatically install background on startup or when VSCode updates",
-            handle: () => update("autoInstall", !get("autoInstall")).then(moreMenu)
+            handle: () => update("autoInstall", !get("autoInstall")).then(() => moreMenu(0))
         }),
         quickPickItem({
             label: "Render Content Above Background",
             description: `[$(${get("renderContentAboveBackground") ? "check" : "close"})]`,
             detail: "Render content like images, PDFs, and markdown previews above the background",
-            handle: () => update("renderContentAboveBackground", !get("renderContentAboveBackground")).then(moreMenu)
+            handle: () => update("renderContentAboveBackground", !get("renderContentAboveBackground")).then(() => moreMenu(1))
         }),
         quickPickItem({
             label: "Smooth Image Rendering",
             description: `[$(${get("smoothImageRendering") ? "check" : "close"})]`,
             detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
-            handle: () => update("smoothImageRendering", !get("smoothImageRendering")).then(moreMenu)
+            handle: () => update("smoothImageRendering", !get("smoothImageRendering")).then(() => moreMenu(2))
         }),
         separator(),
         quickPickItem({
@@ -120,7 +120,8 @@ const moreMenu: () => void = () => {
         matchOnDescription: true,
         matchOnDetail: true
     },
-     () => optionMenu());
+     () => optionMenu(),
+    selected);
 }
 
 // quick pick
