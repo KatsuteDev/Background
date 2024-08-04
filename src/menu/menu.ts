@@ -19,7 +19,7 @@
 import { platform, release } from "os";
 import { Uri, commands, env, version } from "vscode";
 
-import { pkg } from "../extension/package";
+import { ConfigurationKey, pkg } from "../extension/package";
 import { UI, configuration, get, update } from "../extension/config";
 
 import { count } from "../lib/glob";
@@ -80,24 +80,27 @@ export const optionMenu: () => void = () =>
 // more options
 
 const moreMenu: (selected?: number) => void = (selected?: number) => {
+    const descriptionBool: (key: ConfigurationKey) => string = (key: ConfigurationKey) => `[$(${get(key) ? "check" : "close"})]`;
+    const handleBool: (key: ConfigurationKey, index: number) => (item: CommandQuickPickItem) => void = (key: ConfigurationKey, index: number) => () => update(key, !get(key)).then(() => moreMenu(index));
+
     showQuickPick([
         quickPickItem({
             label: "Auto Install",
-            description: `[$(${get("autoInstall") ? "check" : "close"})]`,
+            description: descriptionBool("autoInstall"),
             detail: "Automatically install background on startup or when VSCode updates",
-            handle: () => update("autoInstall", !get("autoInstall")).then(() => moreMenu(0))
+            handle: handleBool("autoInstall", 0)
         }),
         quickPickItem({
             label: "Render Content Above Background",
             description: `[$(${get("renderContentAboveBackground") ? "check" : "close"})]`,
             detail: "Render content like images, PDFs, and markdown previews above the background",
-            handle: () => update("renderContentAboveBackground", !get("renderContentAboveBackground")).then(() => moreMenu(1))
+            handle: handleBool("renderContentAboveBackground", 1)
         }),
         quickPickItem({
             label: "Smooth Image Rendering",
             description: `[$(${get("smoothImageRendering") ? "check" : "close"})]`,
             detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
-            handle: () => update("smoothImageRendering", !get("smoothImageRendering")).then(() => moreMenu(2))
+            handle: handleBool("smoothImageRendering", 2)
         }),
         separator(),
         quickPickItem({
