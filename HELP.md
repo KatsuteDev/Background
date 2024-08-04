@@ -18,12 +18,6 @@ This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resource
 
 Backgrounds are not removed on extension disable or uninstall, you must run the **Background: Uninstall** command to remove backgrounds.
 
-### Options not working for editor/sidebar/panel
-
-*`background.useWindowOptionsForAllBackgrounds` is deprecated, do not use it.*
-
-Options will not change if `background.useWindowOptionsForAllBackgrounds` is set to `true`, either change the options for window or set `background.useWindowOptionsForAllBackgrounds` to `false`.
-
 ### Background doesn't work on window buttons (minimize/maximize/close) [#178](https://github.com/KatsuteDev/Background/issues/178)
 
 These buttons are controlled by the system and not VSCode; and can not be modified by this extension.
