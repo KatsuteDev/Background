@@ -44,7 +44,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
         handle: (value: string) => {
             if(!isNaN(+value)){
                 const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
-                if(o > .1){
+                if(get("useInvertedOpacity") ? o > .1 : o < .9){
                     update("backgroundOpacity", o, ui)
                         .then(() => backgroundMenu(ui)); // reopen menu
                 }else{
