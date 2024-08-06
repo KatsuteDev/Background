@@ -83,24 +83,32 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
     const descriptionBool: (key: ConfigurationKey) => string = (key: ConfigurationKey) => `[$(${get(key) ? "check" : "close"})]`;
     const handleBool: (key: ConfigurationKey, index: number) => (item: CommandQuickPickItem) => void = (key: ConfigurationKey, index: number) => () => update(key, !get(key)).then(() => moreMenu(index));
 
+    let i = 0;
+
     showQuickPick([
         quickPickItem({
             label: "Auto Install",
             description: descriptionBool("autoInstall"),
             detail: "Automatically install background on startup or when VSCode updates",
-            handle: handleBool("autoInstall", 0)
+            handle: handleBool("autoInstall", i++)
         }),
         quickPickItem({
             label: "Render Content Above Background",
-            description: `[$(${get("renderContentAboveBackground") ? "check" : "close"})]`,
+            description: descriptionBool("renderContentAboveBackground"),
             detail: "Render content like images, PDFs, and markdown previews above the background",
-            handle: handleBool("renderContentAboveBackground", 1)
+            handle: handleBool("renderContentAboveBackground", i++)
+        }),
+        quickPickItem({
+            label: "Use Inverted Opacity",
+            description: descriptionBool("useInvertedOpacity"),
+            detail: "Use an inverted opacity, so 0 is fully visible and 1 is invisible",
+            handle: handleBool("useInvertedOpacity", i++)
         }),
         quickPickItem({
             label: "Smooth Image Rendering",
-            description: `[$(${get("smoothImageRendering") ? "check" : "close"})]`,
+            description: descriptionBool("smoothImageRendering"),
             detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
-            handle: handleBool("smoothImageRendering", 2)
+            handle: handleBool("smoothImageRendering", i++)
         }),
         separator(),
         quickPickItem({
