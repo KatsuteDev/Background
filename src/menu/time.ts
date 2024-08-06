@@ -21,7 +21,7 @@ import { UI, get, update } from "../extension/config";
 import { round } from "../lib/math";
 import { showInputBox } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 export const show: (ui: UI) => void = (ui: UI) => {
     const current: number = round(get("backgroundChangeTime", ui) as number, 2);
@@ -43,7 +43,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
             if(!isNaN(+value)){
                 const o: number = Math.max(round(+value, 2), 0);
                 update("backgroundChangeTime", o, ui)
-                    .then(() => open(ui)); // reopen menu
+                    .then(() => backgroundMenu(ui)); // reopen menu
             }
         }
     });

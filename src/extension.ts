@@ -27,7 +27,7 @@ import { reload } from "./lib/vscode";
 
 import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
-import { show } from "./menu/menu";
+import { optionMenu } from "./menu/menu";
 import { configuration } from "./extension/config";
 
 //
@@ -127,7 +127,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
         commands.registerCommand("background.reload", reload),
         commands.registerCommand("background.help", () => commands.executeCommand("markdown.showPreview", help)),
         commands.registerCommand("background.changelog", () => commands.executeCommand("markdown.showPreview", changelog)),
-        commands.registerCommand("background.config", show),
+        commands.registerCommand("background.config", optionMenu),
         statusbar
     );
 

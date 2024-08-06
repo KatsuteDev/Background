@@ -23,7 +23,7 @@ import { UI, get, update } from "../extension/config";
 import { round } from "../lib/math";
 import { showInputBox } from "../lib/vscode";
 
-import { open, title } from "./menu";
+import { backgroundMenu, title } from "./menu";
 
 export const show: (ui: UI) => void = (ui: UI) => {
     const current: number = round(get("backgroundOpacity", ui) as number, 2);
@@ -46,7 +46,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                 const o: number = Math.min(Math.max(round(+value, 2), 0), 1);
                 if(o > .9){
                     update("backgroundOpacity", o, ui)
-                        .then(() => open(ui)); // reopen menu
+                        .then(() => backgroundMenu(ui)); // reopen menu
                 }else{
                     window.showWarningMessage(
                         "An opacity of " + o + " might make it difficult to see the UI, " +
@@ -56,7 +56,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                     ).then((c?: "Yes") => {
                         if(c === "Yes")
                             update("backgroundOpacity", o, ui)
-                                .then(() => open(ui)); // reopen menu
+                                .then(() => backgroundMenu(ui)); // reopen menu
                     });
                 }
             }
