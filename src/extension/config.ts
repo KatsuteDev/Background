@@ -51,16 +51,29 @@ export const notify: () => void = () =>
 
 export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) => {
     const option = configuration().inspect(key);
-    return  !ui
-            ? option!.globalValue ?? option!.defaultValue // non ui use global option
-            : target() === ConfigurationTarget.Workspace
-                    // use workspace, default to global
-                ?      (option!.workspaceValue as any[] | undefined)?.[Index(ui)]
-                    ?? (option!.globalValue as any[] | undefined)?.[Index(ui)]
-                    ?? (option!.defaultValue as any[])[Index(ui)]
-                    // use global
-                :      (option!.globalValue as any[] | undefined)?.[Index(ui)]
-                    ?? (option!.defaultValue as any[])[Index(ui)];
+    if(Array.isArray(option!.defaultValue)){ // background setting
+        if(option!.defaultValue.length === 0){ // actual backgrounds
+            if(target() === ConfigurationTarget.Workspace){ // workspace setting, fallback to global
+                return (option!.workspaceValue as any[] | undefined)
+                    ?? (option!.globalValue as any[] | undefined)
+                    ?? (option!.defaultValue as any[]);
+            }else{ // global setting
+                return (option!.globalValue as any[] | undefined)
+                    ?? (option!.defaultValue as any[]);
+            }
+        }else{ // settings (opacity, pos, timer, etc.)
+            if(target() === ConfigurationTarget.Workspace){ // workspace setting, fallback to global
+                return (option!.workspaceValue as any[] | undefined)?.[Index(ui!)]
+                    ?? (option!.globalValue as any[] | undefined)?.[Index(ui!)]
+                    ?? (option!.defaultValue as any[])[Index(ui!)];
+            }else{ // global setting
+                return (option!.globalValue as any[] | undefined)?.[Index(ui!)]
+                    ?? (option!.defaultValue as any[])[Index(ui!)];
+            }
+        }
+    }else{ // global setting
+        return option?.globalValue ?? option!.defaultValue;
+    }
 }
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
