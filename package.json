@@ -297,7 +297,7 @@
                     "default": false
                 },
                 "background.settingScope": {
-                    "markdownDescription": "Where to save background settings. If set to `Workspace`, the workspace settings will be used and fallback to the `Global` setting if not set.",
+                    "markdownDescription": "Where to save background settings. If set to `Workspace`, the workspace settings will be used and fallback to the `Global` setting if not set.\n\nThis does not automatically update the background on workspace change, you need to also turn on `#background.autoInstall#`.",
                     "order": 15,
                     "type": "string",
                     "enum": [

@@ -92,20 +92,20 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
         }),
         quickPickItem({
             label: "Render Content Above Background",
-            description: `[$(${get("renderContentAboveBackground") ? "check" : "close"})]`,
+            description: descriptionBool("renderContentAboveBackground"),
             detail: "Render content like images, PDFs, and markdown previews above the background",
             handle: handleBool("renderContentAboveBackground", 1)
         }),
         quickPickItem({
             label: "Smooth Image Rendering",
-            description: `[$(${get("smoothImageRendering") ? "check" : "close"})]`,
+            description: descriptionBool("smoothImageRendering"),
             detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
             handle: handleBool("smoothImageRendering", 2)
         }),
         quickPickItem({
             label: "Setting Scope",
             description: `[${get("settingScope")}]`,
-            detail: "Where to save background settings",
+            detail: "Where to save settings; workspace requires Auto Install to update background on switch",
             handle: () => update("settingScope", get("settingScope") === "Global" ? "Workspace" : "Global").then(() => moreMenu(3))
         }),
         separator(),
