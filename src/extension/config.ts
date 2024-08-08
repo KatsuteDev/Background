@@ -152,7 +152,8 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
     let changed: boolean = false;
     if(!ui){
         changed = get(key) !== value;
-        await configuration().update(key, value, ConfigurationTarget.Global); // non ui settings are global
+        // if value is array, then it is the background[] array and should use targeted scope, otherwise it is a config setting and should be global
+        await configuration().update(key, value, Array.isArray(value) ? target() : ConfigurationTarget.Global);
     }else{
         const current: any = get(key);
 
