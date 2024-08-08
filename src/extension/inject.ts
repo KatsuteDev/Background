@@ -47,10 +47,10 @@ export const clean: (content: string) => string = (s: string) =>
 
 const getJavaScript: () => string = () => {
     const images: {[key: string]: string[]} = {
-        window:  resolve(get("windowBackgrounds")),
-        editor:  resolve(get("editorBackgrounds")),
-        sidebar: resolve(get("sidebarBackgrounds")),
-        panel:   resolve(get("panelBackgrounds"))
+        window:  resolve(get("windowBackgrounds", {fallback: true})),
+        editor:  resolve(get("editorBackgrounds", {fallback: true})),
+        sidebar: resolve(get("sidebarBackgrounds", {fallback: true})),
+        panel:   resolve(get("panelBackgrounds", {fallback: true}))
     };
 
     const after: boolean = get("renderContentAboveBackground");
@@ -112,10 +112,10 @@ const iEditorBackgrounds = [...Array(${images.editor.length}).keys()];
 const iSidebarBackgrounds = [...Array(${images.sidebar.length}).keys()];
 const iPanelBackgrounds = [...Array(${images.panel.length}).keys()];
 
-const windowTime = ${get("backgroundChangeTime", "window") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "window"), 2), 5)};
-const editorTime = ${get("backgroundChangeTime", "editor") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "editor"), 2), 5)};
-const sidebarTime = ${get("backgroundChangeTime", "sidebar") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "sidebar"), 2), 5)};
-const panelTime = ${get("backgroundChangeTime", "panel") == 0 ? 0 : Math.max(round(get("backgroundChangeTime", "panel"), 2), 5)};
+const windowTime = ${get("backgroundChangeTime", {ui: "window", fallback: true}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "window", fallback: true}), 2), 5)};
+const editorTime = ${get("backgroundChangeTime", {ui: "editor", fallback: true}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "editor", fallback: true}), 2), 5)};
+const sidebarTime = ${get("backgroundChangeTime", {ui: "sidebar", fallback: true}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "sidebar", fallback: true}), 2), 5)};
+const panelTime = ${get("backgroundChangeTime", {ui: "panel", fallback: true}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "panel"}), 2), 5)};
 `
 + // individual background css - window
 `

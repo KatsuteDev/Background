@@ -326,7 +326,8 @@
         "vscode:prepublish": "npm run prepare",
         "build:esbuild": "esbuild src/extension.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node --minify --legal-comments=none --metafile=meta.json",
         "build:post": "node build.js",
-        "build": "npm run build:esbuild && npm run build:post",
+        "tsc": "tsc -noEmit",
+        "build": "tsc --noEmit && npm run build:esbuild && npm run build:post",
         "prepare": "npm run clean && npm run build",
         "// -- deploy -- //": "",
         "package": "vsce package"

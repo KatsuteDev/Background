@@ -49,35 +49,53 @@ export const notify: () => void = () =>
 
 // get
 
-export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) => {
+export const get: (key: ConfigurationKey, options?: {
+    ui?: UI, // UI for [,,,] settings
+    scope?: "workspace" | "global", // force override
+    includeDefault?: boolean, // [true] use default value if none set
+    fallback?: boolean // [false] use global value if workspace not set
+}) => any = (key: ConfigurationKey, options?: {ui?: UI, scope?: "workspace" | "global", includeDefault?: boolean, fallback?: boolean}) => {
     const option = configuration().inspect(key);
-    if(Array.isArray(option!.defaultValue)){ // background setting
-        if(option!.defaultValue.length === 0){ // actual backgrounds
-            if(target() === ConfigurationTarget.Workspace){ // workspace setting, fallback to global
-                return (option!.workspaceValue as any[] | undefined)
-                    ?? (option!.globalValue as any[] | undefined)
-                    ?? (option!.defaultValue as any[]);
-            }else{ // global setting
-                return (option!.globalValue as any[] | undefined)
-                    ?? (option!.defaultValue as any[]);
-            }
-        }else{ // settings (opacity, pos, timer, etc.)
-            if(target() === ConfigurationTarget.Workspace){ // workspace setting, fallback to global
-                return (option!.workspaceValue as any[] | undefined)?.[Index(ui!)]
-                    ?? (option!.globalValue as any[] | undefined)?.[Index(ui!)]
-                    ?? (option!.defaultValue as any[])[Index(ui!)];
-            }else{ // global setting
-                return (option!.globalValue as any[] | undefined)?.[Index(ui!)]
-                    ?? (option!.defaultValue as any[])[Index(ui!)];
-            }
+
+    const {ui, scope, includeDefault = true, fallback = false} = options ?? {};
+
+    const values: {workspace: any | undefined, global: any | undefined, default: any } = {
+        workspace: option!.workspaceValue,
+        global: option!.globalValue,
+        default: option!.defaultValue
+    };
+
+    let value: any;
+
+    if(Array.isArray(values.default)){ // background[,,,] setting
+        if(scope === "workspace"){ // force workspace
+            value = values.workspace;
+        }else if(scope === "global"){ // force global
+            value = values.global;
+        }else if(target() === ConfigurationTarget.Workspace){ // workspace, optional fallback
+            value = values.workspace ?? (fallback ? values.global : undefined);
+        }else{ // global (default)
+            value = values.global;
         }
     }else{ // global setting
-        return option?.globalValue ?? option!.defaultValue;
+        value = values.global;
+    }
+
+    value ??= includeDefault ? values.default : undefined; // assign default if current value is undefined and includeDefault is true
+
+    if(Array.isArray(values.default)){ // background[,,,] setting
+        if(values.default.length === 0){ // backgrounds[]
+            return value;
+        }else{ // background setting[,,,]
+            return value[Index(ui!)];
+        }
+    }else{ // default
+        return value;
     }
 }
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
-    const value: string = get(key, ui);
+    const value: string = get(key, {ui});
     const prop: Properties = getConfigurationProperty(key);
 
     switch(key){
@@ -95,7 +113,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
                 case prop.items!.enum![6]: return "left bottom";
                 case prop.items!.enum![7]: return "center bottom";
                 case prop.items!.enum![8]: return "right bottom";
-                case prop.items!.enum![9]: return sanitizeUnits(get("backgroundAlignmentValue", ui));
+                case prop.items!.enum![9]: return sanitizeUnits(get("backgroundAlignmentValue", {ui}));
             }
         }
         case "backgroundBlur": {
@@ -119,7 +137,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
                 case prop.items!.enum![0]: return "auto";
                 case prop.items!.enum![1]: return "contain";
                 case prop.items!.enum![2]: return "cover";
-                case prop.items!.enum![3]: return sanitizeUnits(get("backgroundSizeValue", ui));
+                case prop.items!.enum![3]: return sanitizeUnits(get("backgroundSizeValue", {ui}));
             }
         }
         default: {
