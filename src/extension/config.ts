@@ -95,7 +95,7 @@ export const get: (key: ConfigurationKey, options?: {
 }
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
-    const value: string = get(key, {ui});
+    const value: string = get(key, {ui, fallback: true});
     const prop: Properties = getConfigurationProperty(key);
 
     switch(key){
