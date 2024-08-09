@@ -53,11 +53,10 @@ export const get: (key: ConfigurationKey, options?: {
     ui?: UI, // UI for [,,,] settings
     scope?: "workspace" | "global", // force override
     includeDefault?: boolean, // [true] use default value if none set
-    fallback?: boolean // [false] use global value if workspace not set
-}) => any = (key: ConfigurationKey, options?: {ui?: UI, scope?: "workspace" | "global", includeDefault?: boolean, fallback?: boolean}) => {
+}) => any = (key: ConfigurationKey, options?: {ui?: UI, scope?: "workspace" | "global", includeDefault?: boolean}) => {
     const option = configuration().inspect(key);
 
-    const {ui, scope, includeDefault = true, fallback = false} = options ?? {};
+    const {ui, scope, includeDefault = true} = options ?? {};
 
     const values: {workspace: any | undefined, global: any | undefined, default: any } = {
         workspace: option!.workspaceValue,
@@ -67,35 +66,25 @@ export const get: (key: ConfigurationKey, options?: {
 
     let value: any;
 
-    if(Array.isArray(values.default)){ // background[,,,] setting
-        if(scope === "workspace"){ // force workspace
-            value = values.workspace;
-        }else if(scope === "global"){ // force global
-            value = values.global;
-        }else if(target() === ConfigurationTarget.Workspace){ // workspace, optional fallback
-            value = values.workspace ?? (fallback ? values.global : undefined);
-        }else{ // global (default)
-            value = values.global;
-        }
-    }else{ // global setting
-        value = values.global;
-    }
+    value = Array.isArray(values.default) && (scope === "workspace" || target() === ConfigurationTarget.Workspace)
+        ? values.workspace // array and workspace setting
+        : values.global; // non-array (bool) or global setting
 
     value ??= includeDefault ? values.default : undefined; // assign default if current value is undefined and includeDefault is true
 
     if(Array.isArray(values.default)){ // background[,,,] setting
         if(values.default.length === 0){ // backgrounds[]
             return value;
-        }else{ // background setting[,,,]
+        }else if(ui){ // background setting[,,,]
             return value[Index(ui!)];
         }
-    }else{ // default
-        return value;
     }
+
+    return value; // default
 }
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
-    const value: string = get(key, {ui, fallback: true});
+    const value: string = get(key, {ui});
     const prop: Properties = getConfigurationProperty(key);
 
     switch(key){

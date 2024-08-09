@@ -17,10 +17,10 @@
  */
 
 import { platform, release } from "os";
-import { Uri, commands, env, version } from "vscode";
+import { ConfigurationTarget, Uri, commands, env, version } from "vscode";
 
 import { ConfigurationKey, pkg } from "../extension/package";
-import { UI, configuration, get, update } from "../extension/config";
+import { UI, configuration, get, target, update } from "../extension/config";
 
 import { count } from "../lib/glob";
 import { appendS, appendIf, capitalize } from "../lib/string";
@@ -73,7 +73,7 @@ export const optionMenu: () => void = () =>
             handle: () => commands.executeCommand("background.help")
         }),
     ], {
-        title: "Background",
+        title: "Background" + (target() === ConfigurationTarget.Workspace ? " (Workspace)": ""),
         matchOnDescription: true
     });
 
@@ -220,7 +220,7 @@ export const backgroundMenu: (ui: UI) => void = (ui: UI) =>
             handle: () => timeMenu(ui)
         })
     ], {
-        title: `${capitalize(ui)} Background`,
+        title: `${capitalize(ui)} Background` + (target() === ConfigurationTarget.Workspace ? " (Workspace)": ""),
         matchOnDescription: true,
         matchOnDetail: true
     }, optionMenu);
