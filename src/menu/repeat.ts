@@ -30,7 +30,7 @@ const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem
         .then(() => backgroundMenu(item.ui!)); // reopen menu
 
 export const show: (ui: UI) => void = (ui: UI) => {
-    const current: string = get("backgroundRepeat", ui) as string;
+    const current: string = get("backgroundRepeat", {ui}) as string;
 
     showQuickPick([
         quickPickItem({ label: prop.items!.enum![0], description: prop.items!.enumDescriptions![0], handle: handle, ui }, current),

@@ -24,7 +24,7 @@ import { showInputBox } from "../lib/vscode";
 import { backgroundMenu, title } from "./menu";
 
 export const show: (ui: UI) => void = (ui: UI) => {
-    const current: string = get("backgroundBlur", ui) as string;
+    const current: string = get("backgroundBlur", {ui}) as string;
 
     showInputBox({
         title: title("Blur", ui),
