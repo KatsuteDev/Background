@@ -26,7 +26,7 @@ import { showInputBox } from "../lib/vscode";
 import { backgroundMenu, title } from "./menu";
 
 export const show: (ui: UI) => void = (ui: UI) => {
-    const current: number = round(get("backgroundOpacity", ui) as number, 2);
+    const current: number = round(get("backgroundOpacity", {ui}) as number, 2);
 
     showInputBox({
         title: title("Opacity", ui),

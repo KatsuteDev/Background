@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { ConfigurationTarget, WorkspaceConfiguration, commands, window, workspace } from "vscode";
+import { ConfigurationScope, ConfigurationTarget, WorkspaceConfiguration, commands, window, workspace } from "vscode";
 
 import { ConfigurationKey, Properties, getConfigurationProperty } from "./package";
 
@@ -37,7 +37,9 @@ const Index: (ui: UI) => 0 | 1 | 2 | 3 = (ui: UI) => {
     }[ui] as 0 | 1 | 2 | 3;
 }
 
-export const configuration: () => WorkspaceConfiguration = () => workspace.getConfiguration("background");
+export const configuration: (scope?: ConfigurationScope | null) => WorkspaceConfiguration = (scope?: ConfigurationScope | null) => workspace.getConfiguration("background", scope);
+
+export const target: () => ConfigurationTarget = () => configuration().get("settingScope") === "Workspace" && workspace.workspaceFolders ? ConfigurationTarget.Workspace : ConfigurationTarget.Global;
 
 export const notify: () => void = () =>
     window.showWarningMessage("Background has been modified, a reinstall is required to see changes.", "Install and Reload", "Ignore")
@@ -47,17 +49,42 @@ export const notify: () => void = () =>
 
 // get
 
-export const get: (key: ConfigurationKey, ui?: UI) => any = (key: ConfigurationKey, ui?: UI) =>
-    !ui
-    ? configuration().get(key)
-      ?? getConfigurationProperty(key).default
-      ?? "null"
-    : (configuration().get(key) as any[])[Index(ui)]
-      ?? getConfigurationProperty(key).default[0]
-      ?? "null";
+export const get: (key: ConfigurationKey, options?: {
+    ui?: UI, // UI for [,,,] settings
+    scope?: "workspace" | "global", // force override
+    includeDefault?: boolean, // [true] use default value if none set
+}) => any = (key: ConfigurationKey, options?: {ui?: UI, scope?: "workspace" | "global", includeDefault?: boolean}) => {
+    const option = configuration().inspect(key);
+
+    const {ui, scope, includeDefault = true} = options ?? {};
+
+    const values: {workspace: any | undefined, global: any | undefined, default: any } = {
+        workspace: option!.workspaceValue,
+        global: option!.globalValue,
+        default: option!.defaultValue
+    };
+
+    let value: any;
+
+    value = Array.isArray(values.default) && (scope === "workspace" || target() === ConfigurationTarget.Workspace)
+        ? values.workspace // array and workspace setting
+        : values.global; // non-array (bool) or global setting
+
+    value ??= includeDefault ? values.default : undefined; // assign default if current value is undefined and includeDefault is true
+
+    if(Array.isArray(values.default)){ // background[,,,] setting
+        if(values.default.length === 0){ // backgrounds[]
+            return value;
+        }else if(ui){ // background setting[,,,]
+            return value[Index(ui!)];
+        }
+    }
+
+    return value; // default
+}
 
 export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: ConfigurationKey, ui: UI) => {
-    const value: string = get(key, ui);
+    const value: string = get(key, {ui});
     const prop: Properties = getConfigurationProperty(key);
 
     switch(key){
@@ -75,7 +102,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
                 case prop.items!.enum![6]: return "left bottom";
                 case prop.items!.enum![7]: return "center bottom";
                 case prop.items!.enum![8]: return "right bottom";
-                case prop.items!.enum![9]: return sanitizeUnits(get("backgroundAlignmentValue", ui));
+                case prop.items!.enum![9]: return sanitizeUnits(get("backgroundAlignmentValue", {ui}));
             }
         }
         case "backgroundBlur": {
@@ -99,7 +126,7 @@ export const getCSS: (key: ConfigurationKey, ui: UI) => string = (key: Configura
                 case prop.items!.enum![0]: return "auto";
                 case prop.items!.enum![1]: return "contain";
                 case prop.items!.enum![2]: return "cover";
-                case prop.items!.enum![3]: return sanitizeUnits(get("backgroundSizeValue", ui));
+                case prop.items!.enum![3]: return sanitizeUnits(get("backgroundSizeValue", {ui}));
             }
         }
         default: {
@@ -114,7 +141,8 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
     let changed: boolean = false;
     if(!ui){
         changed = get(key) !== value;
-        await configuration().update(key, value, ConfigurationTarget.Global);
+        // if value is array, then it is the background[] array and should use targeted scope, otherwise it is a config setting and should be global
+        await configuration().update(key, value, Array.isArray(value) ? target() : ConfigurationTarget.Global);
     }else{
         const current: any = get(key);
 
@@ -127,7 +155,7 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
         changed = current[i] !== value;
         current[i] = value;
 
-        await configuration().update(key, current, ConfigurationTarget.Global);
+        await configuration().update(key, current, target()); // update to target
     }
     skipNotification === false && changed && notify();
 }
