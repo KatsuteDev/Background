@@ -114,7 +114,7 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             label: "Setting Scope",
             description: `[${get("settingScope")}]`,
             detail: "Where to save settings; workspace requires Auto Install to update background on switch",
-            handle: () => update("settingScope", get("settingScope") === "Global" ? "Workspace" : "Global").then(() => moreMenu(3))
+            handle: () => update("settingScope", get("settingScope") === "Global" ? "Workspace" : "Global").then(() => moreMenu(i++))
         }),
         separator(),
         quickPickItem({
