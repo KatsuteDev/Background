@@ -31,7 +31,7 @@ const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem
         .then(() => backgroundMenu(item.ui!)); // reopen menu
 
 export const show: (ui: UI) => void = (ui: UI) => {
-    const current: string = get("backgroundSize", ui) as string;
+    const current: string = get("backgroundSize", {ui}) as string;
 
     showQuickPick([
         // size
@@ -40,8 +40,8 @@ export const show: (ui: UI) => void = (ui: UI) => {
         quickPickItem({ label: prop.items!.enum![2], description: prop.items!.enumDescriptions![2], handle, ui }, current),
         separator(),
         // manual
-        quickPickItem({ label: prop.items!.enum![3], description: `(${get("backgroundSizeValue", ui)})`, ui: ui, handle: (item: CommandQuickPickItem) => {
-            const currentValue: string = get("backgroundSizeValue", ui);
+        quickPickItem({ label: prop.items!.enum![3], description: `(${get("backgroundSizeValue", {ui})})`, ui: ui, handle: (item: CommandQuickPickItem) => {
+            const currentValue: string = get("backgroundSizeValue", {ui});
             showInputBox({
                 title: title("Size", ui),
                 placeHolder: "Background size",
@@ -50,7 +50,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                 validateInput: (value: string) => !isValidCSS(value) ? "Invalid CSS" : null,
                 handle: (value: string) => {
                     if(isValidCSS(value)){
-                        let changed: boolean = get("backgroundSize", ui) !== prop.items!.enum![3] || currentValue !== value;
+                        let changed: boolean = get("backgroundSize", {ui}) !== prop.items!.enum![3] || currentValue !== value;
 
                         update("backgroundSize", prop.items!.enum![3], ui, true)
                             .then(() => update("backgroundSizeValue", value, ui, true))

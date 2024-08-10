@@ -17,10 +17,10 @@
  */
 
 import { platform, release } from "os";
-import { Uri, commands, env, version } from "vscode";
+import { ConfigurationTarget, Uri, commands, env, version } from "vscode";
 
 import { ConfigurationKey, pkg } from "../extension/package";
-import { UI, configuration, get, update } from "../extension/config";
+import { UI, configuration, get, target, update } from "../extension/config";
 
 import { count } from "../lib/glob";
 import { appendS, appendIf, capitalize } from "../lib/string";
@@ -73,7 +73,7 @@ export const optionMenu: () => void = () =>
             handle: () => commands.executeCommand("background.help")
         }),
     ], {
-        title: "Background",
+        title: "Background" + (target() === ConfigurationTarget.Workspace ? " (Workspace)": ""),
         matchOnDescription: true
     });
 
@@ -110,6 +110,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             detail: "Use smooth image rendering rather than pixelated rendering when resizing images",
             handle: handleBool("smoothImageRendering", i++)
         }),
+        quickPickItem({
+            label: "Setting Scope",
+            description: `[${get("settingScope")}]`,
+            detail: "Where to save settings; workspace requires Auto Install to update background on switch",
+            handle: () => update("settingScope", get("settingScope") === "Global" ? "Workspace" : "Global").then(() => moreMenu(3))
+        }),
         separator(),
         quickPickItem({
             label: "$(output) Changelog",
@@ -144,14 +150,14 @@ const getQuickPick: (ui: UI, icon: string) => CommandQuickPickItem = (ui: UI, ic
 
     // detail
     let detail: string =
-        `${get("backgroundAlignment", ui)} Alignment` + " • " +
-        `${get("backgroundBlur",      ui)} Blur`      + " • " +
-        `${get("backgroundOpacity",   ui)} Opacity`   + " • " +
-        `${get("backgroundRepeat",    ui)} Repeat`    + " • " +
-        `${get("backgroundSize",      ui)} Size`;
+        `${get("backgroundAlignment", {ui})} Alignment` + " • " +
+        `${get("backgroundBlur",      {ui})} Blur`      + " • " +
+        `${get("backgroundOpacity",   {ui})} Opacity`   + " • " +
+        `${get("backgroundRepeat",    {ui})} Repeat`    + " • " +
+        `${get("backgroundSize",      {ui})} Size`;
 
     // only include time if nonzero (enabled)
-    const time: number = +get("backgroundChangeTime", ui);
+    const time: number = +get("backgroundChangeTime", {ui});
 
     if(time > 0)
         detail += " • " + appendS(time, "second");
@@ -181,48 +187,48 @@ export const backgroundMenu: (ui: UI) => void = (ui: UI) =>
         separator(),
         quickPickItem({
             label: "$(arrow-both) Alignment",
-            description: `${appendIf(get("backgroundAlignment", ui), s => s === "Manual", ` (${get("backgroundAlignmentValue", ui)})`)}`,
+            description: `${appendIf(get("backgroundAlignment", {ui}), s => s === "Manual", ` (${get("backgroundAlignmentValue", {ui})})`)}`,
             detail: "Background image alignment",
             ui,
             handle: () => alignMenu(ui)
         }),
         quickPickItem({
             label: "$(eye) Blur",
-            description: `${get("backgroundBlur", ui)}`,
+            description: `${get("backgroundBlur", {ui})}`,
             detail: "Background image blur",
             ui,
             handle: () => blurMenu(ui)
         }),
         quickPickItem({
             label: "$(color-mode) Opacity",
-            description: `${get("backgroundOpacity", ui)}`,
+            description: `${get("backgroundOpacity", {ui})}`,
             detail: "Background image opacity",
             ui,
             handle: () => opacityMenu(ui)
         }),
         quickPickItem({
             label: "$(multiple-windows) Repeat",
-            description: `${get("backgroundRepeat", ui)}`,
+            description: `${get("backgroundRepeat", {ui})}`,
             detail: "Background image repeat",
             ui,
             handle: () => repeatMenu(ui)
         }),
         quickPickItem({
             label: "$(screen-full) Size",
-            description: `${appendIf(get("backgroundSize", ui), s => s === "Manual", ` (${get("backgroundSizeValue", ui)})`)}`,
+            description: `${appendIf(get("backgroundSize", {ui}), s => s === "Manual", ` (${get("backgroundSizeValue", {ui})})`)}`,
             detail: "Background image size",
             ui,
             handle: () => sizeMenu(ui)
         }),
         quickPickItem({
             label: "$(clock) Time",
-            description: `${appendS(+get("backgroundChangeTime", ui), "second")}`,
+            description: `${appendS(+get("backgroundChangeTime", {ui}), "second")}`,
             detail: "How often to change the background",
             ui,
             handle: () => timeMenu(ui)
         })
     ], {
-        title: `${capitalize(ui)} Background`,
+        title: `${capitalize(ui)} Background` + (target() === ConfigurationTarget.Workspace ? " (Workspace)": ""),
         matchOnDescription: true,
         matchOnDetail: true
     }, optionMenu);

@@ -122,6 +122,7 @@ The order settings are saved in is:
 |`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
 |`background.useInvertedOpacity`|`boolean`|Use an inverted opacity, so 0 is fully visible and 1 is invisible.|
 |`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
+|`background.settingScope`|`Global` \| `Workspace`|Where to save background settings. This does not automatically update the background on workspace change, you need to also turn on `autoInstall`.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>

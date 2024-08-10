@@ -31,7 +31,7 @@ const handle: (item: CommandQuickPickItem) => void = (item: CommandQuickPickItem
         .then(() => backgroundMenu(item.ui!)); // reopen menu
 
 export const show: (ui: UI) => void = (ui: UI) => {
-    const current: string = get("backgroundAlignment", ui);
+    const current: string = get("backgroundAlignment", {ui});
 
     showQuickPick([
         // top
@@ -51,10 +51,10 @@ export const show: (ui: UI) => void = (ui: UI) => {
         // manual
         separator(),
         quickPickItem({ label: prop.items!.enum![9],
-            description: `(${get("backgroundAlignmentValue", ui)})`,
+            description: `(${get("backgroundAlignmentValue", {ui})})`,
             ui,
             handle: (item: CommandQuickPickItem) => {
-                const currentValue: string = get("backgroundAlignmentValue", ui);
+                const currentValue: string = get("backgroundAlignmentValue", {ui});
                 showInputBox({
                     title: title("Alignment", ui),
                     placeHolder: "Background position",
@@ -63,7 +63,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
                     validateInput: (value: string) => !isValidCSS(value) ? "Invalid CSS" : null,
                     handle: (value: string) => {
                         if(isValidCSS(value)){
-                            let changed: boolean = get("backgroundAlignment", ui) !== prop.items!.enum![9] || currentValue !== value;
+                            let changed: boolean = get("backgroundAlignment", {ui}) !== prop.items!.enum![9] || currentValue !== value;
 
                             update("backgroundAlignment", prop.items!.enum![9], ui, true)
                                 .then(() => update("backgroundAlignmentValue", value, ui, true))

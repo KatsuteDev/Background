@@ -14,6 +14,10 @@ This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resource
 
 ## &nbsp;
 
+### Backgrounds are missing on workspace
+
+The workspace setting will use whatever settings are set for that workspace, it does not fallback to the global setting.
+
 ### Disable/uninstall doesn't remove background
 
 Backgrounds are not removed on extension disable or uninstall, you must run the **Background: Uninstall** command to remove backgrounds.

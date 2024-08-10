@@ -34,6 +34,7 @@ export type ConfigurationKey =
     "autoInstall" |
     "renderContentAboveBackground" |
     "useInvertedOpacity" |
+    "settingScope" |
     "smoothImageRendering" |
     "CSS";
 

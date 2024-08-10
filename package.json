@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "2.10.4",
+    "version": "3.0.0",
     "private": true,
     "engines": {
         "vscode": "^1.92.0"
@@ -286,21 +286,31 @@
                 },
                 "background.renderContentAboveBackground": {
                     "markdownDescription": "Render content like images, PDFs, and markdown previews above the background.",
-                    "order": 14,
+                    "order": 13,
                     "type": "boolean",
                     "default": false
                 },
                 "background.useInvertedOpacity": {
                     "markdownDescription": "Use an inverted opacity, so 0 is fully visible and 1 is invisible.",
-                    "order": 15,
+                    "order": 14,
                     "type": "boolean",
                     "default": false
                 },
                 "background.smoothImageRendering": {
                     "markdownDescription": "Use smooth image rendering rather than pixelated rendering when resizing images.",
-                    "order": 16,
+                    "order": 15,
                     "type": "boolean",
                     "default": false
+                },
+                "background.settingScope": {
+                    "markdownDescription": "Where to save and load background settings.\n\nThis does not automatically update the background on workspace change, you need to also turn on `#background.autoInstall#`.",
+                    "order": 16,
+                    "type": "string",
+                    "enum": [
+                        "Global",
+                        "Workspace"
+                    ],
+                    "default": "Global"
                 },
                 "background.CSS": {
                     "markdownDescription": "Apply raw CSS to VSCode.",
@@ -322,7 +332,7 @@
         "vscode:prepublish": "npm run prepare",
         "build:esbuild": "esbuild src/extension.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node --minify --legal-comments=none --metafile=meta.json",
         "build:post": "node build.js",
-        "build": "npm run build:esbuild && npm run build:post",
+        "build": "tsc --noEmit && npm run build:esbuild && npm run build:post",
         "prepare": "npm run clean && npm run build",
         "// -- deploy -- //": "",
         "package": "vsce package"
