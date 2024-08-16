@@ -81,7 +81,7 @@ export const optionMenu: () => void = () =>
 
 const moreMenu: (selected?: number) => void = (selected?: number) => {
     const descriptionBool: (key: ConfigurationKey) => string = (key: ConfigurationKey) => `[$(${get(key) ? "check" : "close"})]`;
-    const handleBool: (key: ConfigurationKey, index: number) => (item: CommandQuickPickItem) => void = (key: ConfigurationKey, index: number) => () => update(key, !get(key)).then(() => moreMenu(index));
+    const handleBool: (key: ConfigurationKey, index: number, skipNotification?: boolean) => (item: CommandQuickPickItem) => void = (key: ConfigurationKey, index: number, skipNotification?: boolean) => () => update(key, !get(key), undefined, skipNotification).then(() => moreMenu(index));
 
     let i = 0;
 
@@ -90,7 +90,7 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             label: "Auto Install",
             description: descriptionBool("autoInstall"),
             detail: "Automatically install background on startup or when VSCode updates",
-            handle: handleBool("autoInstall", i++)
+            handle: handleBool("autoInstall", i++, true)
         }),
         quickPickItem({
             label: "Render Content Above Background",

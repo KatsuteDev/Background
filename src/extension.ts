@@ -137,9 +137,16 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     if(context.globalState.get("migratedOpacity") !== true){ // if not yet migrated
         if(get("backgroundOpacity", {scope: "global", includeDefault: false})){ // has opacity set
-            update("useInvertedOpacity", true, undefined, true);
+            if(configuration().has("useInvertedOpacity")){
+                update("useInvertedOpacity", true, undefined, true) // update setting
+                    .then(() => context.globalState.update("migratedOpacity", true)) // set migrated (changed)
+                    .then(() => window.showInformationMessage("Background opacity settings have been migrated to the latest version."));
+            }else{
+                commands.executeCommand("workbench.action.reloadWindow"); // outdated manifest, force reload
+            }
+        }else{
+            context.globalState.update("migratedOpacity", true); // set migrated (no change)
         }
-        context.globalState.update("migratedOpacity", true); // set migrated
     }
 
     // install
