@@ -108,7 +108,7 @@ The order settings are saved in is:
 |`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
 |`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
 |`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts a [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
-|`background.backgroundOpacity`|`number[4]`|The UI opacity. 0 is fully visible and 1 is invisible.|
+|`background.backgroundOpacity`|`number[4]`|The UI opacity. 1 is fully visible and 0 is invisible.|
 |`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
 |`background.backgroundSize`|`enum[4]`|The background image size.|
 |`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
@@ -120,6 +120,7 @@ The order settings are saved in is:
 |---|:-:|---|
 |`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br>This option is disabled when you run the uninstall command.|
 |`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
+|`background.useInvertedOpacity`|`boolean`|Use an inverted opacity, so 0 is fully visible and 1 is invisible.|
 |`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
 |`background.settingScope`|`Global` \| `Workspace`|Where to save background settings. This does not automatically update the background on workspace change, you need to also turn on `autoInstall`.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
