@@ -1,5 +1,56 @@
 # Changelog
 
+## 3.0.0
+
+### Breaking Change
+
+* Invert opacity setting [#379](https://github.com/KatsuteDev/Background/pull/379) ([@Katsute](https://github.com/Katsute))
+
+  Going forward, to achieve parity with other background extensions, the opacity calculation will be switched from 0 visible and 1 invisible to 1 visible and 0 invisible.
+
+  To use the old behavior, use the **useInvertedOpacity** option. If you already have an opacity set, the inverted opacity setting will automatically be turned on.
+
+### Removed
+
+* Remove `useWindowOptionsForAllBackgrounds` option [#374](https://github.com/KatsuteDev/Background/pull/374) ([@Katsute](https://github.com/Katsute))
+
+### New Features
+
+* Add options selector to menu [#375](https://github.com/KatsuteDev/Background/pull/375) ([@Katsute](https://github.com/Katsute))
+* Add option to save settings per-workspace [#383](https://github.com/KatsuteDev/Background/pull/383) ([@Katsute](https://github.com/Katsute))
+
+  This updates the configuration menu to allow workspace specific settings; to use workspace, toggle the **Setting Scope** in the more options menu. Does not automatically update the background on workspace switch, the **Auto Install** option needs to also be turned on.
+
+  Setting this to workspace will always use the workspace configuration, it does not fallback to global settings.
+
+### Dependencies
+
+* Bump esbuild from 0.21.4 to 0.21.5 [#348](https://github.com/KatsuteDev/Background/pull/348) ([@dependabot](https://github.com/dependabot))
+* Bump @azure/identity from 4.2.0 to 4.2.1 [#349](https://github.com/KatsuteDev/Background/pull/349) ([@dependabot](https://github.com/dependabot))
+* Bump @azure/msal-node from 2.9.1 to 2.9.2 [#350](https://github.com/KatsuteDev/Background/pull/350) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.4.5 to 5.5.2 [#355](https://github.com/KatsuteDev/Background/pull/355) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.27.0 to 2.29.0 [#353](https://github.com/KatsuteDev/Background/pull/353) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.4.1 to 10.4.2 [#354](https://github.com/KatsuteDev/Background/pull/354) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 5.0.7 to 5.0.8 [#363](https://github.com/KatsuteDev/Background/pull/363) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.4.0 to 2.4.1 [#358](https://github.com/KatsuteDev/Background/pull/358) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.5.2 to 5.5.3 [#359](https://github.com/KatsuteDev/Background/pull/359) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.4.2 to 10.4.3 [#361](https://github.com/KatsuteDev/Background/pull/361) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.90.0 to 1.91.0 [#360](https://github.com/KatsuteDev/Background/pull/360) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.21.5 to 0.23.0 [#362](https://github.com/KatsuteDev/Background/pull/362) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.29.0 to 2.30.0 [#365](https://github.com/KatsuteDev/Background/pull/365) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 5.0.8 to 6.0.1 [#366](https://github.com/KatsuteDev/Background/pull/366) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 10.4.3 to 11.0.0 [#364](https://github.com/KatsuteDev/Background/pull/364) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.30.0 to 2.31.1 [#369](https://github.com/KatsuteDev/Background/pull/369) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.5.3 to 5.5.4 [#377](https://github.com/KatsuteDev/Background/pull/377) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 20.14.0 to 22.0.0 [#376](https://github.com/KatsuteDev/Background/pull/376) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.0.0 to 22.1.0 [#384](https://github.com/KatsuteDev/Background/pull/384) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.91.0 to 1.92.0 [#385](https://github.com/KatsuteDev/Background/pull/385) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.1.0 to 22.2.0 [#388](https://github.com/KatsuteDev/Background/pull/388) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.2.0 to 22.3.0 [#389](https://github.com/KatsuteDev/Background/pull/389) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.31.1 to 2.32.0 [#390](https://github.com/KatsuteDev/Background/pull/390) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.10.4...3.0.0`](https://github.com/KatsuteDev/Background/compare/2.10.4...3.0.0)
+
 ## 2.10.4
 
 ### Fixes

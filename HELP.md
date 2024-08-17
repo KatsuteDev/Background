@@ -18,6 +18,10 @@ This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resource
 
 The workspace setting will use whatever settings are set for that workspace, it does not fallback to the global setting.
 
+### Opacity is inverted
+
+As of 3.0.0, opacity has been switched from 0 visible and 1 invisible to 1 visible and 0 invisible, use the **useInvertedOpacity** option if you want the old behavior.
+
 ### Disable/uninstall doesn't remove background
 
 Backgrounds are not removed on extension disable or uninstall, you must run the **Background: Uninstall** command to remove backgrounds.
