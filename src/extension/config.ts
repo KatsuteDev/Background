@@ -64,6 +64,11 @@ export const get: (key: ConfigurationKey, options?: {
         default: option!.defaultValue
     };
 
+    // default override for inverted
+    if(key === "backgroundOpacity" && get("useInvertedOpacity")){
+        values.default = [0.9, 0.9, 0.9, 0.9];
+    }
+
     let value: any;
 
     value = Array.isArray(values.default) && (scope === "workspace" || target() === ConfigurationTarget.Workspace)
@@ -72,7 +77,7 @@ export const get: (key: ConfigurationKey, options?: {
 
     value ??= includeDefault ? values.default : undefined; // assign default if current value is undefined and includeDefault is true
 
-    if(Array.isArray(values.default)){ // background[,,,] setting
+    if(Array.isArray(values.default) && Array.isArray(value)){ // background[,,,] setting
         if(values.default.length === 0){ // backgrounds[]
             return value;
         }else if(ui){ // background setting[,,,]

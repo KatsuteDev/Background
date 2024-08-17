@@ -32,7 +32,7 @@ export const show: (ui: UI) => void = (ui: UI) => {
         title: title("Opacity", ui),
         placeHolder: "Background opacity",
         value: current.toString(),
-        prompt: `Background opacity (${current}). 0 is fully visible and 1 is invisible.`,
+        prompt: `Background opacity (${current}). ${(get("useInvertedOpacity") ? 0 : 1)} is fully visible and ${(get("useInvertedOpacity") ? 1 : 0)} is invisible.`,
         validateInput: (value: string) => {
             if(isNaN(+value))
                 return "Not a number";

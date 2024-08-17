@@ -48,6 +48,9 @@
 * Bump @types/node from 22.1.0 to 22.2.0 [#388](https://github.com/KatsuteDev/Background/pull/388) ([@dependabot](https://github.com/dependabot))
 * Bump @types/node from 22.2.0 to 22.3.0 [#389](https://github.com/KatsuteDev/Background/pull/389) ([@dependabot](https://github.com/dependabot))
 * Bump @vscode/vsce from 2.31.1 to 2.32.0 [#390](https://github.com/KatsuteDev/Background/pull/390) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.3.0 to 22.4.0 [#391](https://github.com/KatsuteDev/Background/pull/391) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.23.0 to 0.23.1 [#393](https://github.com/KatsuteDev/Background/pull/393) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 2.32.0 to 3.0.0 [#392](https://github.com/KatsuteDev/Background/pull/392) ([@dependabot](https://github.com/dependabot))
 
 **Full Changelog**: [`2.10.4...3.0.0`](https://github.com/KatsuteDev/Background/compare/2.10.4...3.0.0)
 
