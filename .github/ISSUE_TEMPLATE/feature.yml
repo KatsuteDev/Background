@@ -5,26 +5,35 @@ assignees: []
 body:
   - type: markdown
     attributes:
-      value: |
+      value: |-
         This form is for the VSCode desktop extension, if you are using the browser extension open an issue [here](https://github.com/KatsuteDev/BackgroundX/issues/new/choose). <br><br>
 
-  - type: markdown
+  - type: checkboxes
     attributes:
-      value: |
-        Before opening a feature request please check that your idea was not already discussed in the following:
+      label: Checks
+      description: |-
+        Save time and check the below before submitting a feature request, it may already have an answer:
+      options:
+        - label: I have checked [existing feature requests](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3A%22feature+request%22).
+          required: true
+        - label: I have checked that this feature does not already exist.
+          required: true
+        - label: I am using the latest extension version.
+          required: true
 
-        * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3A%22feature+request%22)
-
-        Please also check that:
-
-        * This feature makes sense for the project.
-        * This feature does not already exist.
-        * You are running the latest version.
+  - type: checkboxes
+    attributes:
+      label: This is a Feature
+      description: |-
+        Do not use the feature request form to submit bugs, you must use the [bug report](https://github.com/KatsuteDev/Background/issues/new?template=bug.yml) form.
+      options:
+        - label: This is a feature request and not a bug report.
+          required: true
 
   - type: textarea
     attributes:
       label: Feature
-      description: |
+      description: |-
         Explain the feature.
     validations:
       required: true
@@ -32,7 +41,7 @@ body:
   - type: textarea
     attributes:
       label: Reason
-      description: |
+      description: |-
         Explain why you think this feature should be added.
     validations:
       required: true

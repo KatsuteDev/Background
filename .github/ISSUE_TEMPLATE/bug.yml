@@ -5,23 +5,22 @@ assignees: []
 body:
   - type: markdown
     attributes:
-      value: |
+      value: |-
         This form is for the VSCode desktop extension, if you are using the browser extension open an issue [here](https://github.com/KatsuteDev/BackgroundX/issues/new/choose). <br><br>
 
-  - type: markdown
+  - type: checkboxes
     attributes:
-      value: |
-        Before opening a bug report please check that your issue was not already discussed in the following:
-
-        * [Issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22)
-        * [Common Issues](https://github.com/KatsuteDev/Background/blob/main/HELP.md)
-
-        Please also check that:
-
-        * This is actually a bug and not a feature.
-        * You are running the latest extension version.
-
-        If your VSCode is blank or stops working please check [here](https://github.com/KatsuteDev/Background#%EF%B8%8F-vscode-stopped-working) first.
+      description: |-
+        Save time and check the below before submitting an issue, it may already have a resolution:
+      options:
+        - label: I have checked [existing issues](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22).
+          required: true
+        - label: I have checked the [help page](https://github.com/KatsuteDev/Background/blob/main/HELP.md).
+          required: true
+        - label: This is actually a bug and not a feature.
+          required: true
+        - label: I am using the latest extension version.
+          required: true
 
   - type: input
     id: os
@@ -34,10 +33,10 @@ body:
     id: vs
     attributes:
       label: VSCode Version
-      description: |
+      description: |-
         Include the [version](https://code.visualstudio.com/docs/supporting/FAQ#_how-do-i-find-the-version) and type.
 
-        Do not write 'latest'
+        Do not write 'latest', the latest version keeps changing.
     validations:
       required: true
 
@@ -45,7 +44,7 @@ body:
     id: version
     attributes:
       label: Extension Version
-      description: |
+      description: |-
         Do not write 'latest'.
     validations:
       required: true
@@ -54,15 +53,22 @@ body:
     id: settings
     attributes:
       label: Settings
-      description: |
+      description: |-
         Include `background.*` settings from the [settings.json](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) file.
 
-        Make sure to remove any sensitive information.
+  - type: checkboxes
+    attributes:
+      label: Settings Verificiation
+      description: |-
+        Please verify that you have removed any sensitive or personal information from the above input.
+      options:
+        - label: I have made sure to remove any sensitive or personal information from the above input.
+          required: true
 
   - type: textarea
     attributes:
       label: Issue
-      description: |
+      description: |-
         Explain the issue.
     validations:
       required: true
@@ -70,7 +76,7 @@ body:
   - type: textarea
     attributes:
       label: How to replicate
-      description: |
+      description: |-
         Include steps to reproduce this issue. Add a video if possible.
     validations:
       required: true
