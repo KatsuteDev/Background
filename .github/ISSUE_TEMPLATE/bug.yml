@@ -46,7 +46,7 @@ body:
     attributes:
       label: Extension Version
       description: |-
-        Do not write 'latest'.
+        Do not write 'latest', the latest version keeps changing.
     validations:
       required: true
 
@@ -64,7 +64,6 @@ body:
         Please verify that you have removed any sensitive or personal information from the above input.
       options:
         - label: I have made sure to remove any sensitive or personal information from the above input.
-          required: true
 
   - type: textarea
     attributes:
