@@ -331,8 +331,9 @@
         "// -- build -- //": "",
         "vscode:prepublish": "npm run prepare",
         "build:esbuild": "esbuild src/extension.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node --minify --legal-comments=none --metafile=meta.json",
+        "build:localization": "node localization.js",
         "build:post": "node build.js",
-        "build": "tsc --noEmit && npm run build:esbuild && npm run build:post",
+        "build": "tsc --noEmit && npm run build:esbuild && npm run build:localization && npm run build:post",
         "prepare": "npm run clean && npm run build",
         "// -- deploy -- //": "",
         "package": "vsce package"

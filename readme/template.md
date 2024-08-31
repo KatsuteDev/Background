@@ -4,64 +4,56 @@
         <img alt="logo" width="100" height="100" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png">
     </a>
     <h3>Background</h3>
-    <h4>The most advanced background image extension for VSCode</h4>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="Rating" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="Installs" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="Downloads" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <h4>{{ header.description }}</h4>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_rating }}" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_installs }}" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_downloads }}" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
 </div>
 
 <br>
 
-Add multiple background images for the window, editors, sidebars, or the panel. Load backgrounds from file, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL. Transition between multiple background images.
+{{ description }}
 
 <div align="center">
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
 </div>
 
-## Installation
+## {{ installation._ }}
 
- - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
- - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
+{{ installation.description }}
 
-#### Usage
+#### {{ installation.usage._ }}
 
- 1. Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar.
- 2. Select where you want to add a background (Window, Editor, Sidebar, Panel).
- 3. Add backgrounds and change how it should be displayed.
- 4. Use `Background: Install` or press the install button.
+{{ installation.usage.description }}
 
-## Features
+## {{ features._ }}
 
-#### Multiple Backgrounds
+#### {{ features.multiple_backgrounds._ }}
 
-Add background images for the whole window, editors, sidebars, or the panel. Transition between multiple background images.
+{{ features.multiple_backgrounds.description }}
 
 <div align="center">
-    <h6>Full Window</h6>
+    <h6>{{ features.multiple_backgrounds.img_window }}</h6>
     <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
     <br>
-    <h6>Editor, Sidebar, and Terminal</h6>
+    <h6>{{ features.multiple_backgrounds.img_other }}</h6>
     <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
     <br>
-    <h6>Slideshow</h6>
+    <h6>{{ features.multiple_backgrounds.img_slideshow }}</h6>
     <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/transition.gif">
 </div>
 
-#### Configuration Menu
+#### {{ features.configuration._ }}
 
-Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar to access the configuration menu.
+{{ features.configuration.description }}
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
 </div>
 
-#### Glob, URL, and Environment Variable Support
+#### {{ features.path._ }}
 
-Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
-
-> ⚠️ **Use only `/` for directories**
->
-> [node-glob](https://github.com/isaacs/node-glob#windows) only accepts `/` as path separators, `\` is reserved for escape characters.
+{{ features.path.description }}
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
@@ -69,9 +61,9 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## Commands
+## {{ commands._ }}
 
-| Command | Description |
+| {{ commands.table_command }} | {{ commands.table_description }} |
 |---|---|
 |`Background: Install`|Installs and enables the background.|
 |`Background: Uninstall`|Uninstalls and disables the background.|
@@ -81,20 +73,11 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## Configuration
+## {{ configuration._ }}
 
-Use the `Background: Configuration` command to access the configuration menu.
+{{ configuration.description }}
 
-Background properties are saved as arrays so you can have different options for different UI elements.
-
-The order settings are saved in is:
-
- 0. Window
- 1. Editor
- 2. Sidebar
- 3. Panel
-
-| Key | Type | Description |
+| {{ configuration.table_key }} | {{ configuration.table_type }} | {{ configuration.table_description }} |
 |---|:-:|---|
 |`background.windowBackgrounds`|`string[]`|The list of files or globs to use for the window background image.|
 |`background.editorBackgrounds`|`string[]`|The list of files or globs to use for editor background images.|
@@ -103,7 +86,7 @@ The order settings are saved in is:
 
 <br>
 
-| Key | Type | Description |
+| {{ configuration.table_key }} | {{ configuration.table_type }} | {{ configuration.table_description }} |
 |---|:-:|---|
 |`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
 |`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
@@ -116,7 +99,7 @@ The order settings are saved in is:
 
 <br>
 
-| Key | Type | Description |
+| {{ configuration.table_key }} | {{ configuration.table_type }} | {{ configuration.table_description }} |
 |---|:-:|---|
 |`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br>This option is disabled when you run the uninstall command.|
 |`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
@@ -127,12 +110,12 @@ The order settings are saved in is:
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## Environment Variables
+## {{ environment._ }}
 
-| Variable | Description |
+| {{ environment.variable }} | {{ environment.description }} |
 |---|---|
-|`${vscode:workspace}`|Current VSCode project folder|
-|`${user:home}`|Current user's home directory|
+|`${vscode:workspace}`|{{ environment.desc_workspace }}|
+|`${user:home}`|{{ environment.desc_home }}|
 |`${...}`|System environment variable|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
@@ -191,4 +174,4 @@ const background = vscode.extensions.getExtension("katsute.code-background").exp
 
 ## &nbsp;
 
-This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Background/blob/main/LICENSE).
+{{ license }}
