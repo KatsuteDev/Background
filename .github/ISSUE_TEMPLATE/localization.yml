@@ -1,0 +1,28 @@
+name: Translation Issue
+description: Report an incorrect translation
+labels: [localization]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |-
+        Do not open issues regarding missing languages, they will only be added if someone provides a [PR](https://github.com/KatsuteDev/Background-Localization/pulls).
+
+  - type: checkboxes
+    attributes:
+      label: Checks
+      description: |-
+        Please confirm the following.
+      options:
+        - label: This is for a translation error and not a missing translation.
+          required: true
+        - label: I am using the latest extension version.
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Translation Error
+      description: |-
+        Include the text that is translated incorrectly and what it should be translated to.
+    validations:
+      required: true
