@@ -98,33 +98,33 @@ The order settings are saved in is:
 
 | Key | Type | Description |
 |---|:-:|---|
-|`background.windowBackgrounds`|`string[]`|The list of files or globs to use for the window background image.|
-|`background.editorBackgrounds`|`string[]`|The list of files or globs to use for editor background images.|
-|`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
-|`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
+|`background.windowBackgrounds`|`string[]`|The list of files, globs, or URLs to pull background images from.<br><br>* Use only `/` for directories, `\` is reserved for escape characters.<br><br>* Image URLs must be served over HTTPS.|
+|`background.editorBackgrounds`|`string[]`|The list of files, globs, or URLs to pull background images from.<br><br>* Use only `/` for directories, `\` is reserved for escape characters.<br><br>* Image URLs must be served over HTTPS.|
+|`background.sidebarBackgrounds`|`string[]`|The list of files, globs, or URLs to pull background images from.<br><br>* Use only `/` for directories, `\` is reserved for escape characters.<br><br>* Image URLs must be served over HTTPS.|
+|`background.panelBackgrounds`|`string[]`|TThe list of files, globs, or URLs to pull background images from.<br><br>* Use only `/` for directories, `\` is reserved for escape characters.<br><br>* Image URLs must be served over HTTPS..|
 
 <br>
 
 | Key | Type | Description |
 |---|:-:|---|
-|`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
-|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts a [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
-|`background.backgroundOpacity`|`number[4]`|The UI opacity. 1 is fully visible and 0 is invisible.|
+|`background.backgroundAlignment`|`enum[4]`|The background image alignment.|
+|`background.backgroundAlignmentValue`|`string[4]`|If `backgroundAlignment` is set to `Manual`, this is the literal value for the `background-position` css property.|
+|`background.backgroundBlur`|`string[4]`|The background image blur amount in css units.|
+|`background.backgroundOpacity`|`number[4]`|The background opacity, make sure this number is not to high, otherwise you may not be able to see the UI and revert this change.<br><br>`1` is fully visible and `0` is invisible. If `useInvertedOpacity` is true, this logic is inverted.|
 |`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
 |`background.backgroundSize`|`enum[4]`|The background image size.|
-|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
+|`background.backgroundSizeValue`|`string[4]`|If `windowBackgroundSize` is set to `Manual`, this is the literal value for the `background-size` css property.|
+|`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change.<br><br>Set to `0` to always use the same image.|
 
 <br>
 
 | Key | Type | Description |
 |---|:-:|---|
-|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br>This option is disabled when you run the uninstall command.|
+|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br><br>This option is disabled when you run the uninstall command.|
 |`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
 |`background.useInvertedOpacity`|`boolean`|Use an inverted opacity, so 0 is fully visible and 1 is invisible.|
 |`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
-|`background.settingScope`|`Global` \| `Workspace`|Where to save background settings. This does not automatically update the background on workspace change, you need to also turn on `autoInstall`.|
+|`background.settingScope`|`Global` \| `Workspace`|Where to save and load background settings.<br><br>This does not automatically update the background on workspace change, you need to also turn on `autoInstall`.|
 |`background.CSS`|`string`|Apply raw CSS to VSCode.|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>

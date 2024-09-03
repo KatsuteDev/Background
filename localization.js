@@ -26,6 +26,11 @@ for(const folder of fs.readdirSync(localization).filter(f => !f.includes('.'))){
     const en = folder === "en";
 
     const t = JSON.parse(fs.readFileSync(path.join(localization, folder, "readme.json"), "utf-8"));
+    const t2 = JSON.parse(fs.readFileSync(path.join(localization, folder, "translations.json"), "utf-8"));
+
+    for(const [k, v] of Object.entries(t2)){
+        t[`package.${k}`] = v.replace(/\n\n/g, "<br><br>").replace(/#\w+\.(\w+)#/g, "$1");
+    }
 
     fs.writeFileSync(en ? path.join(__dirname, "README.md") : path.join(__dirname, "readme", `readme.${folder}.md`), `<div align="right">${readmePicker}</div>\n\n` + readme.replace(/{{\s*([^}]+)\s*}}/g, (_, key) => {
         if(!t[key.trim()]){

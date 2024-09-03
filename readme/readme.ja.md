@@ -75,11 +75,11 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 
 | Command | Description |
 |---|---|
-|`Background: Install`|Installs and enables the background.|
-|`Background: Uninstall`|Uninstalls and disables the background.|
-|`Background: Reload`|Randomizes the backgrounds. Background must already be installed.|
-|`Background: Configuration`|Opens the configuration menu.|
-|`Background: Changelog`|Opens changelog.|
+|`undefined: undefined`|Installs and enables the background.|
+|`undefined: undefined`|Uninstalls and disables the background.|
+|`undefined: undefined`|Randomizes the backgrounds. Background must already be installed.|
+|`undefined: undefined`|Opens the configuration menu.|
+|`undefined: undefined`|Opens changelog.|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
@@ -98,34 +98,34 @@ The order settings are saved in is:
 
 | Key | Type | Description |
 |---|:-:|---|
-|`background.windowBackgrounds`|`string[]`|The list of files or globs to use for the window background image.|
-|`background.editorBackgrounds`|`string[]`|The list of files or globs to use for editor background images.|
-|`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
-|`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
+|`background.windowBackgrounds`|`string[]`|undefined|
+|`background.editorBackgrounds`|`string[]`|undefined|
+|`background.sidebarBackgrounds`|`string[]`|undefined|
+|`background.panelBackgrounds`|`string[]`|Tundefined.|
 
 <br>
 
 | Key | Type | Description |
 |---|:-:|---|
-|`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
-|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts a [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
-|`background.backgroundOpacity`|`number[4]`|The UI opacity. 1 is fully visible and 0 is invisible.|
-|`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
-|`background.backgroundSize`|`enum[4]`|The background image size.|
-|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
+|`background.backgroundAlignment`|`enum[4]`|undefined|
+|`background.backgroundAlignmentValue`|`string[4]`|undefined|
+|`background.backgroundBlur`|`string[4]`|undefined|
+|`background.backgroundOpacity`|`number[4]`|undefined|
+|`background.backgroundRepeat`|`enum[4]`|undefined|
+|`background.backgroundSize`|`enum[4]`|undefined|
+|`background.backgroundSizeValue`|`string[4]`|undefined|
+|`background.backgroundChangeTime`|`number[4]`|undefined|
 
 <br>
 
 | Key | Type | Description |
 |---|:-:|---|
-|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br>This option is disabled when you run the uninstall command.|
-|`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
-|`background.useInvertedOpacity`|`boolean`|Use an inverted opacity, so 0 is fully visible and 1 is invisible.|
-|`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
-|`background.settingScope`|`Global` \| `Workspace`|Where to save background settings. This does not automatically update the background on workspace change, you need to also turn on `autoInstall`.|
-|`background.CSS`|`string`|Apply raw CSS to VSCode.|
+|`background.autoInstall`|`boolean`|undefined|
+|`background.renderContentAboveBackground`|`boolean`|undefined|
+|`background.useInvertedOpacity`|`boolean`|undefined|
+|`background.smoothImageRendering`|`boolean`|undefined|
+|`background.settingScope`|`Global` \| `Workspace`|undefined|
+|`background.CSS`|`string`|undefined|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
