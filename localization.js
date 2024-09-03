@@ -2,43 +2,50 @@ const fs = require("fs");
 const path = require("path");
 
 const readme = fs.readFileSync(path.join(__dirname, "readme", "template.md"), "utf-8");
+const help = fs.readFileSync(path.join(__dirname, "readme", "template.help.md"), "utf-8");
 
 const localization = path.join(__dirname, "localization");
 
-const r1 = JSON.parse(fs.readFileSync(path.join(localization, "en", "readme.json"), "utf-8"));
+const ent = JSON.parse(fs.readFileSync(path.join(localization, "en", "readme.json"), "utf-8"));
 
 let error = false;
 
-const languages = fs.readdirSync(localization)
+const readmePicker = fs.readdirSync(localization)
     .filter(f => !f.includes('.'))
-    .map(f => `<a href="https://github.com/KatsuteDev/Background/blob/main/readme/readme.${f}.md">${JSON.parse(fs.readFileSync(path.join(localization, f, "readme.json"))).language}</a>`)
+    .map(f => [f, f === "en" ? `https://github.com/KatsuteDev/Background#readme` : `https://github.com/KatsuteDev/Background/blob/main/readme/readme.${f}.md`])
+    .map(f => `<a href="${f[1]}">${JSON.parse(fs.readFileSync(path.join(localization, f[0], "readme.json"))).language}</a>`)
     .join(" | ");
 
-const lstring = `<div align="right">${languages}</div>\n\n`
+const helpPicker = fs.readdirSync(localization)
+    .filter(f => !f.includes('.'))
+    .map(f => [f, f === "en" ? `https://github.com/KatsuteDev/Background/blob/main/HELP.md` : `https://github.com/KatsuteDev/Background/blob/main/readme/help.${f}.md`])
+    .map(f => `<a href="${f[1]}">${JSON.parse(fs.readFileSync(path.join(localization, f[0], "readme.json"))).language}</a>`)
+    .join(" | ");
 
 for(const folder of fs.readdirSync(localization).filter(f => !f.includes('.'))){
-    if(folder === "en"){
-        fs.writeFileSync(path.join(__dirname, "README.md"), lstring + readme.replace(/{{\s*([^}]+)\s*}}/g, (match, key) => {
-            if(!r1[key.trim()]){
-                console.error(`[${folder}] Failed to find '${key.trim()}'`);
-                error = true;
-            }
-            return r1[key.trim()];
-        }).replace(/\r?\n/g, '\n').trim(), "utf-8");
-        fs.copyFileSync(path.join(localization, folder, "translations.json"), path.join(__dirname, `package.nls.json`));
-    }else{
-        const r2 = Object.keys(JSON.parse(fs.readFileSync(path.join(localization, folder, "readme.json"), "utf-8")));
-        fs.writeFileSync(path.join(__dirname, "readme", `readme.${folder}.md`), lstring + readme.replace(/{{\s*([^}]+)\s*}}/g, (match, key) => {
-            if(!r2[key.trim()]){
-                console.warn(`[${folder}] Failed to find '${key.trim()}', using English translation`)
-                return r1[key.trim()]; // if it doesn't exist it will throw an error from above block
-            }
-            return r2[key.trim()];
-        }).replace(/\r?\n/g, '\n').trim(), "utf-8");
-        fs.copyFileSync(path.join(localization, folder, "translations.json"), path.join(__dirname, `package.nls.${folder}.json`));
-    }
+    const en = folder === "en";
+
+    const t = JSON.parse(fs.readFileSync(path.join(localization, folder, "readme.json"), "utf-8"));
+
+    fs.writeFileSync(en ? path.join(__dirname, "README.md") : path.join(__dirname, "readme", `readme.${folder}.md`), `<div align="right">${readmePicker}</div>\n\n` + readme.replace(/{{\s*([^}]+)\s*}}/g, (_, key) => {
+        if(!t[key.trim()]){
+            console.error(`[${folder}] Failed to find '${key.trim()}'`);
+            error = true;
+            return ent[key.trim()];
+        }
+        return t[key.trim()];
+    }).replace(/\r?\n/g, '\n').trim(), "utf-8");
+
+    fs.writeFileSync(en ? path.join(__dirname, "HELP.md") : path.join(__dirname, "readme", `help.${folder}.md`), `<div align="right">${helpPicker}</div>\n\n` + help.replace(/{{\s*([^}]+)\s*}}/g, (_, key) => {
+        if(!t[key.trim()]){
+            console.error(`[${folder}] Failed to find '${key.trim()}'`);
+            error = true;
+            return ent[key.trim()];
+        }
+        return t[key.trim()];
+    }).replace(/\r?\n/g, '\n').trim(), "utf-8");
+
+    fs.copyFileSync(path.join(localization, folder, "translations.json"), path.join(__dirname, en ? `package.nls.json` : `package.nls.${folder}.json`));
 }
 
-if(error){
-    process.exit(1);
-}
+error && process.exit(1);

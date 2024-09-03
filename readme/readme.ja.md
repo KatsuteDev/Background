@@ -1,6 +1,7 @@
-<div align="right"><a href="https://github.com/KatsuteDev/Background/blob/main/readme/readme.en.md">English</a> | <a href="https://github.com/KatsuteDev/Background/blob/main/readme/readme.ja.md">日本語</a></div>
+<div align="right"><a href="https://github.com/KatsuteDev/Background#readme">English</a> | <a href="https://github.com/KatsuteDev/Background/blob/main/readme/readme.ja.md">日本語</a></div>
 
 <div id="top" align="center">
+    <br>
     <a href="https://github.com/KatsuteDev/Background#readme">
         <img alt="logo" width="100" height="100" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png">
     </a>

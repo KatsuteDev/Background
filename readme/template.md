@@ -1,4 +1,5 @@
 <div id="top" align="center">
+    <br>
     <a href="https://github.com/KatsuteDev/Background#readme">
         <img alt="logo" width="100" height="100" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/icon.png">
     </a>
