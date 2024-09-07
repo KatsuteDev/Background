@@ -1,12 +1,12 @@
-# {{ help.commonIssues }}
+# {{ help._ }}
 
 ### {{ help.corrupt._ }}
 
-{{ help.corrupt.description }}
+{{ help.corrupt.description | https://code.visualstudio.com/download }}
 
-### {{ help.fix._ }}
+### {{ help.fix._ | [#46](https://github.com/KatsuteDev/Background/issues/46) }}
 
-{{ help.fix.description }}
+{{ help.fix.description | %LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js | workbench.desktop.main-backup.js | %LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json | product-backup.json }}
 
 ## &nbsp;
 
@@ -22,20 +22,20 @@
 
 {{ help.uninstall.description }}
 
-### {{ help.window._ }}
+### {{ help.window._ | [#178](https://github.com/KatsuteDev/Background/issues/178) }}
 
 {{ help.window.description }}
 
 ## &nbsp;
 
-### {{ help.wsl._ }}
+### {{ help.wsl._ | [#27](https://github.com/KatsuteDev/Background/issues/27#issuecomment-1233610914) }}
 
 {{ help.wsl.description }}
 
-### {{ help.readonly._ }}
+### {{ help.readonly._ | [#76](https://github.com/KatsuteDev/Background/issues/76) }}
 
-{{ help.readonly.description }}
+{{ help.readonly.description | Visual Studio Code.app | Download | Application | sudo chmod -R a+rwx '/Applications/Visual Studio Code.app' }}
 
-### {{ help.snap._ }}
+### {{ help.snap._ | [#140](https://github.com/KatsuteDev/Background/issues/140#issuecomment-1503820398) }}
 
-{{ help.snap.description }}
+{{ help.snap.description | https://snapcraft.io/ | https://code.visualstudio.com/download }}

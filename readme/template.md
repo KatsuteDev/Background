@@ -5,14 +5,14 @@
     </a>
     <h3>Background</h3>
     <h4>{{ header.description }}</h4>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_rating }}" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_installs }}" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_downloads }}" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_rating }}" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label={{ header.img_rating }}"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_installs }}" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label={{ header.img_installs }}"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="{{ header.img_downloads }}" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label={{ header.img_downloads }}"></a>
 </div>
 
 <br>
 
-{{ description }}
+{{ description | https://github.com/isaacs/node-glob#glob-primer }}
 
 <div align="center">
     <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
@@ -20,7 +20,7 @@
 
 ## {{ installation._ }}
 
-{{ installation.description }}
+{{ installation.description | https://marketplace.visualstudio.com/items?itemName=katsute.code-background | [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background) }}
 
 #### {{ installation.usage._ }}
 
@@ -53,7 +53,7 @@
 
 #### {{ features.path._ }}
 
-{{ features.path.description }}
+{{ features.path.description | https://github.com/isaacs/node-glob#glob-primer | https://github.com/isaacs/node-glob#windows }}
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
@@ -116,7 +116,7 @@
 |---|---|
 |`${vscode:workspace}`|{{ environment.desc_workspace }}|
 |`${user:home}`|{{ environment.desc_home }}|
-|`${...}`|System environment variable|
+|`${...}`|{{ environment.desc_env }}|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
@@ -174,4 +174,4 @@ const background = vscode.extensions.getExtension("katsute.code-background").exp
 
 ## &nbsp;
 
-{{ license }}
+{{ license | [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Background/blob/main/LICENSE) }}
