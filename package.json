@@ -207,12 +207,12 @@
                             "Repeat Round"
                         ],
                         "enumDescriptions": [
-                            "Do not repeat",
-                            "Repeat X/Y",
-                            "Repeat X",
-                            "Repeat Y",
-                            "Repeat with even spacing to fill the screen",
-                            "Repeat and stretch images to fill the screen"
+                            "%contributes.configuration.backgroundRepeat.NR%",
+                            "%contributes.configuration.backgroundRepeat.R%",
+                            "%contributes.configuration.backgroundRepeat.RX%",
+                            "%contributes.configuration.backgroundRepeat.RY%",
+                            "%contributes.configuration.backgroundRepeat.RS%",
+                            "%contributes.configuration.backgroundRepeat.RR%"
                         ]
                     }
                 },
@@ -237,10 +237,10 @@
                             "Manual"
                         ],
                         "enumDescriptions": [
-                            "Original image size",
-                            "Fit image to the screen",
-                            "Stretch image to fill the screen",
-                            "Manual size"
+                            "%contributes.configuration.backgroundSize.Auto%",
+                            "%contributes.configuration.backgroundSize.Contain%",
+                            "%contributes.configuration.backgroundSize.Cover%",
+                            "%contributes.configuration.backgroundSize.Manual%"
                         ]
                     }
                 },
