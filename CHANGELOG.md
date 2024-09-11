@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.0.1
+
+### Fixes
+
+* Fix extension compatibility with VSCode 1.84 [#409](https://github.com/KatsuteDev/Background/pull/409) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump @types/node from 22.4.0 to 22.5.0 [#395](https://github.com/KatsuteDev/Background/pull/395) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.92.0 to 1.93.0 [#406](https://github.com/KatsuteDev/Background/pull/406) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.0.0 to 3.1.0 [#407](https://github.com/KatsuteDev/Background/pull/407) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.0.0...3.0.1`](https://github.com/KatsuteDev/Background/compare/3.0.0...3.0.1)
+
 ## 3.0.0
 
 ### Breaking Change
