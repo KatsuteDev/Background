@@ -54,18 +54,21 @@ export const statusbar: StatusBarItem = (() => {
 export const activate: (context: ExtensionContext) => any = (context: ExtensionContext) => {
     let workbench: string;
     let product: string;
+
+    const dir = require?.main?.filename ? dirname(require.main.filename) : join(process.cwd(), "resources", "app", "out");
+
     // internal files
-    if(require?.main?.filename){
+    if(dir){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        workbench = join(dirname(require.main.filename), "vs", "workbench", "workbench.desktop.main.js");
+        workbench = join(dir, "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-        product = join(dirname(require.main.filename), "../", "product.json");
+        product = join(dir, "../", "product.json");
 
         if(!existsSync(workbench)){
-            window.showErrorMessage(`Failed to find '${workbench}, please report this issue`);
+            window.showErrorMessage(`Failed to find '${workbench}', please report this issue`);
             return;
         }else if(!existsSync(product)){
-            window.showErrorMessage(`Failed to find '${product}, please report this issue`);
+            window.showErrorMessage(`Failed to find '${product}', please report this issue`);
             return;
         }else{ // workbench & product exists
             const workbench_backup: string = workbench.replace(".js", "-backup.js");
@@ -108,7 +111,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
             }
         }
     }else{
-        window.showErrorMessage("Failed to find main file, please report this issue");
+        window.showErrorMessage("Failed to find application directory, please report this issue");
         return;
     }
 
