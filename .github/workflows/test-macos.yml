@@ -1,0 +1,30 @@
+name: Install and Launch VS Code on macOS
+
+on: [workflow_dispatch]
+
+jobs:
+  install-and-launch-vscode:
+    runs-on: macos-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Visual Studio Code
+      run: |-
+        brew install --cask visual-studio-code
+
+    - name: Install VSIX extension
+      run: |-
+        code --install-extension test/test.vsix
+
+    - name: Launch VS Code
+      run: |-
+        code &
+        sleep 60
+        pkill code
+
+    - name: Echo file content
+      run: |-
+        cat /tmp/test.txt

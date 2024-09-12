@@ -1,6 +1,6 @@
 name: Install and Launch VS Code
 
-on: [workflow_dispatch]
+on: [workflow_dispatch, push]
 
 jobs:
   install-and-launch-vscode:
