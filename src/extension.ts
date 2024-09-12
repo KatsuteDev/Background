@@ -55,7 +55,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     let workbench: string;
     let product: string;
 
-    const dir = require?.main?.filename
+    const dir = require?.main?.filename && existsSync(require.main.filename)
                     ? dirname(require.main.filename)
                     : platform() === "darwin"
                         ? join(process.cwd(), "Content", "Resources", "app", "out")
