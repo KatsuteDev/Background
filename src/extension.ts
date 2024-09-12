@@ -17,7 +17,7 @@
  */
 
 import { dirname, join } from "path";
-import { platform, release } from "os";
+import { platform, release, tmpdir } from "os";
 import { exec } from "@vscode/sudo-prompt";
 import { existsSync, copyFileSync } from "fs";
 import { ConfigurationTarget, ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
@@ -55,7 +55,11 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     let workbench: string;
     let product: string;
 
-    const dir = require?.main?.filename ? dirname(require.main.filename) : join(process.cwd(), "resources", "app", "out");
+    const dir = require?.main?.filename
+                    ? dirname(require.main.filename)
+                    : platform() === "darwin"
+                        ? join(process.cwd(), "Content", "Resources", "app", "out")
+                        : join(process.cwd(), "resources", "app", "out");
 
     // internal files
     if(dir){
@@ -63,6 +67,8 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
         workbench = join(dir, "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
         product = join(dir, "../", "product.json");
+
+        require("fs").writeFileSync(join(tmpdir(), "test.txt"), `${dir}\n${workbench}\n${existsSync(workbench)}\n${product} \n${existsSync(product)}`);
 
         if(!existsSync(workbench)){
             window.showErrorMessage(`Failed to find '${workbench}', please report this issue`);
