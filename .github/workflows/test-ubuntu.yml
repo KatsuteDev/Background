@@ -32,11 +32,7 @@ jobs:
 
     - name: Launch VS Code
       run: |-
-        nohup code > /dev/null 2>&1 &
+        code &
         sleep 30
-
-    - name: Echo file content
-      continue-on-error: true
-      run: |-
         cat /tmp/test.txt
         exit 0
