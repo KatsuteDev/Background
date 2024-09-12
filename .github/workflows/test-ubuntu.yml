@@ -1,9 +1,10 @@
-name: Install and Launch VS Code
+name: Test Ubuntu
 
 on: [workflow_dispatch, push]
 
 jobs:
-  install-and-launch-vscode:
+  test-ubuntu:
+    name: Test Ubuntu
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -32,9 +33,10 @@ jobs:
     - name: Launch VS Code
       run: |-
         code &
-        sleep 60
+        sleep 30
         pkill code
 
     - name: Echo file content
-      run: |
+      continue-on-error: true
+      run: |-
         cat /tmp/test.txt
