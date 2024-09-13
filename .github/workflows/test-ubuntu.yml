@@ -34,6 +34,6 @@ jobs:
     - name: Launch VS Code
       shell: bash
       run: |-
-        code &
+        code --verbose &
         sleep 10
         cat $GITHUB_STEP_SUMMARY
