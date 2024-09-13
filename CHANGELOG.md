@@ -1,10 +1,18 @@
 # Changelog
 
+## 3.0.2
+
+### Fixes
+
+* Fix extension compatibility with VSCode 1.94 for Mac [#410](https://github.com/KatsuteDev/Background/pull/410) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`3.0.1...3.0.2`](https://github.com/KatsuteDev/Background/compare/3.0.1...3.0.2)
+
 ## 3.0.1
 
 ### Fixes
 
-* Fix extension compatibility with VSCode 1.84 [#409](https://github.com/KatsuteDev/Background/pull/409) ([@Katsute](https://github.com/Katsute))
+* Fix extension compatibility with VSCode 1.94 [#409](https://github.com/KatsuteDev/Background/pull/409) ([@Katsute](https://github.com/Katsute))
 
 ### Dependencies
 
