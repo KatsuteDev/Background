@@ -25,6 +25,7 @@ jobs:
         sudo apt-get install -y apt-transport-https
         sudo apt-get update
         sudo apt-get install -y code
+        sudo apt-get install -y xvfb
 
     - name: Install VSIX extension
       run: |-
@@ -34,6 +35,6 @@ jobs:
     - name: Launch VS Code
       shell: bash
       run: |-
-        code --verbose &
+        xvfb-run code --verbose &
         sleep 10
         cat $GITHUB_STEP_SUMMARY
