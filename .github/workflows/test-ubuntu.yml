@@ -26,13 +26,12 @@ jobs:
 
     - name: Install VSIX extension
       run: |-
-        code --install-extension test/test.vsix
+        code --install-extension test/test-ubuntu.vsix
         sleep 5
 
     - name: Launch VS Code
       shell: bash
       run: |-
-        xvfb-run code --verbose &
+        xvfb-run code &
         sleep 20
-        ls /tmp
         cat /tmp/test.txt
