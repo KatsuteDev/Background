@@ -34,6 +34,7 @@ jobs:
     - name: Launch VS Code
       shell: bash
       run: |-
+        cd /usr/share/code
         xvfb-run code --verbose &
         sleep 20
 
@@ -41,4 +42,7 @@ jobs:
       shell: bash
       run: |-
         ls /tmp
+        sleep 1
+        echo ======
+        sleep 1
         cat /tmp/test.txt
