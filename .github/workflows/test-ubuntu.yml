@@ -36,5 +36,7 @@ jobs:
         code &
         sleep 20
         cat /tmp/test.txt
+        cat /var/tmp/test.txt
+        ls /var/tmp
         ls /tmp
         exit 0
