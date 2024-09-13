@@ -33,8 +33,8 @@ jobs:
     - name: Print Output
       shell: bash
       run: |-
-        ls /tmp
+        ls $TMPDIR
         sleep 1
         echo ======
         sleep 1
-        cat /tmp/test.txt
+        cat $(echo $TMPDIR)test.txt
