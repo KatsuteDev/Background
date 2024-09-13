@@ -27,7 +27,7 @@ jobs:
     - name: Launch VS Code
       shell: bash
       run: |-
-        open -a "Visual Studio Code" --args --verbose &
+        /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --verbose &
         sleep 20
 
     - name: Print Output
