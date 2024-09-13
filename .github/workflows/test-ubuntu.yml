@@ -1,0 +1,48 @@
+name: Test Ubuntu
+
+on: [workflow_dispatch]
+
+jobs:
+  test-ubuntu:
+    name: Test Ubuntu
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      shell: bash
+      run: |-
+        sudo apt-get update
+        sudo apt-get install -y wget gpg
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+        sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+        sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+        sudo apt-get install -y apt-transport-https
+        sudo apt-get update
+        sudo apt-get install -y code
+        sudo apt-get install -y xvfb
+
+    - name: Install VSIX extension
+      shell: bash
+      run: |-
+        code --install-extension test/test.vsix
+        sleep 5
+
+    - name: Launch VS Code
+      shell: bash
+      run: |-
+        cd /usr/share/code
+        xvfb-run code --verbose &
+        sleep 20
+
+    - name: Print Output
+      shell: bash
+      run: |-
+        ls /tmp
+        sleep 1
+        echo ======
+        sleep 1
+        cat /tmp/test.txt
