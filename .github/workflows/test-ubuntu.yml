@@ -29,14 +29,11 @@ jobs:
     - name: Install VSIX extension
       run: |-
         code --install-extension test/test.vsix
-        sleep 10
+        sleep 5
 
     - name: Launch VS Code
       shell: bash
       run: |-
         code &
-        sleep 20
-        echo Temp Directory: $RUNNER_TEMP
-        sleep 1
-        ls $RUNNER_TEMP
-        cat $RUNNER_TEMP/test.txt
+        sleep 10
+        cat $GITHUB_STEP_SUMMARY
