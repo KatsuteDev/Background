@@ -29,11 +29,12 @@ jobs:
     - name: Install VSIX extension
       run: |-
         code --install-extension test/test.vsix
+        sleep 10
 
     - name: Launch VS Code
       run: |-
         code &
-        sleep 30
-        ls /tmp
+        sleep 20
         cat /tmp/test.txt
+        ls /tmp
         exit 0
