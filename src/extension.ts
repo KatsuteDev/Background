@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { dirname, join } from "path";
+import { join } from "path";
 import { platform, release } from "os";
 import { exec } from "@vscode/sudo-prompt";
 import { existsSync, copyFileSync } from "fs";
@@ -29,6 +29,7 @@ import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
 import { optionMenu } from "./menu/menu";
 import { configuration, get, update } from "./extension/config";
+import { env } from "vscode";
 
 //
 
@@ -55,18 +56,14 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     let workbench: string;
     let product: string;
 
-    const dir = require?.main?.filename && existsSync(require.main.filename)
-                    ? dirname(require.main.filename)
-                    : platform() === "darwin"
-                        ? join(process.env.PWD ?? "", "Contents", "Resources", "app", "out")
-                        : join(process.cwd(), "resources", "app", "out");
+    const dir = env.appRoot;
 
     // internal files
     if(dir){
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        workbench = join(dir, "vs", "workbench", "workbench.desktop.main.js");
+        workbench = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
-        product = join(dir, "../", "product.json");
+        product = join(dir, "product.json");
 
         if(!existsSync(workbench)){
             window.showErrorMessage(`Failed to find '${workbench}', please report this issue`);
