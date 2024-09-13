@@ -1,6 +1,6 @@
 name: Test Ubuntu
 
-on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 
 jobs:
   test-ubuntu:
@@ -28,7 +28,7 @@ jobs:
     - name: Install VSIX extension
       shell: bash
       run: |-
-        code --install-extension test/test-ubuntu.vsix
+        code --install-extension test/test.vsix
         sleep 5
 
     - name: Launch VS Code
