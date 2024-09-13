@@ -34,4 +34,5 @@ jobs:
       run: |-
         xvfb-run code &
         sleep 20
+        ls /tmp
         cat /tmp/test.txt
