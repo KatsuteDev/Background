@@ -32,10 +32,11 @@ jobs:
         sleep 10
 
     - name: Launch VS Code
+      shell: bash
       run: |-
         code &
         sleep 20
-        echo $RUNNER_TEMP
+        echo Temp Directory: $RUNNER_TEMP
         sleep 1
         ls $RUNNER_TEMP
-        exit 0
+        cat $RUNNER_TEMP/test.txt
