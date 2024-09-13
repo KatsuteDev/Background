@@ -58,7 +58,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     const dir = require?.main?.filename && existsSync(require.main.filename)
                     ? dirname(require.main.filename)
                     : platform() === "darwin"
-                        ? join(process.cwd(), "Contents", "Resources", "app", "out")
+                        ? join(process.env.PWD ?? "", "Contents", "Resources", "app", "out")
                         : join(process.cwd(), "resources", "app", "out");
 
     // internal files
