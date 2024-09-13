@@ -35,8 +35,7 @@ jobs:
       run: |-
         code &
         sleep 20
-        ls /var/tmp
+        echo $RUNNER_TEMP
         sleep 1
-        ls /tmp
-        cat /var/tmp/test.txt
+        ls $RUNNER_TEMP
         exit 0
