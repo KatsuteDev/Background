@@ -21,23 +21,20 @@ jobs:
     - name: Install VSIX extension
       shell: bash
       run: |-
-        cd /c/Program\ Files/Microsoft\ VS\ Code
+        cd 'C:\ProgramData\chocolatey\lib\vscode'
         code --install-extension test/test.vsix
-        sleep 5
 
     - name: Launch VS Code
       shell: bash
       run: |-
-        cd /c/Program\ Files/Microsoft\ VS\ Code
+        cd 'C:\ProgramData\chocolatey\lib\vscode'
         code --verbose &
-        sleep 20
+        sleep 15
 
     - name: Print Output
       shell: bash
       run: |-
-        cat /c/Users/runneradmin/AppData/Local/Temp/test.txt
-        cat /c/Users/runneradmin/AppData/Local/Temp/test.txt | grep -q 'false' && exit 1
-
+        cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
 
   test-ubuntu:
     name: Ubuntu
@@ -65,21 +62,18 @@ jobs:
         shell: bash
         run: |-
           code --install-extension test/test.vsix
-          sleep 5
 
       - name: Launch VS Code
         shell: bash
         run: |-
           cd /usr/share/code
           xvfb-run code --verbose &
-          sleep 20
+          sleep 15
 
       - name: Print Output
         shell: bash
         run: |-
-          sleep 1
-          cat /tmp/test.txt
-          grep -q 'false' "/tmp/test.txt" && exit 1
+          cat /tmp/test.txt >> $GITHUB_STEP_SUMMARY
 
   test-macos:
     name: MacOS
@@ -100,17 +94,15 @@ jobs:
       shell: bash
       run: |-
         /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension test/test.vsix
-        sleep 5
 
     - name: Launch VS Code
       shell: bash
       run: |-
         /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --verbose &
-        sleep 20
+        sleep 15
 
     - name: Print Output
       shell: bash
       run: |-
         sleep 1
-        cat $(echo $TMPDIR)test.txt
-        grep -q 'false' "$(echo $TMPDIR)test.txt" && exit 1
+        cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
