@@ -1,4 +1,4 @@
-name: Test
+name: Test Admin Write
 on: [workflow_dispatch]
 
 jobs:
