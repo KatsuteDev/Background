@@ -21,6 +21,7 @@ jobs:
     - name: Install VSIX extension
       shell: bash
       run: |-
+        cd /c/Program\ Files/Microsoft\ VS\ Code
         code --install-extension test/test.vsix
         sleep 5
 
@@ -78,7 +79,7 @@ jobs:
         run: |-
           sleep 1
           cat /tmp/test.txt
-          cat /tmp/test.txt | grep -q 'false' && exit 1
+          grep -q 'false' "/tmp/test.txt" && exit 1
 
   test-macos:
     name: MacOS
@@ -112,4 +113,4 @@ jobs:
       run: |-
         sleep 1
         cat $(echo $TMPDIR)test.txt
-        cat $(echo $TMPDIR)test.txt | grep -q 'false' && exit 1
+        grep -q 'false' "$(echo $TMPDIR)test.txt" && exit 1
