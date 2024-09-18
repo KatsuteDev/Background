@@ -9,38 +9,31 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Install Dependencies
-      shell: bash
-      run: |-
-        choco install wget -y
-        choco install vscode -y
+      - name: Install Dependencies
+        shell: bash
+        run: |-
+          choco install wget -y
+          choco install vscode -y
 
-    - name: Install VSIX extension
-      shell: bash
-      run: |-
-        'C:\Program Files\Microsoft VS Code\bin\code' --install-extension test/test.vsix
+      - name: Install VSIX extension
+        shell: bash
+        run: |-
+          'C:\Program Files\Microsoft VS Code\bin\code' --install-extension test/test.vsix
 
-    - name: Launch VS Code
-      shell: bash
-      run: |-
-        'C:\Program Files\Microsoft VS Code\bin\code' --verbose &
-        sleep 15
+      - name: Launch VS Code
+        shell: bash
+        run: |-
+          'C:\Program Files\Microsoft VS Code\bin\code' --verbose &
+          sleep 15
 
-    - name: Print Output
-      id: po
-      shell: bash
-      run: |-
-        cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
-        echo "::set-output name=result::$(cat /c/Users/runneradmin/AppData/Local/Temp/test.txt)"
-
-    - name: Verify Output
-      if: contains(steps.po.outputs.result, 'false')
-      shell: bash
-      run: |-
-        exit 1
+      - name: Print Output
+        id: po
+        shell: bash
+        run: |-
+          cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
 
   test-ubuntu:
     name: Ubuntu
@@ -87,27 +80,27 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Install Dependencies
-      shell: bash
-      run: |-
-        brew update
-        brew install --cask visual-studio-code
+      - name: Install Dependencies
+        shell: bash
+        run: |-
+          brew update
+          brew install --cask visual-studio-code
 
-    - name: Install VSIX extension
-      shell: bash
-      run: |-
-        /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension test/test.vsix
+      - name: Install VSIX extension
+        shell: bash
+        run: |-
+          /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension test/test.vsix
 
-    - name: Launch VS Code
-      shell: bash
-      run: |-
-        /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --verbose &
-        sleep 15
+      - name: Launch VS Code
+        shell: bash
+        run: |-
+          /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --verbose &
+          sleep 15
 
-    - name: Print Output
-      shell: bash
-      run: |-
-        cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
+      - name: Print Output
+        shell: bash
+        run: |-
+          cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
