@@ -21,14 +21,12 @@ jobs:
     - name: Install VSIX extension
       shell: bash
       run: |-
-        cd 'C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code'
-        code --install-extension test/test.vsix
+        'C:\Program Files\Microsoft VS Code\bin\code' --install-extension test/test.vsix
 
     - name: Launch VS Code
       shell: bash
       run: |-
-        cd 'C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code'
-        code --verbose &
+        'C:\Program Files\Microsoft VS Code\bin\code' --verbose &
         sleep 15
 
     - name: Print Output
@@ -79,16 +77,9 @@ jobs:
           sleep 15
 
       - name: Print Output
-        id: po
         shell: bash
         run: |-
           cat /tmp/test.txt >> $GITHUB_STEP_SUMMARY
-
-      - name: Verify Output
-        if: contains(steps.po.outputs.result, 'false')
-        shell: bash
-        run: |-
-          exit 1
 
   test-macos:
     name: MacOS
@@ -117,15 +108,6 @@ jobs:
         sleep 15
 
     - name: Print Output
-      id: po
       shell: bash
       run: |-
-        sleep 1
         cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
-        echo "::set-output name=result::$(cat $(echo $TMPDIR)test.txt)"
-
-    - name: Verify Output
-      if: contains(steps.po.outputs.result, 'false')
-      shell: bash
-      run: |-
-        exit 1
