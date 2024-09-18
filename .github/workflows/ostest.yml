@@ -1,0 +1,42 @@
+name: Test Windows
+
+on: [workflow_dispatch, push]
+
+jobs:
+  test-windows:
+    name: Test Windows
+    runs-on: windows-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      shell: bash
+      run: |-
+        choco install wget -y
+        choco install vscode -y
+        choco install xvfb -y
+
+    - name: Install VSIX extension
+      shell: bash
+      run: |-
+        code --install-extension test/test.vsix
+        sleep 5
+
+    - name: Launch VS Code
+      shell: bash
+      run: |-
+        cd /c/Program\ Files/Microsoft\ VS\ Code
+        xvfb-run code --verbose &
+        sleep 20
+
+    - name: Print Output
+      shell: bash
+      run: |-
+        ls /c/Users/runneradmin/AppData/Local/Temp
+        sleep 1
+        echo ======
+        sleep 1
+        cat /c/Users/runneradmin/AppData/Local/Temp/test.txt
