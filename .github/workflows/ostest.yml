@@ -6,9 +6,6 @@ jobs:
   test-windows:
     name: Windows
     runs-on: windows-latest
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
 
     steps:
@@ -41,9 +38,6 @@ jobs:
   test-windows-insiders:
     name: Windows (Insiders)
     runs-on: windows-latest
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
 
     steps:
@@ -76,9 +70,6 @@ jobs:
   test-ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
 
     steps:
@@ -118,9 +109,6 @@ jobs:
   test-ubuntu-insiders:
     name: Ubuntu (Insiders)
     runs-on: ubuntu-latest
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
 
     steps:
@@ -160,9 +148,6 @@ jobs:
   test-macos:
     name: MacOS
     runs-on: macos-latest
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
 
     steps:
@@ -194,9 +179,6 @@ jobs:
   test-macos-insiders:
     name: MacOS (Insiders)
     runs-on: macos-latest
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
 
     steps:
@@ -227,9 +209,6 @@ jobs:
 
   test-copy:
     name: Test Copy [${{matrix.os}}] (existing ${{matrix.exists}})
-    concurrency:
-      group: ostest
-      cancel-in-progress: false
     timeout-minutes: 5
     runs-on: ${{ matrix.os }}
     strategy:
