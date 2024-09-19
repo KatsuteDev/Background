@@ -6,6 +6,8 @@ jobs:
   test-windows:
     name: Windows
     runs-on: windows-latest
+    concurrency:
+      group: ostest
     timeout-minutes: 5
 
     steps:
@@ -35,9 +37,45 @@ jobs:
         run: |-
           cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
 
+  test-windows-insiders:
+    name: Windows (Insiders)
+    runs-on: windows-latest
+    concurrency:
+      group: ostest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        shell: bash
+        run: |-
+          choco install wget -y
+          choco install vscode-insiders -y
+
+      - name: Install VSIX extension
+        shell: bash
+        run: |-
+          'C:\Program Files\Microsoft VS Code Insiders\bin\code-insiders' --install-extension test/test.vsix
+
+      - name: Launch VS Code Insiders
+        shell: bash
+        run: |-
+          'C:\Program Files\Microsoft VS Code Insiders\bin\code-insiders' --verbose &
+          sleep 15
+
+      - name: Print Output
+        id: po
+        shell: bash
+        run: |-
+          cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
+
   test-ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
+    concurrency:
+      group: ostest
     timeout-minutes: 5
 
     steps:
@@ -74,9 +112,52 @@ jobs:
         run: |-
           cat /tmp/test.txt >> $GITHUB_STEP_SUMMARY
 
+  test-ubuntu-insiders:
+    name: Ubuntu (Insiders)
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ostest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        shell: bash
+        run: |-
+          sudo apt-get update
+          sudo apt-get install -y wget gpg
+          wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+          sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+          sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode-insiders stable main" > /etc/apt/sources.list.d/vscode-insiders.list'
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+          sudo apt-get install -y code-insiders
+          sudo apt-get install -y xvfb
+
+      - name: Install VSIX extension
+        shell: bash
+        run: |-
+          code-insiders --install-extension test/test.vsix
+
+      - name: Launch VS Code Insiders
+        shell: bash
+        run: |-
+          cd /usr/share/code-insiders
+          xvfb-run code-insiders --verbose &
+          sleep 15
+
+      - name: Print Output
+        shell: bash
+        run: |-
+          cat /tmp/test.txt >> $GITHUB_STEP_SUMMARY
+
   test-macos:
     name: MacOS
     runs-on: macos-latest
+    concurrency:
+      group: ostest
     timeout-minutes: 5
 
     steps:
@@ -104,3 +185,105 @@ jobs:
         shell: bash
         run: |-
           cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
+
+  test-macos-insiders:
+    name: MacOS (Insiders)
+    runs-on: macos-latest
+    concurrency:
+      group: ostest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        shell: bash
+        run: |-
+          brew update
+          brew install --cask visual-studio-code-insiders
+
+      - name: Install VSIX extension
+        shell: bash
+        run: |-
+          /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code-insiders --install-extension test/test.vsix
+
+      - name: Launch VS Code Insiders
+        shell: bash
+        run: |-
+          /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code-insiders --verbose &
+          sleep 15
+
+      - name: Print Output
+        shell: bash
+        run: |-
+          cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
+
+  test-copy:
+    name: Test Copy [${{matrix.os}}] (existing ${{matrix.exists}})
+    concurrency:
+      group: ostest
+    timeout-minutes: 5
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        exists: [true, false]
+    steps:
+      - name: Create File
+        shell: bash
+        run: |-
+          echo "A" > A
+          echo "B" > B
+
+      - name: Create Existing File
+        shell: bash
+        if: matrix.exists
+        run: |-
+          echo "A" > C.txt
+          echo "B" > D.txt
+
+      - name: List Files
+        shell: bash
+        run: ls
+
+      - name: Script
+        uses: actions/github-script@v7
+        with:
+          script: |-
+            const existsSync = require("fs").existsSync;
+            const windows = process.platform === "win32"
+
+            const cp = (files) => {
+                return files
+                    .map((file) =>
+                        windows
+                        ? (!existsSync(file[1]) ? `echo "NUL" > "${file[1]}" && ` : '') +
+                          `xcopy /r /y "${file[0]}" "${file[1]}"`
+                        : `cp -f '${file[0]}' '${file[1]}'`
+                    )
+                    .join(" && ");
+            };
+
+            console.log(cp([["A", "C.txt"], ["B", "D.txt"]]));
+
+      - name: Copy (Windows)
+        if: matrix.os == 'windows-latest' && !matrix.exists
+        run: echo "NUL" > "C.txt" && xcopy /r /y "A" "C.txt" && echo "NUL" > "D.txt" && xcopy /r /y "B" "D.txt"
+
+      - name: Copy Existing (Windows)
+        if: matrix.os == 'windows-latest' && matrix.exists
+        run: xcopy /r /y "A" "C.txt" && xcopy /r /y "B" "D.txt"
+
+      - name: Copy (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
+
+      - name: Copy (Mac)
+        if: matrix.os == 'macos-latest'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
+
+      - name: List Files
+        shell: bash
+        run: ls
