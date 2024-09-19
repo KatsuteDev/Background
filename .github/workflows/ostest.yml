@@ -194,12 +194,12 @@ jobs:
       - name: Install VSIX extension
         shell: bash
         run: |-
-          /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code-insiders --install-extension test/test.vsix
+          /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code --install-extension test/test.vsix
 
       - name: Launch VS Code Insiders
         shell: bash
         run: |-
-          /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code-insiders --verbose &
+          /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code --verbose &
           sleep 15
 
       - name: Print Output
