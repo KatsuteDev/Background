@@ -6,7 +6,7 @@
     "background.command.changelog": "Changelog",
     "background.command.help": "Help",
 
-    "background.configuration.backgroundDescriptionription": "The list of files, globs, or URLs to pull background images from.\n\n* Use only `/` for directories, `\\` is reserved for escape characters.\n\n* Image URLs must be served over HTTPS",
+    "background.configuration.backgroundDescription": "The list of files, globs, or URLs to pull background images from.\n\n* Use only `/` for directories, `\\` is reserved for escape characters.\n\n* Image URLs must be served over HTTPS",
     "background.configuration.window": "Window",
     "background.configuration.editor": "Editor",
     "background.configuration.sidebar": "Sidebar",
