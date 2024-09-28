@@ -70,7 +70,7 @@ Add background images by file, folder, or URL. Supports [glob](https://github.co
 ## Commands
 
 | Command | Description |
-|---|---|
+|:--|:--|
 |<kbd>Background: Install</kbd>|Installs and enables the background|
 |<kbd>Background: Uninstall</kbd>|Uninstalls and disables the background|
 |<kbd>Background: Reload</kbd>|Randomizes the current background|
@@ -84,11 +84,11 @@ Add background images by file, folder, or URL. Supports [glob](https://github.co
 Use the <kbd>Background: Configuration</kbd> command or press the **Background** button in the bottom right to access the configuration menu.
 
 |Background|Description|
-|---|---|
-|Window Backgrounds|The list of files or globs to use for the window background image.|
-|Editor Backgrounds|The list of files or globs to use for editor background images.|
-|Sidebar Backgrounds|The list of files or globs to use for the sidebar background images.|
-|Panel Backgrounds|The list of files or globs to use for the panel background image.|
+|:--|:--|
+|Window Backgrounds|The list of files or globs to use for the window background image|
+|Editor Backgrounds|The list of files or globs to use for editor background images|
+|Sidebar Backgrounds|The list of files or globs to use for the sidebar background images|
+|Panel Backgrounds|The list of files or globs to use for the panel background image|
 |||
 |**Style Option**|**Description**|
 |Alignment|Background alignment|
@@ -113,7 +113,7 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 ## Environment Variables
 
 |Variable|Description|
-|---|---|
+|:--|:--|
 |`${vscode:workspace}`|Current VSCode project folder|
 |`${user:home}`|Current user's home directory|
 |`${...}`|System environment variable|
