@@ -5,9 +5,10 @@
     </a>
     <h3>Background</h3>
     <h4>The most advanced background image extension for VSCode</h4>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="installs" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="downloads" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF"></a>
+    <h5>Windows + Mac + Linux</h5>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Rating"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="installs" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Installs"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="downloads" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Downloads"></a>
 </div>
 
 <br>
@@ -23,12 +24,9 @@ Add multiple background images for the window, editors, sidebars, or the panel. 
  - Install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
  - Install directly from VSCode using the id [`katsute.code-background`](https://marketplace.visualstudio.com/items?itemName=katsute.code-background).
 
-#### Usage
+Customize using the <kbd>Background: Configuration</kbd> command or press the **Background** button in the bottom right to access the configuration menu.
 
- 1. Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar.
- 2. Select where you want to add a background (Window, Editor, Sidebar, Panel).
- 3. Add backgrounds and change how it should be displayed.
- 4. Use `Background: Install` or press the install button.
+Install using the <kbd>Background: Install</kbd> command or press the **Install** button in the configuration menu to install the background.
 
 ## Features
 
@@ -38,33 +36,33 @@ Add background images for the whole window, editors, sidebars, or the panel. Tra
 
 <div align="center">
     <h6>Full Window</h6>
-    <img alt="window background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
-    <br>
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/window.gif">
+</div>
+<br>
+<div align="center">
     <h6>Editor, Sidebar, and Terminal</h6>
-    <img alt="editor background" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
-    <br>
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/editor.gif">
+</div>
+<br>
+<div align="center">
     <h6>Slideshow</h6>
-    <img alt="multiple backgrounds" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/transition.gif">
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/transition.gif">
 </div>
 
 #### Configuration Menu
 
-Type `Background: Configuration` in the command pallette or press the **Background** tab in the statusbar to access the configuration menu.
+Use the <kbd>Background: Configuration</kbd> command or press the **Background** button in the bottom right to access the configuration menu.
 
 <div align="center">
-    <img alt="configuration menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/configuration.gif">
 </div>
 
 #### Glob, URL, and Environment Variable Support
 
-Add background images by file, folder, [glob](https://github.com/isaacs/node-glob#glob-primer), or URL.
-
-> ⚠️ **Use only `/` for directories**
->
-> [node-glob](https://github.com/isaacs/node-glob#windows) only accepts `/` as path separators, `\` is reserved for escape characters.
+Add background images by file, folder, or URL. Supports [glob](https://github.com/isaacs/node-glob#glob-primer) and [environment variables](#environment-variables).
 
 <div align="center">
-    <img alt="file menu" src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Background/main/assets/glob.gif">
 </div>
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
@@ -72,72 +70,59 @@ Add background images by file, folder, [glob](https://github.com/isaacs/node-glo
 ## Commands
 
 | Command | Description |
-|---|---|
-|`Background: Install`|Installs and enables the background.|
-|`Background: Uninstall`|Uninstalls and disables the background.|
-|`Background: Reload`|Randomizes the backgrounds. Background must already be installed.|
-|`Background: Configuration`|Opens the configuration menu.|
-|`Background: Changelog`|Opens changelog.|
+|:--|:--|
+|<kbd>Background: Install</kbd>|Installs and enables the background|
+|<kbd>Background: Uninstall</kbd>|Uninstalls and disables the background|
+|<kbd>Background: Reload</kbd>|Randomizes the current background|
+|<kbd>Background: Configuration</kbd>|Opens the configuration menu|
+|<kbd>Background: Changelog</kbd>|Opens the changelog|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## Configuration
 
-Use the `Background: Configuration` command to access the configuration menu.
+Use the <kbd>Background: Configuration</kbd> command or press the **Background** button in the bottom right to access the configuration menu.
 
-Background properties are saved as arrays so you can have different options for different UI elements.
-
-The order settings are saved in is:
-
- 0. Window
- 1. Editor
- 2. Sidebar
- 3. Panel
-
-| Background | Type | Description |
-|---|:-:|---|
-|`background.windowBackgrounds`|`string[]`|The list of files or globs to use for the window background image.|
-|`background.editorBackgrounds`|`string[]`|The list of files or globs to use for editor background images.|
-|`background.sidebarBackgrounds`|`string[]`|The list of files or globs to use for the sidebar background images.|
-|`background.panelBackgrounds`|`string[]`|The list of files or globs to use for the panel background image.|
-
-<br>
-
-| Property | Type | Description |
-|---|:-:|---|
-|`background.backgroundAlignment`|`enum[4]`|The alignment of the background image.|
-|`background.backgroundAlignmentValue`|`string[4]`|If the background image alignment is set to `Manual`, this is the literal value for the `background-position` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundBlur`|`string[4]`|Background image blur. Only accepts a [css \<length>](https://developer.mozilla.org/en-US/docs/Web/CSS/length).|
-|`background.backgroundOpacity`|`number[4]`|The UI opacity. 1 is fully visible and 0 is invisible.|
-|`background.backgroundRepeat`|`enum[4]`|The background image repeat.|
-|`background.backgroundSize`|`enum[4]`|The background image size.|
-|`background.backgroundSizeValue`|`string[4]`|If the background image size is set to `Manual`, this is the literal value for the `background-size` css property. Only accepts a [css \<position>](https://developer.mozilla.org/en-US/docs/Web/CSS/position_value).|
-|`background.backgroundChangeTime`|`number[4]`|How long in seconds before the background should automatically change. Set to 0 to always use the same image.|
-
-<br>
-
-| Advanced | Type | Description |
-|---|:-:|---|
-|`background.autoInstall`|`boolean`|Automatically installs backgrounds and reloads the window on startup if changes are detected or VSCode updates.<br>This option is disabled when you run the uninstall command.|
-|`background.renderContentAboveBackground`|`boolean`|Render content like images, PDFs, and markdown previews above the background.|
-|`background.useInvertedOpacity`|`boolean`|Use an inverted opacity, so 0 is fully visible and 1 is invisible.|
-|`background.smoothImageRendering`|`boolean`|Use smooth image rendering rather than pixelated rendering when resizing images.|
-|`background.settingScope`|`Global` \| `Workspace`|Where to save background settings. This does not automatically update the background on workspace change, you need to also turn on `autoInstall`.|
-|`background.CSS`|`string`|Apply raw CSS to VSCode.|
+|Background|Description|
+|:--|:--|
+|Window Backgrounds|The list of files or globs to use for the window background image|
+|Editor Backgrounds|The list of files or globs to use for editor background images|
+|Sidebar Backgrounds|The list of files or globs to use for the sidebar background images|
+|Panel Backgrounds|The list of files or globs to use for the panel background image|
+|||
+|**Style Option**|**Description**|
+|Alignment|Background alignment|
+|Alignment Value|Background alignment (CSS)|
+|Blur|Background blur (CSS)|
+|Opacity|Background opacity, 1 is fully visible and 0 is invisible|
+|Repeat|Background repeat|
+|Size|Background size|
+|Size Value|Background size (CSS)|
+|Change Time|How often to change the background image in seconds, set to 0 to never change|
+|||
+|**Advanced Option**|**Description**|
+|Auto Install|Automatically install backgrounds on startup|
+|Render Content Above Background|Show images, PDFs, and markdown previews on top of the background|
+|Use Inverted Opacity|Use an inverted opacity, so 0 is visible and 1 is invisible|
+|Smooth Image Rendering|Use smooth image rendering when resizing images instead of pixelated|
+|Setting Scope|Where to save background settings - Global or Workspace|
+|CSS|Custom CSS|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## Environment Variables
 
-| Variable | Description |
-|---|---|
+|Variable|Description|
+|:--|:--|
 |`${vscode:workspace}`|Current VSCode project folder|
 |`${user:home}`|Current user's home directory|
 |`${...}`|System environment variable|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## API
+## &nbsp;
+
+### API
 
 Add this extension to your `package.json`.
 
