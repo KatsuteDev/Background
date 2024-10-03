@@ -1,0 +1,3 @@
+[submodule "localization"]
+	path = localization
+	url = https://github.com/KatsuteDev/Background-Localization.git

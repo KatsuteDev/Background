@@ -9,3 +9,5 @@
 /LICENSES.txt
 
 /*.vsix
+
+/package.nls.*

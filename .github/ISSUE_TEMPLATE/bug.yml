@@ -20,6 +20,8 @@ body:
           required: true
         - label: This is actually a bug and not a feature.
           required: true
+        - label: This is not a localization/translation error.
+          required: true
         - label: I am using the latest extension version.
           required: true
 

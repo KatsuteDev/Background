@@ -1,0 +1,38 @@
+# Copyright (C) 2024 Katsute <https://github.com/Katsute>
+
+name: Localization
+
+on: [workflow_call, pull_request_target]
+
+jobs:
+  localization:
+    name: Localization
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          architecture: x64
+          node-version: 20
+
+      - name: Build
+        run: node localization.js
+
+      - name: Commit to PR
+        run: |-
+          git config --global user.name "kdevbot[bot]"
+          git config --global user.email "155479163+kdevbot[bot]@users.noreply.github.com"
+
+          git add README.md
+          git add package.nls.json
+          git add package.nls.*.json
+          git add readme/*
+          git diff-index --quiet HEAD || git commit -m "Update Localization Files"
+          git push origin HEAD

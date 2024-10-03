@@ -10,6 +10,16 @@ updates:
       time: "06:00"
       timezone: US/Eastern
     open-pull-requests-limit: 10
+  - package-ecosystem: gitsubmodule
+    directory: /
+    labels: [dependencies, localization]
+    assignees: [Katsute]
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: US/Eastern
+    open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: /
     labels: [dependencies]

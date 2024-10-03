@@ -16,7 +16,9 @@ body:
       options:
         - label: I have checked [existing feature requests](https://github.com/KatsuteDev/Background/issues?q=is%3Aissue+is%3Aopen+label%3A%22feature+request%22).
           required: true
-        - label: I have checked that this feature does not already exist.
+        - label: This feature does not already exist.
+          required: true
+        - label: This is not a localization/translation request.
           required: true
         - label: I am using the latest extension version.
           required: true
