@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |-
-        This form is for the VSCode desktop extension, if you are using the browser extension open an issue [here](https://github.com/KatsuteDev/BackgroundX/issues/new/choose). <br><br>
+        Automatically prefill this bug report by opening an issue in the extension under **More Options** > **Report an issue** <br><br>
 
   - type: checkboxes
     attributes:
