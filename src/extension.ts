@@ -30,6 +30,7 @@ import { install, uninstall } from "./extension/writer";
 import { optionMenu } from "./menu/menu";
 import { configuration, get, update } from "./extension/config";
 import { env } from "vscode";
+import { setUserDir } from "./extension/env";
 
 //
 
@@ -57,6 +58,8 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     let product: string;
 
     const dir = env.appRoot;
+
+    setUserDir(join(context.globalStorageUri.fsPath, "../../../")); // for env var
 
     // internal files
     if(dir){

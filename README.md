@@ -115,6 +115,7 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |Variable|Description|
 |:--|:--|
 |`${vscode:workspace}`|Current VSCode project folder|
+|`${vscode:user}`|VSCode user directory, either `Code/User` or `data/user-data/User`|
 |`${user:home}`|Current user's home directory|
 |`${...}`|System environment variable|
 
