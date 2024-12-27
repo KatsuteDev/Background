@@ -112,10 +112,10 @@ const iEditorBackgrounds = [...Array(${images.editor.length}).keys()];
 const iSidebarBackgrounds = [...Array(${images.sidebar.length}).keys()];
 const iPanelBackgrounds = [...Array(${images.panel.length}).keys()];
 
-const windowTime = ${get("backgroundChangeTime", {ui: "window"}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "window"}), 2), 5)};
-const editorTime = ${get("backgroundChangeTime", {ui: "editor"}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "editor"}), 2), 5)};
-const sidebarTime = ${get("backgroundChangeTime", {ui: "sidebar"}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "sidebar"}), 2), 5)};
-const panelTime = ${get("backgroundChangeTime", {ui: "panel"}) == 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "panel"}), 2), 5)};
+const windowTime = ${get("backgroundChangeTime", {ui: "window"}) === 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "window"}), 2), 5)};
+const editorTime = ${get("backgroundChangeTime", {ui: "editor"}) === 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "editor"}), 2), 5)};
+const sidebarTime = ${get("backgroundChangeTime", {ui: "sidebar"}) === 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "sidebar"}), 2), 5)};
+const panelTime = ${get("backgroundChangeTime", {ui: "panel"}) === 0 ? 0 : Math.max(round(get("backgroundChangeTime", {ui: "panel"}), 2), 5)};
 `
 + // individual background css - window
 `

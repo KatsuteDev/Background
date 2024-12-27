@@ -23,11 +23,21 @@ import { escape as esc } from "../lib/glob";
 
 const home: string = homedir();
 
+export const setUserDir: (path: string) => void = (path: string) => {
+    if(!user){ // disallow reassignment
+        user = path;
+    }
+};
+
+let user: string;
+
 export const resolve: (str: string) => string = (str: string) =>
     str.replace(/\${(.*?)}/g, (_, envvar) => {
-        if(envvar == "vscode:workspace" && workspace.workspaceFolders && workspace.workspaceFolders.length > 0 && workspace.workspaceFolders[0].uri){
+        if(envvar === "vscode:workspace" && workspace.workspaceFolders && workspace.workspaceFolders.length > 0 && workspace.workspaceFolders[0].uri){
             return esc(workspace.workspaceFolders[0].uri.fsPath.toString());
-        }else if(envvar == "user:home"){
+        }else if(envvar === "vscode:user" && user){
+            return esc(user);
+        }else if(envvar === "user:home"){
             return esc(home);
         }else if(envvar in process.env){
             return esc(process.env[envvar] || '');

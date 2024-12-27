@@ -20,7 +20,7 @@ module.exports = {
                     await background.remove(ui, image);
             fs.writeFileSync(file, '0', "utf-8");
             background.install();
-        }else if((num = fs.readFileSync(file, "utf-8")) == 0){
+        }else if((num = fs.readFileSync(file, "utf-8")) === 0){
             vscode.window.showInformationMessage("Testing empty install");
 
             await wait(3);
@@ -37,7 +37,7 @@ module.exports = {
 
             fs.writeFileSync(file, `${++num}`, "utf-8");
 
-            if(num == 6){
+            if(num === 6){
                 await background.remove("window", images);
                 await background.add("editor", images);
                 await background.add("sidebar", images);
@@ -55,11 +55,11 @@ module.exports = {
 
             fs.writeFileSync(file, `${++num}`, "utf-8");
 
-            if(num == 11)
+            if(num === 11)
                 background.uninstall();
             else
                 background.reload();
-        }else if(num == 11){
+        }else if(num === 11){
             vscode.window.showInformationMessage(`Testing uninstall`);
 
             await wait(3);
