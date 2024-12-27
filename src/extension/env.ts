@@ -25,7 +25,7 @@ const home: string = homedir();
 
 export const setUserDir: (path: string) => void = (path: string) => {
     if(!user){ // disallow reassignment
-        user = path;
+        user = path.replace(/\/$/, ''); // remove last slash
     }
 };
 

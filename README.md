@@ -112,6 +112,8 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 
 ## Environment Variables
 
+If the path is not working, add an additional `/` after the variable.
+
 |Variable|Description|
 |:--|:--|
 |`${vscode:workspace}`|Current VSCode project folder|

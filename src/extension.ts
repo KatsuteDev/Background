@@ -59,7 +59,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     const dir = env.appRoot;
 
-    setUserDir(join(context.globalStorageUri.fsPath, "../../../")); // for env var
+    setUserDir(join(context.globalStorageUri.fsPath, "../../../User")); // for env var
 
     // internal files
     if(dir){
