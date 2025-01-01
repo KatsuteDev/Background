@@ -364,7 +364,7 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "devDependencies": {
-        "@types/node": "22.10.1",
+        "@types/node": "22.10.2",
         "@types/tmp": "0.2.6",
         "@types/vscode": "1.96.0",
         "@vscode/l10n-dev": "0.0.35",

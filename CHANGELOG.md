@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.1.0
+
+### New Features
+
+* Add env var `${vscode:user}` for `Code/User` directory [#436](https://github.com/KatsuteDev/Background/pull/436) ([@Katsute](https://github.com/Katsute))
+
+  On desktop this is the `Code/User` directory.
+
+  On portable this is the `data/user-data/User` directory.
+
+### Dependencies
+
+* Bump esbuild from 0.23.1 to 0.24.0 [#415](https://github.com/KatsuteDev/Background/pull/415) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.5.0 to 22.7.4 [#417](https://github.com/KatsuteDev/Background/pull/417) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.1.0 to 3.1.1 [#418](https://github.com/KatsuteDev/Background/pull/418) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.93.0 to 1.94.0 [#419](https://github.com/KatsuteDev/Background/pull/419) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.1.1 to 3.2.0 [#422](https://github.com/KatsuteDev/Background/pull/422) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.7.4 to 22.8.1 [#425](https://github.com/KatsuteDev/Background/pull/425) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.2.0 to 3.2.1 [#424](https://github.com/KatsuteDev/Background/pull/424) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.94.0 to 1.95.0 [#427](https://github.com/KatsuteDev/Background/pull/427) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.8.1 to 22.9.0 [#428](https://github.com/KatsuteDev/Background/pull/428) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.6.3 to 5.7.2 [#430](https://github.com/KatsuteDev/Background/pull/430) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.9.0 to 22.10.1 [#431](https://github.com/KatsuteDev/Background/pull/431) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.95.0 to 1.96.0 [#434](https://github.com/KatsuteDev/Background/pull/434) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.24.0 to 0.24.2 [#437](https://github.com/KatsuteDev/Background/pull/437) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.0.2...3.1.0`](https://github.com/KatsuteDev/Background/compare/3.0.2...3.1.0)
+
 ## 3.0.2
 
 ### Fixes
