@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "private": true,
     "engines": {
         "vscode": "^1.101.0"
@@ -348,12 +348,12 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "devDependencies": {
-        "@types/node": "24.0.2",
+        "@types/node": "24.0.6",
         "@types/tmp": "0.2.6",
         "@types/vscode": "1.101.0",
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.5.2",
-        "@vscode/vsce": "3.5.0",
+        "@vscode/vsce": "3.6.0",
         "esbuild": "0.25.5",
         "glob": "11.0.3",
         "rimraf": "6.0.1",

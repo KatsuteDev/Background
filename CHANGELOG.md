@@ -1,5 +1,43 @@
 # Changelog
 
+## 3.1.1
+
+### Dependencies
+
+* Bump typescript from 5.7.2 to 5.7.3 [#444](https://github.com/KatsuteDev/Background/pull/444) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 11.0.0 to 11.0.1 [#443](https://github.com/KatsuteDev/Background/pull/443) ([@dependabot](https://github.com/dependabot))
+* Bump undici from 6.21.0 to 6.21.1 [#446](https://github.com/KatsuteDev/Background/pull/446) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.2.1 to 3.2.2 [#449](https://github.com/KatsuteDev/Background/pull/449) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.10.2 to 22.13.0 [#450](https://github.com/KatsuteDev/Background/pull/450) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.96.0 to 1.97.0 [#453](https://github.com/KatsuteDev/Background/pull/453) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.7.3 to 5.8.2 [#454](https://github.com/KatsuteDev/Background/pull/454) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.24.2 to 0.25.0 [#452](https://github.com/KatsuteDev/Background/pull/452) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.0 to 0.25.1 [#456](https://github.com/KatsuteDev/Background/pull/456) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.97.0 to 1.98.0 [#455](https://github.com/KatsuteDev/Background/pull/455) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.2.2 to 3.3.0 [#457](https://github.com/KatsuteDev/Background/pull/457) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.1 to 0.25.2 [#460](https://github.com/KatsuteDev/Background/pull/460) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.3.0 to 3.3.2 [#459](https://github.com/KatsuteDev/Background/pull/459) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.13.0 to 22.14.0 [#461](https://github.com/KatsuteDev/Background/pull/461) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.8.2 to 5.8.3 [#462](https://github.com/KatsuteDev/Background/pull/462) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.98.0 to 1.99.0 [#463](https://github.com/KatsuteDev/Background/pull/463) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.4.1 to 2.5.2 [#464](https://github.com/KatsuteDev/Background/pull/464) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.99.0 to 1.99.1 [#465](https://github.com/KatsuteDev/Background/pull/465) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.14.0 to 22.15.3 [#469](https://github.com/KatsuteDev/Background/pull/469) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.2 to 0.25.3 [#471](https://github.com/KatsuteDev/Background/pull/471) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 11.0.1 to 11.0.2 [#470](https://github.com/KatsuteDev/Background/pull/470) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.99.1 to 1.100.0 [#472](https://github.com/KatsuteDev/Background/pull/472) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.3 to 0.25.4 [#473](https://github.com/KatsuteDev/Background/pull/473) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.3.2 to 3.4.1 [#476](https://github.com/KatsuteDev/Background/pull/476) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.4.1 to 3.4.2 [#477](https://github.com/KatsuteDev/Background/pull/477) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.4 to 0.25.5 [#478](https://github.com/KatsuteDev/Background/pull/478) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.4.2 to 3.5.0 [#480](https://github.com/KatsuteDev/Background/pull/480) ([@dependabot](https://github.com/dependabot))
+* Bump the npm_and_yarn group with 2 updates [#479](https://github.com/KatsuteDev/Background/pull/479) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 22.15.3 to 24.0.2 [#485](https://github.com/KatsuteDev/Background/pull/485) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 11.0.2 to 11.0.3 [#484](https://github.com/KatsuteDev/Background/pull/484) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.100.0 to 1.101.0 [#483](https://github.com/KatsuteDev/Background/pull/483) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.1.0...3.1.1`](https://github.com/KatsuteDev/Background/compare/3.1.0...3.1.1)
+
 ## 3.1.0
 
 ### New Features
