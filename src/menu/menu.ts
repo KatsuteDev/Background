@@ -83,7 +83,7 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
     const descriptionBool: (key: ConfigurationKey) => string = (key: ConfigurationKey) => `[$(${get(key) ? "check" : "close"})]`;
     const handleBool: (key: ConfigurationKey, index: number, skipNotification?: boolean) => (item: CommandQuickPickItem) => void = (key: ConfigurationKey, index: number, skipNotification?: boolean) => () => update(key, !get(key), undefined, skipNotification).then(() => moreMenu(index));
 
-    let i = 0;
+    let i: number = 0;
 
     showQuickPick([
         quickPickItem({
@@ -97,6 +97,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             description: descriptionBool("renderContentAboveBackground"),
             detail: "Render content like images, PDFs, and markdown previews above the background",
             handle: handleBool("renderContentAboveBackground", i++)
+        }),
+        quickPickItem({
+            label: "$(beaker) Render Text Above Background",
+            description: descriptionBool("renderTextAboveBackground"),
+            detail: "Render text and code above the background",
+            handle: handleBool("renderTextAboveBackground", i++)
         }),
         quickPickItem({
             label: "Use Inverted Opacity",

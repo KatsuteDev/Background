@@ -290,7 +290,7 @@
                     "type": "boolean",
                     "default": false
                 },
-                "background.renderIDEAboveBackground": {
+                "background.renderTextAboveBackground": {
                     "markdownDescription": "Render text and code above the background.",
                     "order": 14,
                     "type": "boolean",
