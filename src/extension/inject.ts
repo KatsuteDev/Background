@@ -54,6 +54,7 @@ const getJavaScript: () => string = () => {
     };
 
     const after: boolean = get("renderContentAboveBackground");
+    const under: boolean = get("renderTextAboveBackground");
 
     return `(() => {` +
 // shared background css
@@ -64,7 +65,16 @@ bk_global.setAttribute("type", "text/css");
 
 bk_global.appendChild(document.createTextNode(\`
 
-    body[windowTransition="true"]${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
+    ${!under ? "" :
+    `body {
+        background-color: #CCC !important;
+    }
+    body .split-view-view:nth-child(3) *, body > div {
+        background-color: unset !important;
+    }`
+    }
+
+    body[windowTransition="true"]${under ? "" : !after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
     body[editorTransition="true"] .split-view-view > .editor-group-container::after,
     body[sidebarTransition="true"] .split-view-view > .part.sidebar::after,
     body[sidebarTransition="true"] .split-view-view > .part.auxiliarybar::after,
@@ -74,7 +84,7 @@ bk_global.appendChild(document.createTextNode(\`
 
     }
 
-    body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
+    body${!after || under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
     .split-view-view > .editor-group-container::after,
     .split-view-view > .part.sidebar::after,
     .split-view-view > .part.auxiliarybar::after,
@@ -87,7 +97,7 @@ bk_global.appendChild(document.createTextNode(\`
         width: 100%;
         height: 100%;
 
-        ${!after ? `z-index: 1000;` : ''}
+        ${!after && !under ? `z-index: 1000;` : ''}
 
         position: absolute;
 
@@ -121,15 +131,15 @@ const panelTime = ${get("backgroundChangeTime", {ui: "panel"}) === 0 ? 0 : Math.
 `
 if(windowBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
+        body${!after || under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
             background-position: ${getCSS("backgroundAlignment", "window")};
             background-repeat: ${getCSS("backgroundRepeat", "window")};
             background-size: ${getCSS("backgroundSize", "window")};
 
-            opacity: ${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "window") : +getCSS("backgroundOpacity", "window"), 2)};
+            opacity: ${under ? 1 : round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "window") : +getCSS("backgroundOpacity", "window"), 2)};
 
-            filter: blur(${getCSS("backgroundBlur", "window")});
+            filter: blur(${getCSS("backgroundBlur", "window")}) ${!under ? "" : `brightness(${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "window") : +getCSS("backgroundOpacity", "window"), 2)})`};
 
         }
     \`));
@@ -234,7 +244,7 @@ const setWindowBackground = () => {
         shuffle(iWindowBackgrounds);
 
         bk_window_image.appendChild(document.createTextNode(\`
-            body${!after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
+            body${!after || under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
 
                 background-image: url("\${windowBackgrounds[iWindowBackgrounds[0]].replace(/"/g, \`\\\\"\`)}");
 
