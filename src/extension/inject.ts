@@ -56,6 +56,8 @@ const getJavaScript: () => string = () => {
     const after: boolean = get("renderContentAboveBackground");
     const under: boolean = get("renderTextAboveBackground");
 
+    const bodySel: string = under || !after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`;
+
     return `(() => {` +
 // shared background css
 `
@@ -74,7 +76,7 @@ bk_global.appendChild(document.createTextNode(\`
     }`
     }
 
-    body[windowTransition="true"]${under ? "" : !after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
+    body[windowTransition="true"]${bodySel},
     body[editorTransition="true"] .split-view-view > .editor-group-container::after,
     body[sidebarTransition="true"] .split-view-view > .part.sidebar::after,
     body[sidebarTransition="true"] .split-view-view > .part.auxiliarybar::after,
@@ -84,7 +86,7 @@ bk_global.appendChild(document.createTextNode(\`
 
     }
 
-    body${!after || under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`},
+    body${bodySel},
     .split-view-view > .editor-group-container::after,
     .split-view-view > .part.sidebar::after,
     .split-view-view > .part.auxiliarybar::after,
@@ -131,7 +133,7 @@ const panelTime = ${get("backgroundChangeTime", {ui: "panel"}) === 0 ? 0 : Math.
 `
 if(windowBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        body${!after || under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
+        body${bodySel} {
 
             background-position: ${getCSS("backgroundAlignment", "window")};
             background-repeat: ${getCSS("backgroundRepeat", "window")};
@@ -244,7 +246,7 @@ const setWindowBackground = () => {
         shuffle(iWindowBackgrounds);
 
         bk_window_image.appendChild(document.createTextNode(\`
-            body${!after || under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`} {
+            body${bodySel} {
 
                 background-image: url("\${windowBackgrounds[iWindowBackgrounds[0]].replace(/"/g, \`\\\\"\`)}");
 

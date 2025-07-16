@@ -291,7 +291,7 @@
                     "default": false
                 },
                 "background.renderTextAboveBackground": {
-                    "markdownDescription": "Render text and code above the background.",
+                    "markdownDescription": "Render text and code above the background.\n\nOnly supported for window backgrounds.",
                     "order": 14,
                     "type": "boolean",
                     "default": false
