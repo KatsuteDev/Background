@@ -18,57 +18,70 @@
 
 import { commands } from "vscode";
 import { add, get, remove, replace } from "../menu/file";
+import { get as get2 } from "./config";
 import { reload } from "../lib/vscode";
 
 export const api = {
-    install: () => commands.executeCommand("background.install"),
-    uninstall: () => commands.executeCommand("background.uninstall"),
+    install: () => get2("API") && commands.executeCommand("background.install"),
+    uninstall: () => get2("API") && commands.executeCommand("background.uninstall"),
     reload,
     get: (ui: string) => {
-        switch(ui){
-            case "window":
-            case "editor":
-            case "sidebar":
-            case "panel":
-                return get(ui);
-            default:
-                return undefined;
-        }
+        if(get2("API"))
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    return get(ui);
+                default:
+                    return undefined;
+            }
+        else
+            return undefined;
     },
     add: async (ui: string, glob: string) => {
-        switch(ui){
-            case "window":
-            case "editor":
-            case "sidebar":
-            case "panel":
-                await add(ui, glob, true);
-                return true;
-            default:
-                return false;
-        }
+        if(get2("API"))
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    await add(ui, glob, true);
+                    return true;
+                default:
+                    return false;
+            }
+        else
+            return false;
     },
     replace: async (ui: string, old: string, glob: string) => {
-        switch(ui){
-            case "window":
-            case "editor":
-            case "sidebar":
-            case "panel":
-                await replace(ui, old, glob, true);
-                return true;
-            default:
-                return false;
-        }
+        if(get2("API"))
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    await replace(ui, old, glob, true);
+                    return true;
+                default:
+                    return false;
+            }
+        else
+            return false;
     },
     remove: async (ui: string, glob: string) => {
-        switch(ui){
-            case "window":
-            case "editor":
-            case "sidebar":
-            case "panel":
-                await remove(ui, glob, true);
-                return true;
-            default:
-                return false;
-        }
+        if(get2("API"))
+            switch(ui){
+                case "window":
+                case "editor":
+                case "sidebar":
+                case "panel":
+                    await remove(ui, glob, true);
+                    return true;
+                default:
+                    return false;
+            }
+        else
+            return false;
     }
 }

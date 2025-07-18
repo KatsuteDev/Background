@@ -107,6 +107,7 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |Smooth Image Rendering|Use smooth image rendering when resizing images instead of pixelated|
 |Setting Scope|Where to save background settings - Global or Workspace|
 |CSS|Custom CSS|
+|API|Toggles API access|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
@@ -126,6 +127,8 @@ If the path is not working, add an additional `/` after the variable.
 ## &nbsp;
 
 ### API
+
+*Requires API setting to be turned on in the extension*
 
 Add this extension to your `package.json`.
 
