@@ -9,6 +9,8 @@ const images = path.join(__dirname, "*.png").replace(/\\/g, '/');
 
 module.exports = {
     run: () => new Promise(async () => {
+        await vscode.workspace.getConfiguration('background').update('API', true, vscode.ConfigurationTarget.Global);
+
         await wait(5);
 
         const background = vscode.extensions.getExtension("katsute.code-background").exports;
