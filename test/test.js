@@ -22,7 +22,7 @@ module.exports = {
                     await background.remove(ui, image);
             fs.writeFileSync(file, '0', "utf-8");
             background.install();
-        }else if((num = fs.readFileSync(file, "utf-8")) === 0){
+        }else if((num = parseInt(fs.readFileSync(file, "utf-8"))) === 0){
             vscode.window.showInformationMessage("Testing empty install");
 
             await wait(3);
@@ -75,6 +75,8 @@ module.exports = {
             await background.replace("window", images, images.replace(".png", ''));
 
             vscode.window.showInformationMessage(`All tests completed!\n\nBackgrounds are: \nwindow: [${await background.get("window")}]\neditor: [${await background.get("editor")}]\nsidebar: [${await background.get("sidebar")}]\npanel: [${await background.get("panel")}]`);
+
+            await vscode.workspace.getConfiguration('background').update('API', false, vscode.ConfigurationTarget.Global);
 
             fs.unlinkSync(file);
         }
