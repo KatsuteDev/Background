@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "3.2.0",
+    "version": "4.0.0",
     "private": true,
     "engines": {
         "vscode": "^1.102.0"
@@ -327,7 +327,7 @@
                 },
                 "background.API": {
                     "markdownDescription": "Enable API access.",
-                    "order": 18,
+                    "order": 19,
                     "type": "boolean",
                     "default": false
                 }
