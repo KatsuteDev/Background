@@ -122,6 +122,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             detail: "Where to save settings; workspace requires Auto Install to update background on switch",
             handle: () => update("settingScope", get("settingScope") === "Global" ? "Workspace" : "Global").then(() => moreMenu(i++))
         }),
+        quickPickItem({
+            label: "API",
+            description: descriptionBool("API"),
+            detail: "Enable/disable API access",
+            handle: handleBool("API", i++)
+        }),
         separator(),
         quickPickItem({
             label: "$(output) Changelog",

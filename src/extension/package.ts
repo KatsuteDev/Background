@@ -37,7 +37,8 @@ export type ConfigurationKey =
     "useInvertedOpacity" |
     "settingScope" |
     "smoothImageRendering" |
-    "CSS";
+    "CSS" |
+    "API";
 
 export type Contributes = {
     commands: [{

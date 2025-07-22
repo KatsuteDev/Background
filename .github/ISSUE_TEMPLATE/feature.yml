@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |-
-        This form is for the VSCode desktop extension, if you are using the browser extension open an issue [here](https://github.com/KatsuteDev/BackgroundX/issues/new/choose). <br><br>
+        Please do not open issues about adding this extension to OpenVSX, this extension depends on specific file paths and css selectors which will not match third-party VSCode distributions. <br><br>
 
   - type: checkboxes
     attributes:
