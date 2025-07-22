@@ -18,15 +18,15 @@
 
 import { commands } from "vscode";
 import { add, get, remove, replace } from "../menu/file";
-import { get as get2 } from "./config";
+import { get as cget } from "./config";
 import { reload } from "../lib/vscode";
 
 export const api = {
-    install: () => get2("API") && commands.executeCommand("background.install"),
-    uninstall: () => get2("API") && commands.executeCommand("background.uninstall"),
+    install: () => cget("API") && commands.executeCommand("background.install"),
+    uninstall: () => cget("API") && commands.executeCommand("background.uninstall"),
     reload,
     get: (ui: string) => {
-        if(get2("API"))
+        if(cget("API"))
             switch(ui){
                 case "window":
                 case "editor":
@@ -40,7 +40,7 @@ export const api = {
             return undefined;
     },
     add: async (ui: string, glob: string) => {
-        if(get2("API"))
+        if(cget("API"))
             switch(ui){
                 case "window":
                 case "editor":
@@ -55,7 +55,7 @@ export const api = {
             return false;
     },
     replace: async (ui: string, old: string, glob: string) => {
-        if(get2("API"))
+        if(cget("API"))
             switch(ui){
                 case "window":
                 case "editor":
@@ -70,7 +70,7 @@ export const api = {
             return false;
     },
     remove: async (ui: string, glob: string) => {
-        if(get2("API"))
+        if(cget("API"))
             switch(ui){
                 case "window":
                 case "editor":
