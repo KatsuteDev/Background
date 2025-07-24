@@ -68,10 +68,7 @@ bk_global.setAttribute("type", "text/css");
 bk_global.appendChild(document.createTextNode(\`
 
     ${!under ? "" :
-    `body {
-        background-color: #CCC !important;
-    }
-    body .split-view-view:nth-child(3) *, body > div {
+    `body .split-view-view:nth-child(3) *, body > div {
         background-color: unset !important;
     }`
     }
