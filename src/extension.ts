@@ -57,7 +57,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     let workbench: string;
     let product: string;
 
-    const dir = env.appRoot;
+    const dir: string = env.appRoot;
 
     setUserDir(join(context.globalStorageUri.fsPath, "../../../User")); // for env var
 

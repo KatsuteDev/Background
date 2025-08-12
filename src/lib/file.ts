@@ -16,6 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+import { env } from "vscode";
 import { platform } from "process";
 import { createHash } from "crypto";
 import { PathLike, existsSync } from "fs";
@@ -23,10 +24,12 @@ import { PathLike, existsSync } from "fs";
 // copy
 
 const windows: boolean = platform === "win32";
+const mac: boolean = platform === "darwin";
 
 export const copyCommand:
     (files: [source: PathLike, dest: PathLike][]) => string =
     (files: [PathLike, PathLike][]) =>
+    (mac ? `chmod -R a+rwx '${env.appRoot.replace(/\/Contents\/Resources\/app$/g, '')}' && ` : '') +
     files
         .map((file: [source: PathLike, dest: PathLike]) =>
             windows
