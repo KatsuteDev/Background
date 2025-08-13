@@ -29,7 +29,7 @@ const mac: boolean = platform === "darwin";
 export const copyCommand:
     (files: [source: PathLike, dest: PathLike][]) => string =
     (files: [PathLike, PathLike][]) =>
-    (mac ? `chmod -R a+rwx '${env.appRoot.replace(/\/Contents\/Resources\/app$/g, '')}' && ` : '') +
+    (mac ? `chmod -R a+rwx '${env.appRoot.replace(/\/Contents\/Resources\/app$/g, '').replace(/'/g, "\\'")}' && ` : '') +
     files
         .map((file: [source: PathLike, dest: PathLike]) =>
             windows
