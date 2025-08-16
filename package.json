@@ -360,7 +360,7 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "devDependencies": {
-        "@types/node": "24.0.6",
+        "@types/node": "24.2.0",
         "@types/tmp": "0.2.6",
         "@types/vscode": "1.102.0",
         "@vscode/sudo-prompt": "9.3.1",
@@ -369,7 +369,7 @@
         "esbuild": "0.25.8",
         "glob": "11.0.3",
         "rimraf": "6.0.1",
-        "tmp": "0.2.3",
-        "typescript": "5.8.3"
+        "tmp": "0.2.5",
+        "typescript": "5.9.2"
     }
 }
