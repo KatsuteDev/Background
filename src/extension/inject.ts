@@ -193,8 +193,8 @@ if(panelBackgrounds.length > 0){
 + // notification overrides
 `
 bk_global.appendChild(document.createTextNode(\`
-    div.notification-toast:has(> div.notifications-list-container > div.monaco-list[aria-label="Your Code installation appears to be corrupt. Please reinstall., notification"]),
-    div.notification-toast:has(> div.notifications-list-container > div.monaco-list[aria-label="Your Code - Insiders installation appears to be corrupt. Please reinstall., notification"]) {
+    div.notification-toast:has(> div.notifications-list-container > div.monaco-list[aria-label*="Your Code installation appears to be corrupt. Please reinstall., notification"]),
+    div.notification-toast:has(> div.notifications-list-container > div.monaco-list[aria-label*="Your Code - Insiders installation appears to be corrupt. Please reinstall., notification"]) {
 
         display: none;
 
