@@ -103,6 +103,7 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |**Advanced Option**|**Description**|
 |Auto Install|Automatically install backgrounds on startup|
 |Render Content Above Background|Show images, PDFs, and markdown previews on top of the background|
+|Render Text Above Background|Show text and code on top of the background, only supported for window backgrounds|
 |Use Inverted Opacity|Use an inverted opacity, so 0 is visible and 1 is invisible|
 |Smooth Image Rendering|Use smooth image rendering when resizing images instead of pixelated|
 |Setting Scope|Where to save background settings - Global or Workspace|
