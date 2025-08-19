@@ -11,7 +11,7 @@
     "version": "3.1.1",
     "private": true,
     "engines": {
-        "vscode": "^1.102.0"
+        "vscode": "^1.103.0"
     },
     "categories": [
         "Other"
@@ -356,7 +356,7 @@
     "devDependencies": {
         "@types/node": "24.2.0",
         "@types/tmp": "0.2.6",
-        "@types/vscode": "1.102.0",
+        "@types/vscode": "1.103.0",
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.5.2",
         "@vscode/vsce": "3.6.0",
