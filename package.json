@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "3.1.1",
+    "version": "4.0.0",
     "private": true,
     "engines": {
         "vscode": "^1.103.0"
@@ -290,21 +290,27 @@
                     "type": "boolean",
                     "default": false
                 },
+                "background.renderTextAboveBackground": {
+                    "markdownDescription": "Render text and code above the background.\n\nOnly supported for window backgrounds.",
+                    "order": 14,
+                    "type": "boolean",
+                    "default": false
+                },
                 "background.useInvertedOpacity": {
                     "markdownDescription": "Use an inverted opacity, so 0 is fully visible and 1 is invisible.",
-                    "order": 14,
+                    "order": 15,
                     "type": "boolean",
                     "default": false
                 },
                 "background.smoothImageRendering": {
                     "markdownDescription": "Use smooth image rendering rather than pixelated rendering when resizing images.",
-                    "order": 15,
+                    "order": 16,
                     "type": "boolean",
                     "default": false
                 },
                 "background.settingScope": {
                     "markdownDescription": "Where to save and load background settings.\n\nThis does not automatically update the background on workspace change, you need to also turn on `#background.autoInstall#`.",
-                    "order": 16,
+                    "order": 17,
                     "type": "string",
                     "enum": [
                         "Global",
@@ -314,14 +320,14 @@
                 },
                 "background.CSS": {
                     "markdownDescription": "Apply raw CSS to VSCode.",
-                    "order": 17,
+                    "order": 18,
                     "type": "string",
                     "editPresentation": "multilineText",
                     "default": ""
                 },
                 "background.API": {
                     "markdownDescription": "Enable API access.",
-                    "order": 18,
+                    "order": 19,
                     "type": "boolean",
                     "default": false
                 }
