@@ -68,7 +68,7 @@ bk_global.setAttribute("type", "text/css");
 bk_global.appendChild(document.createTextNode(\`
 
     ${!under ? "" :
-    `body .split-view-view:nth-child(3) *, body > div {
+    `body .split-view-view:nth-child(3) :not(.sticky-widget) > *:not([role="tooltip"]), body > div {
         background-color: unset !important;
     }`
     }
