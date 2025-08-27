@@ -1,5 +1,40 @@
 # Changelog
 
+## 4.0.0
+
+### New Features
+
+* Require API access to be enabled [#490](https://github.com/KatsuteDev/Background/pull/490) ([@Katsute](https://github.com/Katsute))
+
+  It is now required to enable API access in the options menu in order to use the extension API.
+* Add experimental option for text over backgrounds [#487](https://github.com/KatsuteDev/Background/pull/487) ([@Katsute](https://github.com/Katsute))
+
+  Adds an option `renderTextAboveBackground` which improves text visibility. Only supported for window backgrounds, not supported for editor/sidebar/panel options yet.
+
+  Terminal will still have a solid background with this option enabled.
+
+  Feature is experimental, please report any visibility issues with this option.
+
+### Fixes
+
+* Fix corrupt installation message not being hidden [#498](https://github.com/KatsuteDev/Background/pull/498) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.25.5 to 0.25.6 [#489](https://github.com/KatsuteDev/Background/pull/489) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.101.0 to 1.102.0 [#488](https://github.com/KatsuteDev/Background/pull/488) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.6 to 0.25.8 [#491](https://github.com/KatsuteDev/Background/pull/491) ([@dependabot](https://github.com/dependabot))
+* Bump form-data from 4.0.3 to 4.0.4 [#492](https://github.com/KatsuteDev/Background/pull/492) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.8.3 to 5.9.2 [#494](https://github.com/KatsuteDev/Background/pull/494) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.0.6 to 24.2.0 [#495](https://github.com/KatsuteDev/Background/pull/495) ([@dependabot](https://github.com/dependabot))
+* Bump tmp from 0.2.3 to 0.2.4 in the npm_and_yarn group [#496](https://github.com/KatsuteDev/Background/pull/496) ([@dependabot](https://github.com/dependabot))
+* Bump tmp from 0.2.4 to 0.2.5 [#497](https://github.com/KatsuteDev/Background/pull/497) ([@dependabot](https://github.com/dependabot))
+* Bump actions/checkout from 4 to 5 [#501](https://github.com/KatsuteDev/Background/pull/501) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.8 to 0.25.9 [#502](https://github.com/KatsuteDev/Background/pull/502) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.102.0 to 1.103.0 [#503](https://github.com/KatsuteDev/Background/pull/503) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.1.1...4.0.0`](https://github.com/KatsuteDev/Background/compare/3.1.1...4.0.0)
+
 ## 3.1.1
 
 ### Dependencies

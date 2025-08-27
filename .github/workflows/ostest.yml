@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Dependencies
         shell: bash
@@ -34,6 +34,7 @@ jobs:
         shell: bash
         run: |-
           cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
+          cat $GITHUB_STEP_SUMMARY
 
   test-windows-insiders:
     name: Windows (Insiders)
@@ -42,7 +43,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Dependencies
         shell: bash
@@ -66,6 +67,7 @@ jobs:
         shell: bash
         run: |-
           cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
+          cat $GITHUB_STEP_SUMMARY
 
   test-ubuntu:
     name: Ubuntu
@@ -74,7 +76,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Dependencies
         shell: bash
@@ -105,6 +107,7 @@ jobs:
         shell: bash
         run: |-
           cat /tmp/test.txt >> $GITHUB_STEP_SUMMARY
+          cat $GITHUB_STEP_SUMMARY
 
   test-ubuntu-insiders:
     name: Ubuntu (Insiders)
@@ -113,7 +116,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Dependencies
         shell: bash
@@ -144,6 +147,7 @@ jobs:
         shell: bash
         run: |-
           cat /tmp/test.txt >> $GITHUB_STEP_SUMMARY
+          cat $GITHUB_STEP_SUMMARY
 
   test-macos:
     name: MacOS
@@ -152,7 +156,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Dependencies
         shell: bash
@@ -175,6 +179,7 @@ jobs:
         shell: bash
         run: |-
           cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
+          cat $GITHUB_STEP_SUMMARY
 
   test-macos-insiders:
     name: MacOS (Insiders)
@@ -183,7 +188,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Dependencies
         shell: bash
@@ -206,6 +211,7 @@ jobs:
         shell: bash
         run: |-
           cat $(echo $TMPDIR)test.txt >> $GITHUB_STEP_SUMMARY
+          cat $GITHUB_STEP_SUMMARY
 
   test-copy:
     name: Test Copy [${{matrix.os}}] (existing ${{matrix.exists}})
