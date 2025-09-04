@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.1
+
+### Fixes
+
+* Fix various missing backgrounds when using render text over background option [#507](https://github.com/KatsuteDev/Background/pull/507) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`4.0.0...4.0.1`](https://github.com/KatsuteDev/Background/compare/4.0.0...4.0.1)
+
 ## 4.0.0
 
 ### New Features
