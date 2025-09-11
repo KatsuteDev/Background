@@ -274,7 +274,7 @@ jobs:
 
       - name: Copy (Mac)
         if: matrix.os == 'macos-latest'
-        run: chmod -R a+rwx . && cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
+        run: cp -f 'A' 'C.txt' && cp -f 'B' 'D.txt'
 
       - name: List Files
         shell: bash
