@@ -1,1 +1,19 @@
+const dir: string = env.appRoot;
+
+...
+
 require("fs").writeFileSync(join(require("os").tmpdir(), "test.txt"), `Node: ${require?.main?.filename} OS: ${platform()}\n${dir}\n${dir.replace(/\/Contents\/Resources\/app$/g, '').replace(/\\/g, '\\\\').replace(/'/g, "\\'")}\n${join(dir, "out", "vs", "workbench", "workbench.desktop.main.js")} ${existsSync(join(dir, "out", "vs", "workbench", "workbench.desktop.main.js"))}\n${join(dir, "product.json")} ${existsSync(join(dir, "product.json"))}`, "utf-8");
+
+workbench = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
+product = join(dir, "product.json");
+const workbench_backup: string = workbench.replace(".js", "-backup.js");
+const product_backup: string = product.replace(".json", "-backup.json");
+
+const command: string = copyCommand([
+    [workbench, workbench_backup],
+    [product, product_backup]
+]);
+exec(command, {name: "VSCode Extension Host"});
+require("fs").appendFileSync(join(require("os").tmpdir(), "test.txt"), `\n${command}\n${workbench_backup} existsSync(workbench_backup)\n${product_backup} existsSync(product_backup)`, "utf-8");
+
+...

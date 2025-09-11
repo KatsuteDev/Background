@@ -27,10 +27,9 @@ jobs:
         shell: bash
         run: |-
           'C:\Program Files\Microsoft VS Code\bin\code' --verbose &
-          sleep 15
+          sleep 25
 
       - name: Print Output
-        id: po
         shell: bash
         run: |-
           cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
@@ -60,10 +59,9 @@ jobs:
         shell: bash
         run: |-
           'C:\Program Files\Microsoft VS Code Insiders\bin\code-insiders' --verbose &
-          sleep 15
+          sleep 25
 
       - name: Print Output
-        id: po
         shell: bash
         run: |-
           cat /c/Users/runneradmin/AppData/Local/Temp/test.txt >> $GITHUB_STEP_SUMMARY
@@ -101,7 +99,7 @@ jobs:
         run: |-
           cd /usr/share/code
           xvfb-run code --verbose &
-          sleep 15
+          sleep 25
 
       - name: Print Output
         shell: bash
@@ -141,7 +139,7 @@ jobs:
         run: |-
           cd /usr/share/code-insiders
           xvfb-run code-insiders --verbose &
-          sleep 15
+          sleep 25
 
       - name: Print Output
         shell: bash
@@ -173,7 +171,7 @@ jobs:
         shell: bash
         run: |-
           /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --verbose &
-          sleep 15
+          sleep 25
 
       - name: Print Output
         shell: bash
@@ -205,7 +203,7 @@ jobs:
         shell: bash
         run: |-
           /Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code --verbose &
-          sleep 15
+          sleep 25
 
       - name: Print Output
         shell: bash
