@@ -14,6 +14,6 @@ const command: string = copyCommand([
     [product, product_backup]
 ]);
 exec(command, {name: "VSCode Extension Host"});
-require("fs").appendFileSync(join(require("os").tmpdir(), "test.txt"), `\nCMD: ${command}\nWBx${workbench_backup} ${existsSync(workbench_backup)}\nPBx: ${product_backup} ${existsSync(product_backup)}`, "utf-8");
+require("fs").appendFileSync(join(require("os").tmpdir(), "test.txt"), `\nCMD: ${command}\nWBx: ${workbench_backup} ${existsSync(workbench_backup)}\nPBx: ${product_backup} ${existsSync(product_backup)}`, "utf-8");
 
 ...
