@@ -5,8 +5,7 @@ updates:
     labels: [dependencies]
     assignees: [Katsute]
     schedule:
-      interval: weekly
-      day: monday
+      interval: monthly
       time: "00:00"
       timezone: US/Eastern
     open-pull-requests-limit: 10
@@ -15,8 +14,7 @@ updates:
     labels: [dependencies]
     assignees: [Katsute]
     schedule:
-      interval: weekly
-      day: monday
+      interval: monthly
       time: "00:00"
       timezone: US/Eastern
     open-pull-requests-limit: 10
