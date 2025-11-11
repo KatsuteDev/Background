@@ -366,7 +366,7 @@
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.5.2",
         "@vscode/vsce": "3.6.2",
-        "esbuild": "0.25.12",
+        "esbuild": "0.27.0",
         "glob": "11.0.3",
         "rimraf": "6.1.0",
         "tmp": "0.2.5",
