@@ -11,7 +11,7 @@
     "version": "4.0.2",
     "private": true,
     "engines": {
-        "vscode": "^1.106.1"
+        "vscode": "^1.107.0"
     },
     "categories": [
         "Other"
@@ -360,13 +360,13 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "devDependencies": {
-        "@types/node": "24.10.0",
+        "@types/node": "25.0.2",
         "@types/tmp": "0.2.6",
-        "@types/vscode": "1.106.1",
+        "@types/vscode": "1.107.0",
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.5.2",
         "@vscode/vsce": "3.7.1",
-        "esbuild": "0.27.0",
+        "esbuild": "0.27.1",
         "glob": "13.0.0",
         "rimraf": "6.1.2",
         "tmp": "0.2.5",
