@@ -1,5 +1,43 @@
 # Changelog
 
+## 4.0.2
+
+### Fixes
+
+* Fix missing text selector when using render text over background option [#538](https://github.com/KatsuteDev/Background/pull/538) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump actions/github-script from 7 to 8 [#508](https://github.com/KatsuteDev/Background/pull/508) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.3.0 to 24.4.0 [#509](https://github.com/KatsuteDev/Background/pull/509) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.103.0 to 1.104.0 [#510](https://github.com/KatsuteDev/Background/pull/510) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.4.0 to 24.5.2 [#511](https://github.com/KatsuteDev/Background/pull/511) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.9 to 0.25.10 [#512](https://github.com/KatsuteDev/Background/pull/512) ([@dependabot](https://github.com/dependabot))
+* Bump tar-fs from 2.1.3 to 2.1.4 in the npm_and_yarn group across 1 directory [#513](https://github.com/KatsuteDev/Background/pull/513) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.6.0 to 3.6.2 [#514](https://github.com/KatsuteDev/Background/pull/514) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.9.2 to 5.9.3 [#515](https://github.com/KatsuteDev/Background/pull/515) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.5.2 to 24.6.2 [#516](https://github.com/KatsuteDev/Background/pull/516) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.6.2 to 24.7.2 [#518](https://github.com/KatsuteDev/Background/pull/518) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.104.0 to 1.105.0 [#517](https://github.com/KatsuteDev/Background/pull/517) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.10 to 0.25.11 [#519](https://github.com/KatsuteDev/Background/pull/519) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.7.2 to 24.8.1 [#520](https://github.com/KatsuteDev/Background/pull/520) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.8.1 to 24.9.1 [#522](https://github.com/KatsuteDev/Background/pull/522) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 24.9.1 to 24.10.0 [#523](https://github.com/KatsuteDev/Background/pull/523) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 6.0.1 to 6.1.0 [#524](https://github.com/KatsuteDev/Background/pull/524) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.11 to 0.25.12 [#525](https://github.com/KatsuteDev/Background/pull/525) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.25.12 to 0.27.0 [#526](https://github.com/KatsuteDev/Background/pull/526) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.6.2 to 3.7.0 [#527](https://github.com/KatsuteDev/Background/pull/527) ([@dependabot](https://github.com/dependabot))
+* Bump the npm_and_yarn group across 1 directory with 1 update [#529](https://github.com/KatsuteDev/Background/pull/529) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 11.0.3 to 11.1.0 in the npm_and_yarn group across 1 directory [#530](https://github.com/KatsuteDev/Background/pull/530) ([@dependabot](https://github.com/dependabot))
+* Bump actions/checkout from 5 to 6 [#531](https://github.com/KatsuteDev/Background/pull/531) ([@dependabot](https://github.com/dependabot))
+* Bump rimraf from 6.1.0 to 6.1.2 [#535](https://github.com/KatsuteDev/Background/pull/535) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.105.0 to 1.106.1 [#534](https://github.com/KatsuteDev/Background/pull/534) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.7.0 to 3.7.1 [#532](https://github.com/KatsuteDev/Background/pull/532) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 11.1.0 to 13.0.0 [#533](https://github.com/KatsuteDev/Background/pull/533) ([@dependabot](https://github.com/dependabot))
+* Bump jws from 3.2.2 to 3.2.3 in the npm_and_yarn group across 1 directory [#537](https://github.com/KatsuteDev/Background/pull/537) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`4.0.1...4.0.2`](https://github.com/KatsuteDev/Background/compare/4.0.1...4.0.2)
+
 ## 4.0.1
 
 ### Fixes
