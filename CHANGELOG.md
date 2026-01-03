@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.0.3
+
+### Fixes
+
+* Fix suggestion background when using render text over background option [#542](https://github.com/KatsuteDev/Background/pull/542) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.27.1 to 0.27.2 [#540](https://github.com/KatsuteDev/Background/pull/540) ([@dependabot](https://github.com/dependabot))
+* Bump qs from 6.14.0 to 6.14.1 in the npm_and_yarn group across 1 directory [#541](https://github.com/KatsuteDev/Background/pull/541) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`4.0.2...4.0.3`](https://github.com/KatsuteDev/Background/compare/4.0.2...4.0.3)
+
 ## 4.0.2
 
 ### Fixes
