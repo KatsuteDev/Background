@@ -68,7 +68,10 @@ bk_global.setAttribute("type", "text/css");
 bk_global.appendChild(document.createTextNode(\`
 
     ${!under ? "" :
-    `body .split-view-view:nth-child(3) *:not([role="tooltip"], .monaco-count-badge, .badge-content, .label, .action-item *, .monaco-button, .view-overlays *, .sticky-widget *, .monaco-tree-sticky-container *, .lines-content *, .suggest-widget, .suggest-widget *), body > div {
+    `body .split-view-view:nth-child(3) *:not(
+        [role="tooltip"], .monaco-count-badge, .badge-content, .label, .action-item *, .monaco-button,
+        .view-overlays *, .sticky-widget *, .monaco-tree-sticky-container *, .lines-content *, .suggest-widget, .suggest-widget *),
+        body > div {
         background-color: unset !important;
     }`
     }
