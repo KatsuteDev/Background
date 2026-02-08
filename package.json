@@ -11,7 +11,7 @@
     "version": "4.0.3",
     "private": true,
     "engines": {
-        "vscode": "^1.108.1"
+        "vscode": "^1.109.0"
     },
     "categories": [
         "Other"
