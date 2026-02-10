@@ -71,7 +71,7 @@ bk_global.appendChild(document.createTextNode(\`
     `body .split-view-view:nth-child(3) *:not(
         [role="tooltip"], .monaco-count-badge, .badge-content, .label, .action-item *, .monaco-button,
         .view-overlays *, .sticky-widget *, .monaco-tree-sticky-container *, .lines-content *, .suggest-widget,
-        .monaco-list-row.focused, .monaco-list-row.selected, .pane-header),
+        .monaco-list-row.focused, .monaco-list-row.selected, .monaco-list-row:hover),
         body > div {
         background-color: unset !important;
     }`
