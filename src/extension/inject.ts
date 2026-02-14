@@ -73,6 +73,10 @@ bk_global.appendChild(document.createTextNode(\`
         .view-overlays *, .sticky-widget *, .monaco-tree-sticky-container *, .lines-content *, .suggest-widget, .suggest-widget *),
         body > div {
         background-color: unset !important;
+    }
+
+    .current-line {
+        opacity: 0.5;
     }`
     }
 
