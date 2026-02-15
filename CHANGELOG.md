@@ -1,5 +1,26 @@
 # Changelog
 
+## 4.0.4
+
+### Fixes
+
+* Restore missing suggestion highlight when using render text over background option [#556](https://github.com/KatsuteDev/Background/pull/556) ([@Katsute](https://github.com/Katsute))
+* Improve background visibility on selected line when using render text over background option [#558](https://github.com/KatsuteDev/Background/pull/558) ([@Katsute](https://github.com/Katsute))
+* Restore missing background on selected and hovered sidebar list when using render text over background option [#559](https://github.com/KatsuteDev/Background/pull/559) ([@Katsute](https://github.com/Katsute))
+* Fix tab background when using render text over background option [#557](https://github.com/KatsuteDev/Background/pull/557) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump lodash from 4.17.21 to 4.17.23 in the npm_and_yarn group across 1 directory [#545](https://github.com/KatsuteDev/Background/pull/545) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 25.0.2 to 25.1.0 [#547](https://github.com/KatsuteDev/Background/pull/547) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.107.0 to 1.108.1 [#549](https://github.com/KatsuteDev/Background/pull/549) ([@kdevbot](https://github.com/KatsuteDev))
+* Bump glob from 13.0.0 to 13.0.1 [#551](https://github.com/KatsuteDev/Background/pull/551) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 25.1.0 to 25.2.2 [#552](https://github.com/KatsuteDev/Background/pull/552) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.108.1 to 1.109.0 [#555](https://github.com/KatsuteDev/Background/pull/555) ([@kdevbot](https://github.com/KatsuteDev))
+* Bump esbuild from 0.27.2 to 0.27.3 [#554](https://github.com/KatsuteDev/Background/pull/554) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`4.0.3...4.0.4`](https://github.com/KatsuteDev/Background/compare/4.0.3...4.0.4)
+
 ## 4.0.3
 
 ### Fixes
