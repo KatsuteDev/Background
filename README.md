@@ -6,9 +6,9 @@
     <h3>Background</h3>
     <h4>The most advanced background image extension for VSCode</h4>
     <h5>Windows + Mac + Linux</h5>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Rating"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="installs" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Installs"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="downloads" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Downloads"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="rating" src="https://raw.githubusercontent.com/KatsuteDev/Background/refs/heads/main/badge-rating.svg"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="installs" src="https://raw.githubusercontent.com/KatsuteDev/Background/refs/heads/main/badge-installs.svg"></a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="downloads" src="https://raw.githubusercontent.com/KatsuteDev/Background/refs/heads/main/badge-downloads.svg"></a>
 </div>
 
 <br>
