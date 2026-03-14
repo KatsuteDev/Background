@@ -25,18 +25,26 @@ jobs:
       - name: Generate
         run: node badge.js
 
-      - name: Delete gh-pages
+      - name: Convert SVG to PNG
         run: |-
-          if git ls-remote --exit-code --heads origin gh-pages; then
-            git push origin --delete gh-pages
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
+          for svg in badge-*.svg; do
+            rsvg-convert "$svg" -o "${svg%.svg}.png"
+          done
+
+      - name: Delete branch
+        run: |-
+          if git ls-remote --exit-code --heads origin badges; then
+            git push origin --delete badges
           fi
 
-      - name: Create gh-pages
+      - name: Create branch
         run: |-
           git config --global user.name "kdevbot[bot]"
           git config --global user.email "155479163+kdevbot[bot]@users.noreply.github.com"
-          git checkout --orphan gh-pages
+          git checkout --orphan badges
           git reset --hard
-          git add badge-*.svg
-          git commit -m "Create gh-pages branch with badges"
-          git push -u origin gh-pages --force
+          git add badge-*.png
+          git commit -m "Create badges branch with badges"
+          git push -u origin badges --force
