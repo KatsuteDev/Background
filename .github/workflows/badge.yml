@@ -25,10 +25,18 @@ jobs:
       - name: Generate
         run: node badge.js
 
-      - name: Commit
+      - name: Delete gh-pages
+        run: |-
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git push origin --delete gh-pages
+          fi
+
+      - name: Create gh-pages
         run: |-
           git config --global user.name "kdevbot[bot]"
           git config --global user.email "155479163+kdevbot[bot]@users.noreply.github.com"
+          git checkout --orphan gh-pages
+          git reset --hard
           git add badge-*.svg
-          git commit -m "Update badges"
-          git push
+          git commit -m "Create gh-pages branch with badges"
+          git push -u origin gh-pages --force
