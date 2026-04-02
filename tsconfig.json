@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
-        "target": "ES2020",
-        "module": "commonjs",
+        "target": "esnext",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "esModuleInterop": true,
         "strict": true,
         "alwaysStrict": true,
         "sourceMap": true,
         "removeComments": true,
         "resolveJsonModule": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "types": ["node"]
     }
 }
