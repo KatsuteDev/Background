@@ -28,7 +28,7 @@ import { reload } from "./lib/vscode";
 import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
 import { optionMenu } from "./menu/menu";
-import { configuration, get, update } from "./extension/config";
+import { configuration } from "./extension/config";
 import { env } from "vscode";
 import { setUserDir } from "./extension/env";
 
