@@ -93,13 +93,7 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             handle: handleBool("autoInstall", i++, true)
         }),
         quickPickItem({
-            label: "Render Content Above Background",
-            description: descriptionBool("renderContentAboveBackground"),
-            detail: "Render content like images, PDFs, and markdown previews above the background",
-            handle: handleBool("renderContentAboveBackground", i++)
-        }),
-        quickPickItem({
-            label: "$(beaker) Render Text Above Background",
+            label: "Render Text Above Background",
             description: descriptionBool("renderTextAboveBackground"),
             detail: "Render text and code above the background; only supported for window backgrounds",
             handle: handleBool("renderTextAboveBackground", i++)

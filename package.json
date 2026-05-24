@@ -8,10 +8,10 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "4.0.4",
+    "version": "5.0.0",
     "private": true,
     "engines": {
-        "vscode": "^1.118.0"
+        "vscode": "^1.121.0"
     },
     "categories": [
         "Other"
@@ -284,15 +284,9 @@
                     "type": "boolean",
                     "default": false
                 },
-                "background.renderContentAboveBackground": {
-                    "markdownDescription": "Render content like images, PDFs, and markdown previews above the background.",
-                    "order": 13,
-                    "type": "boolean",
-                    "default": false
-                },
                 "background.renderTextAboveBackground": {
                     "markdownDescription": "Render text and code above the background.\n\nOnly supported for window backgrounds.",
-                    "order": 14,
+                    "order": 13,
                     "type": "boolean",
                     "default": false
                 },
@@ -360,9 +354,9 @@
     },
     "homepage": "https://github.com/KatsuteDev/Background#readme",
     "devDependencies": {
-        "@types/node": "25.6.0",
+        "@types/node": "25.9.1",
         "@types/tmp": "0.2.6",
-        "@types/vscode": "1.118.0",
+        "@types/vscode": "1.120.0",
         "@vscode/sudo-prompt": "9.3.1",
         "@vscode/test-electron": "2.5.2",
         "@vscode/vsce": "3.9.1",

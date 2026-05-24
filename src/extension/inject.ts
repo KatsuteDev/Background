@@ -53,10 +53,9 @@ const getJavaScript: () => string = () => {
         panel:   resolve(get("panelBackgrounds"))
     };
 
-    const after: boolean = get("renderContentAboveBackground");
     const under: boolean = get("renderTextAboveBackground");
 
-    const bodySel: string = under || !after ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`;
+    const bodySel: string = under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`;
 
     return `(() => {` +
 // shared background css
@@ -105,7 +104,7 @@ bk_global.appendChild(document.createTextNode(\`
         width: 100%;
         height: 100%;
 
-        ${!after && !under ? `z-index: 1000;` : ''}
+        ${!under ? `z-index: 1000;` : ''}
 
         position: absolute;
 
