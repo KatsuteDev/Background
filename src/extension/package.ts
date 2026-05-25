@@ -32,7 +32,6 @@ export type ConfigurationKey =
     "backgroundSizeValue" |
     "backgroundChangeTime" |
     "autoInstall" |
-    "renderContentAboveBackground" |
     "renderTextAboveBackground" |
     "useInvertedOpacity" |
     "settingScope" |

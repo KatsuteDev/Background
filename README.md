@@ -6,9 +6,6 @@
     <h3>Background</h3>
     <h4>The most advanced background image extension for VSCode</h4>
     <h5>Windows + Mac + Linux</h5>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Rating"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="installs" src="https://img.shields.io/visual-studio-marketplace/i/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Installs"></a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=katsute.code-background"><img alt="downloads" src="https://img.shields.io/visual-studio-marketplace/d/katsute.code-background?style=for-the-badge&logo=visualstudiocode&labelColor=252526&color=0098FF&label=Downloads"></a>
 </div>
 
 <br>
@@ -102,8 +99,7 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |||
 |**Advanced Option**|**Description**|
 |Auto Install|Automatically install backgrounds on startup|
-|Render Content Above Background|Show images, PDFs, and markdown previews on top of the background|
-|Render Text Above Background|Show text and code on top of the background, only supported for window backgrounds|
+|Render Text Above Background|Show text, code, browser, and iframes on top of the background, only supported for window backgrounds|
 |Use Inverted Opacity|Use an inverted opacity, so 0 is visible and 1 is invisible|
 |Smooth Image Rendering|Use smooth image rendering when resizing images instead of pixelated|
 |Setting Scope|Where to save background settings - Global or Workspace|
