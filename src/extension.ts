@@ -28,7 +28,7 @@ import { reload } from "./lib/vscode";
 import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
 import { optionMenu } from "./menu/menu";
-import { configuration, get, update } from "./extension/config";
+import { configuration } from "./extension/config";
 import { env } from "vscode";
 import { setUserDir } from "./extension/env";
 
@@ -139,22 +139,6 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
     );
 
     statusbar.show();
-
-    // migrate
-
-    if(!configuration().has("useInvertedOpacity")){
-        commands.executeCommand("workbench.action.reloadWindow"); // outdated manifest, force reload
-    }
-
-    if(context.globalState.get("migratedOpacity") !== true){ // if not yet migrated
-        if(get("backgroundOpacity", {scope: "global", includeDefault: false})){ // has opacity set
-            update("useInvertedOpacity", true, undefined, true) // update setting
-                .then(() => context.globalState.update("migratedOpacity", true)) // set migrated (changed)
-                .then(() => window.showInformationMessage("Background opacity settings have been migrated to the latest version."));
-        }else{
-            context.globalState.update("migratedOpacity", true); // set migrated (no change)
-        }
-    }
 
     // install
 
