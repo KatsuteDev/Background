@@ -104,8 +104,6 @@ bk_global.appendChild(document.createTextNode(\`
         width: 100%;
         height: 100%;
 
-        ${!under ? `z-index: 1000;` : ''}
-
         position: absolute;
 
         pointer-events: none;
