@@ -285,7 +285,7 @@
                     "default": false
                 },
                 "background.renderTextAboveBackground": {
-                    "markdownDescription": "Render text and code above the background.\n\nOnly supported for window backgrounds.",
+                    "markdownDescription": "Show text, code, browser, and iframes on top of the background.\n\nOnly supported for window backgrounds.",
                     "order": 13,
                     "type": "boolean",
                     "default": false
