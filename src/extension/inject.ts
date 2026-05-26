@@ -69,6 +69,7 @@ bk_global.appendChild(document.createTextNode(\`
     ${!under ? "" :
     `body .split-view-view:nth-child(3) *:not(
         [role="tooltip"], .monaco-count-badge, .badge-content, .label, .action-item *, .monaco-button,
+        .monaco-editor-overlaymessage, .monaco-editor-overlaymessage *, .context-view, .context-view *,
         .view-overlays *, .sticky-widget *, .monaco-tree-sticky-container *, .lines-content *, .suggest-widget, .suggest-widget *,
         .monaco-tree-sticky-container, .monaco-list-row.focused, .monaco-list-row.selected, .monaco-list-row:hover),
         body > div,
