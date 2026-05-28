@@ -18,7 +18,7 @@
 
 import { round } from "../lib/math";
 
-import { get, getCSS } from "./config";
+import { get, getCSS, UI } from "./config";
 import { sanitizeCSS } from "../lib/css";
 import { resolve } from "../lib/glob";
 
@@ -56,6 +56,11 @@ const getJavaScript: () => string = () => {
     const under: boolean = get("renderTextAboveBackground");
 
     const bodySel: string = under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`;
+    const secSel: string  = under ? `::before` : `::after`;
+
+    const opacity = (sec: UI) => under ? 1 : round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", sec) : +getCSS("backgroundOpacity", sec), 2);
+
+    const filter = (sec: UI) => `blur(${getCSS("backgroundBlur", sec)}) ${!under ? "" : `brightness(${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", sec) : +getCSS("backgroundOpacity", sec), 2)})`}`;
 
     return `(() => {` +
 // shared background css
@@ -83,20 +88,20 @@ bk_global.appendChild(document.createTextNode(\`
     }
 
     body[windowTransition="true"]${bodySel},
-    body[editorTransition="true"] .split-view-view > .editor-group-container::after,
-    body[sidebarTransition="true"] .split-view-view > .part.sidebar::after,
-    body[sidebarTransition="true"] .split-view-view > .part.auxiliarybar::after,
-    body[panelTransition="true"] .split-view-view > .part.panel::after {
+    body[editorTransition="true"] .split-view-view > .editor-group-container${secSel},
+    body[sidebarTransition="true"] .split-view-view > .part.sidebar${secSel},
+    body[sidebarTransition="true"] .split-view-view > .part.auxiliarybar${secSel},
+    body[panelTransition="true"] .split-view-view > .part.panel${secSel} {
 
         opacity: 0;
 
     }
 
     body${bodySel},
-    .split-view-view > .editor-group-container::after,
-    .split-view-view > .part.sidebar::after,
-    .split-view-view > .part.auxiliarybar::after,
-    .split-view-view > .part.panel::after {
+    .split-view-view > .editor-group-container${secSel},
+    .split-view-view > .part.sidebar${secSel},
+    .split-view-view > .part.auxiliarybar${secSel},
+    .split-view-view > .part.panel${secSel} {
 
         content: "";
 
@@ -112,6 +117,8 @@ bk_global.appendChild(document.createTextNode(\`
         transition: opacity 1s ease-in-out;
 
         image-rendering: ${get("smoothImageRendering") ? "auto" : "pixelated"};
+
+        ${under ? "z-index: -1;" : ""}
 
     }
 \`));
@@ -143,9 +150,9 @@ if(windowBackgrounds.length > 0){
             background-repeat: ${getCSS("backgroundRepeat", "window")};
             background-size: ${getCSS("backgroundSize", "window")};
 
-            opacity: ${under ? 1 : round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "window") : +getCSS("backgroundOpacity", "window"), 2)};
+            opacity: ${opacity("window")};
 
-            filter: blur(${getCSS("backgroundBlur", "window")}) ${!under ? "" : `brightness(${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "window") : +getCSS("backgroundOpacity", "window"), 2)})`};
+            filter: ${filter("window")};
 
         }
     \`));
@@ -155,15 +162,15 @@ if(windowBackgrounds.length > 0){
 `
 if(editorBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        .split-view-view > .editor-group-container::after {
+        .split-view-view > .editor-group-container${secSel} {
 
             background-position: ${getCSS("backgroundAlignment", "editor")};
             background-repeat: ${getCSS("backgroundRepeat", "editor")};
             background-size: ${getCSS("backgroundSize", "editor")};
 
-            opacity: ${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "editor") : +getCSS("backgroundOpacity", "editor"), 2)};
+            opacity: ${opacity("editor")};
 
-            filter: blur(${getCSS("backgroundBlur", "editor")});
+            filter: ${filter("editor")};
 
         }
     \`));
@@ -173,16 +180,16 @@ if(editorBackgrounds.length > 0){
 `
 if(sidebarBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        .split-view-view > .part.sidebar::after,
-        .split-view-view > .part.auxiliarybar::after {
+        .split-view-view > .part.sidebar${secSel},
+        .split-view-view > .part.auxiliarybar${secSel} {
 
             background-position: ${getCSS("backgroundAlignment", "sidebar")};
             background-repeat: ${getCSS("backgroundRepeat", "sidebar")};
             background-size: ${getCSS("backgroundSize", "sidebar")};
 
-            opacity: ${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "sidebar") : +getCSS("backgroundOpacity", "sidebar"), 2)};
+            opacity: ${opacity("sidebar")};
 
-            filter: blur(${getCSS("backgroundBlur", "sidebar")});
+            filter: ${filter("sidebar")};
 
         }
     \`));
@@ -192,15 +199,15 @@ if(sidebarBackgrounds.length > 0){
 `
 if(panelBackgrounds.length > 0){
     bk_global.appendChild(document.createTextNode(\`
-        .split-view-view > .part.panel::after {
+        .split-view-view > .part.panel${secSel} {
 
             background-position: ${getCSS("backgroundAlignment", "panel")};
             background-repeat: ${getCSS("backgroundRepeat", "panel")};
             background-size: ${getCSS("backgroundSize", "panel")};
 
-            opacity: ${round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", "panel") : +getCSS("backgroundOpacity", "panel"), 2)};
+            opacity: ${opacity("panel")};
 
-            filter: blur(${getCSS("backgroundBlur", "panel")});
+            filter: ${filter("panel")};
 
         }
     \`));
@@ -278,7 +285,7 @@ const setEditorBackground = () => {
         let buf = '';
         for(let i = 0; i < len; i++){
             buf += \`
-                .part.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container::after {
+                .part.editor :not(.split-view-container) .split-view-container > .split-view-view:nth-child(\${len}n+\${i+1}) > .editor-group-container${secSel} {
                     background-image: url("\${editorBackgrounds[iEditorBackgrounds[i]].replace(/"/g, \`\\\\"\`)}");
                 }
             \`;
@@ -302,12 +309,12 @@ const setSidebarBackground = () => {
         shuffle(iSidebarBackgrounds);
 
         bk_sidebar_image.appendChild(document.createTextNode(\`
-            .split-view-view > .part.sidebar::after {
+            .split-view-view > .part.sidebar${secSel} {
 
                 background-image: url("\${sidebarBackgrounds[iSidebarBackgrounds[0]].replace(/"/g, \`\\\\"\`)}");
 
             }
-            .split-view-view > .part.auxiliarybar::after {
+            .split-view-view > .part.auxiliarybar${secSel} {
 
                 background-image: url("\${(sidebarBackgrounds[iSidebarBackgrounds[1]] ?? sidebarBackgrounds[iSidebarBackgrounds[0]]).replace(/"/g, \`\\\\"\`)}");
 
@@ -331,7 +338,7 @@ const setPanelBackground = () => {
         shuffle(iPanelBackgrounds);
 
         bk_panel_image.appendChild(document.createTextNode(\`
-            .split-view-view > .part.panel::after {
+            .split-view-view > .part.panel${secSel} {
 
                 background-image: url("\${panelBackgrounds[iPanelBackgrounds[0]].replace(/"/g, \`\\\\"\`)}");
 
