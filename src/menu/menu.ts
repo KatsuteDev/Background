@@ -95,7 +95,7 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
         quickPickItem({
             label: "Render Text Above Background",
             description: descriptionBool("renderTextAboveBackground"),
-            detail: "Show text, code, browser, and iframes on top of the background; only supported for window backgrounds",
+            detail: "Show text, code, browser, and iframes on top of the background",
             handle: handleBool("renderTextAboveBackground", i++)
         }),
         quickPickItem({
