@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.1
+
+### Fixes
+
+* Fix window background not being applied properly [#596](https://github.com/KatsuteDev/Background/pull/596) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`5.0.0...5.0.1`](https://github.com/KatsuteDev/Background/compare/5.0.0...5.0.1)
+
 ## 5.0.0
 
 ### Breaking Change
