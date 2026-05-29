@@ -1,5 +1,61 @@
 # Changelog
 
+## 5.0.0
+
+### Breaking Change
+
+* Remove `Render Content Above Background` option [#587](https://github.com/KatsuteDev/Background/pull/587) ([@Katsute](https://github.com/Katsute))
+
+  This feature is no longer functional, instead use the **Render Text Above Background** option.
+
+### Removed
+
+* Remove automatic opacity migration for v3 opacity inversion [#588](https://github.com/KatsuteDev/Background/pull/588) ([@Katsute](https://github.com/Katsute))
+
+  This removes the automatic opacity migration from v2 to v3 (2024).
+
+  **Users using v3 or higher**
+
+  No action is needed; your opacity settings have already been converted as part of the v2 to v3 update.
+
+  **Users using v2**
+
+  Update to v3 to have your opacity settings migrated, then to v5. As a reminder, the **Use Inverted Opacity** setting can still be used to preserve the inverted opacity (v2) behavior.
+
+### New Features
+
+* Render Text Above Background option now supports Sidebar, Editor, and Panel [#592](https://github.com/KatsuteDev/Background/pull/592) ([@Katsute](https://github.com/Katsute))
+
+### Fixes
+
+* Fix sticky tree transparency when using render text over background option [#589](https://github.com/KatsuteDev/Background/pull/589) ([@Katsute](https://github.com/Katsute))
+* Fix tooltip/generate background when using render text over background option [#591](https://github.com/KatsuteDev/Background/pull/591) ([@Katsute](https://github.com/Katsute))
+* Fix documentation popup transparency when using render text over background option [#590](https://github.com/KatsuteDev/Background/pull/590) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump rimraf from 6.1.2 to 6.1.3 [#563](https://github.com/KatsuteDev/Background/pull/563) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 25.2.2 to 25.3.3 [#564](https://github.com/KatsuteDev/Background/pull/564) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 13.0.1 to 13.0.6 [#565](https://github.com/KatsuteDev/Background/pull/565) ([@dependabot](https://github.com/dependabot))
+* Bump the npm_and_yarn group across 1 directory with 1 update [#561](https://github.com/KatsuteDev/Background/pull/561) ([@dependabot](https://github.com/dependabot))
+* Bump undici from 7.22.0 to 7.24.1 in the npm_and_yarn group across 1 directory [#567](https://github.com/KatsuteDev/Background/pull/567) ([@dependabot](https://github.com/dependabot))
+* Bump picomatch from 2.3.1 to 2.3.2 in the npm_and_yarn group across 1 directory [#568](https://github.com/KatsuteDev/Background/pull/568) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.27.3 to 0.27.4 [#570](https://github.com/KatsuteDev/Background/pull/570) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 25.3.3 to 25.5.0 [#569](https://github.com/KatsuteDev/Background/pull/569) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.109.0 to 1.110.0 [#571](https://github.com/KatsuteDev/Background/pull/571) ([@dependabot](https://github.com/dependabot))
+* Bump lodash from 4.17.23 to 4.18.1 in the npm_and_yarn group across 1 directory [#574](https://github.com/KatsuteDev/Background/pull/574) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 5.9.3 to 6.0.2 [#573](https://github.com/KatsuteDev/Background/pull/573) ([@Katsute](https://github.com/Katsute))
+* Bump actions/github-script from 8 to 9 [#575](https://github.com/KatsuteDev/Background/pull/575) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 3.7.1 to 3.9.1 [#577](https://github.com/KatsuteDev/Background/pull/577) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 25.5.0 to 25.6.0 [#578](https://github.com/KatsuteDev/Background/pull/578) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 6.0.2 to 6.0.3 [#579](https://github.com/KatsuteDev/Background/pull/579) ([@dependabot](https://github.com/dependabot))
+* Bump uuid from 8.3.2 to removed in the npm_and_yarn group across 1 directory [#581](https://github.com/KatsuteDev/Background/pull/581) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.27.4 to 0.28.0 [#580](https://github.com/KatsuteDev/Background/pull/580) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.110.0 to 1.118.0 [#576](https://github.com/KatsuteDev/Background/pull/576) ([@dependabot](https://github.com/dependabot))
+* Bump fast-uri from 3.1.0 to 3.1.2 in the npm_and_yarn group across 1 directory [#582](https://github.com/KatsuteDev/Background/pull/582) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`4.0.4...5.0.0`](https://github.com/KatsuteDev/Background/compare/4.0.4...5.0.0)
+
 ## 4.0.4
 
 ### Fixes
