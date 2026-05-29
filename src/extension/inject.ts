@@ -55,7 +55,7 @@ const getJavaScript: () => string = () => {
 
     const under: boolean = get("renderTextAboveBackground");
 
-    const bodySel: string = under ? `::before` : ` > div[role=application] > div.monaco-grid-view::after`;
+    const bodySel: string = "::before";
     const secSel: string  = under ? `::before` : `::after`;
 
     const opacity = (sec: UI) => under ? 1 : round(get("useInvertedOpacity") ? 1 - +getCSS("backgroundOpacity", sec) : +getCSS("backgroundOpacity", sec), 2);
@@ -109,6 +109,8 @@ bk_global.appendChild(document.createTextNode(\`
 
         width: 100%;
         height: 100%;
+
+        ${!under ? `z-index: 1000;` : ''}
 
         position: absolute;
 
