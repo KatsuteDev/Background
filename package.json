@@ -8,10 +8,10 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "private": true,
     "engines": {
-        "vscode": "^1.121.0"
+        "vscode": "^1.123.0"
     },
     "categories": [
         "Other"
@@ -357,7 +357,7 @@
         "@types/node": "25.9.1",
         "@types/tmp": "0.2.6",
         "@types/vscode": "1.120.0",
-        "@vscode/sudo-prompt": "9.3.1",
+        "@vscode/sudo-prompt": "9.3.2",
         "@vscode/test-electron": "2.5.2",
         "@vscode/vsce": "3.9.1",
         "esbuild": "0.28.0",
