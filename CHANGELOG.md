@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.0.2
+
+### ANNOUNCEMENT
+
+As of VSCode 1.123 the Reload command and Install & Reload button do not refresh the background. Please refer to [#600](https://github.com/KatsuteDev/Background/issues/600) for tracking on this issue.
+
+To see background updates you must fully close and reopen the IDE.
+
+### Fixes
+
+* Fix sudo not working on VS 1.123 [#599](https://github.com/KatsuteDev/Background/pull/599) ([@Katsute](https://github.com/Katsute))
+
+  Fixes a Node compatibility issue with sudo caused by a bad VSCode release that did not declare a **breaking** Node version increase.
+
+**Full Changelog**: [`5.0.1...5.0.2`](https://github.com/KatsuteDev/Background/compare/5.0.1...5.0.2)
+
 ## 5.0.1
 
 ### Fixes
