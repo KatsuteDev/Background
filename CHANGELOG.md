@@ -6,7 +6,9 @@
 
 As of VSCode 1.123 **Install**, **Uninstall**, and **Reload** buttons do not refresh the background. Please refer to [#600](https://github.com/KatsuteDev/Background/issues/600) for tracking on this issue.
 
-To see background updates you must fully close and reopen the IDE.
+To see background updates you must fully close and reopen VSCode.
+
+**Full Changelog**: [`5.0.2...5.0.3`](https://github.com/KatsuteDev/Background/compare/5.0.2...5.0.3)
 
 ## 5.0.2
 
