@@ -8,7 +8,7 @@
         "theme": "dark"
     },
     "publisher": "Katsute",
-    "version": "5.0.3",
+    "version": "6.0.0",
     "private": true,
     "engines": {
         "vscode": "^1.123.0"

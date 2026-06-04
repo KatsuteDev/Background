@@ -63,8 +63,8 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     // internal files
     if(dir){
-        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        workbench = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
+        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/code/electron-browser/workbench/workbench.html
+        workbench = join(dir, "out", "vs", "code", "electron-browser", "workbench", "workbench.html");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
         product = join(dir, "product.json");
 
@@ -75,7 +75,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
             window.showErrorMessage(`Failed to find '${product}', please report this issue`);
             return;
         }else{ // workbench & product exists
-            const workbench_backup: string = workbench.replace(".js", "-backup.js");
+            const workbench_backup: string = workbench.replace(".html", "-backup.html");
             const product_backup: string = product.replace(".json", "-backup.json");
 
             if(!existsSync(workbench_backup) || !existsSync(product_backup)){ // backup missing

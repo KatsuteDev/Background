@@ -39,17 +39,19 @@ export const uninstall: (workbench: PathLike, product: PathLike, force?: boolean
 
 // write
 
-const workbenchChecksum: RegExp = /(?<=^\s*"vs\/workbench\/workbench\.desktop\.main\.js\": \").*(?=\",\s*$)/gm;
+const workbenchChecksum: RegExp = /(?<=^\s*"vs\/code\/electron-browser\/workbench\/workbench\.html\": \").*(?=\",\s*$)/gm;
 
 const write: (workbench: PathLike, product: PathLike, content: string, force?: boolean) => void = (workbench: PathLike, product: PathLike, content: string, force: boolean = false) => {
-    const pJson: string = readFileSync(product, "utf-8").replace(workbenchChecksum, generateChecksum(content));
+    // allow inlined JS
+    const patched: string = content.replace(/\bscript-src\b(?![^'\n]*'unsafe-inline')/gm, "script-src 'unsafe-inline'");
+    const pJson: string = readFileSync(product, "utf-8").replace(workbenchChecksum, generateChecksum(patched));
 
     try{ // write changes
         setActive(true);
 
         let changed: boolean = force;
-        if(readFileSync(workbench, "utf-8") !== content){
-            writeFileSync(workbench, content, "utf-8");
+        if(readFileSync(workbench, "utf-8") !== patched){
+            writeFileSync(workbench, patched, "utf-8");
             changed = true;
         }
         if(readFileSync(product, "utf-8") !== pJson){
@@ -80,7 +82,7 @@ const write: (workbench: PathLike, product: PathLike, content: string, force?: b
                 if(value === "Yes"){
                     // use temp files
                     const workbenchTemp = fileSync().name;
-                    writeFileSync(workbenchTemp, content, "utf-8");
+                    writeFileSync(workbenchTemp, patched, "utf-8");
                     const productTemp = fileSync().name;
                     writeFileSync(productTemp, pJson, "utf-8");
 

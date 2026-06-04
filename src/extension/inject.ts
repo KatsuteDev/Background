@@ -24,9 +24,9 @@ import { resolve } from "../lib/glob";
 
 const identifier: string = "KatsuteDev/Background";
 
-const partition: RegExp = new RegExp(`^\\/\\* ${identifier}-start \\*\\/$` +
+const partition: RegExp = new RegExp(`^<!-- ${identifier}-start -->$` +
                                      `[\\s\\S]*?` +
-                                     `^\\/\\* ${identifier}-end \\*\\/$`, "gmi");
+                                     `^<!-- ${identifier}-end -->$`, "gmi");
 
 // extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
 
@@ -35,13 +35,15 @@ export const extensions: () => string[] = () => ["png", "jpg", "jpeg", "webp", "
 // inject
 
 export const inject: (content: string) => string = (content: string) =>
-    clean(content) + '\n' +
-    `/* ${identifier}-start */` + '\n' +
-    minifyJavaScript(getJavaScript()) + '\n' +
-    `/* ${identifier}-end */`;
+    clean(content).replace(/(<\/html>)/i,
+        `<!-- ${identifier}-start -->\n` +
+        `<script>${minifyJavaScript(getJavaScript())}</script>\n` +
+        `<!-- ${identifier}-end -->\n` +
+        `$1`
+    );
 
 export const clean: (content: string) => string = (s: string) =>
-    s.replace(partition, "").trim();
+    s.replace(partition, "");
 
 // javascript
 
