@@ -1,5 +1,32 @@
 # Changelog
 
+## 6.0.0
+
+### ANNOUNCEMENT
+
+Background reload is now fixed, please refer to the below changelog.
+
+### Breaking Change
+
+* Fix reload not working on VSCode 1.123 [#601](https://github.com/KatsuteDev/Background/pull/601) ([@Katsute](https://github.com/Katsute))
+
+  Some users may receive an error about a legacy installation, please refer to the following options to migrate to v6:
+
+  ##### Rollback
+
+   1. Right click the extension the extensions tab and choose **Install Specific Version...**
+   2. Choose a version that is older than v6
+   3. Click **Restart Extensions**
+   4. Run the **Uninstall** command
+   5. Fully close and reopen VSCode
+   6. You can now update to v6 and use this extension
+
+  ##### Reinstall
+
+   1. Reinstall [VSCode](https://code.visualstudio.com/download)
+
+**Full Changelog**: [`5.0.3...6.0.0`](https://github.com/KatsuteDev/Background/compare/5.0.3...6.0.0)
+
 ## 5.0.3
 
 ### ANNOUNCEMENT
