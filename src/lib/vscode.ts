@@ -16,13 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { InputBoxOptions, QuickPick, QuickPickItem, QuickPickItemKind, QuickPickOptions, commands, window } from "vscode";
+import { env, InputBoxOptions, QuickPick, QuickPickItem, QuickPickItemKind, QuickPickOptions, Uri, window } from "vscode";
 
 import { UI } from "../extension/config";
 
 // reload
 
-export const reload: () => void = () => commands.executeCommand("workbench.action.reloadWindow");
+// export const reload: () => void = () => commands.executeCommand("workbench.action.reloadWindow");
+
+export const reload: () => void = () => window
+    .showWarningMessage("VSCode 1.123 has broken reload for this extension, as a temporary workaround please close and reopen the window to see the background update.", "View Issue", "Ignore")
+    .then((value?: string) =>
+        value === "View Issue" && env.openExternal(Uri.parse("https://github.com/KatsuteDev/Background/issues/600"))
+    );
 
 // input
 
