@@ -19,7 +19,7 @@
 import { join } from "path";
 import { platform, release } from "os";
 import { exec } from "@vscode/sudo-prompt";
-import { existsSync, copyFileSync } from "fs";
+import { existsSync, copyFileSync, readFileSync } from "fs";
 import { ConfigurationTarget, ExtensionContext, StatusBarAlignment, StatusBarItem, Uri, commands, window } from "vscode";
 
 import { copyCommand } from "./lib/file";
@@ -63,8 +63,8 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     // internal files
     if(dir){
-        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js
-        workbench = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
+        // %appdata%/Local/Programs/Microsoft VS Code/resources/app/out/vs/code/electron-browser/workbench/workbench.html
+        workbench = join(dir, "out", "vs", "code", "electron-browser", "workbench", "workbench.html");
         // %appdata%/Local/Programs/Microsoft VS Code/resources/app/product.json
         product = join(dir, "product.json");
 
@@ -75,7 +75,7 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
             window.showErrorMessage(`Failed to find '${product}', please report this issue`);
             return;
         }else{ // workbench & product exists
-            const workbench_backup: string = workbench.replace(".js", "-backup.js");
+            const workbench_backup: string = workbench.replace(".html", "-backup.html");
             const product_backup: string = product.replace(".json", "-backup.json");
 
             if(!existsSync(workbench_backup) || !existsSync(product_backup)){ // backup missing
@@ -118,6 +118,15 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
         window.showErrorMessage("Failed to find application directory, please report this issue");
         return;
     }
+
+    // legacy warning
+    const legacyWorkbench: string = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
+    if(existsSync(legacyWorkbench) && readFileSync(legacyWorkbench, "utf-8").includes("/* KatsuteDev/Background-start */"))
+        window.showErrorMessage("A legacy installation of Background has been detected, please rollback to an older version, uninstall backgrounds, then update to v6; or reinstall VSCode to clear out the old installation.", "Instructions", "Ignore")
+            .then((value?: string) => {
+                if(value === "Instructions")
+                    env.openExternal(Uri.parse("https://github.com/KatsuteDev/Background/blob/main/HELP.md#legacy-installation-of-background-has-been-detected"));
+            });
 
     // extension
 

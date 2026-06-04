@@ -1,12 +1,29 @@
 ## Common Issues
 
+#### Legacy installation of Background has been detected
+
+This warning may appear when migrating to v6, there are two options to migrate:
+
+##### Rollback
+
+ 1. Right click the extension the extensions tab and choose **Install Specific Version...**
+ 2. Choose a version that is older than v6
+ 3. Click **Restart Extensions**
+ 4. Run the **Uninstall** command
+ 5. Fully close and reopen VSCode
+ 6. You can now update to v6 and use this extension
+
+##### Reinstall
+
+ 1. Reinstall [VSCode](https://code.visualstudio.com/download)
+
 #### Code installation is corrupt
 
 This warning may appear after running the uninstall command, reopen VSCode for this to disappear.
 
 #### VSCode stopped working
 
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\code\electron-browser\workbench\workbench.html` with `workbench-backup.html`.
 
 This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json`, replace with `product-backup.json` if VSCode stops working.
 
