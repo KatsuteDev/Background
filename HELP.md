@@ -1,5 +1,22 @@
 ## Common Issues
 
+#### Legacy installation of Background has been detected
+
+This warning may appear when migrating to v6, there are two options to migrate:
+
+##### Rollback
+
+ 1. Right click the extension the extensions tab and choose **Install Specific Version...**
+ 2. Choose a version that is older than v6
+ 3. Click **Restart Extensions**
+ 4. Run the **Uninstall** command
+ 5. Fully close and reopen VSCode
+ 6. You can now update to v6 and use this extension
+
+##### Reinstall
+
+ 1. Reinstall [VSCode](https://code.visualstudio.com/download)
+
 #### Code installation is corrupt
 
 This warning may appear after running the uninstall command, reopen VSCode for this to disappear.

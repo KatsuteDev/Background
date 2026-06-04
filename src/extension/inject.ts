@@ -26,7 +26,7 @@ const identifier: string = "KatsuteDev/Background";
 
 const partition: RegExp = new RegExp(`^<!-- ${identifier}-start -->$` +
                                      `[\\s\\S]*?` +
-                                     `^<!-- ${identifier}-end -->$`, "gmi");
+                                     `^<!-- ${identifier}-end -->$\n?`, "gmi");
 
 // extensions https://github.com/microsoft/vscode/blob/main/src/vs/platform/protocol/electron-main/protocolMainService.ts#L27
 
@@ -42,7 +42,7 @@ export const inject: (content: string) => string = (content: string) =>
         `$1`
     );
 
-export const clean: (content: string) => string = (s: string) => s.replace(partition, "");
+export const clean: (content: string) => string = (s: string) => s.replace(partition, "").trim();
 
 // javascript
 
