@@ -1,7 +1,3 @@
-## v6 Notice
-
-This update introduces a breaking change to how backgrounds are installed, it is highly recommended to uninstall your background before updating to this version, or running a reinstall of VSCode to clear out any old backgrounds.
-
 ## Common Issues
 
 #### Code installation is corrupt

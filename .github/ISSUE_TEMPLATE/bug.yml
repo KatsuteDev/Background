@@ -8,13 +8,6 @@ body:
       value: |-
         Automatically prefill this bug report by opening an issue in the extension under **More Options** > **Report an issue** <br><br>
 
-  - type: markdown
-    attributes:
-      value: |-
-        **v6 Notice:**
-
-        This update introduced a breaking change to how backgrounds are installed, it is highly recommended to uninstall your background prior to update or run a reinstall of VSCode to clear out any old backgrounds.
-
   - type: checkboxes
     attributes:
       label: Checks
