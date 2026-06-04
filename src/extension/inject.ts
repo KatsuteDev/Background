@@ -42,8 +42,7 @@ export const inject: (content: string) => string = (content: string) =>
         `$1`
     );
 
-export const clean: (content: string) => string = (s: string) =>
-    s.replace(partition, "");
+export const clean: (content: string) => string = (s: string) => s.replace(partition, "");
 
 // javascript
 
