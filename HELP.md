@@ -6,7 +6,7 @@ This warning may appear after running the uninstall command, reopen VSCode for t
 
 #### VSCode stopped working
 
-This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\workbench\workbench.desktop.main.js` with `workbench.desktop.main-backup.js`.
+This extension modifies an internal file to make backgrounds work, if VSCode stops working replace `%LocalAppData%\Programs\Microsoft VS Code\resources\app\out\vs\code\electron-browser\workbench\workbench.html` with `workbench-backup.html`.
 
 This extension also modifies `%LocalAppData%\Programs\Microsoft VS Code\resources\app\product.json`, replace with `product-backup.json` if VSCode stops working.
 
