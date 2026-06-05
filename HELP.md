@@ -9,13 +9,16 @@ This warning may appear when migrating to v6, there are two options to migrate:
  1. Right click the extension the extensions tab and choose **Install Specific Version...**
  2. Choose a version that is older than v6
  3. Click **Restart Extensions**
- 4. Run the **Uninstall** command
- 5. Fully close and reopen VSCode
- 6. You can now update to v6 and use this extension
+ 4. Run the **Uninstall** command or use the button in the Background menu, this is **NOT** the extension uninstall, it is specifically the Background Uninstall that needs to run
+ 5. Wait for the uninstall to complete, on v5.0.3 this will show a failed notification, on older versions it will automatically reload
+ 6. Fully close and reopen VSCode
+ 7. You can now update to v6 and use this extension
 
 ##### Reinstall
 
  1. Reinstall [VSCode](https://code.visualstudio.com/download)
+
+## &nbsp;
 
 #### Code installation is corrupt
 
