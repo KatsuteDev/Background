@@ -168,3 +168,21 @@ export const update: (key: ConfigurationKey, value: any, ui?: UI, skipNotificati
 export const updateFromLabel: (key: ConfigurationKey, item: CommandQuickPickItem, ui?: UI) => Promise<void> = async (key: ConfigurationKey, item: CommandQuickPickItem, ui?: UI) => {
     item.label && await update(key, item.label, ui);
 }
+
+// terminal
+
+const TRANSPARENT: string = "#00000000";
+
+export const syncTerminalBackground: (uninstall?: boolean) => Promise<void> = async (uninstall: boolean = false) => {
+    const workbench: WorkspaceConfiguration = workspace.getConfiguration("workbench");
+    const colors: {[key: string]: string} = { ...(workbench.get("colorCustomizations") ?? {}) };
+
+    if(get("renderTextAboveBackground")){
+        if(!uninstall && get("removeTerminalBackground")){
+            colors["terminal.background"] = TRANSPARENT;
+        }else{
+            delete colors["terminal.background"];
+        }
+        await workbench.update("colorCustomizations", colors, target());
+    }
+}

@@ -100,6 +100,7 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |**Advanced Option**|**Description**|
 |Auto Install|Automatically install backgrounds on startup|
 |Render Text Above Background|Show text, code, browser, and iframes on top of the background|
+|Remove Terminal Background|Removes the terminal background when using above option|
 |Use Inverted Opacity|Use an inverted opacity, so 0 is visible and 1 is invisible|
 |Smooth Image Rendering|Use smooth image rendering when resizing images instead of pixelated|
 |Setting Scope|Where to save background settings - Global or Workspace|
