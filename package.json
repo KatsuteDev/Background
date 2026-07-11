@@ -291,7 +291,7 @@
                     "default": false
                 },
                 "background.removeTerminalBackground": {
-                    "markdownDescription": "Removes the terminal background when `#background.renderTextAboveBackground#` is enabled.",
+                    "markdownDescription": "Remove the terminal background when using `#background.renderTextAboveBackground#`.",
                     "order": 14,
                     "type": "boolean",
                     "default": false
