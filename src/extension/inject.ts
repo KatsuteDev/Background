@@ -77,7 +77,8 @@ bk_global.appendChild(document.createTextNode(\`
         [role="tooltip"], .monaco-count-badge, .badge-content, .label, .action-item *, .monaco-button,
         .monaco-editor-overlaymessage, .monaco-editor-overlaymessage *, .context-view, .context-view *,
         .view-overlays *, .sticky-widget *, .lines-content *, .suggest-widget, .suggest-widget *, .suggest-details, .suggest-details *, .editor-widget, .editor-widget *,
-        .monaco-tree-sticky-container, .monaco-tree-sticky-container *, .monaco-list-row.focused, .monaco-list-row.selected, .monaco-list-row:hover),
+        .monaco-tree-sticky-container, .monaco-tree-sticky-container *, .monaco-list-row.focused, .monaco-list-row.selected, .monaco-list-row:hover,
+        .scrollbar > .slider, .minimap-slider-horizontal),
         body > div,
         .tabs-and-actions-container {
         background-color: unset !important;
