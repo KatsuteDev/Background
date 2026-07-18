@@ -173,7 +173,7 @@ export const updateFromLabel: (key: ConfigurationKey, item: CommandQuickPickItem
 
 const TRANSPARENT: string = "#00000000";
 
-export const syncTerminalBackground: (uninstall?: boolean) => Promise<void> = async (uninstall: boolean = false) => {
+export const setTerminalBackground: (uninstall?: boolean) => Promise<void> = async (uninstall: boolean = false) => {
     const workbench: WorkspaceConfiguration = workspace.getConfiguration("workbench");
     const colors: {[key: string]: string} = { ...(workbench.get("colorCustomizations") ?? {}) };
 
