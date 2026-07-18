@@ -99,6 +99,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             handle: handleBool("renderTextAboveBackground", i++)
         }),
         quickPickItem({
+            label: "Remove Terminal Background",
+            description: descriptionBool("removeTerminalBackground"),
+            detail: "Removes the terminal background when using above option",
+            handle: handleBool("removeTerminalBackground", i++)
+        }),
+        quickPickItem({
             label: "Use Inverted Opacity",
             description: descriptionBool("useInvertedOpacity"),
             detail: "Use an inverted opacity, so 0 is fully visible and 1 is invisible",

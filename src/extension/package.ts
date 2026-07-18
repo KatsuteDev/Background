@@ -33,6 +33,7 @@ export type ConfigurationKey =
     "backgroundChangeTime" |
     "autoInstall" |
     "renderTextAboveBackground" |
+    "removeTerminalBackground" |
     "useInvertedOpacity" |
     "settingScope" |
     "smoothImageRendering" |

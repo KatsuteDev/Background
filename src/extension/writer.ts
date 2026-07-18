@@ -28,12 +28,15 @@ import { copyCommand, generateChecksum } from "../lib/file";
 
 import { clean, inject } from "./inject"
 import { installDelay, setActive } from "../extension";
+import { setTerminalBackground } from "./config";
 
-export const install: (workbench: PathLike, product: PathLike, force?: boolean) => void = (workbench: PathLike, product: PathLike, force: boolean = false) => {
+export const install: (workbench: PathLike, product: PathLike, force?: boolean) => Promise<void> = async (workbench: PathLike, product: PathLike, force: boolean = false) => {
+    await setTerminalBackground();
     write(workbench, product, inject(readFileSync(workbench, "utf-8")), force);
 }
 
-export const uninstall: (workbench: PathLike, product: PathLike, force?: boolean) => void = (workbench: PathLike, product: PathLike, force: boolean = false) => {
+export const uninstall: (workbench: PathLike, product: PathLike, force?: boolean) => Promise<void> = async (workbench: PathLike, product: PathLike, force: boolean = false) => {
+    await setTerminalBackground(true);
     write(workbench, product, clean(readFileSync(workbench, "utf-8")), force);
 }
 
