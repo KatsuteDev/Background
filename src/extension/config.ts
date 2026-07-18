@@ -171,15 +171,13 @@ export const updateFromLabel: (key: ConfigurationKey, item: CommandQuickPickItem
 
 // terminal
 
-const TRANSPARENT: string = "#00000000";
-
 export const setTerminalBackground: (uninstall?: boolean) => Promise<void> = async (uninstall: boolean = false) => {
     const workbench: WorkspaceConfiguration = workspace.getConfiguration("workbench");
     const colors: {[key: string]: string} = { ...(workbench.get("colorCustomizations") ?? {}) };
 
     if(get("renderTextAboveBackground")){
         if(!uninstall && get("removeTerminalBackground")){
-            colors["terminal.background"] = TRANSPARENT;
+            colors["terminal.background"] = "#00000000";
         }else{
             delete colors["terminal.background"];
         }
