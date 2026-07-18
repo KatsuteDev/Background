@@ -1,5 +1,27 @@
 # Changelog
 
+## 6.1.0
+
+### New Features
+
+* Add option to hide terminal background when using render text above background option [#616](https://github.com/KatsuteDev/Background/pull/616) ([@Katsute](https://github.com/Katsute))
+
+### Fixes
+
+* Fix missing scrollbar when using render text above background option [#615](https://github.com/KatsuteDev/Background/pull/615) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump esbuild from 0.28.0 to 0.28.1 in the npm_and_yarn group across 1 directory [#606](https://github.com/KatsuteDev/Background/pull/606) ([@dependabot](https://github.com/dependabot))
+* Bump actions/checkout from 6 to 7 [#608](https://github.com/KatsuteDev/Background/pull/608) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 25.9.1 to 26.0.1 [#610](https://github.com/KatsuteDev/Background/pull/610) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.120.0 to 1.125.0 [#609](https://github.com/KatsuteDev/Background/pull/609) ([@dependabot](https://github.com/dependabot))
+* Bump markdown-it from 14.1.1 to 14.2.0 in the npm_and_yarn group across 1 directory [#607](https://github.com/KatsuteDev/Background/pull/607) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 2.5.2 to 3.0.0 [#611](https://github.com/KatsuteDev/Background/pull/611) ([@dependabot](https://github.com/dependabot))
+* Bump the npm_and_yarn group across 1 directory with 3 updates (form-data, js-yaml, undici) [#614](https://github.com/KatsuteDev/Background/pull/614) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`6.0.0...6.1.0`](https://github.com/KatsuteDev/Background/compare/6.0.0...6.1.0)
+
 ## 6.0.0
 
 ### ANNOUNCEMENT
