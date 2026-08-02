@@ -80,7 +80,8 @@ bk_global.appendChild(document.createTextNode(\`
         .monaco-tree-sticky-container, .monaco-tree-sticky-container *, .monaco-list-row.focused, .monaco-list-row.selected, .monaco-list-row:hover,
         .scrollbar > .slider, .minimap-slider-horizontal, .xterm-scrollbar *),
         body > div,
-        .tabs-and-actions-container {
+        .tabs-and-actions-container,
+        .monaco-workbench.floating-panels :is(.part.sidebar, .part.auxiliarybar, .part.panel), .monaco-workbench.floating-panels > .monaco-grid-view {
         background-color: unset !important;
     }
 
