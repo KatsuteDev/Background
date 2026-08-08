@@ -73,7 +73,7 @@ bk_global.setAttribute("type", "text/css");
 bk_global.appendChild(document.createTextNode(\`
 
     ${!under ? "" :
-    `body .split-view-view:nth-child(3) *:not(
+    `body :is(.split-view-view:nth-child(3), .content.auxiliary) *:not(
         [role="tooltip"], .monaco-count-badge, .badge-content, .label, .action-item *, .monaco-button,
         .monaco-editor-overlaymessage, .monaco-editor-overlaymessage *, .context-view, .context-view *,
         .view-overlays *, .sticky-widget *, .lines-content *, .suggest-widget, .suggest-widget *, .suggest-details, .suggest-details *, .editor-widget, .editor-widget *,
@@ -81,6 +81,8 @@ bk_global.appendChild(document.createTextNode(\`
         .scrollbar > .slider, .minimap-slider-horizontal, .xterm-scrollbar *),
         body > div,
         .tabs-and-actions-container,
+        .part.editor,
+        .content.auxiliary,
         .monaco-workbench.floating-panels :is(.part.sidebar, .part.auxiliarybar, .part.panel), .monaco-workbench.floating-panels > .monaco-grid-view {
         background-color: unset !important;
     }
