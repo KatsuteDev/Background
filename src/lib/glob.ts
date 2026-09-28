@@ -26,7 +26,7 @@ import { resolve as resolveEnv } from "../extension/env";
 import { Uri } from "vscode";
 
 const filter: (v: string) => boolean = (v : string) => {
-    const ext: string = extname(v).slice(1);
+    const ext: string = extname(v).slice(1).toLowerCase();
     return extensions().includes(ext);
 }
 
@@ -66,7 +66,8 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
 
     return urls.concat((globSync(globs, options) as string[])
                     .filter(filter) // must use '/' for URL ↓
-                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/g, '/').replace(/^\/+/g, "")}`))
+                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/g, '/').replace(/^\/+/g, "")
+                        .split('/').map(s => encodeURIComponent(s).replace(/%3A/gi, ':')).join('/')}`)) // fix #%
                .filter(unique)
                .map(path => '"' + path.replace(/"/g, `\\"`) + '"');
 }
