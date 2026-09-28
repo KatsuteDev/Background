@@ -23,12 +23,16 @@ import { extensions } from "../extension/inject";
 
 import { unique } from "./array";
 import { resolve as resolveEnv } from "../extension/env";
+import { get } from "../extension/config";
 import { Uri } from "vscode";
 
 const filter: (v: string) => boolean = (v : string) => {
     const ext: string = extname(v).slice(1);
     return extensions().includes(ext);
 }
+
+const allowed: (v: string) => boolean = (v: string) =>
+    get("environmentVariables") || !/\${.*?}/.test(v);
 
 const options: GlobOptions = {
     absolute: true,
@@ -48,7 +52,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
     for(const g of (Array.isArray(glob) ? glob.filter(unique) : [glob]))
         if(g.startsWith("https://"))
             i++;
-        else // do not normalize '/', add file/dir already does this; warning already included in add glob
+        else if(allowed(g)) // do not normalize '/', add file/dir already does this; warning already included in add glob
             globs.push(resolveEnv(g));
 
     return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
@@ -61,7 +65,7 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
     for(const g of (Array.isArray(glob) ? glob.filter(unique) : [glob]))
         if(g.startsWith("https://"))
             urls.push(g);
-        else // do not normalize '/', add file/dir already does this; warning already included in add glob
+        else if(allowed(g)) // do not normalize '/', add file/dir already does this; warning already included in add glob
             globs.push(resolveEnv(g));
 
     return urls.concat((globSync(globs, options) as string[])
