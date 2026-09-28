@@ -330,6 +330,12 @@
                     "order": 19,
                     "type": "boolean",
                     "default": false
+                },
+                "background.environmentVariables": {
+                    "markdownDescription": "Enable environment variable resolution in background paths.",
+                    "order": 20,
+                    "type": "boolean",
+                    "default": false
                 }
             }
         }
