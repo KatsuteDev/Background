@@ -1,5 +1,29 @@
 # Changelog
 
+## 6.1.1
+
+### Fixes
+
+* Fix compatibility with Modern UI, auxiliary window [#626](https://github.com/KatsuteDev/Background/pull/626) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump the npm_and_yarn group across 1 directory with 2 updates [#620](https://github.com/KatsuteDev/Background/pull/620) ([@dependabot](https://github.com/dependabot))
+* Bump fast-uri from 3.1.2 to 3.1.4 in the npm_and_yarn group across 1 directory [#621](https://github.com/KatsuteDev/Background/pull/621) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/test-electron from 3.0.0 to 3.1.0 [#622](https://github.com/KatsuteDev/Background/pull/622) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 26.0.1 to 26.1.2 [#623](https://github.com/KatsuteDev/Background/pull/623) ([@dependabot](https://github.com/dependabot))
+* Bump typescript from 6.0.3 to 7.0.2 [#624](https://github.com/KatsuteDev/Background/pull/624) ([@dependabot](https://github.com/dependabot))
+* Bump undici from 7.28.0 to 7.29.0 in the npm_and_yarn group across 1 directory [#627](https://github.com/KatsuteDev/Background/pull/627) ([@dependabot](https://github.com/dependabot))
+* Bump fast-uri from 3.1.4 to 3.1.5 in the npm_and_yarn group across 1 directory [#628](https://github.com/KatsuteDev/Background/pull/628) ([@dependabot](https://github.com/dependabot))
+* Bump js-yaml from 4.3.0 to 4.3.1 in the npm_and_yarn group across 1 directory [#629](https://github.com/KatsuteDev/Background/pull/629) ([@dependabot](https://github.com/dependabot))
+* Bump @types/node from 26.1.2 to 26.4.0 [#631](https://github.com/KatsuteDev/Background/pull/631) ([@dependabot](https://github.com/dependabot))
+* Bump esbuild from 0.28.1 to 0.28.2 [#630](https://github.com/KatsuteDev/Background/pull/630) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.125.0 to 1.134.0 [#632](https://github.com/KatsuteDev/Background/pull/632) ([@dependabot](https://github.com/dependabot))
+* Bump fast-uri from 3.1.5 to 3.1.7 in the npm_and_yarn group across 1 directory [#633](https://github.com/KatsuteDev/Background/pull/633) ([@dependabot](https://github.com/dependabot))
+* Bump js-yaml from 4.3.1 to 4.3.2 in the npm_and_yarn group across 1 directory [#634](https://github.com/KatsuteDev/Background/pull/634) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`6.1.0...6.1.1`](https://github.com/KatsuteDev/Background/compare/6.1.0...6.1.1)
+
 ## 6.1.0
 
 ### New Features
