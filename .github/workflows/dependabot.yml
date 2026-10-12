@@ -4,6 +4,4 @@ on: [pull_request]
 jobs:
   dependabot:
     name: Dependabot[bot]
-    permissions:
-      pull-requests: write
     uses: KatsuteDev/workflows/.github/workflows/dependabot.yml@main
