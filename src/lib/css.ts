@@ -19,10 +19,13 @@
 // sanitize
 
 export const sanitizeCSS: (css: string) => string = (css: string) =>
-    css
-        .replace(/\r?\n/gm, ' ') // make single line
-        .replace(/"/gm, `'`)     // prevent escaping quotes
-        .replace(/\\+$/gm, '');  // prevent escaping inject script quote
+    JSON.stringify(String(css ?? "")).slice(1, -1) // escapes \ " and control characters (newlines)
+        .replace(/</g, "\\u003C")            // prevent </script> and <!-- from breaking out of the script tag
+        .replace(/>/g, "\\u003E")
+        .replace(/\//g, "\\u002F")           // prevent // and /* */ from being read as comments by the minifier
+        .replace(/\*/g, "\\u002A")
+        .replace(/\u2028/g, "\\u2028")       // line/paragraph separators
+        .replace(/\u2029/g, "\\u2029");
 
 export const sanitizeUnits: (unit: string) => string = (unit: string) =>
     unit.replace(/[^\w.% +-]/gmi, "");

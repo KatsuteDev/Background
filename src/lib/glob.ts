@@ -27,13 +27,19 @@ import { get } from "../extension/config";
 import { Uri } from "vscode";
 
 const filter: (v: string) => boolean = (v : string) => {
-    const ext: string = extname(v).slice(1);
+    const ext: string = extname(v).slice(1).toLowerCase();
     return extensions().includes(ext);
 }
 
-const options: GlobOptions = {
-    absolute: true,
-    nodir: true
+const options: () => GlobOptions = () => {
+    const limit: number = Date.now() + 5000; // 5s
+    return {
+        absolute: true,
+        nodir: true,
+        ignore: {
+            childrenIgnored: () => Date.now() > limit // stop traversing after timeout
+        }
+    };
 }
 
 export const escapePath: (path: Uri) => string = (path: Uri) =>
@@ -54,7 +60,7 @@ export const count: (glob: string | string[]) => number = (glob: string | string
         else if(canUseEnv || !/\${.*?}/.test(g)) // do not normalize '/', add file/dir already does this; warning already included in add glob
             globs.push(resolveEnv(g));
 
-    return i + (globSync(globs, options) as string[]).filter(filter).filter(unique).length;
+    return i + (globSync(globs, options()) as string[]).filter(filter).filter(unique).length;
 }
 
 export const resolve: (glob: string | string[]) => string[] = (glob: string | string[]) => {
@@ -69,9 +75,10 @@ export const resolve: (glob: string | string[]) => string[] = (glob: string | st
         else if(canUseEnv || !/\${.*?}/.test(g)) // do not normalize '/', add file/dir already does this; warning already included in add glob
             globs.push(resolveEnv(g));
 
-    return urls.concat((globSync(globs, options) as string[])
+    return urls.concat((globSync(globs, options()) as string[])
                     .filter(filter) // must use '/' for URL ↓
-                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/g, '/').replace(/^\/+/g, "")}`))
+                    .map(path => `vscode-file://vscode-app/${path.replace(/\\/g, '/').replace(/^\/+/g, "")
+                        .split('/').map(s => encodeURIComponent(s).replace(/%3A/gi, ':')).join('/')}`)) // fix #%
                .filter(unique)
                .map(path => '"' + path.replace(/"/g, `\\"`) + '"');
 }
