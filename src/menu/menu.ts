@@ -128,6 +128,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             detail: "Enable/disable API access",
             handle: handleBool("API", i++)
         }),
+        quickPickItem({
+            label: "Environment Variables",
+            description: descriptionBool("environmentVariables"),
+            detail: "Enable/disable environment variable resolution in paths",
+            handle: handleBool("environmentVariables", i++)
+        }),
         separator(),
         quickPickItem({
             label: "$(output) Changelog",

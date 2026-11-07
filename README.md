@@ -106,10 +106,13 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |Setting Scope|Where to save background settings - Global or Workspace|
 |CSS|Custom CSS|
 |API|Toggles API access|
+|Environment Variables|Toggles environment variable resolution in paths|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## Environment Variables
+
+*Requires Environment Variables setting to be turned on*
 
 If the path is not working, add an additional `/` after the variable.
 

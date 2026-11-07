@@ -38,7 +38,8 @@ export type ConfigurationKey =
     "settingScope" |
     "smoothImageRendering" |
     "CSS" |
-    "API";
+    "API" |
+    "environmentVariables";
 
 export type Contributes = {
     commands: [{
