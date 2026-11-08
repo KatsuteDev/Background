@@ -1,5 +1,40 @@
 # Changelog
 
+## 7.0.0
+
+### Breaking Change
+
+* Stop glob path traversal after 5 seconds [#638](https://github.com/KatsuteDev/Background/pull/638) ([@Katsute](https://github.com/Katsute))
+
+  Globs will stop returning results after 5 seconds to prevent the extension host from freezing. Most globs will not be impacted, if a glob takes longer than 5 seconds it is indexing too many files.
+* Require user permission to use environment variables [#636](https://github.com/KatsuteDev/Background/pull/636) ([@Katsute](https://github.com/Katsute))
+
+  It is now required to turn on environment variables option to use them in path resolution.
+
+### Security
+
+* Require trusted workspace to use extension [#635](https://github.com/KatsuteDev/Background/pull/635) ([@Katsute](https://github.com/Katsute))
+* Make CSS sanitizer more strict [#637](https://github.com/KatsuteDev/Background/pull/637) ([@Katsute](https://github.com/Katsute))
+
+### Fixes
+
+* Fix background flickering when using extremely large timer values [#640](https://github.com/KatsuteDev/Background/pull/640) ([@Katsute](https://github.com/Katsute))
+* Fix certain image paths not being included [#639](https://github.com/KatsuteDev/Background/pull/639) ([@Katsute](https://github.com/Katsute))
+
+  * Fix non-lowercase extensions not being included
+  * Fix certain symbols in file paths being included incorrectly
+
+### Dependencies
+
+* Bump brace-expansion from 5.0.9 to 5.0.12 [#641](https://github.com/KatsuteDev/Background/pull/641) ([@dependabot](https://github.com/dependabot))
+* Bump @azure/msal-node from 6.0.1 to 7.1.2 [#644](https://github.com/KatsuteDev/Background/pull/644) ([@dependabot](https://github.com/dependabot))
+* Bump @vscode/vsce from 4.0.0 to 4.1.0 [#647](https://github.com/KatsuteDev/Background/pull/647) ([@dependabot](https://github.com/dependabot))
+* Bump @types/vscode from 1.138.0 to 1.144.0 [#646](https://github.com/KatsuteDev/Background/pull/646) ([@dependabot](https://github.com/dependabot))
+* Bump glob from 13.0.6 to 14.0.3 [#645](https://github.com/KatsuteDev/Background/pull/645) ([@dependabot](https://github.com/dependabot))
+* Bump qs from 6.16.0 to 6.17.1 [#648](https://github.com/KatsuteDev/Background/pull/648) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`6.1.1...7.0.0`](https://github.com/KatsuteDev/Background/compare/6.1.1...7.0.0)
+
 ## 6.1.1
 
 ### Fixes
