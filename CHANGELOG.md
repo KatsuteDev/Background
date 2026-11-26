@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.0.1
+
+### Fixes
+
+* Fix sidebar/panel compatibility with Modern UI [#650](https://github.com/KatsuteDev/Background/pull/650) ([@Katsute](https://github.com/Katsute))
+
+**Full Changelog**: [`7.0.0...7.0.1`](https://github.com/KatsuteDev/Background/compare/7.0.0...7.0.1)
+
 ## 7.0.0
 
 ### Breaking Change
