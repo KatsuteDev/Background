@@ -1,0 +1,124 @@
+name: Screenshot CI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  screenshot:
+    name: Screenshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      DISPLAY: ":99"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install & Package
+        run: |-
+          sudo apt-get update
+          sudo apt-get install -y xvfb xdotool imagemagick jq libgbm1 libnss3 libasound2t64 libsecret-1-0
+          npm ci
+          npx vsce package --out background.vsix
+
+      - name: Download VS Code & Start Display
+        run: |-
+          curl -fsSL https://update.code.visualstudio.com/latest/linux-x64/stable -o vscode-stable.tar.gz
+          curl -fsSL https://update.code.visualstudio.com/latest/linux-x64/insider -o vscode-insider.tar.gz
+          Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+
+      - name: Screenshot
+        run: |-
+          screenshot() {
+            local release=$1 test=$2 ui=$3
+            local name="$release-$test-$ui" root="$RUNNER_TEMP/vscode/$release-$test-$ui"
+            local app="$root/app" data="$root/data" ext="$root/ext"
+            local flags=(--user-data-dir "$data" --extensions-dir "$ext")
+
+            echo "::group::$name"
+
+            # fresh install so each test starts unpatched
+            mkdir -p "$app" "$data/User" screenshots
+            tar -xzf "vscode-$release.tar.gz" -C "$app" --strip-components=1
+            local code="$app/bin/$(ls "$app/bin" | grep -xE 'code(-insiders)?')"
+            local workbench=$(find "$app" -path '*electron-browser/workbench/workbench.html')
+
+            # settings
+            jq -s --argjson modern "$([ "$ui" = modern ] && echo true || echo false)" \
+              '.[0] * .[1] * {"workbench.experimental.modernUI": $modern}' \
+              test/screenshot/base.json "test/screenshot/$test.json" \
+              | sed "s|__TEST__|$GITHUB_WORKSPACE/test|g" > "$data/User/settings.json"
+            cp test/screenshot/keybindings.json "$data/User/"
+
+            # install extension & launch
+            "$code" "${flags[@]}" --install-extension background.vsix
+            "$code" "${flags[@]}" --no-sandbox --disable-gpu --password-store=basic --skip-welcome --skip-release-notes \
+              --new-window test/test.js > "$root/vscode.log" 2>&1 &
+
+            # wait for the extension to patch workbench.html, then for the window to reload
+            timeout 120 sh -c "until grep -q KatsuteDev/Background '$workbench'; do sleep 2; done" \
+              || { echo "::warning::Background was not installed for $name"; cat "$root/vscode.log"; }
+            sleep 25
+
+            # maximize, then open sidebars (and panel for ui) and return focus to editor, see keybindings.json
+            local win=$(xdotool search --onlyvisible --class code | tail -n 1)
+            xdotool windowmove "$win" 0 0 windowsize "$win" 1920 1080 windowactivate --sync "$win" || true
+            xdotool key --delay 1000 --clearmodifiers ctrl+alt+shift+1 ctrl+alt+shift+2 \
+              $([ "$test" = ui ] && echo ctrl+alt+shift+3) ctrl+alt+shift+4
+            sleep 3
+
+            import -window root "screenshots/$name.png"
+
+            pkill -f "$app" || true
+            sleep 3
+            echo "::endgroup::"
+          }
+
+          for release in stable insider; do
+            for test in window ui; do
+              screenshot $release $test classic
+              screenshot $release $test modern
+            done
+          done
+
+      - name: Combine Screenshots
+        if: always()
+        run: |-
+          # grid: one row per release/test, classic on the left and modern on the right
+          args=()
+          for release in stable insider; do
+            for test in window ui; do
+              for ui in classic modern; do
+                r=${release/insider/insiders} t=${test/ui/UI}
+                label="${r^} · ${t^} · ${ui^}"
+                file="screenshots/$release-$test-$ui.png"
+                if [ -f "$file" ]; then
+                  args+=(-label "$label" "$file")
+                else # keep the grid aligned if a test failed
+                  args+=(-label "$label (missing)" -size 1920x1080 "xc:#3a0000")
+                fi
+              done
+            done
+          done
+
+          montage -font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf -pointsize 28 -background '#1e1e1e' -fill white \
+            "${args[@]}" -tile 2x -geometry 960x540+8+8 screenshots.png
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          path: screenshots.png
+          archive: false
+          if-no-files-found: ignore
