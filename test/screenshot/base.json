@@ -1,0 +1,12 @@
+{
+    "security.workspace.trust.enabled": false,
+    "workbench.startupEditor": "none",
+    "workbench.tips.enabled": false,
+    "workbench.secondarySideBar.defaultVisibility": "visible",
+    "workbench.colorTheme": "Default Dark Modern",
+    "update.mode": "none",
+    "extensions.autoUpdate": false,
+    "extensions.autoCheckUpdates": false,
+    "telemetry.telemetryLevel": "off",
+    "window.restoreWindows": "none"
+}
