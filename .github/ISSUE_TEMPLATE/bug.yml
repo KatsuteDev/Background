@@ -65,6 +65,14 @@ body:
       options:
         - label: I have made sure to remove any sensitive or personal information from the above input.
 
+  - type: checkboxes
+    attributes:
+      label: Modern UI
+      description: |-
+        Check this option if you are using the `workbench.experimental.modernUI` option.
+      options:
+        - label: Modern UI
+
   - type: textarea
     attributes:
       label: Issue
