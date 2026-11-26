@@ -1,0 +1,7 @@
+{
+    "background.windowBackgrounds": ["__TEST__/sample.png"],
+    "background.backgroundSize": ["Auto", "Auto", "Auto", "Auto"],
+    "background.backgroundRepeat": ["Repeat", "Repeat", "Repeat", "Repeat"],
+    "background.backgroundAlignment": ["Center Center", "Center Center", "Center Center", "Center Center"],
+    "background.autoInstall": true
+}

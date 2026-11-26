@@ -1,0 +1,9 @@
+{
+    "background.editorBackgrounds": ["__TEST__/sample.png"],
+    "background.sidebarBackgrounds": ["__TEST__/sample-alt.png"],
+    "background.panelBackgrounds": ["__TEST__/sample-t.png"],
+    "background.backgroundSize": ["Auto", "Auto", "Auto", "Auto"],
+    "background.backgroundRepeat": ["Repeat", "Repeat", "Repeat", "Repeat"],
+    "background.backgroundAlignment": ["Center Center", "Center Center", "Center Center", "Center Center"],
+    "background.autoInstall": true
+}

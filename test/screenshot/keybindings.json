@@ -1,0 +1,6 @@
+[
+    { "key": "ctrl+alt+shift+1", "command": "workbench.action.focusSideBar" },
+    { "key": "ctrl+alt+shift+2", "command": "workbench.action.focusAuxiliaryBar" },
+    { "key": "ctrl+alt+shift+3", "command": "workbench.action.focusPanel" },
+    { "key": "ctrl+alt+shift+4", "command": "workbench.action.focusActiveEditorGroup" }
+]
