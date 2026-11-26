@@ -113,8 +113,8 @@ bk_global.appendChild(document.createTextNode(\`
 
         top: 0;
 
-        width: 100%;
-        height: 100%;
+        width: 100% !important;
+        height: 100% !important;
 
         ${!under ? `z-index: 1000;` : ''}
 
@@ -127,6 +127,16 @@ bk_global.appendChild(document.createTextNode(\`
         image-rendering: ${get("smoothImageRendering") ? "auto" : "pixelated"};
 
         ${under ? "z-index: -1;" : ""}
+
+    }
+
+    .split-view-view > :is(.part.sidebar, .part.auxiliarybar, .part.panel)${secSel} {
+
+        inset: 0 !important;
+
+        translate: none !important;
+
+        z-index: ${under ? -1 : 1000} !important;
 
     }
 \`));
